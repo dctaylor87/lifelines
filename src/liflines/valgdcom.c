@@ -46,17 +46,12 @@
 #include "zstr.h"
 #include "codesets.h"
 #include "btree.h"
+#include "messages.h"
 
 #ifndef INCLUDED_STDARG_H
 #include <stdarg.h>
 #define INCLUDED_STDARG_H
 #endif
-
-extern STRING qSmisixr, qSmisfxr;
-extern STRING qSmulper, qSmulfam;
-extern STRING qSmatper, qSmatfam;
-extern STRING qSundper, qSundfam, qSundsrc;
-extern STRING qSundevn, qSbadlev, qSnoname;
 
 /* external data set by check_stdkeys() , used by addmissingkeys() */
 

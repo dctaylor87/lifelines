@@ -40,9 +40,7 @@
 #include "zstr.h"
 #include "llinesi.h"
 #include "btree.h"
-
-extern STRING qSdbrecstats,qSdbrecords;
-extern STRING qSprogsig,qSsignal;
+#include "messages.h"
 
 extern BTREE BTR;
 

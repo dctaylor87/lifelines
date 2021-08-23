@@ -35,14 +35,9 @@
 #include "feedback.h"
 #include "liflines.h"
 #include "fpattern.h"
+#include "messages.h"
 
 #include "llinesi.h"
-
-/*********************************************
- * external variables (no header)
- *********************************************/
-
-extern STRING qSscanrs, qSscnrfn;
 
 /*********************************************
  * local types

@@ -16,7 +16,7 @@ EXTRA_DIST = \
 	isolangs.h interp.h \
 	langinfz.h liflines.h list.h llnls.h lloptions.h llstdlib.h \
 	log.h \
-	menuitem.h metadata.h mychar.h mycurses.h mystring.h \
+	menuitem.h messages.h metadata.h mychar.h mycurses.h mystring.h \
 	object.h \
 	proptbls.h pvalue.h \
 	screen.h sequence.h standard.h sys_inc.h \

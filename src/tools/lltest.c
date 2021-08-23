@@ -30,10 +30,9 @@
 #include <stddef.h>	/* offsetof */
 #include "llstdlib.h"
 #include "version.h"
+#include "messages.h"
 #include "btree.h"
 #include "../btree/btreei.h"
-
-extern STRING qSgen_bugreport;
 
 /*********************************************
  * required global variables

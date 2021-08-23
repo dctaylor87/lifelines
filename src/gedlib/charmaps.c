@@ -20,6 +20,7 @@
 #include "feedback.h"
 #include "lloptions.h"
 #include "zstr.h"
+#include "messages.h"
 
 /*********************************************
  * global/exported variables
@@ -34,12 +35,6 @@ const char *map_keys[] = {
 	"MDSIN", "MINDS", "MRPIN", "MINRP", "MSORT",
 	"MCHAR", "MLCAS", "MUCAS", "MPREF"
 };
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSbaddec,qSbadhex,qSnorplc,qSbadesc,qSnoorig,qSmaperr;
 
 /*********************************************
  * local types

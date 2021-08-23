@@ -33,12 +33,7 @@
 #include "menuitem.h"
 #include "screen.h"
 #include "screeni.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSmn_unkcmd;
+#include "messages.h"
 
 /*********************************************
  * local function prototypes

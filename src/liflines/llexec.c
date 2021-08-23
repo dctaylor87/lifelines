@@ -26,6 +26,7 @@
 #include "ui.h"
 #include "llinesi.h"
 #include "version.h"
+#include "messages.h"
 
 #ifdef HAVE_GETOPT
 #ifdef HAVE_GETOPT_H
@@ -36,12 +37,6 @@
 /*********************************************
  * external variables (no header)
  *********************************************/
-
-extern STRING qSmtitle,qSnorwandro,qSnofandl,qSbdlkar;
-extern STRING qSusgFinnOpt,qSusgFinnAlw,qSusgNorm;
-extern STRING qSbaddb,qSdefttl,qSiddefpath;
-extern STRING qSaskynq,qSaskynyn,qSaskyY,qSaskint;
-extern STRING qSchlistx,qSvwlistx;
 
 extern INT csz_indi;
 extern INT csz_fam;

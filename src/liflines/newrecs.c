@@ -38,6 +38,7 @@
 #include "liflines.h"
 #include "feedback.h"
 #include "lloptions.h"
+#include "messages.h"
 
 #include "llinesi.h"
 
@@ -46,12 +47,6 @@
  *********************************************/
 
 extern BTREE BTR;
-extern STRING qScfradd, qScfeadd, qScfxadd, qSrredit, qSeredit, qSxredit;
-extern STRING qScfrupt, qScfeupt, qScfxupt, qSgdrmod, qSgdemod, qSgdxmod;
-extern STRING qSidredt, qSideedt, qSidxedt, qSronlya, qSronlye;
-extern STRING qSrreditopt, qSereditopt, qSxreditopt;
-extern STRING qSnofopn;
-extern STRING qSdefsour,qSdefeven,qSdefothr,qSnosuchrec;
 
 /*********************************************
  * local function prototypes

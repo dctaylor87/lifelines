@@ -37,15 +37,7 @@
 #include "liflines.h"
 #include "feedback.h"
 #include "zstr.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-extern STRING qSsig00, qSsig01, qSsig02, qSsig03, qSsig04;
-extern STRING qSsig05, qSsig06, qSsig07, qSsig08, qSsig09;
-extern STRING qSsig10, qSsig11, qSsig12, qSsig13, qSsig14;
-extern STRING qSsig15, qSsig16, qSsig17, qSsig18, qSsig19;
-extern STRING qSsig20, qSsigunk;
+#include "messages.h"
 
 /*********************************************
  * local function prototypes

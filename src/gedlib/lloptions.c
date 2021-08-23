@@ -18,13 +18,7 @@
 #include "gedcom.h"
 #include "gedcomi.h"
 #include "lloptions.h"
-
-
-/*********************************************
- * external variables
- *********************************************/
-
-extern STRING qSopt2long;
+#include "messages.h"
 
 /*********************************************
  * local function prototypes

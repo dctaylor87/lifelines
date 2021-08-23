@@ -42,6 +42,7 @@
 #include "feedback.h"
 #include "lloptions.h"
 #include "zstr.h"
+#include "messages.h"
 
 #include "interpi.h"
 
@@ -50,7 +51,6 @@
  * external/imported variables
  *********************************************/
 
-extern STRING qSwhtout;
 extern INT rpt_cancelled;
 
 /*********************************************

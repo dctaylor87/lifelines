@@ -39,13 +39,8 @@
 #include "liflines.h"
 #include "llinesi.h"
 #include "feedback.h"
+#include "messages.h"
 
-
-extern STRING qSidpdel, qSidodel, qScfpdel, qScfodel, qScffdel, qScffdeld;
-extern STRING qSidfrmv, qSidfrsp, qSidfrch;
-extern STRING qSidcrmv, qSntchld, qSntprnt, qSidsrmv, qSidsrmf, qSnormls, qScfcrmv;
-extern STRING qSokcrmv, qSntsinf, qSntcinf, qScfsrmv, qSoksrmv, qSronlye, qSidcrmf;
-extern STRING qSparadox;
 
 /*=====================================================
  * choose_and_remove_family -- Choose & delete a family

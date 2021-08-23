@@ -34,8 +34,7 @@
 /* llstdlib.h pulls in standard.h, config.h, sys_inc.h */
 #include "btree.h"
 #include "version.h"
-
-extern STRING qSgen_bugreport;
+#include "messages.h"
 
 /*********************************************
  * required global variables

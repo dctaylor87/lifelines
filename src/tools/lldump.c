@@ -37,8 +37,7 @@
 #include "version.h"
 #include "toolsi.h"
 #include "errno.h"
-
-extern STRING qSgen_bugreport;
+#include "messages.h"
 
 /*********************************************
  * required global variables

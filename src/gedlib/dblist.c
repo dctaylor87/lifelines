@@ -15,13 +15,7 @@
 #include "mychar.h"
 #include "charprops.h"
 #include "xlat.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSdbrecstats;
-
+#include "messages.h"
 
 /*********************************************
  * local function prototypes

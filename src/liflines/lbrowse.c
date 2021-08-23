@@ -38,15 +38,13 @@
 #include "liflines.h"
 #include "feedback.h"
 #include "menuitem.h"
+#include "messages.h"
 
 #include "llinesi.h"
 #include "screen.h"
 
 #define VIEWABLE 13
 
-extern STRING qSlstnam, qSlstnon, qSlstwht, qSlstnad, qSlstpad, qSlstbot, qSlsttop;
-extern STRING qSasknam;
-extern STRING qSidplst, qSlstnew, qSmrkrec;
 extern INDISEQ current_seq;
 
 static void name_the_list(INDISEQ seq);

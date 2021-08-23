@@ -37,13 +37,9 @@
 #include "indiseq.h"
 #include "liflines.h"
 #include "feedback.h"
+#include "messages.h"
 
 #include "llinesi.h"
-
-extern STRING qSiredit, qSfredit, qScfpupt, qScffupt, qSidpedt, qSidspse, qSidfbys;
-extern STRING qSireditopt, qSfreditopt;
-extern STRING qSntprnt, qSgdpmod, qSgdfmod, qSronlye;
-extern STRING qSparadox;
 
 /*********************************************
  * local function definitions

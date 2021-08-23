@@ -43,14 +43,9 @@
 #include "zstr.h"
 #include "codesets.h"
 #include "arch.h"
+#include "messages.h"
 
 #include "interpi.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSaskstr,qSchoostrttl;
 
 /*********************************************
  * local function prototypes

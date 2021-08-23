@@ -48,16 +48,10 @@
 #include "codesets.h"
 #include "charprops.h"
 #include "listui.h"
-
+#include "messages.h"
 
 
 static INT LISTWIN_WIDTH=0;
-
- /*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSmn_quit;
 
 /*********************************************
  * local types

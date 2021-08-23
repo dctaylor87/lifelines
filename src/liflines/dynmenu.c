@@ -16,13 +16,7 @@
 #include "feedback.h"
 #include "gedcom.h"
 #include "menuitem.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSttlindibrw, qSttlfambrw, qSttl2perbrw, qSttl2fambrw;
-extern STRING qSttlauxbrw, qSttllstbrw;
+#include "messages.h"
 
 /*********************************************
  * local types

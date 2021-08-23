@@ -35,13 +35,7 @@
 #include "translat.h"
 #include "gedcom.h"
 #include "lloptions.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSdspa_mar,qSdspa_bir,qSdspa_chr,qSdspa_dea,qSdspa_bur;
-extern STRING qSunksps;
+#include "messages.h"
 
 /*********************************************
  * local variables

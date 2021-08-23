@@ -39,7 +39,7 @@
 #include "llinesi.h"
 #include "screen.h"
 #include "zstr.h"
-
+#include "messages.h"
 
 /*********************************************
  * local function prototypes
@@ -65,8 +65,6 @@ static void update_rec_count(INT pass, char ctype, STRING tag, INT count);
  *********************************************/
 
 extern STRING readpath_file;
-extern STRING qSoutarc, qSoutfin;
-extern STRING qSwhatgedc;
 
 /*********************************************
  * local variables

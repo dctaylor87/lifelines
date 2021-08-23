@@ -32,13 +32,7 @@
 #include "date.h"
 #include "datei.h"
 #include "zstr.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSdatetrl_bcA,qSdatetrl_bcB,qSdatetrl_bcC,qSdatetrl_bcD;
-extern STRING qSdatetrl_adA,qSdatetrl_adB,qSdatetrl_adC,qSdatetrl_adD;
+#include "messages.h"
 
 /*********************************************
  * local function prototypes

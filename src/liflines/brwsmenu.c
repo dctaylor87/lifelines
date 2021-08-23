@@ -15,6 +15,7 @@
 #include "feedback.h"
 #include "gedcom.h"
 #include "menuitem.h"
+#include "messages.h"
 
 /*********************************************
  * global/exported variables
@@ -24,13 +25,6 @@
 added on-the-fly to every menu page displayed */
 MenuItem g_MenuItemOther = { N_("?  Other menu choices"), 0, CMD_MENU_MORE, 0 };
 MenuItem g_MenuItemQuit = { N_("q  Return to main menu"), 0, CMD_QUIT, 0 };
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSttlindibrw, qSttlfambrw, qSttl2perbrw, qSttl2fambrw;
-extern STRING qSttlauxbrw, qSttllstbrw;
 
 /*********************************************
  * local types

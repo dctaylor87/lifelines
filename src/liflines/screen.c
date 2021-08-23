@@ -48,6 +48,7 @@
 #include "codesets.h"
 #include "charprops.h"
 #include "listui.h"
+#include "messages.h"
 
 #define LINESREQ 24
 #define COLSREQ  80
@@ -89,39 +90,8 @@ static UIWINDOW extra_menu_win=NULL;
 
 extern INT alldone;
 extern BOOLEAN progrunning;
-extern STRING empstr,empstr71,readpath,readpath_file,qSronlye,qSdataerr;
-extern STRING qSabverr,qSuoperr,qSbadttnum,qSnosuchtt,qSmouttt,qSmintt;
-extern STRING qSmtitle,qScright,qSdbname,qSdbimmut,qSdbrdonly,qSplschs;
-extern STRING qSmn_unkcmd,qSronlya,qSronlyr;
-extern STRING qSaskynq,qSaskynyn,qSaskyY;
-extern STRING qSmn_quit, qSmn_changedb, qSmn_ret, qSmn_exit;
-extern STRING qSmn_mmbrws,qSmn_mmsear,qSmn_mmadd,qSmn_mmdel;
-extern STRING qSmn_mmprpt,qSmn_mmrpt,qSmn_mmcset;
-extern STRING qSmn_mmtt,qSmn_mmut,qSmn_mmex;
-extern STRING qSmn_cstsort,qSmn_cspref,qSmn_cschar,qSmn_cslcas,qSmn_csucas;
-extern STRING qSmn_csrpt;
-extern STRING qSmn_csrpttl;
+extern STRING empstr,empstr71,readpath,readpath_file;
 extern STRING idsortttl,idloc;
-extern STRING qSmn_edttttl,qSmn_svttttl;
-extern STRING qSmn_utsave,qSmn_utread,qSmn_utgdchoo;
-extern STRING qSmn_utkey,qSmn_utkpers,qSmn_utdbstat,qSmn_utmemsta;
-extern STRING qSmn_utplaces,qSmn_utusropt;
-extern STRING qSmn_xxbsour, qSmn_xxbeven, qSmn_xxbothr, qSmn_xxasour, qSmn_xxesour;
-extern STRING qSmn_xxaeven, qSmn_xxeeven, qSmn_xxaothr, qSmn_xxeothr;
-extern STRING qSerrlist,qSdefttl,qSiddefpath;
-
-extern STRING qSmn_uttl;
-extern STRING qSmn_xttl;
-extern STRING qSmn_notimpl;
-extern STRING qShitkey;
-
-extern STRING qSmn_add_ttl,qSmn_add_indi,qSmn_add_fam,qSmn_add_chil,qSmn_add_spou;
-extern STRING qSmn_del_ttl,qSmn_del_chil,qSmn_del_spou;
-extern STRING qSmn_del_indi,qSmn_del_fam,qSmn_del_any;
-extern STRING qSmn_tt_ttl,qSmn_tt_edit,qSmn_tt_load,qSmn_tt_save,qSmn_tt_exp;
-extern STRING qSmn_tt_imp,qSmn_tt_dir;
-extern STRING qSmn_tt_edin,qSmn_tt_ined,qSmn_tt_gdin,qSmn_tt_ingd;
-extern STRING qSmn_tt_dsin,qSmn_tt_inds,qSmn_tt_inrp;
 
 
 /*********************************************

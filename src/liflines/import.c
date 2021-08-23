@@ -43,7 +43,7 @@
 #include "impfeed.h"
 #include "codesets.h"
 #include "zstr.h"
-
+#include "messages.h"
 
 
 /*********************************************
@@ -62,9 +62,6 @@ extern INT gd_fmax;	/* maximum family key number */
 extern INT gd_smax;	/* maximum source key number */
 extern INT gd_emax;	/* maximum event key number */
 extern INT gd_xmax;	/* maximum other key number */
-
-extern STRING qSgdnadd, qSdboldk, qSdbnewk;
-extern STRING qScfoldk, qSunsupuniv, qSproceed;
 
 /*********************************************
  * local types

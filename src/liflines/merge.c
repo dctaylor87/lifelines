@@ -40,15 +40,13 @@
 #include "liflines.h"
 #include "llinesi.h"
 #include "feedback.h"
+#include "messages.h"
 
 /*********************************************
  * external/imported variables
  *********************************************/
 
 extern BOOLEAN traditional;
-extern STRING qSiredit, qScfpmrg, qSnopmrg, qSnoqmrg, qSnoxmrg, qSnofmrg;
-extern STRING qSdhusb,  qSdwife,  qScffmrg, qSfredit, qSbadata, qSronlym;
-extern STRING qSmgsfam,qSmgconf;
 
 static void merge_fam_links(NODE, NODE, NODE, NODE, INT);
 static NODE remove_dupes(NODE, NODE);

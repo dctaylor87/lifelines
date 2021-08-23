@@ -33,8 +33,7 @@
 #include "llstdlib.h"
 #include "arch.h"
 #include "version.h"
-
-extern STRING qSgen_copyright, qSgen_warranty, qSgen_website;
+#include "messages.h"
 
 /*===============================================
  * get_lifelines_version -- Return version string

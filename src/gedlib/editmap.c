@@ -14,11 +14,10 @@
 #include "feedback.h"
 #include "gedcomi.h"
 #include "zstr.h"
+#include "messages.h"
 
 
 extern STRING map_keys[];
-extern STRING qScmperr,qSaredit,qSronlye,qSdataerr,qSbadttnum;
-extern STRING qSsepch;
 
 /*==============================================
  * edit_mapping -- Edit character mapping record

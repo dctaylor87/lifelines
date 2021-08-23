@@ -29,14 +29,12 @@
  *===========================================================*/
 
 #include "llstdlib.h"
+#include "messages.h"
 #include "ui.h"
 
 /*********************************************
  * external variables (no header)
  *********************************************/
-extern STRING qSdefttl,qSiddefpath;
-extern STRING qSaskynq,qSaskynyn,qSaskyY,qSaskint;
-extern STRING qSchlistx,qSvwlistx;
 extern INT screen_width;
 
 /*********************************************

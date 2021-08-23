@@ -32,30 +32,7 @@
 #include "date.h"
 #include "datei.h"
 #include "zstr.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSdatea_abtA,qSdatea_abtB,qSdatea_estA,qSdatea_estB,qSdatea_calA;
-extern STRING qSdatea_calB,qSdatep_fromA,qSdatep_fromB,qSdatep_toA,qSdatep_toB;
-extern STRING qSdatep_frtoA,qSdatep_frtoB,qSdater_befA,qSdater_befB,qSdater_aftA;
-extern STRING qSdater_aftB,qSdater_betA,qSdater_betB;
-extern STRING qScaljul,qScalheb,qScalfr,qScalrom;
-extern STRING qSmon_gj1A,qSmon_gj1B,qSmon_gj2A,qSmon_gj2B,qSmon_gj3A,qSmon_gj3B;
-extern STRING qSmon_gj4A,qSmon_gj4B,qSmon_gj5A,qSmon_gj5B,qSmon_gj6A,qSmon_gj6B;
-extern STRING qSmon_gj7A,qSmon_gj7B,qSmon_gj8A,qSmon_gj8B,qSmon_gj9A,qSmon_gj9B;
-extern STRING qSmon_gj10A,qSmon_gj10B,qSmon_gj11A,qSmon_gj11B,qSmon_gj12A,qSmon_gj12B;
-extern STRING qSmon_heb1A,qSmon_heb1B,qSmon_heb2A,qSmon_heb2B,qSmon_heb3A,qSmon_heb3B;
-extern STRING qSmon_heb4A,qSmon_heb4B,qSmon_heb5A,qSmon_heb5B,qSmon_heb6A,qSmon_heb6B;
-extern STRING qSmon_heb7A,qSmon_heb7B,qSmon_heb8A,qSmon_heb8B,qSmon_heb9A,qSmon_heb9B;
-extern STRING qSmon_heb10A,qSmon_heb10B,qSmon_heb11A,qSmon_heb11B;
-extern STRING qSmon_heb12A,qSmon_heb12B,qSmon_heb13A,qSmon_heb13B;
-extern STRING qSmon_fr1A,qSmon_fr1B,qSmon_fr2A,qSmon_fr2B,qSmon_fr3A,qSmon_fr3B;
-extern STRING qSmon_fr4A,qSmon_fr4B,qSmon_fr5A,qSmon_fr5B,qSmon_fr6A,qSmon_fr6B;
-extern STRING qSmon_fr7A,qSmon_fr7B,qSmon_fr8A,qSmon_fr8B,qSmon_fr9A,qSmon_fr9B;
-extern STRING qSmon_fr10A,qSmon_fr10B,qSmon_fr11A,qSmon_fr11B;
-extern STRING qSmon_fr12A,qSmon_fr12B,qSmon_fr13A,qSmon_fr13B;
+#include "messages.h"
 
 /*********************************************
  * local function prototypes

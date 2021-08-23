@@ -47,6 +47,7 @@
 #include "icvt.h"
 #include "date.h"
 #include "xlat.h"
+#include "messages.h"
 
 #ifndef INCLUDED_STDARG_H
 #include <stdarg.h>
@@ -80,8 +81,6 @@ BOOLEAN rpt_cancelled = FALSE;
 
 extern INT progerror;
 extern BOOLEAN progrunning, progparsing;
-extern STRING qSwhatrpt;
-extern STRING qSunsupuniv;
 
 /*********************************************
  * local function prototypes

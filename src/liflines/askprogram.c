@@ -17,7 +17,7 @@
 #include "liflines.h"
 #include "arch.h"
 #include "proptbls.h"
-
+#include "messages.h"
 
 /*********************************************
  * local function prototypes
@@ -28,9 +28,6 @@ static void add_program_props(TABLE fileprops);
 static void parse_programs(TABLE * fileprops);
 static int select_programs(const struct dirent *entry);
 static void set_programs_d0(TABLE * fileprops);
-
-/* messages used */
-extern STRING qSextchoos;
 
 /*=========================
  * The supported meta-tags.

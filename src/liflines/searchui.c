@@ -34,15 +34,7 @@
 #include "screen.h"
 #include "screeni.h"
 #include "cscurses.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSmn_ret;
-extern STRING qSmn_sea_ttl;
-extern STRING qSsts_sca_ful,qSsts_sca_fra,qSsts_sca_ref,qSsts_sca_non;
-extern STRING qSsts_sca_src;
+#include "messages.h"
 
 /*********************************************
  * local function prototypes

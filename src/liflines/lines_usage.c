@@ -7,8 +7,7 @@
 #include "llstdlib.h"
 /* llstdlib.h pulls in standard.h, config.h, sys_inc.h */
 #include "llinesi.h"
-
-extern STRING qSgen_bugreport, qSgen_copyright, qSgen_license;
+#include "messages.h"
 
 /*===============================================
  * print_lines_usage -- display program help/usage

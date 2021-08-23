@@ -38,17 +38,11 @@
 #include "arch.h"
 #include "lloptions.h"
 #include "interp.h"
+#include "messages.h"
 
 #include "llinesi.h"
 #include "screen.h" /* calling initscr, noecho, ... */
 
-
-/*********************************************
- * external variables (no header)
- *********************************************/
-
-extern STRING qSnodbse,qScrdbse;
-extern STRING qSidldir,qSidldrp,qSiddbse;
 
 /*********************************************
  * local function prototypes

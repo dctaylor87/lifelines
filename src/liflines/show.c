@@ -41,6 +41,7 @@
 #include "lloptions.h"
 #include "date.h"
 #include "zstr.h"
+#include "messages.h"
 
 #include "llinesi.h"
 #include "screen.h"
@@ -59,13 +60,6 @@ INT Scroll1=0;
 extern BOOLEAN opt_nocb;	/* TRUE to suppress display of cb. data */
 extern INT listbadkeys;
 extern char badkeylist[];
-extern STRING qSmisskeys;
-extern STRING qSdspl_indi,qSdspl_fath,qSdspl_moth,qSdspl_spouse,qSdspl_child;
-extern STRING qSdspa_resi,qSdspa_div;
-extern STRING qSdspa_mar,qSdspa_bir,qSdspa_chr,qSdspa_dea,qSdspa_bur,qSdspa_chbr;
-extern STRING qSdspl_mar,qSdspl_bir,qSdspl_chr,qSdspl_dea,qSdspl_bur;
-extern STRING qSdspa_eng,qSdspa_marc;
-extern STRING qSdspl_eng,qSdspl_marc;
 
 /*********************************************
  * local types

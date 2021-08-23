@@ -20,19 +20,13 @@
 #include "date.h"
 #include "xlat.h"
 #include "cache.h"
+#include "messages.h"
 
 /*********************************************
  * global/exported variables
  *********************************************/
 
 INT flineno = 0;
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSfileof, qSreremp, qSrerlng, qSrernlv, qSrerinc;
-extern STRING qSrerbln, qSrernwt, qSrerilv, qSrerwlv, qSunsupunix, qSunsupuniv;
 
 /*********************************************
  * local function prototypes, alphabetical

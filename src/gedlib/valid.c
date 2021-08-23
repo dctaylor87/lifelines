@@ -36,11 +36,7 @@
 #include "gedcom.h"
 #include "liflines.h"
 #include "lloptions.h"
-
-
-extern STRING qSbadind,qSbadfmc,qSbadfms,qSbadfam,qSbadhsb,qSbadwif,qSbadchl;
-extern STRING qSbademp,qSbadin0,qSbadfm0,qSbadsr0,qSbadev0,qSbadothr0;
-extern STRING qSbadmul,qSbadenm,qSbadparsex,qSbadirefn;
+#include "messages.h"
 
 /*===================================
  * valid_indi_tree -- Validate person tree

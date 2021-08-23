@@ -42,6 +42,7 @@
 #include "menuitem.h"
 #include "cache.h"
 #include "lloptions.h"
+#include "messages.h"
 
 #include "llinesi.h"
 #include "screen.h"
@@ -57,20 +58,6 @@ RECORD jumpnode; /* used by Ethel for direct navigation */
  *********************************************/
 
 extern BOOLEAN traditional;
-extern STRING qSnochil, qSnopers, qSnofam, qSnosour, qSidsour, qSnorec;
-extern STRING qSnoeven, qSideven, qSnoothe, qSidothe;
-extern STRING qSnonote, qSidnote, qSnoptr, qSidptr;
-extern STRING qSidsbrs, qSidsrmv, qSidfbrs, qSidcbrs, qSidcrmv, qSiscnew, qSissnew;
-extern STRING qSidfcop, qSntprnt, qSnofath, qSnomoth, qSnospse, qSnoysib, qSnoosib;
-extern STRING qSnoprnt, qSnohusb, qSnowife, qShasbth, qShasnei, qSnocinf, qSnocofp;
-extern STRING qSidpnxt, qSidnxt;
-extern STRING qSids2fm, qSidc2fm, qSidplst, qSidp2br, qScrtcfm, qScrtsfm;
-extern STRING qSronlye, qSronlya, qSidhbrs, qSidwbrs;
-extern STRING qSid1sbr, qSid2sbr, qSid1fbr, qSid2fbr, qSid1cbr, qSid2cbr;
-extern STRING qSid1hbr, qSid2hbr, qSid1wbr, qSid2wbr;
-extern STRING qSspover, qSidfamk, qSnohist, qSidhist, qShistclr;
-extern STRING qStag2lng2cnc,qSnewrecis,qSautoxref,qSeditcur,qSgotonew,qSstaycur;
-extern STRING qSbadhistcnt,qSbadhistcnt2,qSbadhistlen;
 
 /*********************************************
  * local enums & defines

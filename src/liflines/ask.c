@@ -42,7 +42,7 @@
 #include "liflines.h"
 #include "llinesi.h"
 #include "feedback.h"
-
+#include "messages.h"
 
 /*********************************************
  * external/imported variables
@@ -50,12 +50,6 @@
 
 extern INT listbadkeys;
 extern char badkeylist[];
-
-extern STRING qSntchld,qSntprnt,qSidfbrs,qSentnam;
-extern STRING qSnotonei,qSnotonex,qSifonei,qSifonex;
-extern STRING qSnofopn,qSidbrws,qSwhtfname,qSwhtfnameext;
-extern STRING qSnonamky,qSparadox,qSaskint,qSmisskeys,qSbadkeyptr;
-extern STRING qSfn2long,qSidkyrfn,qSduprfn;
 
 /*********************************************
  * local function prototypes

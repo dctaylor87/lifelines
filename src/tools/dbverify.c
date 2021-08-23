@@ -43,6 +43,7 @@
 #include "arch.h"
 #include "gedcom.h"
 #include "version.h"
+#include "messages.h"
 
 #ifndef INCLUDED_STDARG_H
 #include <stdarg.h>
@@ -55,7 +56,6 @@
  *********************************************/
 
 extern BTREE BTR;
-extern STRING qSmtitle, qSbaddb;
 
 /*********************************************
  * required global variables

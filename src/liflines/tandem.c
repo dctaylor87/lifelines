@@ -40,18 +40,10 @@
 #include "liflines.h"
 #include "feedback.h"
 #include "llinesi.h"
+#include "messages.h"
 
 #include "menuitem.h"
 #include "screen.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSnofath, qSnomoth, qSnospse, qSnocofp;
-extern STRING qStwohsb, qStwowif, qSidsbrs, qSidplst, qSidcbrs;
-extern STRING qSidhbrs, qSidwbrs, qSid1wbr, qSid2wbr;
-extern STRING qSnowife;
 
 /*********************************************
  * local function prototypes

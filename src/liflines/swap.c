@@ -38,16 +38,9 @@
 #include "indiseq.h"
 #include "liflines.h"
 #include "feedback.h"
+#include "messages.h"
 
 #include "llinesi.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-extern STRING qSidcswp, qSid1csw, qSid2csw, qSid1fsw, qSid2fsw, qSidfbys, qSntprnt;
-extern STRING qSless2c, qSokcswp, qSless2f, qSokfswp, qSidfswp, qSronlye;
-extern STRING qSidcrdr, qSntchld, qSparadox;
-extern STRING qScffswp, qScfchswp;
 
 /*********************************************
  * local function prototypes

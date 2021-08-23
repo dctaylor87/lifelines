@@ -24,18 +24,12 @@
 #include "lloptions.h"
 #include "date.h"
 #include "vtable.h"
+#include "messages.h"
 
 /*********************************************
  * global/exported variables
  *********************************************/
 
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qSfileof, qSreremp, qSrerlng, qSrernlv, qSrerinc;
-extern STRING qSrerbln, qSrernwt, qSrerilv, qSrerwlv, qSunsupunix, qSunsupuniv;
 
 /*********************************************
  * local types

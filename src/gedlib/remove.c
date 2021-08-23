@@ -37,12 +37,7 @@
 #include "indiseq.h"
 #include "liflines.h"
 #include "feedback.h"
-
-/*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING qShaslnk;
+#include "messages.h"
 
 /*********************************************
  * local function prototypes

@@ -37,8 +37,7 @@
 #include "gedcom.h"
 #include "feedback.h"
 #include "zstr.h"
-
-extern STRING qSaredit,qSdataerr,qSsepch,qSronly;
+#include "messages.h"
 
 static STRING trans_edin(STRING input, INT len);
 static STRING trans_ined(STRING input, INT len);

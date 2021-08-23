@@ -41,14 +41,9 @@
 #include "llinesi.h"
 #include "feedback.h"
 #include "lloptions.h"
-
+#include "messages.h"
 
 extern BOOLEAN traditional;
-extern STRING qSidcfam, qSfredit, qScffadd, qSidprnt, qSunksex, qSidsbln, qSmklast;
-extern STRING qSireditopt, qSfreditopt;
-extern STRING qSidsadd, qSidsinf, qSkchild, qSiscinf, qSnotopp, qSidsps1, qSidsps2;
-extern STRING qSnosex,  qShashsb, qShaswif, qSidchld, qSgdfadd, qScfcadd, qSiredit;
-extern STRING qScfpadd, qScfsadd, qSgdpadd, qSgdcadd, qSgdsadd, qSronlya, qSronlye;
 
 /*********************************************
  * local function prototypes

@@ -32,9 +32,7 @@
  *===========================================================*/
 
 #include "llstdlib.h"
-
-#define SS (STRING)
-#define ZST STRING
+#include "messages.h"
 
 /* strings used to clear the screen */
 STRING empstr = SS "                                                ";
