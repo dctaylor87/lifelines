@@ -88,6 +88,17 @@ rptui_ask_for_indi_list (STRING ttl, BOOLEAN reask)
 	end_rptui();
 	return seq;
 }
+
+RECORD
+rptui_ask_for_indi (STRING ttl, ASK1Q ask1)
+{
+	RECORD rec;
+	begin_rptui();
+	rec = ask_for_indi(ttl,ask1);
+	end_rptui();
+	return rec;
+}
+
 STRING
 rptui_ask_for_indi_key (STRING ttl, ASK1Q ask1)
 {

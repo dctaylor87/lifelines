@@ -22,15 +22,15 @@ llines_SOURCES = add.c advedit.c ask.c askgedc.c askprogram.c \
 llexec_SOURCES = ask.c error.c lines_usage.c llexec.c selectdb.c miscutls.c llexec.h
 
 # extra stuff for lines
-llines_LDADD = ../interp/libinterp.a ../gedlib/libgedcom.a \
+llines_LDADD = ../interp/libinterp.a @LIBPYLLINES@ ../gedlib/libgedcom.a \
 	../btree/libbtree.a ../stdlib/libstdlib.a ../arch/libarch.a \
-	@LIBINTL@ @LIBICONV@
+	@PYTHON_LIBS@ @LIBINTL@ @LIBICONV@
 
 # extra stuff for llexec
-llexec_LDADD = ../interp/libinterp.a ../gedlib/libgedcom.a \
+llexec_LDADD = ../interp/libinterp.a @LIBPYLLINES@ ../gedlib/libgedcom.a \
 	../btree/libbtree.a ../stdlib/libstdlib.a ../arch/libarch.a \
 	../ui/libuicli.a \
-	@LIBINTL@ @LIBICONV@
+	@PYTHON_LIBS@ @LIBINTL@ @LIBICONV@
 
 # $(top_builddir)        for config.h
 # $(top_srcdir)/src/hdrs for headers
@@ -53,6 +53,9 @@ EXTRA_DIST = llinesi.h screeni.h
 
 ../gedlib/libgedcom.a :
 	$(MAKE) -C ../gedlib libgedcom.a
+
+../python/libpyllines.a :
+	$(MAKE) -C ../python libpyllines.a
 
 ../stdlib/libstdlib.a :
 	$(MAKE) -C ../stdlib libstdlib.a

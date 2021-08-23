@@ -21,6 +21,37 @@
 
 #define MAX_NAME_LENGTH	68 /* see comment in llrpt_fullname (interp/builtin.c) */
 
+/* forward references */
+
+static PyObject *llpy_name (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_fullname (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_surname (PyObject *self, PyObject *args);
+static PyObject *llpy_givens (PyObject *self, PyObject *args);
+static PyObject *llpy_trimname (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_birth (PyObject *self, PyObject *args);
+static PyObject *llpy_death (PyObject *self, PyObject *args);
+static PyObject *llpy_burial (PyObject *self, PyObject *args);
+static PyObject *llpy_father (PyObject *self, PyObject *args);
+static PyObject *llpy_mother (PyObject *self, PyObject *args);
+static PyObject *llpy_nextsib (PyObject *self, PyObject *args);
+static PyObject *llpy_prevsib (PyObject *self, PyObject *args);
+static PyObject *llpy_sex (PyObject *self, PyObject *args);
+static PyObject *llpy_male (PyObject *self, PyObject *args);
+static PyObject *llpy_female (PyObject *self, PyObject *args);
+static PyObject *llpy_pn (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_nspouses (PyObject *self, PyObject *args);
+static PyObject *llpy_nfamilies (PyObject *self, PyObject *args);
+static PyObject *llpy_parents (PyObject *self, PyObject *args);
+
+static PyObject *llpy_title (PyObject *self, PyObject *args);
+
+static PyObject *llpy_soundex (PyObject *self, PyObject *args);
+
+static PyObject *llpy_nextindi (PyObject *self, PyObject *args);
+static PyObject *llpy_previndi (PyObject *self, PyObject *args);
+
+static void llpy_individual_dealloc (PyObject *self);
+
 /* NOTE on the function header comments that follow:
 
    The name shown is the C name.  The Python name, unless noted
@@ -33,9 +64,9 @@
    '1 NAME' line.  The slashes are removed.  If CAPS (optional) is
    True (default), the surname is made all capitals.  */
 
-PyObject *llpy_name (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_name (PyObject *self, PyObject *args, PyObject *kw)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   static char *keywords[] = { "caps", NULL };
   int caps = 1;
   NODE node_name = 0;
@@ -46,7 +77,7 @@ PyObject *llpy_name (PyObject *self, PyObject *args, PyObject *kw)
        Python.  Do not currently know how to handle that.  XXX */
     return NULL;
 
-  if (! (node_name = NAME (nztop (indi->lli_record))))
+  if (! (node_name = NAME (nztop (indi->lri_record))))
     {
       if (getlloptint("RequireNames", 0))
 	/* XXX figure out how to issue exceptions XXX _("name: person does not have a name") */
@@ -71,9 +102,9 @@ PyObject *llpy_name (PyObject *self, PyObject *args, PyObject *kw)
    MAX_LENGTH specifies the maximum length that can be used to show
    the name.  Default: 0 (no maximum) */
 
-PyObject *llpy_fullname (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_fullname (PyObject *self, PyObject *args, PyObject *kw)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   static char *keywords[] = { "upcase", "keep_order", "max_length", NULL };
   int upcase = 0;
   int keep_order = 1;
@@ -84,7 +115,7 @@ PyObject *llpy_fullname (PyObject *self, PyObject *args, PyObject *kw)
   if (! PyArg_ParseTupleAndKeywords (args, kw, "|ppI", keywords, &upcase, &keep_order, &max_length))
     return NULL;
 
-  if (! (node_name = NAME (nztop (indi->lli_record))) || ! nval(node_name))
+  if (! (node_name = NAME (nztop (indi->lri_record))) || ! nval(node_name))
     {
       if (getlloptint("RequireNames", 0))
 	/* XXX figure out how to issue exceptions XXX _("fullname: person does not have a name") */
@@ -103,19 +134,19 @@ PyObject *llpy_fullname (PyObject *self, PyObject *args, PyObject *kw)
    Returns the surname as found in the first '1 NAME' line.  Slashes
    are removed. */
 
-PyObject *llpy_surname (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_surname (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   NODE node_name = 0;
-  STRING name = 0;
+  CNSTRING name = 0;
 
-  node_name = nztop (indi->lli_record);
+  node_name = nztop (indi->lri_record);
   if (! (node_name = NAME(node_name)) || ! nval(node_name))
     {
       if (getlloptint ("RequireNames", 0))
 	/* XXX figure out how to issue exceptions XXX _("surname: person does not have a name" */
 	return NULL;
-      return None;		/* XXX should it be an empty string instead? */
+      Py_RETURN_NONE;		/* XXX should it be an empty string instead? */
     }
   name = getasurname(nval(node_name));
   return (Py_BuildValue ("s", name));
@@ -126,12 +157,12 @@ PyObject *llpy_surname (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    Returns the given names of the person in the same order and format
    as found in the first '1 NAME' line of the record.  */
 
-PyObject *llpy_givens (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_givens (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   NODE name = 0;
 
-  if (!(name = NAME(nztop(indi->lli_record))) || !nval(name))
+  if (!(name = NAME(nztop (indi->lri_record))) || !nval(name))
     {
       if (getlloptint("RequireNames", 0))
 	{
@@ -139,7 +170,6 @@ PyObject *llpy_givens (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 	  return NULL;
 	}
       Py_RETURN_NONE;
-      
     }
   return (Py_BuildValue ("s", givens(nval(name))));
 }
@@ -148,9 +178,9 @@ PyObject *llpy_givens (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
    Returns the name trimmed to MAX_LENGTH.  */
 
-PyObject *llpy_trimname (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_trimname (PyObject *self, PyObject *args, PyObject *kw)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   static char *keywords[] = { "max_length", NULL };
   int max_length;
 
@@ -166,14 +196,24 @@ PyObject *llpy_trimname (PyObject *self, PyObject *args, PyObject *kw)
    Returns the first birth event of INDI; None if no event is
    found.  */
 
-PyObject *llpy_birth (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_birth (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  NODE indi = nztop (self->lli_record);
-  NODE birth;
-
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop(indi->lri_record);
+  NODE birth = BIRT(indi_node);
+  LLINES_PY_EVEN_NODE *event;
   
-  abort ();
+  if (! birth)
+    Py_RETURN_NONE;
+
+  event = PyObject_New(LLINES_PY_EVEN_NODE, &llines_event_type);
+  if (! event)
+    return NULL;		/* PyObject_New failed */
+
+  event->lne_node = birth;
+  event->lne_type = LLINES_TYPE_EVEN;
+
+  return (PyObject *)event;
 }
 
 /* llpy_death (INDI) --> EVENT
@@ -181,10 +221,24 @@ PyObject *llpy_birth (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    Returns the first death event of INDI; None if no event is
    found.  */
 
-PyObject *llpy_death (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_death (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop(indi->lri_record);
+  NODE death = DEAT(indi_node);
+  LLINES_PY_EVEN_NODE *event;
+  
+  if (! death)
+    Py_RETURN_NONE;
+
+  event = PyObject_New(LLINES_PY_EVEN_NODE, &llines_event_type);
+  if (! event)
+    return NULL;		/* PyObject_New failed */
+
+  event->lne_node = death;
+  event->lne_type = LLINES_TYPE_EVEN;
+
+  return (PyObject *)event;
 }
 
 /* llpy_burial (INDI) --> EVENT
@@ -192,10 +246,24 @@ PyObject *llpy_death (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    Returns the first burial event of INDI; None if no event is
    found.  */
 
-PyObject *llpy_burial (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_burial (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop(indi->lri_record);
+  NODE burial = BURI(indi_node);
+  LLINES_PY_EVEN_NODE *event;
+  
+  if (! burial)
+    Py_RETURN_NONE;
+
+  event = PyObject_New(LLINES_PY_EVEN_NODE, &llines_event_type);
+  if (! event)
+    return NULL;		/* PyObject_New failed */
+
+  event->lne_node = burial;
+  event->lne_type = LLINES_TYPE_EVEN;
+
+  return (PyObject *)event;
 }
 
 /* llpy_father (INDI) --> INDI
@@ -203,10 +271,20 @@ PyObject *llpy_burial (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    Returns the first father of INDI; None if no person in the
    role.  */
 
-PyObject *llpy_father (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_father (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = indi_to_fath(nztop (indi->lri_record));
+  LLINES_PY_INDI_RECORD *father;
+
+  if (! indi_node)
+    Py_RETURN_NONE;		/* no person in the role */
+
+  father = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  father->lri_record = node_to_record (indi_node);
+  father->lri_type = LLINES_TYPE_INDI;
+
+  return (PyObject *)father;
 }
 
 /* llpy_mother (INDI) --> INDI
@@ -214,10 +292,20 @@ PyObject *llpy_father (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    Returns the first mother of INDI; None if no person in the
    role.  */
 
-PyObject *llpy_mother (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_mother (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = indi_to_moth(nztop (indi->lri_record));
+  LLINES_PY_INDI_RECORD *mother;
+
+  if (! indi_node)
+    Py_RETURN_NONE;		/* no person in the role */
+
+  mother = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  mother->lri_record = node_to_record (indi_node);
+  mother->lri_type = LLINES_TYPE_INDI;
+
+  return (PyObject *)mother;
 }
 
 /* llpy_nextsib (INDI) --> INDI
@@ -225,10 +313,20 @@ PyObject *llpy_mother (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    Returns the next (younger) sibling of INDI; None if no person in
    the role.  */
 
-PyObject *llpy_nextsib (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_nextsib (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = indi_to_next_sib_old (nztop (indi->lri_record));
+  LLINES_PY_INDI_RECORD *sibling;
+
+  if (! indi_node)
+    Py_RETURN_NONE;		/* no person in the role */
+
+  sibling = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  sibling->lri_record = node_to_record (indi_node);
+  sibling->lri_type = LLINES_TYPE_INDI;
+
+  return (PyObject *)sibling;
 }
 
 /* llpy_prevsib (INDI) --> INDI
@@ -236,20 +334,30 @@ PyObject *llpy_nextsib (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    Returns the previous (older) sibling of INDI; None if no person in
    the role.  */
 
-PyObject *llpy_prevsib (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_prevsib (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = indi_to_prev_sib_old (nztop (indi->lri_record));
+  LLINES_PY_INDI_RECORD *sibling;
+
+  if (! indi_node)
+    Py_RETURN_NONE;		/* no person in the role */
+
+  sibling = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  sibling->lri_record = node_to_record (indi_node);
+  sibling->lri_type = LLINES_TYPE_INDI;
+
+  return (PyObject *)sibling;
 }
 
 /* llpy_sex (INDI) --> STRING
 
    Returns the sex of INDI (M, F, or U).  */
 
-PyObject *llpy_sex (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_sex (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  NODE indi_node = nztop (indi->lli_record);
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop (indi->lri_record);
   char *sex;
 
   if (SEX(indi_node) == SEX_FEMALE)
@@ -266,11 +374,12 @@ PyObject *llpy_sex (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
    Returns True if male, False otherwise.  */
 
-PyObject *llpy_male (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_male (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  NODE indi_node = nztop (indi->lli_record);
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop (indi->lri_record);
   BOOLEAN bool = (SEX(indi_node) == SEX_MALE);
+
   if (bool)
     Py_RETURN_TRUE;
   else
@@ -281,11 +390,12 @@ PyObject *llpy_male (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
    Returns True if Female; False otherwise.  */
 
-PyObject *llpy_female (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_female (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  NODE indi_node = nztop (indi->lli_record);
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop (indi->lri_record);
   BOOLEAN bool = (SEX(indi_node) == SEX_FEMALE);
+
   if (bool)
     Py_RETURN_TRUE;
   else
@@ -294,9 +404,9 @@ PyObject *llpy_female (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 /* llpy_pn */
 
-PyObject *llpy_pn (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_pn (PyObject *self, PyObject *args, PyObject *kw)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   static char *keywords[] = { "which", NULL };
   int which;
 
@@ -310,9 +420,9 @@ PyObject *llpy_pn (PyObject *self, PyObject *args, PyObject *kw)
 
    Returns the number of spouses of INDI.  */
 
-PyObject *llpy_nspouses (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_nspouses (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   abort ();
 }
 
@@ -320,38 +430,55 @@ PyObject *llpy_nspouses (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
    Returns the number of families (as spouse/parent) of INDI.  */
 
-PyObject *llpy_nfamilies (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_nfamilies (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  RECORD indi_record = indi->lli_record;
-  int count = length_nodes (FAMS (nztop (indi_record)));
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop (indi->lri_record);
+  int count = length_nodes (FAMS (indi_node));
 
   return (Py_BuildValue ("I", count));
 }
 
 /* llpy_parents */
 
-PyObject *llpy_parents (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_parents (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop (indi->lri_record);
+  NODE fam_node = indi_to_famc (indi_node);
+  LLINES_PY_FAM_RECORD *fam;
+
+  if (! fam_node)
+    Py_RETURN_NONE;		/* parents are unknown */
+
+  fam = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
+  fam->lrf_type = LLINES_TYPE_FAM;
+  fam->lrf_record = node_to_record (fam_node);
+
+  return (PyObject *)fam;
 }
 
 /* llpy_title (INDI) --> STRING
 
    Returns the first '1 TITL' line in the record.  */
 
-PyObject *llpy_title (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_title (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop (indi->lri_record);
+  NODE title = find_tag (nchild (indi_node), "TITL");
+
+  if (! title)
+    Py_RETURN_NONE;		/* no title found */
+
+  return Py_BuildValue ("s", nval(title));
 }
 
 /* llpy_key */
 
 PyObject *llpy_key (PyObject *self, PyObject *args, PyObject *kw)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   static char *keywords[] = { "num_only", NULL };
   int num_only = 0;
 
@@ -365,17 +492,29 @@ PyObject *llpy_key (PyObject *self, PyObject *args, PyObject *kw)
 
    Returns the SOUNDEX code of INDI.  */
 
-PyObject *llpy_soundex (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_soundex (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE name = 0;
+
+  if (!(name = NAME(nztop (indi->lri_record))) || !nval(name))
+    {
+      if (getlloptint("RequireNames", 0))
+	{
+	  /* XXX throw error _("soundex: person does not have a name") XXX */
+	  return NULL;
+	}
+      Py_RETURN_NONE;
+    }
+  /* XXX does Py_BuildValue copy the string?  If not, we need to do so! XXX */
+  return Py_BuildValue ("s", trad_soundex (getsxsurname (nval (name))));
 }
 
 /* llpy_root */
 
 PyObject *llpy_root (PyObject *self, PyObject *args)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   abort ();
 }
 
@@ -383,20 +522,109 @@ PyObject *llpy_root (PyObject *self, PyObject *args)
 
    Returns the next INDI in the database (in key order).  */
 
-PyObject *llpy_nextindi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_nextindi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop (indi->lri_record);
+  STRING key = indi_to_key(indi_node);
+  char *endptr = 0;
+  long key_val;
+
+  errno = 0;
+  key_val = strtol (&key[1], &endptr, 10);
+  if (errno != 0)
+    {
+      /* XXX error occurred -- figure out how to raise an exception XXX */
+      return NULL;
+    }
+  if (*endptr != '@')
+    {
+      /* XXX should not happen -- raise an error XXX */
+      return NULL;
+    }
+  /* XXX xref_{next|prev}{i,f,s,e,x,} ultimately casts its argument to
+     an INT32, so even if you are on a system where INT is INT64
+     (e.g., x86_64), you are limited to INT_MAX keys -- despite the
+     manual's assertion that keys can be as large as 9,999,999,999.
+     Of course, iterating through that many keys would be painful...
+     But, still...  Also, shouldn't the key value be *UNSIGNED*?  Keys
+     are never negative.  Zero is reserved for *NOT FOUND / DOES NOT
+     EXIST*.  XXX */
+  key_val = (long)xref_nexti ((INT)key_val);
+
+  if (key_val == 0)
+    Py_RETURN_NONE;		/* no more -- we have reached the end */
+
+  indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  indi->lri_type = LLINES_TYPE_INDI;
+  indi->lri_record = keynum_to_irecord (key_val);
+  return (PyObject *)indi;
 }
 
 /* llpy_previndi (INDI) --> INDI
 
    Returns the previous INDI in the database (in key order).  */
 
-PyObject *llpy_previndi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_previndi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_INDI_NODE *indi = (LLINES_PY_INDI_NODE *) self;
-  abort ();
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi_node = nztop (indi->lri_record);
+  STRING key = indi_to_key(indi_node);
+  char *endptr = 0;
+  long key_val;
+
+  errno = 0;
+  key_val = strtol (&key[1], &endptr, 10);
+  if (errno != 0)
+    {
+      /* XXX error occurred -- figure out how to raise an exception XXX */
+      return NULL;
+    }
+  if (*endptr != '@')
+    {
+      /* XXX should not happen -- raise an error XXX */
+      return NULL;
+    }
+  /* XXX xref_{next|prev}{i,f,s,e,x,} ultimately casts its argument to
+     an INT32, so even if you are on a system where INT is INT64
+     (e.g., x86_64), you are limited to INT_MAX keys -- despite the
+     manual's assertion that keys can be as large as 9,999,999,999.
+     Of course, iterating through that many keys would be painful...
+     But, still...  Also, shouldn't the key value be *UNSIGNED*?  Keys
+     are never negative.  Zero is reserved for *NOT FOUND / DOES NOT
+     EXIST*.  XXX */
+  key_val = (long)xref_previ ((INT)key_val);
+
+  if (key_val == 0)
+    Py_RETURN_NONE;		/* no more -- we have reached the end */
+
+  indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  indi->lri_type = LLINES_TYPE_INDI;
+  indi->lri_record = keynum_to_irecord (key_val);
+  return (PyObject *)indi;
+}
+
+static void llpy_individual_dealloc (PyObject *self)
+{
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  release_record (indi->lri_record);
+  indi->lri_record = 0;
+  indi->lri_type = 0;
+  Py_TYPE(self)->tp_free (self);
+  Py_DECREF (Py_TYPE(self));
+}
+
+static PyObject *llpy_individual_iter(PyObject *self)
+{
+  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+
+  if (! iter)
+    return NULL;
+
+  iter->li_current = 0;
+  iter->li_type = LLINES_TYPE_INDI;
+
+  return (PyObject *)iter;
 }
 
 static struct PyMethodDef Lifelines_Person_Methods[] =
@@ -452,6 +680,10 @@ same order and format as found in the first '1 NAME' line of the record." },
 If boolean NUM_ONLY is True (default: False), omit the leading letter." },
    { "soundex",		(PyCFunction)llpy_soundex, METH_NOARGS,
      "(INDI).soundex(void) -> STRING: SOUNDEX code of INDI" },
+   { "nextindi",	(PyCFunction)llpy_nextindi, METH_NOARGS,
+     "(INDI).nextindi(void) -> INDI: Returns next INDI (in database order)." },
+   { "previndi",	(PyCFunction)llpy_previndi, METH_NOARGS,
+     "(INDI).previndi(void) -> INDI: Returns previous INDI (in database order)." },
 
    /* User Interaction Functions */
 
@@ -471,9 +703,11 @@ PyTypeObject llines_individual_type =
    PyVarObject_HEAD_INIT(NULL, 0)
    .tp_name = "llines.Individual",
    .tp_doc = "Lifelines GEDCOM Individual Record",
-   .tp_basicsize = sizeof (LLINES_PY_INDI_NODE),
+   .tp_basicsize = sizeof (LLINES_PY_INDI_RECORD),
    .tp_itemsize = 0,
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
+   .tp_dealloc = llpy_individual_dealloc,
+   .tp_iter = llpy_individual_iter,
    .tp_methods = Lifelines_Person_Methods,
  };

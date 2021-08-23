@@ -11,27 +11,16 @@
 #include "database.h"
 #include "family.h"
 #include "person.h"
+#include "types.h"
 
 static struct PyMethodDef LifelinesMethods[] =
   {
    /* Person Functions -- moved to Lifelines_Person_Methods */
 
-   { "parents",		llpy_parents, METH_VARARGS,
-     "doc string" },
    { "key",		(PyCFunction)llpy_key, METH_VARARGS | METH_KEYWORDS,
      "key(INDI) --> : internal key" },
    { "inode",		llpy_inode, METH_VARARGS,
      "Root GEDCOM node of INDI" },
-   { "firstindi",	(PyCFunction)llpy_firstindi, METH_NOARGS,
-     "firstindi(void) -> INDI: First person in database in key order" },
-   { "lastindi",	(PyCFunction)llpy_lastindi, METH_NOARGS,
-     "lastindi(void) -> INDI: Last person in database in key order" },
-   { "nextindi",	(PyCFunction)llpy_nextindi, METH_VARARGS | METH_KEYWORDS,
-     "nextindi(INDI) -> INDI: next person in database after INDI (in key order)" },
-   { "previndi",	(PyCFunction)llpy_previndi, METH_VARARGS | METH_KEYWORDS,
-     "previndi(INDI) -> INDI: previous person in database after INDI (in key order)" },
-   { "spouseset",	llpy_spouseset, METH_VARARGS,
-     "doc string" },
 
    /* Family Functions -- moved to Lifelines_Family_Methods */
 
@@ -42,24 +31,7 @@ static struct PyMethodDef LifelinesMethods[] =
    { "fam",		llpy_fam, METH_VARARGS,
      "doc string" },
 
-   /* GEDCOM Node Functions */
-
-   { "xref",		llpy_xref, METH_VARARGS,
-     "doc string" },
-   { "tag",		llpy_tag, METH_VARARGS,
-     "doc string" },
-   { "value",		llpy_value, METH_VARARGS,
-     "doc string" },
-   { "parent",		llpy_parent, METH_VARARGS,
-     "doc string" },
-   { "child",		llpy_child, METH_VARARGS,
-     "doc string" },
-   { "sibling",		llpy_sibling, METH_VARARGS,
-     "doc string" },
-   { "savenode",	llpy_savenode, METH_VARARGS,
-     "doc string" },
-   { "level",		llpy_level, METH_VARARGS,
-     "doc string" },
+   /* GEDCOM Node Functions -- now in nodes.c */
 
    /* Event and Date Functions */
 
@@ -195,31 +167,95 @@ through user interface." },
    { NULL, 0, 0, NULL }		/* sentinel */
 };
 
-static struct PyMethodDef Lifelines_Source_Methods[] =
-  {
-
-   { NULL, 0, 0, NULL }		/* sentinel */
-  };
-
-static struct PyMethodDef Lifelines_Other_Methods[] =
-  {
-
-   { NULL, 0, 0, NULL }		/* sentinel */
-  };
-
-static PyModuleDef LifelinesModule =
+static PyModuleDef lifelines_module =
   {
    PyModuleDef_HEAD_INIT,
    .m_name = "llines",
    .m_doc = "Lifelines extension module",
-   .m_size = -1,		/* XXX for now -- might want to revisit this XXX */
+   .m_size = -1,
    .m_methods = LifelinesMethods,
   };
 
-static PyObject *
-PyInit_llines (void)
+PyMODINIT_FUNC
+PyInit_llines(void)
 {
-  return PyModule_Create (&LifelinesModule);
+  PyObject *module;
+
+  if (PyType_Ready(&llines_node_type) < 0)
+    return NULL;
+
+  if (PyType_Ready(&llines_family_type) < 0)
+    return NULL;
+
+  if (PyType_Ready(&llines_individual_type) < 0)
+    return NULL;
+
+  if (PyType_Ready(&llines_event_type) < 0)
+    return NULL;
+
+  if (PyType_Ready(&llines_source_type) < 0)
+    return NULL;
+
+  if (PyType_Ready(&llines_other_type) < 0)
+    return NULL;
+
+  if (PyType_Ready(&llines_record_type) < 0)
+    return NULL;
+
+  module = PyModule_Create (&lifelines_module);
+  if (module == NULL)
+    return NULL;
+
+  Py_INCREF (&llines_node_type);
+  if (PyModule_AddObject (module, "Node", (PyObject *) &llines_node_type) < 0) {
+    Py_DECREF (&llines_node_type);
+    Py_DECREF (module);
+    return NULL;
+  }
+
+  Py_INCREF (&llines_family_type);
+  if (PyModule_AddObject (module, "Family", (PyObject *) &llines_family_type) < 0) {
+    Py_DECREF (&llines_family_type);
+    Py_DECREF (module);
+    return NULL;
+  }
+
+  Py_INCREF (&llines_individual_type);
+  if (PyModule_AddObject (module, "Individual", (PyObject *) &llines_individual_type) < 0) {
+    Py_DECREF (&llines_individual_type);
+    Py_DECREF (module);
+    return NULL;
+  }
+
+  Py_INCREF (&llines_event_type);
+  if (PyModule_AddObject (module, "Event", (PyObject *) &llines_event_type) < 0) {
+    Py_DECREF (&llines_event_type);
+    Py_DECREF (module);
+    return NULL;
+  }
+
+  Py_INCREF (&llines_source_type);
+  if (PyModule_AddObject (module, "Source", (PyObject *) &llines_source_type) < 0) {
+    Py_DECREF (&llines_source_type);
+    Py_DECREF (module);
+    return NULL;
+  }
+
+  Py_INCREF (&llines_other_type);
+  if (PyModule_AddObject (module, "Other", (PyObject *) &llines_other_type) < 0) {
+    Py_DECREF (&llines_other_type);
+    Py_DECREF (module);
+    return NULL;
+  }
+
+  Py_INCREF (&llines_record_type);
+  if (PyModule_AddObject (module, "Record", (PyObject *) &llines_record_type) < 0) {
+    Py_DECREF (&llines_record_type);
+    Py_DECREF (module);
+    return NULL;
+  }
+
+  return (module);
 }
 
 /* XXX when Python support is compiled in, this routine must be called

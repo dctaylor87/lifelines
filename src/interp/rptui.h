@@ -1,5 +1,6 @@
 RECORD rptui_ask_for_fam(STRING s1, STRING s2);
 INDISEQ rptui_ask_for_indi_list(STRING ttl, BOOLEAN reask);
+RECORD rptui_ask_for_indi (STRING ttl, ASK1Q ask1);
 STRING rptui_ask_for_indi_key(STRING ttl, ASK1Q ask1);
 BOOLEAN rptui_ask_for_int(STRING, INT *);
 FILE * rptui_ask_for_output_file(STRING mode, STRING ttl, STRING *pfname

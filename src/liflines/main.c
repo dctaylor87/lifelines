@@ -45,6 +45,7 @@
 #include "lloptions.h"
 #include "interp.h"
 #include "version.h"
+#include "messages.h"
 
 #include "llinesi.h"
 #include "screen.h" /* calling initscr, noecho, ... */
@@ -58,13 +59,13 @@ extern int yydebug;
 #endif /* HAVE_GETOPT_H */
 #endif /* HAVE_GETOPT */
 
+#if defined(HAVE_PYTHON)
+#include "llpy-externs.h"
+#endif
+
 /*********************************************
  * external variables (no header)
  *********************************************/
-
-extern STRING qSmtitle,qSnorwandro,qSnofandl,qSbdlkar;
-extern STRING qSusgFinnOpt,qSusgFinnAlw,qSusgNorm;
-extern STRING qSbaddb;
 
 extern INT csz_indi;
 extern INT csz_fam;
@@ -407,6 +408,10 @@ prompt_for_db:
 		release_table(exargs);
 		exargs = 0;
 	}
+#if defined(HAVE_PYTHON)
+	llpy_init ();
+#endif
+
 	if (exprogs) {
 		BOOLEAN picklist = FALSE;
 		BOOLEAN timing = FALSE;
