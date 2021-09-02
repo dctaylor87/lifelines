@@ -12,6 +12,7 @@
 /* forward references */
 
 static void llpy_iter_dealloc (PyObject *self);
+static PyObject *llpy_iter_iter (PyObject *self);
 static PyObject *llpy_iter_iternext (PyObject *self);
 
 /* start of code */
@@ -46,9 +47,8 @@ static PyObject *llpy_iter_iternext (PyObject *self)
     case LLINES_TYPE_OTHR:
       iter->li_current = xref_next (iter->li_type, iter->li_current);
       break;
-    default:
-      /* XXX internal error -- figure out how to raise exception XXX */
-      abort ();
+    default:      
+      Py_UNREACHABLE ();	/* internal error */
     }
   if (iter->li_current == 0)
     {
@@ -113,11 +113,11 @@ static PyObject *llpy_iter_iternext (PyObject *self)
 	return (PyObject *)obj;
       }
     default:
-      /* XXX something mighty weird is happening. Not only was there
+      /* Something mighty weird is happening. Not only was there
 	 an internal error for us to be called with an unexpected
 	 type, but it was not caught by the previous switch
-	 statment.  XXX */
-      abort ();
+	 statment.  */
+      Py_UNREACHABLE ();
     }
 }
 

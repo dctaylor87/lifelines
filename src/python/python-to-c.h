@@ -41,8 +41,6 @@ PyObject *llpy_getindiset (PyObject *self, PyObject *args);
 PyObject *llpy_chooseindi (PyObject *self, PyObject *args);
 PyObject *llpy_choosesubset (PyObject *self, PyObject *args);
 
-PyObject *llpy_choosechild (PyObject *self, PyObject *args);
-PyObject *llpy_choosefam (PyObject *self, PyObject *args);
 PyObject *llpy_choosespouse (PyObject *self, PyObject *args);
 
 PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw);
@@ -55,12 +53,12 @@ PyObject *llpy_indiset (PyObject *self, PyObject *args);
 PyObject *llpy_parentset (PyObject *self, PyObject *args);
 PyObject *llpy_childset (PyObject *self, PyObject *args);
 PyObject *llpy_spouseset (PyObject *self, PyObject *args);
-PyObject *llpy_siblingset (PyObject *self, PyObject *args);
 PyObject *llpy_ancestorset (PyObject *self, PyObject *args);
 PyObject *llpy_descendentset (PyObject *self, PyObject *args);
 PyObject *llpy_descendentset (PyObject *self, PyObject *args);
 PyObject *llpy_getindiset (PyObject *self, PyObject *args);
 PyObject *llpy_gengedcomstrong (PyObject *self, PyObject *args);
 PyObject *llpy_program (PyObject *self, PyObject *args);
-PyObject *llpy_version (PyObject *self, PyObject *args);
 PyObject *llpy_heapused (PyObject *self, PyObject *args);
+
+extern PyObject *Lifelines_Module;

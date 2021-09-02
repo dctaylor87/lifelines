@@ -58,5 +58,7 @@ PyTypeObject llines_source_type =
    .tp_new = PyType_GenericNew,
    .tp_dealloc = llpy_source_dealloc,
    .tp_iter = llpy_source_iter,
+   .tp_hash = llines_record_hash,
+   .tp_richcompare = llines_record_richcompare,
    .tp_methods = Lifelines_Source_Methods,
   };

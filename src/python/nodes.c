@@ -50,27 +50,62 @@ static PyObject *llpy_value (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 static PyObject *llpy_parent_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_NODE *node = (LLINES_PY_NODE *) self;
-  LLINES_PY_NODE *parent = PyObject_New (LLINES_PY_NODE, &llines_node_type);
+  LLINES_PY_NODE *parent;
+  NODE pnode = nparent (node->lnn_node);
 
+  if (! pnode)
+    Py_RETURN_NONE;		/* can this happen?  No node parent? */
+
+  parent = PyObject_New (LLINES_PY_NODE, &llines_node_type);
   if (! parent)
     return NULL;		/* PyOBject_New failed and set an exception */
 
-  parent->lnn_type = 0;		/* XXX figure out what to put here XXX */
-  parent->lnn_node = nparent (node->lnn_node);
+  parent->lnn_type = node->lnn_type; /* 'inherit' type from previous node */
+  parent->lnn_node = pnode;
 
   return (PyObject *)parent;
 }
 
 static PyObject *llpy_child_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_NODE *node = (LLINES_PY_NODE *) self;
-  abort ();
+  LLINES_PY_NODE *py_node = (LLINES_PY_NODE *) self;
+  NODE node = py_node->lnn_node;
+  int type;
+
+  node = nchild (node);
+  if (! node)
+    Py_RETURN_NONE;		/* node has no children */
+
+  type = py_node->lnn_type;	/* save old type -- we are about to reuse py_node */
+  py_node = PyObject_New (LLINES_PY_NODE, &llines_node_type);
+  if (! py_node)
+    return NULL;
+
+  py_node->lnn_type = type;
+  py_node->lnn_node = node;
+
+  return (PyObject *)py_node;
 }
 
 static PyObject *llpy_sibling_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_NODE *node = (LLINES_PY_NODE *) self;
-  abort ();
+  LLINES_PY_NODE *py_node = (LLINES_PY_NODE *) self;
+  NODE node = py_node->lnn_node;
+  int type;
+
+  node = nsibling (node);
+  if (! node)
+    Py_RETURN_NONE;		/* node has no siblings */
+
+  type = py_node->lnn_type;	/* save old type -- we are about to reuse py_node */
+  py_node = PyObject_New (LLINES_PY_NODE, &llines_node_type);
+  if (! py_node)
+    return NULL;
+
+  py_node->lnn_type = type;
+  py_node->lnn_node = node;
+
+  return (PyObject *)py_node;
 }
 
 static PyObject *llpy_copy_node_tree (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)

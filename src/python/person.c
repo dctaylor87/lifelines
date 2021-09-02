@@ -14,6 +14,7 @@
 
 #include "gedcom.h"		/* RECORD */
 #include "indiseq.h"		/* INDISEQ */
+#include "messages.h"
 
 #include "python-to-c.h"
 #include "types.h"
@@ -49,6 +50,8 @@ static PyObject *llpy_soundex (PyObject *self, PyObject *args);
 
 static PyObject *llpy_nextindi (PyObject *self, PyObject *args);
 static PyObject *llpy_previndi (PyObject *self, PyObject *args);
+static PyObject *llpy_choosechild_i (PyObject *self, PyObject *args);
+static PyObject *llpy_choosefam (PyObject *self, PyObject *args);
 
 static void llpy_individual_dealloc (PyObject *self);
 
@@ -82,9 +85,10 @@ static PyObject *llpy_name (PyObject *self, PyObject *args, PyObject *kw)
       if (getlloptint("RequireNames", 0))
 	/* XXX figure out how to issue exceptions XXX _("name: person does not have a name") */
 	return NULL;
+
       Py_RETURN_NONE;
     }
-  name = manip_name(nval(node_name), caps, REGORDER, MAX_NAME_LENGTH);
+  name = manip_name(nval(node_name), caps ? DOSURCAP : NOSURCAP, REGORDER, MAX_NAME_LENGTH);
   return (Py_BuildValue ("s", name));
 }
 
@@ -180,15 +184,28 @@ static PyObject *llpy_givens (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 static PyObject *llpy_trimname (PyObject *self, PyObject *args, PyObject *kw)
 {
-  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  LLINES_PY_INDI_RECORD *record_indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE indi = nztop(record_indi->lri_record);
   static char *keywords[] = { "max_length", NULL };
   int max_length;
+  STRING str;
 
   if (! PyArg_ParseTupleAndKeywords (args, kw, "I", keywords, &max_length))
     /* XXX not reached - on failure, an exception is signalled by
        Python.  Do not currently know how to handle that.  XXX */
     return NULL;
-  abort ();
+
+  if (!(indi = NAME(indi)) || ! nval(indi))
+    {
+      if (getlloptint("RequireNames", 0))
+	/* XXX set exception -- _("(trimname) person does not have a name") XXX */
+	return NULL;
+    }
+  str = name_string (trim_name (nval (indi), max_length));
+  if (! str)
+    str = "";
+
+  return Py_BuildValue ("s", str);
 }
 
 /* llpy_birth (INDI) --> EVENT
@@ -423,7 +440,15 @@ static PyObject *llpy_pn (PyObject *self, PyObject *args, PyObject *kw)
 static PyObject *llpy_nspouses (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
-  abort ();
+  NODE node = nztop (indi->lri_record);
+  INT nspouses = 0;		/* throw away, used by macro */
+  INT nactual = 0;
+
+  FORSPOUSES(node, spouse, fam, nspouses)
+    ++nactual;
+  ENDSPOUSES
+
+  return Py_BuildValue ("i", nactual);
 }
 
 /* llpy_nfamilies (INDI) --> INTEGER
@@ -604,6 +629,65 @@ static PyObject *llpy_previndi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return (PyObject *)indi;
 }
 
+/* llpy_choosechild_i (INDI) --> INDI
+
+   Figures out INDI's set of children and asks the user to choose one.
+   Returns None if INDI has no children or if the user cancelled the
+   operation. */
+
+static PyObject *llpy_choosechild_i (PyObject *self, PyObject *args)
+{
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE node = nztop (indi->lri_record);
+  INDISEQ seq=0;
+  RECORD record;
+
+  if (! node)
+    Py_RETURN_NONE;		/* XXX should this be an exception? XXX */
+
+  seq = indi_to_children (node);
+
+  if (! seq || (length_indiseq (seq) < 1))
+      Py_RETURN_NONE;	/* no children to choose from */
+
+  record = choose_from_indiseq(seq, DOASK1, _(qSifonei), _(qSnotonei));
+  remove_indiseq (seq);
+
+  indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  if (! indi)
+    return NULL;
+
+  indi->lri_type = LLINES_TYPE_INDI;
+  indi->lri_record = record;
+
+  return (PyObject *)indi;
+}
+
+static PyObject *llpy_choosefam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  INDISEQ seq;
+  RECORD record;
+
+  seq = indi_to_families (nztop (indi->lri_record), TRUE);
+  if (! seq || length_indiseq (seq) < 1)
+    Py_RETURN_NONE;		/* person is not in any families */
+
+  record = choose_from_indiseq(seq, DOASK1, _(qSifonei), _(qSnotonei));
+  remove_indiseq (seq);
+  if (! record)
+    Py_RETURN_NONE;		/* user cancelled */
+
+  indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  if (! indi)
+    return NULL;		/* out of memory? */
+
+  indi->lri_type = LLINES_TYPE_INDI;
+  indi->lri_record = record;
+
+  return (PyObject *) indi;
+}
+
 static void llpy_individual_dealloc (PyObject *self)
 {
   LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
@@ -675,7 +759,7 @@ same order and format as found in the first '1 NAME' line of the record." },
      "doc string" },
    { "title",		(PyCFunction)llpy_title, METH_NOARGS,
      "(INDI).title(void) -> STRING; Returns the value of the first '1 TITL' line in the record." },
-   { "key",		(PyCFunction)llpy_key, METH_NOARGS | METH_KEYWORDS,
+   { "key",		(PyCFunction)llpy_key, METH_VARARGS | METH_KEYWORDS,
      "(INDI).key([num_only]) --> : key; Returns the internal key.\n\
 If boolean NUM_ONLY is True (default: False), omit the leading letter." },
    { "soundex",		(PyCFunction)llpy_soundex, METH_NOARGS,
@@ -687,16 +771,18 @@ If boolean NUM_ONLY is True (default: False), omit the leading letter." },
 
    /* User Interaction Functions */
 
-   { "choosechild",	llpy_choosechild, METH_VARARGS,
-     "choosechild(INDI|FAM) -> INDI; Selects and returns child of person|family\n\
-through user interface." },
-   { "choosefam",	llpy_choosefam, METH_VARARGS,
+   { "choosechild",	llpy_choosechild_i, METH_NOARGS,
+     "choosechild(INDI) -> INDI; Selects and returns child of person\n\
+through user interface.  Returns None if INDI has no children." },
+   { "choosefam",	llpy_choosefam, METH_NOARGS,
      "choosefam(INDI) -> FAM; Selects and returns a family that INDI is in." },
-   { "choosespouse",	llpy_choosespouse, METH_VARARGS,
+#if 0
+   { "choosespouse",	llpy_choosespouse, METH_NOARGS,
      "choosespouse(INDI) -> INDI; Select and return a spouse of INDI." },
+#endif
 
    { NULL, 0, 0, NULL }		/* sentinel */
-};
+  };
 
 PyTypeObject llines_individual_type =
   {
@@ -709,5 +795,7 @@ PyTypeObject llines_individual_type =
    .tp_new = PyType_GenericNew,
    .tp_dealloc = llpy_individual_dealloc,
    .tp_iter = llpy_individual_iter,
+   .tp_hash = llines_record_hash,
+   .tp_richcompare = llines_record_richcompare,
    .tp_methods = Lifelines_Person_Methods,
  };

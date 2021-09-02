@@ -2,6 +2,9 @@
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
+
+#include <ansidecl.h>		/* ATTRIBUTE_UNUSED */
+
 #include "python-to-c.h"
 #include "llpy-externs.h"
 
@@ -11,14 +14,32 @@
 #include "database.h"
 #include "family.h"
 #include "person.h"
+#include "version.h"		/* get_lifelines_version */
 #include "types.h"
+
+/* variables defined here */
+
+PyObject *Lifelines_Module;
+
+/* forward references */
+
+static PyObject *llpy_version (PyObject *self, PyObject *args);
+
+/* start of code */
+
+static PyObject *llpy_version (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  return (Py_BuildValue ("s", get_lifelines_version(100)));
+}
 
 static struct PyMethodDef LifelinesMethods[] =
   {
    /* Person Functions -- moved to Lifelines_Person_Methods */
 
+#if 0				/* XXX what should this do in the Python world? XXX */
    { "key",		(PyCFunction)llpy_key, METH_VARARGS | METH_KEYWORDS,
      "key(INDI) --> : internal key" },
+
    { "inode",		llpy_inode, METH_VARARGS,
      "Root GEDCOM node of INDI" },
 
@@ -29,11 +50,14 @@ static struct PyMethodDef LifelinesMethods[] =
    { "root",		llpy_root, METH_VARARGS,
      "doc string" },
    { "fam",		llpy_fam, METH_VARARGS,
-     "doc string" },
+     "fam(key) --> FAM; Finds a family from a key." },
+#endif
 
    /* GEDCOM Node Functions -- now in nodes.c */
 
    /* Event and Date Functions */
+
+#if 0				/* XXX need serious thought due to existing implementation XXX */
 
    { "gettoday",	llpy_gettoday, METH_NOARGS,
      "doc string" },
@@ -92,48 +116,54 @@ static struct PyMethodDef LifelinesMethods[] =
      "doc string" },
    { "jd2date",		llpy_jd2date, METH_VARARGS,
      "doc string" },
+#endif
 
    /* Value Extraction Functions */
-
+#if 0
    { "extractdate",	llpy_extractdate, METH_VARARGS,
      "doc string" },
    { "extractnames",	llpy_extractnames, METH_VARARGS,
      "doc string" },
    { "extractplaces",	llpy_extractplaces, METH_VARARGS,
      "doc string" },
+#endif
+#if 0
    { "extracttokens",	llpy_extracttokens, METH_VARARGS,
      "doc string" },
+#endif
+#if 0
    { "extractdatestr",	llpy_extractdatestr, METH_VARARGS,
      "doc string" },
+#endif
 
    /* User Interaction Functions */
 
    { "getindi",		(PyCFunction)llpy_getindi, METH_VARARGS | METH_KEYWORDS,
      "getindi(PROMPT) -> INDI: identify person through user interface" },
+#if 0				/* XXX until we figure out what to do about setx XXX */
    { "getindiset",	llpy_getindiset, METH_VARARGS,
      "identify set of persons through user interface" },
-   { "getfam",		llpy_getfam, METH_VARARGS,
+#endif
+   { "getfam",		llpy_getfam, METH_VARARGS | METH_KEYWORDS,
      "getfam(PROMPT) -> FAM: identify family through user interface" },
    { "getint",		llpy_getint, METH_VARARGS,
      "doc string" },
    { "getstr",		llpy_getstr, METH_VARARGS,
      "doc string" },
-   { "choosechild",	llpy_choosechild, METH_VARARGS,
-     "choosechild(INDI|FAM) -> INDI; Selects and returns child of person|family\n\
-through user interface." },
-   { "choosefam",	llpy_choosefam, METH_VARARGS,
-     "choosefam(INDI) -> FAM; Selects and returns a family that INDI is in." },
+#if 0
    { "chooseindi",	llpy_chooseindi, METH_VARARGS,
      "doc string" },
    { "choosespouse",	llpy_choosespouse, METH_VARARGS,
      "choosespouse(INDI) -> INDI; Select and return a spouse of INDI." },
    { "choosesubset",	llpy_choosesubset, METH_VARARGS,
      "doc string" },
+#endif
    { "menuchoose",	llpy_menuchoose, METH_VARARGS,
      "doc string" },
 
    /* Person Set Functions and GEDCOM Extraction */
 
+#if 0				/* XXX until we figure out what to do about sets XXX */
    { "indiset",		llpy_indiset, METH_VARARGS,
      "doc string" },
    { "parentset",	llpy_parentset, METH_VARARGS,
@@ -152,17 +182,23 @@ through user interface." },
      "doc string" },
    { "getindiset",	llpy_getindiset, METH_VARARGS,
      "doc string" },
+
    { "gengedcomstrong",	llpy_gengedcomstrong, METH_VARARGS,
      "doc string" },
+#endif
 
    /* Miscellaneous Functions */
 
+#if 0
    { "program",		llpy_program, METH_NOARGS,
      "program(void) -> STRING: return name of the current program" },
+#endif
    { "version",		llpy_version, METH_NOARGS,
      "version(void) -> STRING: return version of current program" },
+#if 0
    { "heapused",	llpy_heapused, METH_NOARGS,
      "doc string" },
+#endif
 
    { NULL, 0, 0, NULL }		/* sentinel */
 };
@@ -202,9 +238,15 @@ PyInit_llines(void)
   if (PyType_Ready(&llines_record_type) < 0)
     return NULL;
 
+  if (PyType_Ready(&llines_database_type) < 0)
+    return NULL;
+
   module = PyModule_Create (&lifelines_module);
   if (module == NULL)
     return NULL;
+
+  Lifelines_Module = module;
+  Py_INCREF (Lifelines_Module);	/* not sure if this is needed... */
 
   Py_INCREF (&llines_node_type);
   if (PyModule_AddObject (module, "Node", (PyObject *) &llines_node_type) < 0) {
@@ -254,6 +296,9 @@ PyInit_llines(void)
     Py_DECREF (module);
     return NULL;
   }
+
+  llpy_user_init ();
+  llpy_set_init ();
 
   return (module);
 }

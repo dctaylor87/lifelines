@@ -93,7 +93,7 @@ static PyObject *llpy_firstfam (PyObject *Py_UNUSED(self), PyObject *args ATTRIB
   LLINES_PY_FAM_RECORD *rec;
 
   if (keynum == 0)
-    Py_RETURN_NONE;		/* no individuals in the database */
+    Py_RETURN_NONE;		/* no families in the database */
 
   rec = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
   if (! rec)
@@ -114,7 +114,7 @@ static PyObject *llpy_lastfam (PyObject *Py_UNUSED(self), PyObject *args ATTRIBU
   LLINES_PY_FAM_RECORD *rec;
 
   if (keynum == 0)
-    Py_RETURN_NONE;		/* no individuals in the database */
+    Py_RETURN_NONE;		/* no families in the database */
 
   rec = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
   if (! rec)
@@ -186,9 +186,9 @@ static struct PyMethodDef Lifelines_Database_Methods[] =
    { "individuals",	llpy_individuals, METH_NOARGS,
      "individuals(void) -> iterator for the set of all INDI in the database" },
    { "families",	llpy_families, METH_NOARGS,
-     "famalies(void) -> iterator for the set of all FAM in the database" },
+     "families(void) -> iterator for the set of all FAM in the database" },
    { "sources",		llpy_sources, METH_NOARGS,
-     "famalies(void) -> iterator for the set of all SOUR in the database" },
+     "sources(void) -> iterator for the set of all SOUR in the database" },
 
    { NULL, 0, 0, NULL }		/* sentinel */
   };

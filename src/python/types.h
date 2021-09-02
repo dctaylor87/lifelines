@@ -135,3 +135,9 @@ extern PyTypeObject llines_record_type;
 
 /* GEDCOM node */
 extern PyTypeObject llines_node_type;
+
+/* functions for comparing two node or record Python objects */
+
+extern PyObject *llines_record_richcompare (PyObject *self, PyObject *other, int op);
+extern PyObject *llines_node_richcompare (PyObject *self, PyObject *other, int op);
+extern Py_hash_t llines_record_hash (PyObject *obj);
