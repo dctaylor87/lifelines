@@ -22,11 +22,18 @@ static void llpy_other_dealloc (PyObject *self);
 static void llpy_other_dealloc (PyObject *self)
 {
   LLINES_PY_OTHR_RECORD *othr = (LLINES_PY_OTHR_RECORD *) self;
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+	       (void *)self, Py_REFCNT (self));
+    }
   release_record (othr->lro_record);
   othr->lro_record = 0;
   othr->lro_type = 0;
   Py_TYPE(self)->tp_free (self);
+#if 0
   Py_DECREF (Py_TYPE(self));
+#endif
 }
 
 static PyObject *llpy_other_iter(PyObject *self)
@@ -44,6 +51,10 @@ static PyObject *llpy_other_iter(PyObject *self)
 
 static struct PyMethodDef Lifelines_Other_Methods[] =
   {
+   { "key", (PyCFunction)_llpy_key, METH_VARARGS | METH_KEYWORDS,
+     "(OTHR).key([strip_prefix]) --> STRING.  Returns the database key of the record.\n\
+If STRIP_PREFIX is True (default: False), the non numeric prefix is stripped." },
+
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 
