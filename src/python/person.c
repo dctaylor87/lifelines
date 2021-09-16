@@ -14,11 +14,13 @@
 
 #include "gedcom.h"		/* RECORD */
 #include "indiseq.h"		/* INDISEQ */
+#include "liflines.h"
 #include "messages.h"
 
 #include "python-to-c.h"
 #include "types.h"
 #include "person.h"
+#include "set.h"
 
 #define MAX_NAME_LENGTH	68 /* see comment in llrpt_fullname (interp/builtin.c) */
 
@@ -51,7 +53,22 @@ static PyObject *llpy_soundex (PyObject *self, PyObject *args);
 static PyObject *llpy_nextindi (PyObject *self, PyObject *args);
 static PyObject *llpy_previndi (PyObject *self, PyObject *args);
 static PyObject *llpy_choosechild_i (PyObject *self, PyObject *args);
+static PyObject *llpy_choosespouse_i (PyObject *self, PyObject *args);
 static PyObject *llpy_choosefam (PyObject *self, PyObject *args);
+
+static PyObject *llpy_spouses_i (PyObject *self, PyObject *args);
+
+
+/* These four routines used to be in set.c, but got moved here because
+   llpy_children has to be here and either add_children needs to be
+   non-static or all four routines need to be in the same file.  */
+
+static PyObject *llpy_children (PyObject *self, PyObject *args);
+static PyObject *llpy_descendantset (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_childset (PyObject *self, PyObject *args, PyObject *kw);
+
+/* helper routine for llpy_descendantset, llpy_childset, and llpy_children */
+static int add_children (PyObject *obj, PyObject *working_set, PyObject *output_set);
 
 static void llpy_individual_dealloc (PyObject *self);
 
@@ -129,7 +146,7 @@ static PyObject *llpy_fullname (PyObject *self, PyObject *args, PyObject *kw)
   if (max_length == 0)
     max_length = MAX_NAME_LENGTH;
 
-  name = manip_name (nval (node_name), upcase, keep_order, max_length);
+  name = manip_name (nval (node_name), upcase ? DOSURCAP : NOSURCAP, keep_order, max_length);
   return (Py_BuildValue ("s", name));
 }
 
@@ -453,7 +470,10 @@ static PyObject *llpy_nspouses (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 /* llpy_nfamilies (INDI) --> INTEGER
 
-   Returns the number of families (as spouse/parent) of INDI.  */
+   Returns the number of families (as spouse/parent) of INDI.
+
+   NOTE: sensitive to Lifelines GEDCOM format which puts FAMS links
+   *LAST*.  If this changes, this breaks.  */
 
 static PyObject *llpy_nfamilies (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
@@ -499,20 +519,6 @@ static PyObject *llpy_title (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("s", nval(title));
 }
 
-/* llpy_key */
-
-PyObject *llpy_key (PyObject *self, PyObject *args, PyObject *kw)
-{
-  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
-  static char *keywords[] = { "num_only", NULL };
-  int num_only = 0;
-
-  if (! PyArg_ParseTupleAndKeywords (args, kw, "|p", keywords, &num_only))
-    return NULL;
-
-  abort ();
-}
-
 /* llpy_soundex (INDI) --> STRING
 
    Returns the SOUNDEX code of INDI.  */
@@ -550,21 +556,11 @@ PyObject *llpy_root (PyObject *self, PyObject *args)
 static PyObject *llpy_nextindi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
-  NODE indi_node = nztop (indi->lri_record);
-  STRING key = indi_to_key(indi_node);
-  char *endptr = 0;
-  long key_val;
+  INT key_val = nzkeynum(indi->lri_record);
 
-  errno = 0;
-  key_val = strtol (&key[1], &endptr, 10);
-  if (errno != 0)
+  if (key_val == 0)
     {
       /* XXX error occurred -- figure out how to raise an exception XXX */
-      return NULL;
-    }
-  if (*endptr != '@')
-    {
-      /* XXX should not happen -- raise an error XXX */
       return NULL;
     }
   /* XXX xref_{next|prev}{i,f,s,e,x,} ultimately casts its argument to
@@ -593,21 +589,11 @@ static PyObject *llpy_nextindi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 static PyObject *llpy_previndi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
-  NODE indi_node = nztop (indi->lri_record);
-  STRING key = indi_to_key(indi_node);
-  char *endptr = 0;
-  long key_val;
+  INT key_val = nzkeynum (indi->lri_record);
 
-  errno = 0;
-  key_val = strtol (&key[1], &endptr, 10);
-  if (errno != 0)
+  if (key_val == 0)
     {
       /* XXX error occurred -- figure out how to raise an exception XXX */
-      return NULL;
-    }
-  if (*endptr != '@')
-    {
-      /* XXX should not happen -- raise an error XXX */
       return NULL;
     }
   /* XXX xref_{next|prev}{i,f,s,e,x,} ultimately casts its argument to
@@ -635,7 +621,7 @@ static PyObject *llpy_previndi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    Returns None if INDI has no children or if the user cancelled the
    operation. */
 
-static PyObject *llpy_choosechild_i (PyObject *self, PyObject *args)
+static PyObject *llpy_choosechild_i (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
   NODE node = nztop (indi->lri_record);
@@ -663,9 +649,38 @@ static PyObject *llpy_choosechild_i (PyObject *self, PyObject *args)
   return (PyObject *)indi;
 }
 
+static PyObject *llpy_choosespouse_i (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  NODE node = nztop (indi->lri_record);
+  RECORD record;
+  INDISEQ seq;
+  LLINES_PY_INDI_RECORD *py_indi;
+
+  seq = indi_to_spouses (node);
+  if (! seq || (length_indiseq (seq) < 1))
+    Py_RETURN_NONE;		/* no spouses for family */
+
+  record = choose_from_indiseq (seq, DOASK1, _(qSifonei), _(qSnotonei));
+  remove_indiseq (seq);
+  if (! record)
+    Py_RETURN_NONE;		/* user cancelled */
+
+  py_indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  if (! py_indi)
+    return NULL;		/* no memory? */
+
+  py_indi->lri_type = LLINES_TYPE_INDI;
+  py_indi->lri_record = record;
+  return ((PyObject *)py_indi);
+}
+
+/* llpy_choosefam(void) --> FAM */
+
 static PyObject *llpy_choosefam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  LLINES_PY_FAM_RECORD *fam;
   INDISEQ seq;
   RECORD record;
 
@@ -678,27 +693,300 @@ static PyObject *llpy_choosefam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED
   if (! record)
     Py_RETURN_NONE;		/* user cancelled */
 
-  indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
-  if (! indi)
+  fam = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
+  if (! fam)
     return NULL;		/* out of memory? */
 
-  indi->lri_type = LLINES_TYPE_INDI;
-  indi->lri_record = record;
+  fam->lrf_type = LLINES_TYPE_FAM;
+  fam->lrf_record = record;
 
-  return (PyObject *) indi;
+  return (PyObject *) fam;
+}
+
+static PyObject *llpy_spouses_i (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  PyObject *output_set;	/* represents INDIs that are part of the return value */
+  RECORD record = ((LLINES_PY_INDI_RECORD *)self)->lri_record;
+  RECORD spouse;
+
+  output_set = PySet_New (NULL);
+  if (! output_set)
+    return NULL;
+
+  FORSPOUSES_RECORD(record,spouse)
+
+    LLINES_PY_INDI_RECORD *new_indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+    if (! new_indi)
+      {
+	PySet_Clear (output_set);
+	Py_DECREF (output_set);
+	return NULL;
+      }
+    new_indi->lri_type = LLINES_TYPE_INDI;
+    new_indi->lri_record = spouse;
+
+    if (PySet_Add (output_set, (PyObject *)new_indi) < 0)
+      {
+	PySet_Clear (output_set);
+	Py_DECREF (output_set);
+	return NULL;
+      }
+  ENDSPOUSES_RECORD
+
+  return (output_set);
+}
+
+/* llpy_descendantset(SET) -- given an input set of INDIs, produce an
+   output set of those INDIs that are the descendants of the input
+   INDIs.  */
+
+static PyObject *llpy_descendantset (PyObject *self, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "set", NULL };
+  PyObject *input_set;		/* set passed in */
+  PyObject *working_set; /* represents INDIs that are not yet processed */
+  PyObject *output_set;	/* represents INDIs that are part of the return value */
+  PyObject *item;
+  int status;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "O", keywords, &input_set))
+    return NULL;
+
+  output_set = PySet_New (NULL);
+  if (! output_set)
+    return NULL;
+
+  working_set = PySet_New (NULL);
+  if (! working_set)
+    {
+      Py_DECREF (output_set);
+      return NULL;
+    }
+
+  /* propagate parents of the input set into working_set */
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_descendantset: processing input_set\n");
+    }
+
+  PyObject *iterator = PyObject_GetIter (input_set);
+  if (! iterator)
+    {
+      Py_DECREF (working_set);
+      Py_DECREF (output_set);
+      return NULL;
+    }
+  while ((item = PyIter_Next (iterator)))
+    {
+      if ((status = add_children (item, working_set, NULL)) < 0)
+	{
+	  /* report status, cleanup, return NULL */
+	  PySet_Clear (working_set);
+	  Py_DECREF (working_set);
+	  PySet_Clear (output_set);
+	  Py_DECREF (output_set);
+	  Py_DECREF (iterator);
+	  return NULL;
+	}
+    }
+  if (PyErr_Occurred())
+    {
+      /* XXX clean up and return NULL */
+      PySet_Clear (working_set);
+      Py_DECREF (working_set);
+      PySet_Clear (output_set);
+      Py_DECREF (output_set);
+      Py_DECREF (iterator);
+      return NULL;
+    }
+  Py_DECREF (iterator);
+
+  /* go through working_set, putting children into working_set, and
+     item into output_set */
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_descendantset: processing working_set\n");
+    }
+  while ((PySet_GET_SIZE (working_set) > 0) && (item = PySet_Pop (working_set)))
+    {
+      int status = add_children (item, working_set, output_set);
+      if (status < 0)
+	{
+	  /* report status, cleanup, return NULL */
+	  PySet_Clear (working_set);
+	  Py_DECREF (working_set);
+	  PySet_Clear (output_set);
+	  Py_DECREF (output_set);
+	  return NULL;
+	}
+    }
+  ASSERT (PySet_GET_SIZE (working_set) == 0);
+  PySet_Clear (working_set);	/* should be empty! */
+  Py_DECREF (working_set);
+
+  return (output_set);
+}
+
+/* llpy_children(INDI) -- given an INDI, produce an output set of
+   those INDIs that are children of the INDI */
+
+static PyObject *llpy_children (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  PyObject *output_set = PySet_New (NULL);
+  int status;
+
+  if (! output_set)
+    return NULL;
+
+  status = add_children (self, output_set, NULL);
+  if (status < 0)
+    {
+      PySet_Clear (output_set);
+      Py_DECREF (output_set);
+      return NULL;
+    }
+
+  return (output_set);
+}
+
+/* llpy_childset(SET) -- given an input set of INDIs, produce an
+   output set of those INDIs that are the children of the input
+   INDIs.  */
+
+static PyObject *llpy_childset (PyObject *self, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "set", NULL };
+  PyObject *input_set;		/* set passed in */
+  PyObject *output_set;	/* represents INDIs that are part of the return value */
+  PyObject *item;
+  int status;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "O", keywords, &input_set))
+    return NULL;
+
+  output_set = PySet_New (NULL);
+  if (! output_set)
+    return NULL;
+
+  /* propagate parents of the input set into output_set */
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_childset: processing input_set\n");
+    }
+
+  PyObject *iterator = PyObject_GetIter (input_set);
+  if (! iterator)
+    {
+      Py_DECREF (output_set);
+      return NULL;
+    }
+  while ((item = PyIter_Next (iterator)))
+    {
+      if ((status = add_children (item, output_set, NULL)) < 0)
+	{
+	  /* report status, cleanup, return NULL */
+	  PySet_Clear (output_set);
+	  Py_DECREF (output_set);
+	  Py_DECREF (iterator);
+	  return NULL;
+	}
+    }
+  if (PyErr_Occurred())
+    {
+      /* XXX clean up and return NULL */
+      PySet_Clear (output_set);
+      Py_DECREF (output_set);
+      Py_DECREF (iterator);
+      return NULL;
+    }
+  Py_DECREF (iterator);
+
+  return (output_set);
+}
+
+/* add_children -- for an individual, first we look at output_set (if
+   non NULL).  If the individual is already present, we return success
+   as we have already processed him/her.  Otherwise we we add him/her
+   to output_set.
+
+   Then, we look at each of the familes that he/she is a spouse in and
+   for each family found, we add the children to the working set.
+
+   NOTE: output_set is NULL when we are doing the first pass of the
+   input arguments.  */
+
+static int add_children (PyObject *obj, PyObject *working_set, PyObject *output_set)
+{
+  int status;
+  RECORD record;
+
+  if (output_set)
+    {
+      status = PySet_Contains (output_set, obj);
+      if (status == 1)
+	{
+	  if (llpy_debug)
+	    {
+	      fprintf (stderr, "add_children: INDI %s already present\n",
+		       nzkey (((LLINES_PY_INDI_RECORD *)obj)->lri_record));
+	    }
+	  return (0);		/* already present, not to do, success */
+	}
+      else if (status < 0)
+	return (status);	/* failure, let caller cleanup... */
+
+      /* obj is not in output_set *AND* just cam (in caller) from working set */
+      if (llpy_debug)
+	{
+	  fprintf (stderr, "add_children: adding INDI %s to output set\n",
+		   nzkey (((LLINES_PY_INDI_RECORD *)obj)->lri_record));
+	}
+      if (PySet_Add (output_set, (PyObject *)obj) < 0)
+	return (-8);
+    }
+
+  /* the individual is NOT present in output_set, so add him/her to
+     working_set */
+
+  record = ((LLINES_PY_FAM_RECORD *)obj)->lrf_record;
+
+  FORFAMS_RECORD(record, fam)
+    FORCHILDREN_RECORD(fam, child)
+    /* XXX wrap the child in a PyObject and put him/her into working_set XXX */
+      LLINES_PY_INDI_RECORD *indi_rec = PyObject_New (LLINES_PY_INDI_RECORD,
+						      &llines_individual_type);
+      if (! indi_rec)
+	return (-1);		/* caller will clean up */
+
+      indi_rec->lri_type = LLINES_TYPE_INDI;
+      indi_rec->lri_record = child;
+      if (PySet_Add (working_set, (PyObject *)indi_rec) < 0)
+	return (-2);
+
+    ENDCHILDREN_RECORD
+  ENDFAMS_RECORD
+    
+  return (0);
 }
 
 static void llpy_individual_dealloc (PyObject *self)
 {
   LLINES_PY_INDI_RECORD *indi = (LLINES_PY_INDI_RECORD *) self;
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+	       (void *)self, Py_REFCNT (self));
+    }
   release_record (indi->lri_record);
   indi->lri_record = 0;
   indi->lri_type = 0;
   Py_TYPE(self)->tp_free (self);
+#if 0
   Py_DECREF (Py_TYPE(self));
+#endif
 }
 
-static PyObject *llpy_individual_iter(PyObject *self)
+static PyObject *llpy_individual_iter(PyObject *self ATTRIBUTE_UNUSED)
 {
   LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
 
@@ -756,12 +1044,12 @@ same order and format as found in the first '1 NAME' line of the record." },
    { "nfamilies",	(PyCFunction)llpy_nfamilies, METH_NOARGS,
      "(INDI).nfamilies(void) -> INTEGER; Returns number of families (as spouse/parent) of INDI" },
    { "parents",		llpy_parents, METH_VARARGS,
-     "doc string" },
+     "(INDI).parents(void) --> FAM.  Returns the first FAM in which INDI is a child." },
    { "title",		(PyCFunction)llpy_title, METH_NOARGS,
      "(INDI).title(void) -> STRING; Returns the value of the first '1 TITL' line in the record." },
-   { "key",		(PyCFunction)llpy_key, METH_VARARGS | METH_KEYWORDS,
-     "(INDI).key([num_only]) --> : key; Returns the internal key.\n\
-If boolean NUM_ONLY is True (default: False), omit the leading letter." },
+   { "key", (PyCFunction)_llpy_key, METH_VARARGS | METH_KEYWORDS,
+     "(INDI).key([strip_prefix]) --> STRING.  Returns the database key of the record.\n\
+If STRIP_PREFIX is True (default: False), the non numeric prefix is stripped." },
    { "soundex",		(PyCFunction)llpy_soundex, METH_NOARGS,
      "(INDI).soundex(void) -> STRING: SOUNDEX code of INDI" },
    { "nextindi",	(PyCFunction)llpy_nextindi, METH_NOARGS,
@@ -769,11 +1057,16 @@ If boolean NUM_ONLY is True (default: False), omit the leading letter." },
    { "previndi",	(PyCFunction)llpy_previndi, METH_NOARGS,
      "(INDI).previndi(void) -> INDI: Returns previous INDI (in database order)." },
 
+   { "children",	(PyCFunction)llpy_children, METH_NOARGS,
+     "(INDI).children(void) --> SET.  Returns the set of children of INDI." },
    /* User Interaction Functions */
 
    { "choosechild",	llpy_choosechild_i, METH_NOARGS,
      "choosechild(INDI) -> INDI; Selects and returns child of person\n\
 through user interface.  Returns None if INDI has no children." },
+   { "choosepouse",	llpy_choosespouse_i, METH_NOARGS,
+     "choosespouse(void) --> INDI.  Select and return spouse of individual\n\
+through user interface.  Returns None if individual has no spouses or user cancels." },
    { "choosefam",	llpy_choosefam, METH_NOARGS,
      "choosefam(INDI) -> FAM; Selects and returns a family that INDI is in." },
 #if 0
@@ -781,6 +1074,25 @@ through user interface.  Returns None if INDI has no children." },
      "choosespouse(INDI) -> INDI; Select and return a spouse of INDI." },
 #endif
 
+   /* this was in set.c, but there is no documented way to add methods
+      to a type after it has been created.  And, researching how
+      Python does it and then looking at the documentation for the
+      functions involved, it says that it is not safe...  Which I take
+      to mean that it is subject to change without notice... And that
+      there might be other caveats as well. */
+
+   { "spouses",		llpy_spouses_i, METH_NOARGS,
+     "spouses(void) --> SET.  Returns set of spouses of INDI." },
+
+   { NULL, 0, 0, NULL }		/* sentinel */
+  };
+
+static struct PyMethodDef Lifelines_Person_Functions[] =
+  {
+   { "descendantset",	(PyCFunction)llpy_descendantset, METH_VARARGS | METH_KEYWORDS,
+     "descendantset(SET) --> SET.  Returns the set of descendants of the input set." },
+   { "childset",	(PyCFunction)llpy_childset, METH_VARARGS | METH_KEYWORDS,
+     "childset(SET) --> SET.  Returns the set of INDIs that are children of the input INDIs." },
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 
@@ -799,3 +1111,12 @@ PyTypeObject llines_individual_type =
    .tp_richcompare = llines_record_richcompare,
    .tp_methods = Lifelines_Person_Methods,
  };
+
+void llpy_person_init (void)
+{
+  int status;
+
+  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Person_Functions);
+  if (status != 0)
+    fprintf (stderr, "llpy_person_init: attempt to add functions returned %d\n", status);
+}

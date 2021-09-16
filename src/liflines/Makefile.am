@@ -35,7 +35,10 @@ llexec_LDADD = ../interp/libinterp.a @LIBPYLLINES@ ../gedlib/libgedcom.a \
 # $(top_builddir)        for config.h
 # $(top_srcdir)/src/hdrs for headers
 
-AM_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir)/src/hdrs
+# Flags needed to compile Python code
+PYTHON_CPPFLAGS = @PYTHON_CPPFLAGS@
+
+AM_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir)/src/hdrs $(PYTHON_CPPFLAGS)
 
 # Locale information for gettext
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

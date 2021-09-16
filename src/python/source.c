@@ -22,11 +22,18 @@ static void llpy_source_dealloc (PyObject *self);
 static void llpy_source_dealloc (PyObject *self)
 {
   LLINES_PY_SOUR_RECORD *sour = (LLINES_PY_SOUR_RECORD *) self;
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+	       (void *)self, Py_REFCNT (self));
+    }
   release_record (sour->lrs_record);
   sour->lrs_record = 0;
   sour->lrs_type = 0;
   Py_TYPE(self)->tp_free (self);
+#if 0
   Py_DECREF (Py_TYPE(self));
+#endif
 }
 
 static PyObject *llpy_source_iter(PyObject *self)
@@ -44,6 +51,9 @@ static PyObject *llpy_source_iter(PyObject *self)
 
 static struct PyMethodDef Lifelines_Source_Methods[] =
   {
+   { "key", (PyCFunction)_llpy_key, METH_VARARGS | METH_KEYWORDS,
+     "(SOUR).key([strip_prefix]) --> STRING.  Returns the database key of the record.\n\
+If STRIP_PREFIX is True (default: False), the non numeric prefix is stripped." },
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 

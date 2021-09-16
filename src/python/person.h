@@ -4,8 +4,5 @@
    and being made static -- the functions are being made methods of
    the type.  */
 
-/* returns set of spouses */
-PyObject *llpy_spouses (PyObject *self, PyObject *args);
-
 /* returns set of families */
 PyObject *llpy_indi_families (PyObject *self, PyObject *args);

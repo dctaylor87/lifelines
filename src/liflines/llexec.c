@@ -34,6 +34,11 @@
 #endif /* HAVE_GETOPT_H */
 #endif /* HAVE_GETOPT */
 
+#if defined(HAVE_PYTHON)
+#include <Python.h>
+#include "llpy-externs.h"
+#endif
+
 /*********************************************
  * external variables (no header)
  *********************************************/
@@ -100,6 +105,9 @@ main (int argc, char **argv)
 	char * msg;
 	int c;
 	BOOLEAN ok=FALSE;
+#if HAVE_PYTHON
+	BOOLEAN python_interactive = FALSE;
+#endif
 	STRING dbrequested=NULL; /* database (path) requested */
 	BOOLEAN forceopen=FALSE, lockchange=FALSE;
 	char lockarg = 0; /* option passed for database lock */
@@ -150,7 +158,7 @@ main (int argc, char **argv)
 
 	/* Parse Command-Line Arguments */
 	opterr = 0;	/* turn off getopt's error message */
-	while ((c = getopt(argc, argv, "adkrwil:fntc:Fu:x:o:zC:I:vh?")) != -1) {
+	while ((c = getopt(argc, argv, "adkrwil:fntc:Fu:x:o:zC:I:Pvh?")) != -1) {
 		switch (c) {
 		case 'c':	/* adjust cache sizes */
 			while(optarg && *optarg) {
@@ -253,6 +261,11 @@ main (int argc, char **argv)
 		case 'C': /* specify config file */
 			configfile = optarg;
 			break;
+#if HAVE_PYTHON
+		case 'P':
+			python_interactive = TRUE;
+			break;
+#endif
 		case 'v': /* show version */
 			showversion = TRUE;
 			goto usage;
@@ -355,6 +368,20 @@ prompt_for_db:
 		BOOLEAN timing = FALSE;
 		interp_main(exprogs, progout, picklist, timing);
 		destroy_list(exprogs);
+#if HAVE_PYTHON
+	} else if (python_interactive) {
+		int status;
+
+		llpy_init();
+		Py_Initialize();
+
+		status = PyRun_InteractiveLoop (stdin, "<stdin>");
+
+		if (status == 0)
+			ok=TRUE;
+		else
+			ok=FALSE;
+#endif
 	} else {
 		/* TODO: prompt for report filename */
 	}

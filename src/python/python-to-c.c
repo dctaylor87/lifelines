@@ -21,6 +21,8 @@
 
 PyObject *Lifelines_Module;
 
+int llpy_debug = 1;	      /* XXX TODO: make this ia bitmask XXX */
+
 /* forward references */
 
 static PyObject *llpy_version (PyObject *self, PyObject *args);
@@ -32,14 +34,27 @@ static PyObject *llpy_version (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return (Py_BuildValue ("s", get_lifelines_version(100)));
 }
 
+PyObject *_llpy_key (PyObject *self, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "strip_prefix", NULL };
+  LLINES_PY_RECORD *record = (LLINES_PY_RECORD *)self;
+  int strip_prefix = 0;		/* by default, leave the prefix on */
+  CNSTRING key;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "|p", keywords, &strip_prefix))
+    return NULL;
+
+  key = nzkey(record->llr_record);
+  /* currently the prefix is always a single character.  if that
+     changes, this needs modification */
+  return Py_BuildValue ("s", (strip_prefix ? key + 1 : key));
+}
+
 static struct PyMethodDef LifelinesMethods[] =
   {
    /* Person Functions -- moved to Lifelines_Person_Methods */
 
 #if 0				/* XXX what should this do in the Python world? XXX */
-   { "key",		(PyCFunction)llpy_key, METH_VARARGS | METH_KEYWORDS,
-     "key(INDI) --> : internal key" },
-
    { "inode",		llpy_inode, METH_VARARGS,
      "Root GEDCOM node of INDI" },
 
@@ -126,30 +141,17 @@ static struct PyMethodDef LifelinesMethods[] =
      "doc string" },
    { "extractplaces",	llpy_extractplaces, METH_VARARGS,
      "doc string" },
-#endif
-#if 0
-   { "extracttokens",	llpy_extracttokens, METH_VARARGS,
-     "doc string" },
-#endif
-#if 0
+
    { "extractdatestr",	llpy_extractdatestr, METH_VARARGS,
      "doc string" },
 #endif
 
    /* User Interaction Functions */
 
-   { "getindi",		(PyCFunction)llpy_getindi, METH_VARARGS | METH_KEYWORDS,
-     "getindi(PROMPT) -> INDI: identify person through user interface" },
 #if 0				/* XXX until we figure out what to do about setx XXX */
    { "getindiset",	llpy_getindiset, METH_VARARGS,
      "identify set of persons through user interface" },
 #endif
-   { "getfam",		llpy_getfam, METH_VARARGS | METH_KEYWORDS,
-     "getfam(PROMPT) -> FAM: identify family through user interface" },
-   { "getint",		llpy_getint, METH_VARARGS,
-     "doc string" },
-   { "getstr",		llpy_getstr, METH_VARARGS,
-     "doc string" },
 #if 0
    { "chooseindi",	llpy_chooseindi, METH_VARARGS,
      "doc string" },
@@ -158,29 +160,13 @@ static struct PyMethodDef LifelinesMethods[] =
    { "choosesubset",	llpy_choosesubset, METH_VARARGS,
      "doc string" },
 #endif
-   { "menuchoose",	llpy_menuchoose, METH_VARARGS,
-     "doc string" },
 
    /* Person Set Functions and GEDCOM Extraction */
 
 #if 0				/* XXX until we figure out what to do about sets XXX */
    { "indiset",		llpy_indiset, METH_VARARGS,
      "doc string" },
-   { "parentset",	llpy_parentset, METH_VARARGS,
-     "doc string" },
-   { "childset",	llpy_childset, METH_VARARGS,
-     "doc string" },
    { "spouseset",	llpy_spouseset, METH_VARARGS,
-     "doc string" },
-   { "siblingset",	llpy_siblingset, METH_VARARGS,
-     "doc string" },
-   { "ancestorset",	llpy_ancestorset, METH_VARARGS,
-     "doc string" },
-   { "descendantset",	llpy_descendentset, METH_VARARGS,
-     "doc string" },
-   { "descendentset",	llpy_descendentset, METH_VARARGS,
-     "doc string" },
-   { "getindiset",	llpy_getindiset, METH_VARARGS,
      "doc string" },
 
    { "gengedcomstrong",	llpy_gengedcomstrong, METH_VARARGS,
@@ -195,10 +181,6 @@ static struct PyMethodDef LifelinesMethods[] =
 #endif
    { "version",		llpy_version, METH_NOARGS,
      "version(void) -> STRING: return version of current program" },
-#if 0
-   { "heapused",	llpy_heapused, METH_NOARGS,
-     "doc string" },
-#endif
 
    { NULL, 0, 0, NULL }		/* sentinel */
 };
@@ -241,6 +223,9 @@ PyInit_llines(void)
   if (PyType_Ready(&llines_database_type) < 0)
     return NULL;
 
+  if (PyType_Ready(&llines_iter_type) < 0)
+    return NULL;
+
   module = PyModule_Create (&lifelines_module);
   if (module == NULL)
     return NULL;
@@ -249,56 +234,112 @@ PyInit_llines(void)
   Py_INCREF (Lifelines_Module);	/* not sure if this is needed... */
 
   Py_INCREF (&llines_node_type);
-  if (PyModule_AddObject (module, "Node", (PyObject *) &llines_node_type) < 0) {
-    Py_DECREF (&llines_node_type);
-    Py_DECREF (module);
-    return NULL;
-  }
+  if (PyModule_AddObject (module, "Node", (PyObject *) &llines_node_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (module);
+      return NULL;
+    }
 
   Py_INCREF (&llines_family_type);
-  if (PyModule_AddObject (module, "Family", (PyObject *) &llines_family_type) < 0) {
-    Py_DECREF (&llines_family_type);
-    Py_DECREF (module);
-    return NULL;
-  }
+  if (PyModule_AddObject (module, "Family", (PyObject *) &llines_family_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (module);
+      return NULL;
+    }
 
   Py_INCREF (&llines_individual_type);
-  if (PyModule_AddObject (module, "Individual", (PyObject *) &llines_individual_type) < 0) {
-    Py_DECREF (&llines_individual_type);
-    Py_DECREF (module);
-    return NULL;
-  }
+  if (PyModule_AddObject (module, "Individual", (PyObject *) &llines_individual_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_individual_type);
+      Py_DECREF (module);
+      return NULL;
+    }
 
   Py_INCREF (&llines_event_type);
-  if (PyModule_AddObject (module, "Event", (PyObject *) &llines_event_type) < 0) {
-    Py_DECREF (&llines_event_type);
-    Py_DECREF (module);
-    return NULL;
-  }
+  if (PyModule_AddObject (module, "Event", (PyObject *) &llines_event_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (module);
+      return NULL;
+    }
 
   Py_INCREF (&llines_source_type);
-  if (PyModule_AddObject (module, "Source", (PyObject *) &llines_source_type) < 0) {
-    Py_DECREF (&llines_source_type);
-    Py_DECREF (module);
-    return NULL;
-  }
+  if (PyModule_AddObject (module, "Source", (PyObject *) &llines_source_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (module);
+      return NULL;
+    }
 
   Py_INCREF (&llines_other_type);
-  if (PyModule_AddObject (module, "Other", (PyObject *) &llines_other_type) < 0) {
-    Py_DECREF (&llines_other_type);
-    Py_DECREF (module);
-    return NULL;
-  }
+  if (PyModule_AddObject (module, "Other", (PyObject *) &llines_other_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_other_type);
+      Py_DECREF (module);
+      return NULL;
+    }
 
   Py_INCREF (&llines_record_type);
-  if (PyModule_AddObject (module, "Record", (PyObject *) &llines_record_type) < 0) {
-    Py_DECREF (&llines_record_type);
-    Py_DECREF (module);
-    return NULL;
-  }
+  if (PyModule_AddObject (module, "Record", (PyObject *) &llines_record_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_other_type);
+      Py_DECREF (&llines_record_type);
+      Py_DECREF (module);
+      return NULL;
+    }
+
+  Py_INCREF (&llines_iter_type);
+  if (PyModule_AddObject (module, "Iter", (PyObject *) &llines_iter_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_other_type);
+      Py_DECREF (&llines_record_type);
+      Py_DECREF (&llines_iter_type);
+      Py_DECREF (module);
+      return NULL;
+    }
+
+  Py_INCREF (&llines_database_type);
+  if (PyModule_AddObject (module, "Database", (PyObject *) &llines_database_type) < 0)
+    {
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_other_type);
+      Py_DECREF (&llines_record_type);
+      Py_DECREF (&llines_iter_type);
+      Py_DECREF (&llines_database_type);
+      Py_DECREF (module);
+      return NULL;
+    }
 
   llpy_user_init ();
   llpy_set_init ();
+  llpy_iter_init ();
+  llpy_database_init ();
+  llpy_nodes_init ();
 
   return (module);
 }

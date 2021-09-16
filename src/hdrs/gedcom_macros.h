@@ -94,8 +94,8 @@
 */
 
 /*
- FORCHILDRENx takes a node as its first arg
- FORCHILDREN takes a record as its first arg
+ FORCHILDRENx takes a node as its second arg
+ FORCHILDREN takes a record as its second arg
 */
 
 #define FORCHILDRENx(fam,child,num) \

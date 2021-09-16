@@ -7,35 +7,7 @@
    and static variants of the declarations folded into the appropriate
    C file.  */
 
-PyObject *llpy_key (PyObject *self, PyObject *args, PyObject *kw);
-PyObject *llpy_inode (PyObject *self, PyObject *args);
-
-PyObject *llpy_spouseset (PyObject *self, PyObject *args);
-PyObject *llpy_fnode (PyObject *self, PyObject *args);
-PyObject *llpy_root (PyObject *self, PyObject *args);
 PyObject *llpy_fam (PyObject *self, PyObject *args);
-
-PyObject *llpy_gettoday (PyObject *self, PyObject *args);
-PyObject *llpy_setdate (PyObject *self, PyObject *args);
-PyObject *llpy_dayformat (PyObject *self, PyObject *args);
-PyObject *llpy_monthformat (PyObject *self, PyObject *args);
-PyObject *llpy_yearformat (PyObject *self, PyObject *args);
-PyObject *llpy_eraformat (PyObject *self, PyObject *args);
-PyObject *llpy_dateformat (PyObject *self, PyObject *args);
-PyObject *llpy_datepic (PyObject *self, PyObject *args);
-PyObject *llpy_stddate (PyObject *self, PyObject *args);
-PyObject *llpy_complexformat (PyObject *self, PyObject *args);
-PyObject *llpy_complexpic (PyObject *self, PyObject *args);
-PyObject *llpy_complexdate (PyObject *self, PyObject *args);
-PyObject *llpy_dayofweek (PyObject *self, PyObject *args);
-PyObject *llpy_date2jd (PyObject *self, PyObject *args);
-PyObject *llpy_jd2date (PyObject *self, PyObject *args);
-
-PyObject *llpy_extractdate (PyObject *self, PyObject *args);
-PyObject *llpy_extractnames (PyObject *self, PyObject *args);
-PyObject *llpy_extractplaces (PyObject *self, PyObject *args);
-PyObject *llpy_extracttokens (PyObject *self, PyObject *args);
-PyObject *llpy_extractdatestr (PyObject *self, PyObject *args);
 
 PyObject *llpy_getindiset (PyObject *self, PyObject *args);
 PyObject *llpy_chooseindi (PyObject *self, PyObject *args);
@@ -43,22 +15,20 @@ PyObject *llpy_choosesubset (PyObject *self, PyObject *args);
 
 PyObject *llpy_choosespouse (PyObject *self, PyObject *args);
 
-PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw);
-PyObject *llpy_getfam (PyObject *self, PyObject *args);
-PyObject *llpy_getint (PyObject *self, PyObject *args, PyObject *kw);
-PyObject *llpy_getstr (PyObject *self, PyObject *args, PyObject *kw);
-PyObject *llpy_menuchoose (PyObject *self, PyObject *args, PyObject *kw);
-
 PyObject *llpy_indiset (PyObject *self, PyObject *args);
-PyObject *llpy_parentset (PyObject *self, PyObject *args);
-PyObject *llpy_childset (PyObject *self, PyObject *args);
 PyObject *llpy_spouseset (PyObject *self, PyObject *args);
-PyObject *llpy_ancestorset (PyObject *self, PyObject *args);
-PyObject *llpy_descendentset (PyObject *self, PyObject *args);
-PyObject *llpy_descendentset (PyObject *self, PyObject *args);
-PyObject *llpy_getindiset (PyObject *self, PyObject *args);
 PyObject *llpy_gengedcomstrong (PyObject *self, PyObject *args);
 PyObject *llpy_program (PyObject *self, PyObject *args);
-PyObject *llpy_heapused (PyObject *self, PyObject *args);
 
 extern PyObject *Lifelines_Module;
+extern void llpy_iter_init (void);
+extern void llpy_user_init (void);
+extern void llpy_set_init (void);
+extern void llpy_database_init (void);
+extern void llpy_person_init (void);
+extern void llpy_nodes_init (void);
+
+/* XXX TODO: make this a bitmask XXX */
+extern int llpy_debug;
+
+extern PyObject *_llpy_key (PyObject *self, PyObject *args, PyObject *kw);

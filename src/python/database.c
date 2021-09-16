@@ -34,13 +34,6 @@ static PyObject *llpy_firstfam (PyObject *self, PyObject *args);
 /* return the last family in the database (in keynum order) */
 static PyObject *llpy_lastfam (PyObject *self, PyObject *args);
 
-/* these functions return iterators for all individuals, families, and
-   sources, respectively, in the database.  */
-
-static PyObject *llpy_individuals (PyObject *self, PyObject *args);
-static PyObject *llpy_families (PyObject *self, PyObject *args);
-static PyObject *llpy_sources (PyObject *self, PyObject *args);
-
  /* llpy_firstindi (void) --> INDI
 
    Returns the first INDI in the database in key order.  */
@@ -125,54 +118,6 @@ static PyObject *llpy_lastfam (PyObject *Py_UNUSED(self), PyObject *args ATTRIBU
   return (PyObject *)rec;
 }
 
-/* llpy_individuals (void) --> Returns an iterator for the set of
-   individuals in the database.  */
-
-static PyObject *llpy_individuals (PyObject *Py_UNUSED(self), PyObject *args ATTRIBUTE_UNUSED)
-{
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
-
-  if (! iter)
-    return NULL;		/* PyObject_New failed and set exception */
-
-  iter->li_type = LLINES_TYPE_INDI;
-  iter->li_current = 0;
-
-  return (PyObject *)iter;
-}
-
-/* llpy_families (void) --> Returns an iterator for the set of
-   families in the database.  */
-
-static PyObject *llpy_families (PyObject *Py_UNUSED(self), PyObject *args ATTRIBUTE_UNUSED)
-{
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
-
-  if (! iter)
-    return NULL;		/* PyObject_New failed and set exception */
-
-  iter->li_type = LLINES_TYPE_FAM;
-  iter->li_current = 0;
-
-  return (PyObject *)iter;
-}
-
-/* llpy_sources (void) --> Returns an iterator for the set of sources
-   in the database.  */
-
-static PyObject *llpy_sources (PyObject *Py_UNUSED(self), PyObject *args ATTRIBUTE_UNUSED)
-{
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
-
-  if (! iter)
-    return NULL;		/* PyObject_New failed and set exception */
-
-  iter->li_type = LLINES_TYPE_SOUR;
-  iter->li_current = 0;
-
-  return (PyObject *)iter;
-}
-
 static struct PyMethodDef Lifelines_Database_Methods[] =
   {
    { "firstindi",	llpy_firstindi, METH_NOARGS,
@@ -183,12 +128,6 @@ static struct PyMethodDef Lifelines_Database_Methods[] =
      "firstfam(void) -> FAM: first family in database (in key order)" },
    { "lastfam",		llpy_lastfam, METH_NOARGS,
      "lastfam(void) -> FAM: last family in database  (in key order)" },
-   { "individuals",	llpy_individuals, METH_NOARGS,
-     "individuals(void) -> iterator for the set of all INDI in the database" },
-   { "families",	llpy_families, METH_NOARGS,
-     "families(void) -> iterator for the set of all FAM in the database" },
-   { "sources",		llpy_sources, METH_NOARGS,
-     "sources(void) -> iterator for the set of all SOUR in the database" },
 
    { NULL, 0, 0, NULL }		/* sentinel */
   };
@@ -204,3 +143,12 @@ PyTypeObject llines_database_type =
    .tp_new = PyType_GenericNew,
    .tp_methods = Lifelines_Database_Methods,
   };
+
+void llpy_database_init (void)
+{
+  int status;
+
+  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Database_Methods);
+  if (status != 0)
+    fprintf (stderr, "llpy_database_init: attempt to add functions returned %d\n", status);
+}

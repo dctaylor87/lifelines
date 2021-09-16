@@ -113,13 +113,20 @@ static PyObject *llpy_short (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 static void llpy_event_dealloc (PyObject *self)
 {
   LLINES_PY_EVEN_NODE *even = (LLINES_PY_EVEN_NODE *) self;
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+	       (void *)self, Py_REFCNT (self));
+    }
   /* XXX for now we do not do a release_record, since it is a NODE,
      not a RECORD.  If that changes, this will need to be updated.
      XXX */
   even->lne_node = 0;
   even->lne_type = 0;
   Py_TYPE(self)->tp_free (self);
+#if 0
   Py_DECREF (Py_TYPE(self));
+#endif
 }
 
 static struct PyMethodDef Lifelines_Event_Methods[] =

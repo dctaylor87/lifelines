@@ -6,7 +6,9 @@
 #include "standard.h"		/* STRING */
 #include "llstdlib.h"
 #include "gedcom.h"
+#include "../interp/interpi.h"	/* XXX */
 #include "types.h"
+#include "python-to-c.h"
 
 /* forward references */
 
@@ -130,15 +132,129 @@ static PyObject *llpy_level (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("i", level);
 }
 
+static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
+{
+  LLINES_PY_NODE *orig = (LLINES_PY_NODE *) self;
+  NODE orig_node = orig->lnn_node;
+  static char *keywords[] = { "parent", "prev", NULL };
+  PyObject *parent= Py_None;
+  PyObject *prev = Py_None;
+  NODE parent_node = NULL;
+  NODE prev_node = NULL;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "|OO", keywords, &parent, &prev))
+    return NULL;
+
+  if (parent == Py_None)
+    /* either we will become the top-node or we'll get our parent later... */
+    parent_node = NULL;
+  else if (Py_TYPE(parent) == &llines_node_type)
+    parent_node = ((LLINES_PY_NODE *) parent)->lnn_node;
+  else
+    {
+      /* XXX error -- wrong type -- set exception and return NULL XXX */
+      return NULL;
+    }
+  if (prev == Py_None)
+    /* either we are first in line or our preceding sibling will be added later... */
+    prev_node = NULL;
+  else if (Py_TYPE(prev) == &llines_node_type)
+    prev_node = ((LLINES_PY_NODE *) prev)->lnn_node;
+  else
+    {
+      /* XXX error -- wrong type -- set exception and return NULL XXX */
+      return NULL;
+    }
+
+  if (prev_node && (nparent(prev_node) != parent_node))
+    {
+      /* XXX prev_node has a different parent! -- set exception and
+	 return NULL XXX */
+      return NULL;
+    }
+
+  /* XXX the following lines bracketed by dolock_node_in_cache need to
+     be double and triple checked XXX */
+
+  dolock_node_in_cache (orig_node, FALSE);
+  nparent (orig_node) = parent_node;
+  if (parent_node)
+    orig_node->n_cel = parent_node->n_cel;
+  else
+    orig_node->n_cel = NULL;	/* XXX double check this! XXX */
+
+  set_temp_node (orig_node, is_temp_node (parent_node));
+  dolock_node_in_cache (orig_node, TRUE);
+
+  /* if both prev_node and parent_node are NULL, then there is nothing to do */
+  if (! prev_node)
+    {
+      if (! parent_node)
+	;			/* neither a parent nor a sibling -- nothing to do */
+      else
+	{
+	  /* parent, but no previous sibling -- we are first in line */
+	  nsibling(orig_node) = nchild (parent_node);
+	  nchild (parent_node) = orig_node;
+	}
+    }
+  else
+    {
+      if (parent_node)
+	{
+	  /* have sibling and parent */
+	  nparent (orig_node) = parent_node;
+	  nsibling (orig_node) = nsibling (prev_node);
+	  nsibling (prev_node) = orig_node;
+	}
+      else
+	{
+	  /* have sibling, but no parent -- extend the line */
+	  nsibling (orig_node) = nsibling(prev_node);
+	  nsibling(prev_node) = orig_node;
+	}
+    }
+  return (self);
+}
+
+static PyObject *llpy_create_node (PyObject *self, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "tag", "value", NULL };
+  STRING xref = 0;
+  STRING tag = 0;
+  STRING value = 0;
+  NODE parent = 0;
+  NODE node;
+  LLINES_PY_NODE *py_node;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "s|s", keywords, &tag, &value))
+    return NULL;
+
+  node = create_temp_node (xref, tag, value, parent);
+  if (! (py_node = PyObject_New(LLINES_PY_NODE, &llines_node_type)))
+    return NULL;
+
+  py_node->lnn_node = node;
+  py_node->lnn_type = 0;	/* unknown */
+
+  return ((PyObject *)py_node);
+}
 
 static void llpy_node_dealloc (PyObject *self)
 {
   LLINES_PY_NODE *node = (LLINES_PY_NODE *) self;
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+	       (void *)self, Py_REFCNT (self));
+    }
   free_nodes (node->lnn_node);
   node->lnn_node = 0;
   node->lnn_type = 0;
   Py_TYPE(self)->tp_free (self);
+#if 0
   Py_DECREF (Py_TYPE(self));
+#endif
 }
 
 static struct PyMethodDef Lifelines_Node_Methods[] =
@@ -158,9 +274,20 @@ static struct PyMethodDef Lifelines_Node_Methods[] =
    { "sibling_node",	(PyCFunction)llpy_sibling_node, METH_NOARGS,
      "(NODE).sibling_node(void) --> NODE; returns next sibling of NODE" },
    { "copy_node_tree",	(PyCFunction)llpy_copy_node_tree, METH_NOARGS,
-     "(NODE).copy_node_tree --> NODE; returns a copy of the node structure" },
+     "(NODE).copy_node_tree(void) --> NODE; returns a copy of the node structure" },
    { "level",		(PyCFunction)llpy_level, METH_NOARGS,
-     "(NODE).level --> INT; returns the level of NODE" },
+     "(NODE).level(void) --> INT; returns the level of NODE" },
+
+   { "add_node",	(PyCFunction)llpy_add_node, METH_VARARGS | METH_KEYWORDS,
+     "(NODE).add_node([parent],[prev]) --> NODE.  Modifies node to have\n\
+parent PARENT and previous sibling PREV.  Returns modified NODE" },
+   { NULL, 0, 0, NULL }		/* sentinel */
+  };
+
+static struct PyMethodDef Lifelines_Node_Functions[] =
+  {
+   { "create_node",	(PyCFunction)llpy_create_node, METH_VARARGS | METH_KEYWORDS,
+     "create_node(tag,[value]) --> NODE.  Creates node having tag and value." },
 
    { NULL, 0, 0, NULL }		/* sentinel */
   };
@@ -177,3 +304,12 @@ PyTypeObject llines_node_type =
    .tp_dealloc = llpy_node_dealloc,
    .tp_methods = Lifelines_Node_Methods,
   };
+
+void llpy_nodes_init (void)
+{
+  int status;
+
+  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Node_Functions);
+  if (status != 0)
+    fprintf (stderr, "llpy_nodes_initj: attempt to add functions returned %d\n", status);
+}

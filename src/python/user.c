@@ -14,10 +14,15 @@
 #include "python-to-c.h"
 #include "types.h"
 
+static PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_getfam (PyObject *self, PyObject *args);
+static PyObject *llpy_getint (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_getstr (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_menuchoose (PyObject *self, PyObject *args, PyObject *kw);
 
 /* llpy_getindi (PROMPT) --> INDI: identify person through user interface */
 
-PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw)
 {
   STRING prompt = _("Identify person for program:");
   RECORD rec;
@@ -40,7 +45,7 @@ PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw)
 
 /* llpy_getfam (void) --> FAM; Identify family through user interface */
 
-PyObject *llpy_getfam (PyObject *self, PyObject *args)
+static PyObject *llpy_getfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_FAM_RECORD *family;
   RECORD record;
@@ -61,7 +66,7 @@ PyObject *llpy_getfam (PyObject *self, PyObject *args)
 
 /* llpy_getint ([prompt]) --> INT; Get integer through user interface. */
 
-PyObject *llpy_getint (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_getint (PyObject *self, PyObject *args, PyObject *kw)
 {
   STRING prompt = _("Enter integer for program");
   static char *keywords[] = { "prompt", NULL };
@@ -80,7 +85,7 @@ PyObject *llpy_getint (PyObject *self, PyObject *args, PyObject *kw)
 
 /* llpy_getstr ([prompt]) --> STRING; Get string through user interface. */
 
-PyObject *llpy_getstr (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_getstr (PyObject *self, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "prompt", NULL };
   STRING prompt = _(qSchoostrttl);
@@ -98,7 +103,7 @@ PyObject *llpy_getstr (PyObject *self, PyObject *args, PyObject *kw)
 
 /* llpy_menuchoose (choices, [prompt]) --> INT; Select from a collection of choices. */
 
-PyObject *llpy_menuchoose (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_menuchoose (PyObject *self, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "choices", "prompt", NULL };
   abort ();
