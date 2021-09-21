@@ -71,6 +71,7 @@ static PyObject *llpy_siblingset (PyObject *self, PyObject *args, PyObject *kw)
 	{
 	  /* XXX set an exception -- wrong type (non INDI) was found
 	     input set.  Return NULL after cleaning up.  XXX */
+	  PyErr_SetString (PyExc_TypeError, "siblingset: an element of the input set is not an individual");
 	  return NULL;
 	}
       indi = ((LLINES_PY_INDI_RECORD *)py_indi)->lri_record;
@@ -185,7 +186,7 @@ static PyObject *llpy_ancestorset (PyObject *self, PyObject *args, PyObject *kw)
     }
   if (PyErr_Occurred())
     {
-      /* XXX clean up and return NULL */
+      /* clean up and return NULL */
       PySet_Clear (working_set);
       Py_DECREF (working_set);
       PySet_Clear (output_set);
@@ -265,7 +266,7 @@ static PyObject *llpy_parentset (PyObject *self, PyObject *args, PyObject *kw)
     }
   if (PyErr_Occurred())
     {
-      /* XXX clean up and return NULL */
+      /* clean up and return NULL */
       PySet_Clear (output_set);
       Py_DECREF (output_set);
       Py_DECREF (iterator);

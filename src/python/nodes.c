@@ -132,6 +132,9 @@ static PyObject *llpy_level (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("i", level);
 }
 
+/* llpy_add_node([parent], [prev] -- insert current node into GEDCOM
+   tree with specified parent and previous sibling. */
+
 static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
 {
   LLINES_PY_NODE *orig = (LLINES_PY_NODE *) self;
@@ -152,7 +155,8 @@ static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
     parent_node = ((LLINES_PY_NODE *) parent)->lnn_node;
   else
     {
-      /* XXX error -- wrong type -- set exception and return NULL XXX */
+      /* error -- wrong type -- set exception and return NULL XXX */
+      PyErr_SetString (PyExc_TypeError, "add_node: parent must be a NODE or None");
       return NULL;
     }
   if (prev == Py_None)
@@ -162,7 +166,8 @@ static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
     prev_node = ((LLINES_PY_NODE *) prev)->lnn_node;
   else
     {
-      /* XXX error -- wrong type -- set exception and return NULL XXX */
+      /* error -- wrong type -- set exception and return NULL XXX */
+      PyErr_SetString (PyExc_TypeError, "add_node: prev must be a NODE or None");
       return NULL;
     }
 
@@ -170,6 +175,7 @@ static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
     {
       /* XXX prev_node has a different parent! -- set exception and
 	 return NULL XXX */
+      PyErr_SetString (PyExc_ValueError, "add_node: prev is not a child of parent");
       return NULL;
     }
 
@@ -217,6 +223,9 @@ static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
   return (self);
 }
 
+/* llpy_create_node (tag,[value]) --> NODE Returns the newly created
+   node having specified TAG.  If VALUE is omitted, None, or empty,
+   then the value is empty.*/
 static PyObject *llpy_create_node (PyObject *self, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "tag", "value", NULL };
@@ -227,7 +236,7 @@ static PyObject *llpy_create_node (PyObject *self, PyObject *args, PyObject *kw)
   NODE node;
   LLINES_PY_NODE *py_node;
 
-  if (! PyArg_ParseTupleAndKeywords (args, kw, "s|s", keywords, &tag, &value))
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "s|z", keywords, &tag, &value))
     return NULL;
 
   node = create_temp_node (xref, tag, value, parent);

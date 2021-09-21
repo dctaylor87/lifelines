@@ -93,8 +93,6 @@ static PyObject *llpy_name (PyObject *self, PyObject *args, PyObject *kw)
   STRING name = 0;
   
   if (! PyArg_ParseTupleAndKeywords (args, kw, "|p", keywords, &caps))
-    /* XXX not reached - on failure, an exception is signalled by
-       Python.  Do not currently know how to handle that.  XXX */
     return NULL;
 
   if (! (node_name = NAME (nztop (indi->lri_record))))
@@ -208,8 +206,6 @@ static PyObject *llpy_trimname (PyObject *self, PyObject *args, PyObject *kw)
   STRING str;
 
   if (! PyArg_ParseTupleAndKeywords (args, kw, "I", keywords, &max_length))
-    /* XXX not reached - on failure, an exception is signalled by
-       Python.  Do not currently know how to handle that.  XXX */
     return NULL;
 
   if (!(indi = NAME(indi)) || ! nval(indi))
@@ -537,7 +533,6 @@ static PyObject *llpy_soundex (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 	}
       Py_RETURN_NONE;
     }
-  /* XXX does Py_BuildValue copy the string?  If not, we need to do so! XXX */
   return Py_BuildValue ("s", trad_soundex (getsxsurname (nval (name))));
 }
 
@@ -560,7 +555,8 @@ static PyObject *llpy_nextindi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
   if (key_val == 0)
     {
-      /* XXX error occurred -- figure out how to raise an exception XXX */
+      /* unexpected internal error occurred -- raise an exception */
+      PyErr_SetString(PyExc_SystemError, "nextindi: unable to determine RECORD's key");
       return NULL;
     }
   /* XXX xref_{next|prev}{i,f,s,e,x,} ultimately casts its argument to
@@ -593,7 +589,8 @@ static PyObject *llpy_previndi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
   if (key_val == 0)
     {
-      /* XXX error occurred -- figure out how to raise an exception XXX */
+      /* unexpected internal error occurred -- raise an exception */
+      PyErr_SetString(PyExc_SystemError, "previndi: unable to determine RECORD's key");
       return NULL;
     }
   /* XXX xref_{next|prev}{i,f,s,e,x,} ultimately casts its argument to
@@ -629,7 +626,11 @@ static PyObject *llpy_choosechild_i (PyObject *self, PyObject *args ATTRIBUTE_UN
   RECORD record;
 
   if (! node)
-    Py_RETURN_NONE;		/* XXX should this be an exception? XXX */
+    {
+      /* unexpected internal error occurred -- raise an exception */
+      PyErr_SetString(PyExc_SystemError, "choosechild: unable to find RECORD's top NODE");
+      return NULL;
+    }
 
   seq = indi_to_children (node);
 
@@ -791,7 +792,7 @@ static PyObject *llpy_descendantset (PyObject *self, PyObject *args, PyObject *k
     }
   if (PyErr_Occurred())
     {
-      /* XXX clean up and return NULL */
+      /* clean up and return NULL */
       PySet_Clear (working_set);
       Py_DECREF (working_set);
       PySet_Clear (output_set);
@@ -893,7 +894,7 @@ static PyObject *llpy_childset (PyObject *self, PyObject *args, PyObject *kw)
     }
   if (PyErr_Occurred())
     {
-      /* XXX clean up and return NULL */
+      /* clean up and return NULL */
       PySet_Clear (output_set);
       Py_DECREF (output_set);
       Py_DECREF (iterator);
@@ -952,7 +953,7 @@ static int add_children (PyObject *obj, PyObject *working_set, PyObject *output_
 
   FORFAMS_RECORD(record, fam)
     FORCHILDREN_RECORD(fam, child)
-    /* XXX wrap the child in a PyObject and put him/her into working_set XXX */
+    /* wrap the child in a PyObject and put him/her into working_set */
       LLINES_PY_INDI_RECORD *indi_rec = PyObject_New (LLINES_PY_INDI_RECORD,
 						      &llines_individual_type);
       if (! indi_rec)
@@ -1065,14 +1066,10 @@ If STRIP_PREFIX is True (default: False), the non numeric prefix is stripped." }
      "choosechild(INDI) -> INDI; Selects and returns child of person\n\
 through user interface.  Returns None if INDI has no children." },
    { "choosepouse",	llpy_choosespouse_i, METH_NOARGS,
-     "choosespouse(void) --> INDI.  Select and return spouse of individual\n\
+     "choosespouse(void) --> INDI.  Select and return a spouse of individual\n\
 through user interface.  Returns None if individual has no spouses or user cancels." },
    { "choosefam",	llpy_choosefam, METH_NOARGS,
      "choosefam(INDI) -> FAM; Selects and returns a family that INDI is in." },
-#if 0
-   { "choosespouse",	llpy_choosespouse, METH_NOARGS,
-     "choosespouse(INDI) -> INDI; Select and return a spouse of INDI." },
-#endif
 
    /* this was in set.c, but there is no documented way to add methods
       to a type after it has been created.  And, researching how

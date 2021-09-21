@@ -162,8 +162,9 @@ static PyObject *llpy_iter_iternext (PyObject *self)
 
   if (iter->li_current == -1)
     {
-      /* XXX trying to use an iter that was previously exhausted,
-	 raise an exception XXX */
+      /* trying to use an iter that was previously exhausted, raise an
+	 exception */
+      PyErr_SetObject (PyExc_StopIteration, Py_None);
       return NULL;
     }
   switch (iter->li_type)
@@ -181,7 +182,7 @@ static PyObject *llpy_iter_iternext (PyObject *self)
   if (iter->li_current == 0)
     {
       iter->li_current = -1;
-      return NULL;		/* iter exhausted */
+      return NULL;		/* iter is now exhausted */
     }
 
   record = keynum_to_record (iter->li_type, iter->li_current);

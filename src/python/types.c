@@ -21,11 +21,10 @@ llines_record_richcompare (PyObject *self, PyObject *other, int op)
   LLINES_PY_RECORD *obj1;
   LLINES_PY_RECORD *obj2;
 
-  /* XXX insert code to determine if 'other' is a RECORD, a NODE, or
-     something else.  While *we* are only going to create sets where
-     everhthing is a RECORD or everything is a NODE, the user can
-     create any sort of set he/she wishes to create, so we need to
-     handle that.  XXX */
+  /* determine if 'other' is a RECORD, a NODE, or something else.
+     While *we* are only going to create sets where everything is a
+     RECORD or everything is a NODE, the user can create any sort of
+     set he/she wishes to create, so we need to handle that.  */
   if ((other->ob_type == &llines_family_type) ||
       (other->ob_type == &llines_individual_type) ||
       (other->ob_type == &llines_source_type))
@@ -63,11 +62,10 @@ llines_node_richcompare (PyObject *self, PyObject *other, int op)
   RECORD obj1;
   RECORD obj2;
 
-  /* XXX insert code to determine if 'other' is a RECORD, a NODE, or
-     something else.  While *we* are only going to create sets where
-     everhthing is a RECORD or everything is a NODE, the user can
-     create any sort of set he/she wishes to create, so we need to
-     handle that.  XXX */
+  /* determine if 'other' is a RECORD, a NODE, or something else.
+     While *we* are only going to create sets where everything is a
+     RECORD or everything is a NODE, the user can create any sort of
+     set he/she wishes to create, so we need to handle that.  */
   if ((other->ob_type == &llines_event_type) ||
       (other->ob_type == &llines_other_type))
     {

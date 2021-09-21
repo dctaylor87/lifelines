@@ -19,7 +19,8 @@ libpyllines_a_SOURCES = \
 	nodes.c \
 	other.c \
 	person.c person.h \
-	set.c \
+	run.c \
+	set.c set.h \
 	source.c \
 	types.c types.h \
 	user.c

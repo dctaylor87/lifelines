@@ -118,9 +118,8 @@ static void llpy_event_dealloc (PyObject *self)
       fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
-  /* XXX for now we do not do a release_record, since it is a NODE,
-     not a RECORD.  If that changes, this will need to be updated.
-     XXX */
+  /* for now we do not do a release_record, since it is a NODE, not a
+     RECORD.  If that changes, this will need to be updated.  */
   even->lne_node = 0;
   even->lne_type = 0;
   Py_TYPE(self)->tp_free (self);

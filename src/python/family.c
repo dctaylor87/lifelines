@@ -227,7 +227,8 @@ static PyObject *llpy_nextfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
   if (key_val == 0)
     {
-      /* XXX error occurred -- figure out how to raise an exception XXX */
+      /* unexpected internal error occurred -- raise an exception */
+      PyErr_SetString(PyExc_SystemError, "nextfam: unable to determine RECORD's key");
       return NULL;
     }
   key_val = (long)xref_nextf ((INT)key_val);
@@ -252,7 +253,8 @@ static PyObject *llpy_prevfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
   if (key_val == 0)
     {
-      /* XXX error occurred -- figure out how to raise an exception XXX */
+      /* unexpected internal error occurred -- raise an exception */
+      PyErr_SetString(PyExc_SystemError, "prevfam: unable to determine RECORDs key");
       return NULL;
     }
   key_val = (long)xref_prevf ((INT)key_val);
@@ -349,7 +351,11 @@ static PyObject *llpy_choosechild_f (PyObject *self, PyObject *args ATTRIBUTE_UN
   LLINES_PY_INDI_RECORD *indi;
 
   if (! node)
-    Py_RETURN_NONE;		/* XXX should this be an exception? XXX */
+    {
+      /* unexpected internal error occurred -- raise an exception */
+      PyErr_SetString(PyExc_SystemError, "choosechild: unable to find RECORD's top NODE");
+      return NULL;
+    }
 
   seq = fam_to_children (node);
 

@@ -2,6 +2,9 @@
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
+
+#include <ansidecl.h>		/* ATTRIBUTE_UNUSED */
+
 #include "standard.h"		/* STRING */
 #include "llstdlib.h"		/* CALLBACK_FNC */
 #include "uiprompts.h"		/* DOASK1 */
@@ -30,9 +33,6 @@ static PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw)
   LLINES_PY_INDI_RECORD *indi;
 
   if (! PyArg_ParseTupleAndKeywords (args, kw, "|s", keywords, &prompt))
-    /* XXX actually not reached -- on failure an exception is
-       signalled by Python.  Do not currently know how to handle that.
-       XXX */
     return NULL;
 
   rec = rptui_ask_for_indi (prompt, DOASK1);
@@ -77,8 +77,7 @@ static PyObject *llpy_getint (PyObject *self, PyObject *args, PyObject *kw)
 
   if (! rptui_ask_for_int (prompt, &num))
     {
-      /* XXX figure out how to raise an exception XXX */
-      return NULL;
+      Py_RETURN_NONE;		/* user cancelled */
     }
   return Py_BuildValue ("i", num);
 }
