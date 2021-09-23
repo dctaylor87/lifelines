@@ -250,8 +250,8 @@ PyInit_llines(void)
   Py_INCREF (&llines_family_type);
   if (PyModule_AddObject (module, "Family", (PyObject *) &llines_family_type) < 0)
     {
-      Py_DECREF (&llines_node_type);
       Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
       Py_DECREF (module);
       return NULL;
     }
@@ -259,9 +259,9 @@ PyInit_llines(void)
   Py_INCREF (&llines_individual_type);
   if (PyModule_AddObject (module, "Individual", (PyObject *) &llines_individual_type) < 0)
     {
-      Py_DECREF (&llines_node_type);
-      Py_DECREF (&llines_family_type);
       Py_DECREF (&llines_individual_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
       Py_DECREF (module);
       return NULL;
     }
@@ -269,9 +269,10 @@ PyInit_llines(void)
   Py_INCREF (&llines_event_type);
   if (PyModule_AddObject (module, "Event", (PyObject *) &llines_event_type) < 0)
     {
-      Py_DECREF (&llines_node_type);
-      Py_DECREF (&llines_family_type);
       Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_individual_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
       Py_DECREF (module);
       return NULL;
     }
@@ -279,10 +280,11 @@ PyInit_llines(void)
   Py_INCREF (&llines_source_type);
   if (PyModule_AddObject (module, "Source", (PyObject *) &llines_source_type) < 0)
     {
-      Py_DECREF (&llines_node_type);
-      Py_DECREF (&llines_family_type);
-      Py_DECREF (&llines_event_type);
       Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_individual_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
       Py_DECREF (module);
       return NULL;
     }
@@ -290,11 +292,12 @@ PyInit_llines(void)
   Py_INCREF (&llines_other_type);
   if (PyModule_AddObject (module, "Other", (PyObject *) &llines_other_type) < 0)
     {
-      Py_DECREF (&llines_node_type);
-      Py_DECREF (&llines_family_type);
-      Py_DECREF (&llines_event_type);
-      Py_DECREF (&llines_source_type);
       Py_DECREF (&llines_other_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_individual_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
       Py_DECREF (module);
       return NULL;
     }
@@ -302,12 +305,13 @@ PyInit_llines(void)
   Py_INCREF (&llines_record_type);
   if (PyModule_AddObject (module, "Record", (PyObject *) &llines_record_type) < 0)
     {
-      Py_DECREF (&llines_node_type);
-      Py_DECREF (&llines_family_type);
-      Py_DECREF (&llines_event_type);
-      Py_DECREF (&llines_source_type);
-      Py_DECREF (&llines_other_type);
       Py_DECREF (&llines_record_type);
+      Py_DECREF (&llines_other_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_individual_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
       Py_DECREF (module);
       return NULL;
     }
@@ -315,13 +319,14 @@ PyInit_llines(void)
   Py_INCREF (&llines_iter_type);
   if (PyModule_AddObject (module, "Iter", (PyObject *) &llines_iter_type) < 0)
     {
-      Py_DECREF (&llines_node_type);
-      Py_DECREF (&llines_family_type);
-      Py_DECREF (&llines_event_type);
-      Py_DECREF (&llines_source_type);
-      Py_DECREF (&llines_other_type);
-      Py_DECREF (&llines_record_type);
       Py_DECREF (&llines_iter_type);
+      Py_DECREF (&llines_record_type);
+      Py_DECREF (&llines_other_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_individual_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
       Py_DECREF (module);
       return NULL;
     }
@@ -329,14 +334,15 @@ PyInit_llines(void)
   Py_INCREF (&llines_database_type);
   if (PyModule_AddObject (module, "Database", (PyObject *) &llines_database_type) < 0)
     {
-      Py_DECREF (&llines_node_type);
-      Py_DECREF (&llines_family_type);
-      Py_DECREF (&llines_event_type);
-      Py_DECREF (&llines_source_type);
-      Py_DECREF (&llines_other_type);
-      Py_DECREF (&llines_record_type);
-      Py_DECREF (&llines_iter_type);
       Py_DECREF (&llines_database_type);
+      Py_DECREF (&llines_iter_type);
+      Py_DECREF (&llines_record_type);
+      Py_DECREF (&llines_other_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_individual_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
       Py_DECREF (module);
       return NULL;
     }
