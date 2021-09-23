@@ -384,7 +384,7 @@ prompt_for_db:
 	if (python_interactive) {
 #if HAVE_PYTHON
 		int status = llpy_python_interactive ();
-		if (status = 0)
+		if ((status == 0))
 			ok=TRUE;
 		else
 			ok=FALSE;
