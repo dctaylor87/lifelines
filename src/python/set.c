@@ -74,13 +74,13 @@ static PyObject *llpy_siblingset (PyObject *self, PyObject *args, PyObject *kw)
 	  PyErr_SetString (PyExc_TypeError, "siblingset: an element of the input set is not an individual");
 	  return NULL;
 	}
-      indi = ((LLINES_PY_INDI_RECORD *)py_indi)->lri_record;
+      indi = ((LLINES_PY_RECORD *)py_indi)->llr_record;
       for (node = FAMC (nztop (indi)); node; node = NEXT_FAMC(node))
 	{
 	  node = qkey_to_fam (rmvat(nval(node)));
 	  for (NODE child = CHIL (node); child; child = nsibling(child))
 	    {
-	      LLINES_PY_INDI_RECORD *new_indi;
+	      LLINES_PY_RECORD *new_indi;
 	      CNSTRING key = rmvat (nval (child));
 	      INT keynum = atoi(key);
 
@@ -88,7 +88,7 @@ static PyObject *llpy_siblingset (PyObject *self, PyObject *args, PyObject *kw)
 		{
 		  RECORD sibling = key_to_irecord (key);
 
-		  new_indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+		  new_indi = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
 		  if (! new_indi)
 		    {
 		      /* clean up and return */
@@ -100,8 +100,8 @@ static PyObject *llpy_siblingset (PyObject *self, PyObject *args, PyObject *kw)
 
 		      return NULL;
 		    }
-		  new_indi->lri_type = LLINES_TYPE_INDI;
-		  new_indi->lri_record = sibling;
+		  new_indi->llr_type = LLINES_TYPE_INDI;
+		  new_indi->llr_record = sibling;
 		  status = PySet_Add (output, (PyObject *)new_indi);
 		  if (status < 0)
 		    {
@@ -289,7 +289,7 @@ static PyObject *llpy_parentset (PyObject *self, PyObject *args, PyObject *kw)
 
 static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_set)
 {
-  RECORD indi = ((LLINES_PY_INDI_RECORD *)obj)->lri_record;
+  RECORD indi = ((LLINES_PY_RECORD *)obj)->llr_record;
   NODE indi_node = nztop (indi);
   NODE famc = FAMC (indi_node);
   RECORD fam;
@@ -305,7 +305,7 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
 	  if (llpy_debug)
 	    {
 	      fprintf (stderr, "add_parents: INDI %s already present\n",
-		       nzkey (((LLINES_PY_INDI_RECORD *)obj)->lri_record));
+		       nzkey (((LLINES_PY_RECORD *)obj)->llr_record));
 	    }
 	  return 0;			/* already present, nothing to do, success */
 	}
@@ -316,7 +316,7 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
       if (llpy_debug)
 	{
 	  fprintf (stderr, "add_parents: adding INDI %s to output_set\n",
-		   nzkey (((LLINES_PY_INDI_RECORD *)obj)->lri_record));
+		   nzkey (((LLINES_PY_RECORD *)obj)->llr_record));
 	}
       if (PySet_Add (output_set, obj) < 0)
 	return (-8);
@@ -329,7 +329,7 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
       if (llpy_debug)
 	{
 	  fprintf (stderr, "add_parents: INDI %s has no known parents\n",
-		   nzkey (((LLINES_PY_INDI_RECORD *)obj)->lri_record));
+		   nzkey (((LLINES_PY_RECORD *)obj)->llr_record));
 	}
       return 0;			/* no parents, nothing to do, success */
     }
@@ -339,7 +339,7 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
   if ((parent = HUSB (fam_node)))
     {
       RECORD record = qkey_to_irecord (rmvat (nval (parent)));
-      LLINES_PY_INDI_RECORD *new_indi = PyObject_New (LLINES_PY_INDI_RECORD,
+      LLINES_PY_RECORD *new_indi = PyObject_New (LLINES_PY_RECORD,
 						      &llines_individual_type);
       if (! new_indi)
 	return (-2);
@@ -349,8 +349,8 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
 	  fprintf (stderr, "add_parents: adding HUSB %s to working set\n",
 		   nzkey (record));
 	}
-      new_indi->lri_type = LLINES_TYPE_INDI;
-      new_indi->lri_record = record;
+      new_indi->llr_type = LLINES_TYPE_INDI;
+      new_indi->llr_record = record;
       if (PySet_Add (working_set, (PyObject *)new_indi) < 0)
 	return (-3);
 #if 0
@@ -364,7 +364,7 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
   if ((parent = WIFE (fam_node)))
     {
       RECORD record = key_to_irecord (rmvat (nval (parent)));
-      LLINES_PY_INDI_RECORD *new_indi = PyObject_New (LLINES_PY_INDI_RECORD,
+      LLINES_PY_RECORD *new_indi = PyObject_New (LLINES_PY_RECORD,
 						      &llines_individual_type);
       if (! new_indi)
 	return (-5);
@@ -374,8 +374,8 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
 	  fprintf (stderr, "add_parents: adding WIFE %s to working set\n",
 		   nzkey (record));
 	}
-      new_indi->lri_type = LLINES_TYPE_INDI;
-      new_indi->lri_record = record;
+      new_indi->llr_type = LLINES_TYPE_INDI;
+      new_indi->llr_record = record;
       if (PySet_Add (working_set, (PyObject *)new_indi) < 0)
 	return (-6);
 #if 0
@@ -389,7 +389,7 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
   if (llpy_debug)
     {
       fprintf (stderr, "add_parents: successfully processed INDI %s\n",
-	       nzkey (((LLINES_PY_INDI_RECORD *)obj)->lri_record));
+	       nzkey (((LLINES_PY_RECORD *)obj)->llr_record));
     }
   return (0);
 }

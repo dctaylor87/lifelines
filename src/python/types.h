@@ -1,13 +1,6 @@
 /* requires PY_SSIZE_T_CLEAN to be defined and <Python.h> to be
    included first */
 
-#if 0
-typedef struct {
-  PyObject_HEAD
-  PVALUE llp_pvalue;		/* Lifelines PVALUE -- do we need this? */
-} LLINES_PY_PVALUE;
-#endif
-
 typedef struct {
   PyObject_HEAD
   /* XXX place Lifelines member fields here XXX */
@@ -65,36 +58,6 @@ typedef struct {
   int llr_type;
   RECORD llr_record;		/* Lifelines GEDCOM generic RECORD */
 } LLINES_PY_RECORD;
-
-typedef struct {
-  PyObject_HEAD
-  int lri_type;
-  RECORD lri_record;		/* Lifelines GEDCOM Individual RECORD */
-} LLINES_PY_INDI_RECORD;
-
-typedef struct {
-  PyObject_HEAD
-  int lrf_type;
-  RECORD lrf_record;		/* Lifelines GEDCOM Family RECORD */
-} LLINES_PY_FAM_RECORD;
-
-typedef struct {
-  PyObject_HEAD
-  int lre_type;
-  RECORD lre_record;		/* Lifelines GEDCOM Event RECORD */
-} LLINES_PY_EVEN_RECORD;
-
-typedef struct {
-  PyObject_HEAD
-  int lrs_type;
-  RECORD lrs_record;		/* Lifelines GEDCOM Source RECORD */
-} LLINES_PY_SOUR_RECORD;
-
-typedef struct {
-  PyObject_HEAD
-  int lro_type;
-  RECORD lro_record;		/* Lifelines GEDCOM Other RECORD */
-} LLINES_PY_OTHR_RECORD;
 
 typedef struct {
   PyObject_HEAD

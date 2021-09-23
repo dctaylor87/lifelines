@@ -41,17 +41,17 @@ static PyObject *llpy_lastfam (PyObject *self, PyObject *args);
 static PyObject *llpy_firstindi (PyObject *Py_UNUSED(self), PyObject *args ATTRIBUTE_UNUSED)
 {
   INT keynum = xref_firsti();
-  LLINES_PY_INDI_RECORD *rec;
+  LLINES_PY_RECORD *rec;
 
   if (keynum == 0)
     Py_RETURN_NONE;		/* no individuals in the database */
 
-  rec = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  rec = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! rec)
     return NULL;
 
-  rec->lri_type = LLINES_TYPE_INDI;
-  rec->lri_record = keynum_to_irecord (keynum);
+  rec->llr_type = LLINES_TYPE_INDI;
+  rec->llr_record = keynum_to_irecord (keynum);
   return (PyObject *)rec;
 }
 
@@ -62,17 +62,17 @@ static PyObject *llpy_firstindi (PyObject *Py_UNUSED(self), PyObject *args ATTRI
 static PyObject *llpy_lastindi (PyObject *Py_UNUSED(self), PyObject *args ATTRIBUTE_UNUSED)
 {
   INT keynum = xref_lasti();
-  LLINES_PY_INDI_RECORD *rec;
+  LLINES_PY_RECORD *rec;
 
   if (keynum == 0)
     Py_RETURN_NONE;		/* no individuals in the database */
 
-  rec = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  rec = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! rec)
     return NULL;
 
-  rec->lri_type = LLINES_TYPE_INDI;
-  rec->lri_record = keynum_to_irecord (keynum);
+  rec->llr_type = LLINES_TYPE_INDI;
+  rec->llr_record = keynum_to_irecord (keynum);
   return (PyObject *)rec;
 }
 
@@ -83,17 +83,17 @@ static PyObject *llpy_lastindi (PyObject *Py_UNUSED(self), PyObject *args ATTRIB
 static PyObject *llpy_firstfam (PyObject *Py_UNUSED(self), PyObject *args ATTRIBUTE_UNUSED)
 {
   INT keynum = xref_firstf();
-  LLINES_PY_FAM_RECORD *rec;
+  LLINES_PY_RECORD *rec;
 
   if (keynum == 0)
     Py_RETURN_NONE;		/* no families in the database */
 
-  rec = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
+  rec = PyObject_New (LLINES_PY_RECORD, &llines_family_type);
   if (! rec)
     return NULL;
 
-  rec->lrf_type = LLINES_TYPE_FAM;
-  rec->lrf_record = keynum_to_frecord (keynum);
+  rec->llr_type = LLINES_TYPE_FAM;
+  rec->llr_record = keynum_to_frecord (keynum);
   return (PyObject *)rec;
 }
 
@@ -104,17 +104,17 @@ static PyObject *llpy_firstfam (PyObject *Py_UNUSED(self), PyObject *args ATTRIB
 static PyObject *llpy_lastfam (PyObject *Py_UNUSED(self), PyObject *args ATTRIBUTE_UNUSED)
 {
   INT keynum = xref_lastf();
-  LLINES_PY_FAM_RECORD *rec;
+  LLINES_PY_RECORD *rec;
 
   if (keynum == 0)
     Py_RETURN_NONE;		/* no families in the database */
 
-  rec = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
+  rec = PyObject_New (LLINES_PY_RECORD, &llines_family_type);
   if (! rec)
     return NULL;
 
-  rec->lrf_type = LLINES_TYPE_FAM;
-  rec->lrf_record = keynum_to_frecord (keynum);
+  rec->llr_type = LLINES_TYPE_FAM;
+  rec->llr_record = keynum_to_frecord (keynum);
   return (PyObject *)rec;
 }
 

@@ -191,66 +191,66 @@ static PyObject *llpy_iter_iternext (PyObject *self)
     {
     case LLINES_TYPE_EVEN:
       {
-	LLINES_PY_EVEN_RECORD *obj = PyObject_New (LLINES_PY_EVEN_RECORD, &llines_event_type);
+	LLINES_PY_RECORD *obj = PyObject_New (LLINES_PY_RECORD, &llines_event_type);
 	if (! obj)
 	  {
 	    release_record (record);
 	    return NULL;
 	  }
-	obj->lre_type = LLINES_TYPE_EVEN;
-	obj->lre_record = record;
+	obj->llr_type = LLINES_TYPE_EVEN;
+	obj->llr_record = record;
 
 	return (PyObject *)obj;
       }
     case LLINES_TYPE_INDI:
       {
-	LLINES_PY_INDI_RECORD *obj = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+	LLINES_PY_RECORD *obj = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
 	if (! obj)
 	  {
 	    release_record (record);
 	    return NULL;
 	  }
-	obj->lri_type = LLINES_TYPE_INDI;
-	obj->lri_record = record;
+	obj->llr_type = LLINES_TYPE_INDI;
+	obj->llr_record = record;
 
 	return (PyObject *)obj;
       }
     case LLINES_TYPE_FAM:
       {
-	LLINES_PY_FAM_RECORD *obj = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
+	LLINES_PY_RECORD *obj = PyObject_New (LLINES_PY_RECORD, &llines_family_type);
 	if (! obj)
 	  {
 	    release_record (record);
 	    return NULL;
 	  }
-	obj->lrf_type = LLINES_TYPE_FAM;
-	obj->lrf_record = record;
+	obj->llr_type = LLINES_TYPE_FAM;
+	obj->llr_record = record;
 
 	return (PyObject *)obj;
       }
     case LLINES_TYPE_SOUR:
       {
-	LLINES_PY_SOUR_RECORD *obj = PyObject_New (LLINES_PY_SOUR_RECORD, &llines_source_type);
+	LLINES_PY_RECORD *obj = PyObject_New (LLINES_PY_RECORD, &llines_source_type);
 	if (! obj)
 	  {
 	    release_record (record);
 	    return NULL;
 	  }
-	obj->lrs_type = LLINES_TYPE_SOUR;
-	obj->lrs_record = record;
+	obj->llr_type = LLINES_TYPE_SOUR;
+	obj->llr_record = record;
 
 	return (PyObject *)obj;
       }
     case LLINES_TYPE_OTHR:
       {
-	LLINES_PY_OTHR_RECORD *obj = PyObject_New (LLINES_PY_OTHR_RECORD, &llines_other_type);
+	LLINES_PY_RECORD *obj = PyObject_New (LLINES_PY_RECORD, &llines_other_type);
 	if (! obj)
 	  {
 	    release_record (record);
 	    return NULL;
 	  }
-	obj->lro_type = LLINES_TYPE_OTHR;
-	obj->lro_record = record;
+	obj->llr_type = LLINES_TYPE_OTHR;
+	obj->llr_record = record;
 
 	return (PyObject *)obj;
       }

@@ -40,12 +40,12 @@ static void llpy_family_dealloc (PyObject *self);
 
 static PyObject *llpy_marriage (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
   NODE fam_node;
   NODE event = NULL;
   LLINES_PY_EVEN_NODE *marr;
 
-  fam_node = nztop (fam->lrf_record);
+  fam_node = nztop (fam->llr_record);
   event = MARR (fam_node);
 
   if (! event)
@@ -67,13 +67,13 @@ static PyObject *llpy_marriage (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 static PyObject *llpy_husband (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
   NODE fam_node;
   NODE husb_node;
-  LLINES_PY_INDI_RECORD *husb;
+  LLINES_PY_RECORD *husb;
   CNSTRING key;
 
-  fam_node = nztop (fam->lrf_record);
+  fam_node = nztop (fam->llr_record);
   husb_node = HUSB (fam_node);
   if (! husb_node)
     /* family doesn't have a recorded husband */
@@ -83,12 +83,12 @@ static PyObject *llpy_husband (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! key)
     Py_RETURN_NONE;		/* it has a HUSB line, but no value -- no husband */
 
-  husb = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  husb = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! husb)
     return NULL;		/* PyOBject_New failed -- out of memory? */
 
-  husb->lri_record = key_to_irecord (key);
-  husb->lri_type = LLINES_TYPE_INDI;
+  husb->llr_record = key_to_irecord (key);
+  husb->llr_type = LLINES_TYPE_INDI;
 
   return (PyObject *)husb;
 }
@@ -99,13 +99,13 @@ static PyObject *llpy_husband (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 static PyObject *llpy_wife (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
   NODE fam_node;
   NODE wife_node;
-  LLINES_PY_INDI_RECORD *wife;
+  LLINES_PY_RECORD *wife;
   CNSTRING key;
 
-  fam_node = nztop (fam->lrf_record);
+  fam_node = nztop (fam->llr_record);
   wife_node = WIFE (fam_node);
   if (! wife_node)
     /* family doesn't have a recorded wife */
@@ -115,12 +115,12 @@ static PyObject *llpy_wife (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! key)
     Py_RETURN_NONE;		/* it has a WIFE line, but not value -- no wife */
 
-  wife = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  wife = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! wife)
     return NULL;		/* PyOBject_New failed -- out of memory? */
 
-  wife->lri_record = key_to_irecord (key);
-  wife->lri_type = LLINES_TYPE_INDI;
+  wife->llr_record = key_to_irecord (key);
+  wife->llr_type = LLINES_TYPE_INDI;
 
   return (PyObject *)wife;
 }
@@ -134,8 +134,8 @@ static PyObject *llpy_wife (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 static PyObject *llpy_nchildren (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
-  RECORD fam_record = fam->lrf_record;
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
+  RECORD fam_record = fam->llr_record;
   int count = length_nodes (CHIL (nztop (fam_record)));
 
   return (Py_BuildValue ("i", count));
@@ -147,12 +147,12 @@ static PyObject *llpy_nchildren (PyObject *self, PyObject *args ATTRIBUTE_UNUSED
 
 static PyObject *llpy_firstchild (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
   NODE indi_node;
-  LLINES_PY_INDI_RECORD *indi;
+  LLINES_PY_RECORD *indi;
   CNSTRING key;
 
-  indi_node = CHIL(nztop (fam->lrf_record));
+  indi_node = CHIL(nztop (fam->llr_record));
 
   if (! indi_node)
     Py_RETURN_NONE;		/* no children */
@@ -161,15 +161,15 @@ static PyObject *llpy_firstchild (PyObject *self, PyObject *args ATTRIBUTE_UNUSE
   if (! key)
     Py_RETURN_NONE;		/* malformed CHIL line -- no value, no  children */
 
-  indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  indi = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! indi)
     {
       /* PyObject_New failed -- presumably out of memory or corruption
 	 detected.  It should have signalled an exception... */
       return NULL;
     }
-  indi->lri_record = key_to_irecord (key);
-  indi->lri_type = LLINES_TYPE_INDI;
+  indi->llr_record = key_to_irecord (key);
+  indi->llr_type = LLINES_TYPE_INDI;
 
   return (PyObject *)indi;
 }
@@ -180,13 +180,13 @@ static PyObject *llpy_firstchild (PyObject *self, PyObject *args ATTRIBUTE_UNUSE
 
 static PyObject *llpy_lastchild (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
   NODE indi_node;
   NODE prev_node;
-  LLINES_PY_INDI_RECORD *indi;
+  LLINES_PY_RECORD *indi;
   CNSTRING key;
 
-  indi_node = CHIL (nztop (fam->lrf_record));
+  indi_node = CHIL (nztop (fam->llr_record));
   prev_node = indi_node;
 
   if (! indi_node)
@@ -203,15 +203,15 @@ static PyObject *llpy_lastchild (PyObject *self, PyObject *args ATTRIBUTE_UNUSED
   if (! key)
     Py_RETURN_NONE;		/* malformed CHIL line -- no value, no children */
 
-  indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  indi = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! indi)
     {
       /* PyObject_New failed -- presumably out of memory or corruption
 	 detected.  It should have signalled an exception... */
       return NULL;
     }
-  indi->lri_record = key_to_irecord (key);
-  indi->lri_type = LLINES_TYPE_INDI;
+  indi->llr_record = key_to_irecord (key);
+  indi->llr_type = LLINES_TYPE_INDI;
 
   return (PyObject *)indi;
 }
@@ -222,8 +222,8 @@ static PyObject *llpy_lastchild (PyObject *self, PyObject *args ATTRIBUTE_UNUSED
 
 static PyObject *llpy_nextfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
-  INT key_val = nzkeynum(fam->lrf_record);
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
+  INT key_val = nzkeynum(fam->llr_record);
 
   if (key_val == 0)
     {
@@ -236,9 +236,9 @@ static PyObject *llpy_nextfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (key_val == 0)
     Py_RETURN_NONE;		/* no more -- we have reached the end */
 
-  fam = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
-  fam->lrf_type = LLINES_TYPE_FAM;
-  fam->lrf_record = keynum_to_frecord (key_val);
+  fam = PyObject_New (LLINES_PY_RECORD, &llines_family_type);
+  fam->llr_type = LLINES_TYPE_FAM;
+  fam->llr_record = keynum_to_frecord (key_val);
   return (PyObject *)fam;
 }
 
@@ -248,8 +248,8 @@ static PyObject *llpy_nextfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 static PyObject *llpy_prevfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
-  INT key_val = nzkeynum(fam->lrf_record);
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
+  INT key_val = nzkeynum(fam->llr_record);
 
   if (key_val == 0)
     {
@@ -262,9 +262,9 @@ static PyObject *llpy_prevfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (key_val == 0)
     Py_RETURN_NONE;		/* no more -- we have reached the end */
 
-  fam = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
-  fam->lrf_type = LLINES_TYPE_FAM;
-  fam->lrf_record = keynum_to_frecord (key_val);
+  fam = PyObject_New (LLINES_PY_RECORD, &llines_family_type);
+  fam->llr_type = LLINES_TYPE_FAM;
+  fam->llr_record = keynum_to_frecord (key_val);
   return (PyObject *)fam;
 }
 
@@ -274,14 +274,14 @@ static PyObject *llpy_prevfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 static PyObject *llpy_children (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  RECORD fam = ((LLINES_PY_FAM_RECORD *)self)->lrf_record;
+  RECORD fam = ((LLINES_PY_RECORD *)self)->llr_record;
   PyObject *output_set = PySet_New (NULL);
 
   if (! output_set)
     return NULL;
 
   FORCHILDREN_RECORD (fam, child)
-    LLINES_PY_INDI_RECORD *py_record = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+    LLINES_PY_RECORD *py_record = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
     if (! py_record)
       {
 	PySet_Clear (output_set);
@@ -289,8 +289,8 @@ static PyObject *llpy_children (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 	release_record (child);
 	return NULL;
       }
-    py_record->lri_record = child;
-    py_record->lri_type = LLINES_TYPE_FAM;
+    py_record->llr_record = child;
+    py_record->llr_type = LLINES_TYPE_FAM;
     if (PySet_Add (output_set, (PyObject *)py_record) < 0)
       {
 	PySet_Clear (output_set);
@@ -308,14 +308,14 @@ static PyObject *llpy_children (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
 static PyObject *llpy_spouses_f (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  RECORD fam = ((LLINES_PY_FAM_RECORD *)self)->lrf_record;
+  RECORD fam = ((LLINES_PY_RECORD *)self)->llr_record;
   PyObject *output_set = PySet_New (NULL);
 
   if (! output_set)
     return NULL;
 
   FORFAMSPOUSES_RECORD (fam, spouse)
-    LLINES_PY_INDI_RECORD *py_record = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+    LLINES_PY_RECORD *py_record = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
     if (! py_record)
       {
 	PySet_Clear (output_set);
@@ -323,8 +323,8 @@ static PyObject *llpy_spouses_f (PyObject *self, PyObject *args ATTRIBUTE_UNUSED
 	release_record (spouse);
 	return NULL;
       }
-    py_record->lri_record = spouse;
-    py_record->lri_type = LLINES_TYPE_FAM;
+    py_record->llr_record = spouse;
+    py_record->llr_type = LLINES_TYPE_FAM;
     if (PySet_Add (output_set, (PyObject *)py_record) < 0)
       {
 	PySet_Clear (output_set);
@@ -344,11 +344,11 @@ static PyObject *llpy_spouses_f (PyObject *self, PyObject *args ATTRIBUTE_UNUSED
 
 static PyObject *llpy_choosechild_f (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
-  NODE node = nztop (fam->lrf_record);
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
+  NODE node = nztop (fam->llr_record);
   INDISEQ seq=0;
   RECORD record;
-  LLINES_PY_INDI_RECORD *indi;
+  LLINES_PY_RECORD *indi;
 
   if (! node)
     {
@@ -365,23 +365,23 @@ static PyObject *llpy_choosechild_f (PyObject *self, PyObject *args ATTRIBUTE_UN
   record = choose_from_indiseq(seq, DOASK1, _(qSifonei), _(qSnotonei));
   remove_indiseq (seq);
 
-  indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  indi = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! indi)
     return NULL;
 
-  indi->lri_type = LLINES_TYPE_INDI;
-  indi->lri_record = record;
+  indi->llr_type = LLINES_TYPE_INDI;
+  indi->llr_record = record;
 
   return (PyObject *)indi;
 }
 
 static PyObject *llpy_choosespouse_f (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
-  NODE node = nztop (fam->lrf_record);
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
+  NODE node = nztop (fam->llr_record);
   RECORD record;
   INDISEQ seq;
-  LLINES_PY_INDI_RECORD *py_indi;
+  LLINES_PY_RECORD *py_indi;
 
   seq = fam_to_spouses (node);
   if (! seq || (length_indiseq (seq) < 1))
@@ -392,27 +392,27 @@ static PyObject *llpy_choosespouse_f (PyObject *self, PyObject *args ATTRIBUTE_U
   if (! record)
     Py_RETURN_NONE;		/* user cancelled */
 
-  py_indi = PyObject_New (LLINES_PY_INDI_RECORD, &llines_individual_type);
+  py_indi = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! py_indi)
     return NULL;		/* no memory? */
 
-  py_indi->lri_type = LLINES_TYPE_INDI;
-  py_indi->lri_record = record;
+  py_indi->llr_type = LLINES_TYPE_INDI;
+  py_indi->llr_record = record;
   return ((PyObject *)py_indi);
 }
 
 static void llpy_family_dealloc (PyObject *self)
 {
-  LLINES_PY_FAM_RECORD *fam = (LLINES_PY_FAM_RECORD *) self;
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
 
   if (llpy_debug)
     {
       fprintf (stderr, "llpy_family_dealloc entry: self %p\n refcnt %ld",
 	       (void *)self, Py_REFCNT (self));
     }
-  release_record (fam->lrf_record);
-  fam->lrf_record = 0;
-  fam->lrf_type = 0;
+  release_record (fam->llr_record);
+  fam->llr_record = 0;
+  fam->llr_type = 0;
   Py_TYPE(self)->tp_free (self);
 #if 0
   Py_DECREF (Py_TYPE(self));
@@ -477,7 +477,7 @@ PyTypeObject llines_family_type =
    PyVarObject_HEAD_INIT(NULL, 0)
    .tp_name = "llines.Family",
    .tp_doc = "Lifelines GEDCOM Family Record",
-   .tp_basicsize = sizeof (LLINES_PY_FAM_RECORD),
+   .tp_basicsize = sizeof (LLINES_PY_RECORD),
    .tp_itemsize = 0,
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,

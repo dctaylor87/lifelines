@@ -30,16 +30,16 @@ static PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw)
   STRING prompt = _("Identify person for program:");
   RECORD rec;
   static char *keywords[] = { "prompt", NULL };
-  LLINES_PY_INDI_RECORD *indi;
+  LLINES_PY_RECORD *indi;
 
   if (! PyArg_ParseTupleAndKeywords (args, kw, "|s", keywords, &prompt))
     return NULL;
 
   rec = rptui_ask_for_indi (prompt, DOASK1);
 
-  indi = PyObject_New(LLINES_PY_INDI_RECORD, &llines_individual_type);
-  indi->lri_type = LLINES_TYPE_INDI;
-  indi->lri_record = rec;
+  indi = PyObject_New(LLINES_PY_RECORD, &llines_individual_type);
+  indi->llr_type = LLINES_TYPE_INDI;
+  indi->llr_record = rec;
   return (PyObject *)indi;
 }
 
@@ -47,7 +47,7 @@ static PyObject *llpy_getindi (PyObject *self, PyObject *args, PyObject *kw)
 
 static PyObject *llpy_getfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_FAM_RECORD *family;
+  LLINES_PY_RECORD *family;
   RECORD record;
 
   record = rptui_ask_for_fam(_("Enter a spouse from family."),
@@ -55,12 +55,12 @@ static PyObject *llpy_getfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! record)
     Py_RETURN_NONE;		/* user cancelled */
 
-  family = PyObject_New (LLINES_PY_FAM_RECORD, &llines_family_type);
+  family = PyObject_New (LLINES_PY_RECORD, &llines_family_type);
   if (! family)
     return NULL;		/* PyObject_New failed and set the exception */
 
-  family->lrf_record = record;
-  family->lrf_type = LLINES_TYPE_FAM;
+  family->llr_record = record;
+  family->llr_type = LLINES_TYPE_FAM;
   return (PyObject *)family;
 }
 

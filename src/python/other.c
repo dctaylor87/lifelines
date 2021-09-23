@@ -21,15 +21,15 @@ static void llpy_other_dealloc (PyObject *self);
 
 static void llpy_other_dealloc (PyObject *self)
 {
-  LLINES_PY_OTHR_RECORD *othr = (LLINES_PY_OTHR_RECORD *) self;
+  LLINES_PY_RECORD *othr = (LLINES_PY_RECORD *) self;
   if (llpy_debug)
     {
       fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
-  release_record (othr->lro_record);
-  othr->lro_record = 0;
-  othr->lro_type = 0;
+  release_record (othr->llr_record);
+  othr->llr_record = 0;
+  othr->llr_type = 0;
   Py_TYPE(self)->tp_free (self);
 #if 0
   Py_DECREF (Py_TYPE(self));
@@ -66,7 +66,7 @@ PyTypeObject llines_other_type =
    PyVarObject_HEAD_INIT(NULL, 0)
    .tp_name = "llines.Other",
    .tp_doc = "Lifelines GEDCOM Other Record",
-   .tp_basicsize = sizeof (LLINES_PY_OTHR_RECORD),
+   .tp_basicsize = sizeof (LLINES_PY_RECORD),
    .tp_itemsize = 0,
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,

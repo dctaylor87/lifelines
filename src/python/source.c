@@ -21,15 +21,15 @@ static void llpy_source_dealloc (PyObject *self);
 
 static void llpy_source_dealloc (PyObject *self)
 {
-  LLINES_PY_SOUR_RECORD *sour = (LLINES_PY_SOUR_RECORD *) self;
+  LLINES_PY_RECORD *sour = (LLINES_PY_RECORD *) self;
   if (llpy_debug)
     {
       fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
-  release_record (sour->lrs_record);
-  sour->lrs_record = 0;
-  sour->lrs_type = 0;
+  release_record (sour->llr_record);
+  sour->llr_record = 0;
+  sour->llr_type = 0;
   Py_TYPE(self)->tp_free (self);
 #if 0
   Py_DECREF (Py_TYPE(self));
@@ -65,7 +65,7 @@ PyTypeObject llines_source_type =
    PyVarObject_HEAD_INIT(NULL, 0)
    .tp_name = "llines.Source",
    .tp_doc = "Lifelines GEDCOM Source Record",
-   .tp_basicsize = sizeof (LLINES_PY_SOUR_RECORD),
+   .tp_basicsize = sizeof (LLINES_PY_RECORD),
    .tp_itemsize = 0,
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
