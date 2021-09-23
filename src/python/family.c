@@ -466,6 +466,9 @@ If STRIP_PREFIX is True (default: False), the non numeric prefix is stripped." }
      "(FAM).choosespouse(void) --> INDI.  Select and return spouse of family\n\
 through user interface.  Returns None if family has no spouses or user cancels." },
 
+   { "top_node", (PyCFunction)_llpy_top_node, METH_NOARGS,
+     "top_node(void) --> NODE.  Returns the top of the NODE tree associated with the RECORD." },
+
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 

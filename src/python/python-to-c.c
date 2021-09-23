@@ -50,23 +50,31 @@ PyObject *_llpy_key (PyObject *self, PyObject *args, PyObject *kw)
   return Py_BuildValue ("s", (strip_prefix ? key + 1 : key));
 }
 
+PyObject *_llpy_top_node (PyObject *self, PyObject *args)
+{
+  LLINES_PY_RECORD *py_record = (LLINES_PY_RECORD *) self;
+  RECORD record = py_record->llr_record;
+  NODE top = nztop (record);
+  LLINES_PY_NODE *py_node;
+
+  if (! top)
+    {
+      /* something went wrong -- cannot find the top node for this record */
+      PyErr_SetString(PyExc_SystemError, "top_node: unable to find RECORD's top NODE");
+      return NULL;
+    }
+  py_node = PyObject_New (LLINES_PY_NODE, &llines_node_type);
+  if (! py_node)
+    return NULL;
+
+  py_node->lnn_type = py_record->llr_type;
+  py_node->lnn_node = top;
+  return ((PyObject *) py_node);
+}
+
 static struct PyMethodDef LifelinesMethods[] =
   {
    /* Person Functions -- moved to Lifelines_Person_Methods */
-
-#if 0				/* XXX what should this do in the Python world? XXX */
-   { "inode",		llpy_inode, METH_VARARGS,
-     "Root GEDCOM node of INDI" },
-
-   /* Family Functions -- moved to Lifelines_Family_Methods */
-
-   { "fnode",		llpy_fnode, METH_VARARGS,
-     "doc string" },
-   { "root",		llpy_root, METH_VARARGS,
-     "doc string" },
-   { "fam",		llpy_fam, METH_VARARGS,
-     "fam(key) --> FAM; Finds a family from a key." },
-#endif
 
    /* GEDCOM Node Functions -- now in nodes.c */
 
@@ -155,8 +163,6 @@ static struct PyMethodDef LifelinesMethods[] =
 #if 0
    { "chooseindi",	llpy_chooseindi, METH_VARARGS,
      "doc string" },
-   { "choosespouse",	llpy_choosespouse, METH_VARARGS,
-     "choosespouse(INDI) -> INDI; Select and return a spouse of INDI." },
    { "choosesubset",	llpy_choosesubset, METH_VARARGS,
      "doc string" },
 #endif
@@ -340,6 +346,7 @@ PyInit_llines(void)
   llpy_iter_init ();
   llpy_database_init ();
   llpy_nodes_init ();
+  llpy_records_init ();
 
   return (module);
 }

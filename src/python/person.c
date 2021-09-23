@@ -1005,71 +1005,71 @@ static struct PyMethodDef Lifelines_Person_Methods[] =
    /* Person Functions */
 
    { "name",		(PyCFunction)llpy_name, METH_VARARGS | METH_KEYWORDS,
-     "(INDI).name([CAPS]) -->NAME; returns the name found on the first '1 NAME' line.\n\
+     "name([CAPS]) -->NAME; returns the name found on the first '1 NAME' line.\n\
 If CAPS (optional) is True (default), the surname is made all capitals." },
    { "fullname",	(PyCFunction)llpy_fullname, METH_VARARGS | METH_KEYWORDS,
-     "(INDI).fullname(bool1, bool2, int) -->" },
+     "fullname(bool1, bool2, int) -->" },
    { "surname",		(PyCFunction)llpy_surname, METH_NOARGS,
-     "(INDI).surname(void) --> STRING: returns the surname as found in the first '1 NAME'\n\
+     "surname(void) --> STRING: returns the surname as found in the first '1 NAME'\n\
 line.  Slashes aree removed." },
    { "givens",		(PyCFunction)llpy_givens, METH_NOARGS,
-     "(INDI).givens(void) --> STRING: returns the given names of the person in the\n\
+     "givens(void) --> STRING: returns the given names of the person in the\n\
 same order and format as found in the first '1 NAME' line of the record." },
    { "trimname",	(PyCFunction)llpy_trimname, METH_VARARGS | METH_KEYWORDS,
-     "(INDI).trimname(MAX_LENGTH) --> STRING; returns name trimmed to MAX_LENGTH." },
+     "trimname(MAX_LENGTH) --> STRING; returns name trimmed to MAX_LENGTH." },
    { "birth",		(PyCFunction)llpy_birth, METH_NOARGS,
-     "(INDI).birth(void) -> EVENT: First birth event of INDI; None if no event is found." },
+     "birth(void) -> EVENT: First birth event of INDI; None if no event is found." },
    { "death",		(PyCFunction)llpy_death, METH_NOARGS,
-     "(INDI).death(void) -> EVENT: First death event of INDI; None if no event is found." },
+     "death(void) -> EVENT: First death event of INDI; None if no event is found." },
    { "burial",		(PyCFunction)llpy_burial, METH_NOARGS,
-     "(INDI).burial(void) -> EVENT: First burial event of INDI; None if no event is found." },
+     "burial(void) -> EVENT: First burial event of INDI; None if no event is found." },
    { "father",		(PyCFunction)llpy_father, METH_NOARGS,
-     "(INDI).father(void) -> INDI: First father of INDI; None if no person in the role." },
+     "father(void) -> INDI: First father of INDI; None if no person in the role." },
    { "mother",		(PyCFunction)llpy_mother, METH_NOARGS,
-     "(INDI).mother(void) -> INDI: First mother of INDI; None if no person in the role." },
+     "mother(void) -> INDI: First mother of INDI; None if no person in the role." },
    { "nextsib",		(PyCFunction)llpy_nextsib, METH_NOARGS,
-     "(INDI).nextsib(void) -> INDI: next (younger) sibling of INDI. None if no person in the role." },
+     "nextsib(void) -> INDI: next (younger) sibling of INDI. None if no person in the role." },
    { "prevsib",		(PyCFunction)llpy_prevsib, METH_NOARGS,
-     "(INDI).prevsib(void) -> INDI: previous (older) sibling of INDI. None if no person in the role." },
+     "prevsib(void) -> INDI: previous (older) sibling of INDI. None if no person in the role." },
    { "sex",		(PyCFunction)llpy_sex, METH_NOARGS,
-     "(INDI).sex(void) -> STRING: sex of INDI (M, F, or U)." },
+     "sex(void) -> STRING: sex of INDI (M, F, or U)." },
    { "male",		(PyCFunction)llpy_male, METH_NOARGS,
-     "(INDI).male(void) --> boolean: True if male, False otherwise." },
+     "male(void) --> boolean: True if male, False otherwise." },
    { "female",		(PyCFunction)llpy_female, METH_NOARGS,
-     "(INDI).female(void) --> boolean: True if female, False otherwise." },
+     "female(void) --> boolean: True if female, False otherwise." },
    { "pn",		(PyCFunction)llpy_pn, METH_VARARGS | METH_KEYWORDS,
-     "(INDI).pn(integer) --> STRING: pronoun referring to INDI\n\
+     "pn(integer) --> STRING: pronoun referring to INDI\n\
 \t\t0 (He/She), 1 (he/she), 2 (His/Her), 3 (his/her), 4 (him/her)" },
    { "nspouses",	(PyCFunction)llpy_nspouses, METH_NOARGS,
-     "(INDI).nspouses(void) -> INTEGER; Returns number of spouses of INDI." },
+     "nspouses(void) -> INTEGER; Returns number of spouses of INDI." },
    { "nfamilies",	(PyCFunction)llpy_nfamilies, METH_NOARGS,
-     "(INDI).nfamilies(void) -> INTEGER; Returns number of families (as spouse/parent) of INDI" },
+     "nfamilies(void) -> INTEGER; Returns number of families (as spouse/parent) of INDI" },
    { "parents",		llpy_parents, METH_VARARGS,
-     "(INDI).parents(void) --> FAM.  Returns the first FAM in which INDI is a child." },
+     "parents(void) --> FAM.  Returns the first FAM in which INDI is a child." },
    { "title",		(PyCFunction)llpy_title, METH_NOARGS,
-     "(INDI).title(void) -> STRING; Returns the value of the first '1 TITL' line in the record." },
+     "title(void) -> STRING; Returns the value of the first '1 TITL' line in the record." },
    { "key", (PyCFunction)_llpy_key, METH_VARARGS | METH_KEYWORDS,
-     "(INDI).key([strip_prefix]) --> STRING.  Returns the database key of the record.\n\
+     "key([strip_prefix]) --> STRING.  Returns the database key of the record.\n\
 If STRIP_PREFIX is True (default: False), the non numeric prefix is stripped." },
    { "soundex",		(PyCFunction)llpy_soundex, METH_NOARGS,
-     "(INDI).soundex(void) -> STRING: SOUNDEX code of INDI" },
+     "soundex(void) -> STRING: SOUNDEX code of INDI" },
    { "nextindi",	(PyCFunction)llpy_nextindi, METH_NOARGS,
-     "(INDI).nextindi(void) -> INDI: Returns next INDI (in database order)." },
+     "nextindi(void) -> INDI: Returns next INDI (in database order)." },
    { "previndi",	(PyCFunction)llpy_previndi, METH_NOARGS,
-     "(INDI).previndi(void) -> INDI: Returns previous INDI (in database order)." },
+     "previndi(void) -> INDI: Returns previous INDI (in database order)." },
 
    { "children",	(PyCFunction)llpy_children, METH_NOARGS,
-     "(INDI).children(void) --> SET.  Returns the set of children of INDI." },
+     "children(void) --> SET.  Returns the set of children of INDI." },
    /* User Interaction Functions */
 
    { "choosechild",	llpy_choosechild_i, METH_NOARGS,
-     "choosechild(INDI) -> INDI; Selects and returns child of person\n\
+     "choosechild(void) -> INDI; Selects and returns child of person\n\
 through user interface.  Returns None if INDI has no children." },
    { "choosepouse",	llpy_choosespouse_i, METH_NOARGS,
      "choosespouse(void) --> INDI.  Select and return a spouse of individual\n\
 through user interface.  Returns None if individual has no spouses or user cancels." },
    { "choosefam",	llpy_choosefam, METH_NOARGS,
-     "choosefam(INDI) -> FAM; Selects and returns a family that INDI is in." },
+     "choosefam(void) -> FAM; Selects and returns a family that INDI is in." },
 
    /* this was in set.c, but there is no documented way to add methods
       to a type after it has been created.  And, researching how
@@ -1080,6 +1080,9 @@ through user interface.  Returns None if individual has no spouses or user cance
 
    { "spouses",		llpy_spouses_i, METH_NOARGS,
      "spouses(void) --> SET.  Returns set of spouses of INDI." },
+
+   { "top_node", (PyCFunction)_llpy_top_node, METH_NOARGS,
+     "top_nodevoid) --> NODE.  Returns the top of the NODE tree associated with the RECORD." },
 
    { NULL, 0, 0, NULL }		/* sentinel */
   };

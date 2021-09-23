@@ -27,8 +27,10 @@ extern void llpy_set_init (void);
 extern void llpy_database_init (void);
 extern void llpy_person_init (void);
 extern void llpy_nodes_init (void);
+extern void llpy_records_init (void);
 
 /* XXX TODO: make this a bitmask XXX */
 extern int llpy_debug;
 
 extern PyObject *_llpy_key (PyObject *self, PyObject *args, PyObject *kw);
+extern PyObject *_llpy_top_node (PyObject *self, PyObject *args);
