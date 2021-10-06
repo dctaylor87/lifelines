@@ -69,8 +69,8 @@ static PyObject *llpy_siblingset (PyObject *self, PyObject *args, PyObject *kw)
 
       if (py_indi->ob_type != &llines_individual_type)
 	{
-	  /* XXX set an exception -- wrong type (non INDI) was found
-	     input set.  Return NULL after cleaning up.  XXX */
+	  /* Set an exception -- wrong type (non INDI) was found in
+	     the input set.  Return NULL after cleaning up.  */
 	  PyErr_SetString (PyExc_TypeError, "siblingset: an element of the input set is not an individual");
 	  return NULL;
 	}
@@ -175,7 +175,7 @@ static PyObject *llpy_ancestorset (PyObject *self, PyObject *args, PyObject *kw)
     {
       if ((status = add_parents (item, working_set, NULL)) < 0)
 	{
-	  /* XXX report status, cleanup, return NULL XXX */
+	  /* report status, cleanup, return NULL */
 	  PySet_Clear (working_set);
 	  Py_DECREF (working_set);
 	  PySet_Clear (output_set);
@@ -207,7 +207,7 @@ static PyObject *llpy_ancestorset (PyObject *self, PyObject *args, PyObject *kw)
       int status = add_parents (item, working_set, output_set);
       if (status < 0)
 	{
-	  /* XXX report status, cleanup, return NULL XXX */
+	  /* report status, cleanup, return NULL */
 	  PySet_Clear (working_set);
 	  Py_DECREF (working_set);
 	  PySet_Clear (output_set);
@@ -257,7 +257,7 @@ static PyObject *llpy_parentset (PyObject *self, PyObject *args, PyObject *kw)
     {
       if ((status = add_parents (item, output_set, NULL)) < 0)
 	{
-	  /* XXX report status, cleanup, return NULL XXX */
+	  /* report status, cleanup, return NULL */
 	  PySet_Clear (output_set);
 	  Py_DECREF (output_set);
 	  Py_DECREF (iterator);
@@ -285,7 +285,8 @@ static PyObject *llpy_parentset (PyObject *self, PyObject *args, PyObject *kw)
    working_set.   
 
    If output_set is NULL, it is skipped.  The output_set is NULL if
-   this is the initial scan of the input set.  */
+   this is the initial scan of the input set (ancestorset) or it is
+   called from parentset.  */
 
 static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_set)
 {

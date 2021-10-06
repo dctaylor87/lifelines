@@ -41,7 +41,7 @@ static PyObject *llpy_prevsib (PyObject *self, PyObject *args);
 static PyObject *llpy_sex (PyObject *self, PyObject *args);
 static PyObject *llpy_male (PyObject *self, PyObject *args);
 static PyObject *llpy_female (PyObject *self, PyObject *args);
-static PyObject *llpy_pn (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_pronoun (PyObject *self, PyObject *args, PyObject *kw);
 static PyObject *llpy_nspouses (PyObject *self, PyObject *args);
 static PyObject *llpy_nfamilies (PyObject *self, PyObject *args);
 static PyObject *llpy_parents (PyObject *self, PyObject *args);
@@ -57,6 +57,11 @@ static PyObject *llpy_choosespouse_i (PyObject *self, PyObject *args);
 static PyObject *llpy_choosefam (PyObject *self, PyObject *args);
 
 static PyObject *llpy_spouses_i (PyObject *self, PyObject *args);
+static PyObject *llpy_spouseset (PyObject *self, PyObject *args, PyObject *kw);
+
+/* add_spouses -- helper function for llpy_spouses_i and llpy_spouseset */
+
+static int add_spouses (PyObject *record, PyObject *output_set);
 
 
 /* These four routines used to be in set.c, but got moved here because
@@ -163,8 +168,10 @@ static PyObject *llpy_surname (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! (node_name = NAME(node_name)) || ! nval(node_name))
     {
       if (getlloptint ("RequireNames", 0))
-	/* XXX figure out how to issue exceptions XXX _("surname: person does not have a name" */
+	/* XXX figure out how to issue exceptions XXX _("surname:
+	   person does not have a name" */
 	return NULL;
+
       Py_RETURN_NONE;		/* XXX should it be an empty string instead? */
     }
   name = getasurname(nval(node_name));
@@ -311,6 +318,9 @@ static PyObject *llpy_father (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     Py_RETURN_NONE;		/* no person in the role */
 
   father = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
+  if (! father)
+    return NULL;
+
   father->llr_record = node_to_record (indi_node);
   father->llr_type = LLINES_TYPE_INDI;
 
@@ -332,6 +342,9 @@ static PyObject *llpy_mother (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     Py_RETURN_NONE;		/* no person in the role */
 
   mother = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
+  if (! mother)
+    return NULL;
+
   mother->llr_record = node_to_record (indi_node);
   mother->llr_type = LLINES_TYPE_INDI;
 
@@ -432,18 +445,37 @@ static PyObject *llpy_female (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     Py_RETURN_FALSE;
 }
 
-/* llpy_pn */
+/* llpy_pronoun */
 
-static PyObject *llpy_pn (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_pronoun (PyObject *self, PyObject *args, PyObject *kw)
 {
   LLINES_PY_RECORD *indi = (LLINES_PY_RECORD *) self;
   static char *keywords[] = { "which", NULL };
   int which;
+  char *masculine[] = { "He",  "he",  "His", "his", "him", "his",  "himself" };
+  char *feminine[] =  { "She", "she", "Her", "her", "her", "hers", "herself" };
+#if 0
+  char *neuter[] =    { "It",  "it",  "Its", "its", "it",  "its",  "itself"  };
+#endif
+  NODE indi_node;
+  char *pronoun;
 
   if (! PyArg_ParseTupleAndKeywords (args, kw, "i", keywords, &which))
     return NULL;
 
-  abort ();
+  if ((which < 0) || (which > 6))
+    {
+      PyErr_SetString (PyExc_ValueError, "pronoun: argument 'which' must be in the range 0-6");
+      return NULL;
+    }
+
+  indi_node = nztop (indi->llr_record);
+  if (SEX(indi_node) == SEX_FEMALE)
+    pronoun = feminine[which];
+  else
+    pronoun = masculine[which];
+
+  return Py_BuildValue ("s", pronoun);
 }
 
 /* llpy_nspouses (INDI) --> INTEGER
@@ -536,14 +568,6 @@ static PyObject *llpy_soundex (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("s", trad_soundex (getsxsurname (nval (name))));
 }
 
-/* llpy_root */
-
-PyObject *llpy_root (PyObject *self, PyObject *args)
-{
-  LLINES_PY_RECORD *indi = (LLINES_PY_RECORD *) self;
-  abort ();
-}
-
 /* llpy_nextindi (INDI) --> INDI
 
    Returns the next INDI in the database (in key order).  */
@@ -573,6 +597,9 @@ static PyObject *llpy_nextindi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     Py_RETURN_NONE;		/* no more -- we have reached the end */
 
   indi = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
+  if (! indi)
+    return NULL;
+
   indi->llr_type = LLINES_TYPE_INDI;
   indi->llr_record = keynum_to_irecord (key_val);
   return (PyObject *)indi;
@@ -650,6 +677,11 @@ static PyObject *llpy_choosechild_i (PyObject *self, PyObject *args ATTRIBUTE_UN
   return (PyObject *)indi;
 }
 
+/* llpy_choosespouse_i --> INDI.  INDI version of choosespouse.  Given
+   an individual, find all his/her spouses and asks the user to choose
+   one of them.  Returns the INDI choosen or None if the user
+   cancelled.  */
+
 static PyObject *llpy_choosespouse_i (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_RECORD *indi = (LLINES_PY_RECORD *) self;
@@ -676,7 +708,9 @@ static PyObject *llpy_choosespouse_i (PyObject *self, PyObject *args ATTRIBUTE_U
   return ((PyObject *)py_indi);
 }
 
-/* llpy_choosefam(void) --> FAM */
+/* llpy_choosefam(void) --> FAM.  Given an individual, finds all of
+   his/her families and ask the user to choose one of them.  Returns
+   the FAM choosen orf None if the user cancelled. */
 
 static PyObject *llpy_choosefam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
@@ -714,27 +748,86 @@ static PyObject *llpy_spouses_i (PyObject *self, PyObject *args ATTRIBUTE_UNUSED
   if (! output_set)
     return NULL;
 
+  if (add_spouses(record, output_set) < 0)
+    return NULL;
+
+  return (output_set);
+}
+
+static PyObject *llpy_spouseset (PyObject *self, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "set", NULL };
+  PyObject *input_set;		/* set passed in */
+  PyObject *output_set;		/* represents INDIs that are part of the return value */
+  PyObject *item;
+  int status;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "O", keywords, &input_set))
+    return NULL;
+
+  output_set = PySet_New (NULL);
+  if (! output_set)
+    return NULL;
+
+  /* propagate parents of the input set into output_set */
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_spouseset: processing input_set\n");
+    }
+
+  PyObject *iterator = PyObject_GetIter (input_set);
+  if (! iterator)
+    {
+      Py_DECREF (output_set);
+      return NULL;
+    }
+
+  while ((item = PyIter_Next (iterator)))
+    {
+      if ((status = add_spouses (item, output_set)) < 0)
+	{
+	  /* report status, cleanup, return NULL */
+	  PySet_Clear (output_set);
+	  Py_DECREF (output_set);
+	  Py_DECREF (iterator);
+	  return NULL;
+	}
+    }
+  if (PyErr_Occurred())
+    {
+      /* clean up and return NULL */
+      PySet_Clear (output_set);
+      Py_DECREF (output_set);
+      Py_DECREF (iterator);
+      return NULL;
+    }
+  Py_DECREF (iterator);
+
+  return (output_set);
+}
+
+/* add_spouses -- helper function for llpy_spouses_i and llpy_spouseset */
+
+static int add_spouses (PyObject *item, PyObject *output_set)
+{
+  RECORD record = ((LLINES_PY_RECORD *)item)->llr_record;
+  RECORD spouse;
+
   FORSPOUSES_RECORD(record,spouse)
 
     LLINES_PY_RECORD *new_indi = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
     if (! new_indi)
-      {
-	PySet_Clear (output_set);
-	Py_DECREF (output_set);
-	return NULL;
-      }
+      return (-1);
+
     new_indi->llr_type = LLINES_TYPE_INDI;
     new_indi->llr_record = spouse;
 
     if (PySet_Add (output_set, (PyObject *)new_indi) < 0)
-      {
-	PySet_Clear (output_set);
-	Py_DECREF (output_set);
-	return NULL;
-      }
+      return (-2);
+
   ENDSPOUSES_RECORD
 
-  return (output_set);
+  return (0);
 }
 
 /* llpy_descendantset(SET) -- given an input set of INDIs, produce an
@@ -1037,9 +1130,10 @@ same order and format as found in the first '1 NAME' line of the record." },
      "male(void) --> boolean: True if male, False otherwise." },
    { "female",		(PyCFunction)llpy_female, METH_NOARGS,
      "female(void) --> boolean: True if female, False otherwise." },
-   { "pn",		(PyCFunction)llpy_pn, METH_VARARGS | METH_KEYWORDS,
-     "pn(integer) --> STRING: pronoun referring to INDI\n\
-\t\t0 (He/She), 1 (he/she), 2 (His/Her), 3 (his/her), 4 (him/her)" },
+   { "pronoun",		(PyCFunction)llpy_pronoun, METH_VARARGS | METH_KEYWORDS,
+     "pronoun(which) --> STRING: pronoun referring to INDI\n\
+\t\t0 (He/She/It), 1 (he/she/it), 2 (His/Her/Its), 3 (his/her/its), 4 (him/her/it)\n\
+\t\t5 (his/hers/its) 6 (himself/herself/itself)" },
    { "nspouses",	(PyCFunction)llpy_nspouses, METH_NOARGS,
      "nspouses(void) -> INTEGER; Returns number of spouses of INDI." },
    { "nfamilies",	(PyCFunction)llpy_nfamilies, METH_NOARGS,
@@ -1093,6 +1187,8 @@ static struct PyMethodDef Lifelines_Person_Functions[] =
      "descendantset(SET) --> SET.  Returns the set of descendants of the input set." },
    { "childset",	(PyCFunction)llpy_childset, METH_VARARGS | METH_KEYWORDS,
      "childset(SET) --> SET.  Returns the set of INDIs that are children of the input INDIs." },
+   { "spouseset",	(PyCFunction)llpy_spouseset, METH_VARARGS | METH_KEYWORDS,
+     "spouseset(SET) --> SET.  Returns the set of INDIs that are spouses of the input INDIs." },
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 

@@ -86,43 +86,6 @@ static struct PyMethodDef LifelinesMethods[] =
      "doc string" },
    { "setdate",		llpy_setdate, METH_VARARGS,
      "doc string" },
-   { "dayformat",	llpy_dayformat, METH_VARARGS,
-     "dayformat(INT) --> VOID: set day format for stddate calls\n\
-\t\t0 (leave space before single digit days)\n\
-\t\t1 (use leading 0 before single digit days)\n\
-\t\t2 (no space or leading 0 before single digit days)." },
-   { "monthformat",	llpy_monthformat, METH_VARARGS,
-     "monthformat(INT) --> VOID: set month format for stddate calls.\n\
-\t\t0\tnumber with space before single digit months\n\
-\t\t1\tnumber with leading zero before single digit months\n\
-\t\t2\tnumber with no space for zero before single digit months\n\
-\t\t3\tupper case abbreviation (eg.g. JAN, FEB) (localized)\n\
-\t\t4\tcapitalized abbreviation (e.g., Jan, Feb) (localized)\n\
-\t\t5\tupper case full word (e.g., JANUARY, FEBRUARY) (localized)\n\
-\t\t6\tcapitalized full word (e.g., January, February) (localized)\n\
-\t\t7\tlower case abbreviations (e.g., jan, feb) (localized)\n\
-\t\t8\tlower case full word (e.g., january, february) (localized)\n\
-\t\t9\tupper case abbreviation in English per GEDCOM (e.g., JAN, FEB)\n\
-\t\t10\tlower case roman letter (e.g., i, ii)\n\
-\t\t11\tupper case roman letter (e.g., I, II)\n" },
-   { "yearformat",	llpy_yearformat, METH_VARARGS,
-     "yearformat(INT) --> VOID: set year format for stddate calls\n\
-\t\t0 (use leading spaces before years with less than four digits)\n\
-\t\t1 (use leading 0 before years with less than four digits\n\
-\t\t2 (no space or leading 0 before years)." },
-   { "eraformat",	llpy_eraformat, METH_VARARGS,
-     "eraformat(INT) --> VOID: set era format for stddate calls\n\
-\t\t0 (no AD/BC markers)\n\
-\t\t1 (trailing B.C. if appropriate)\n\
-\t\t2 (trailing A.D. or B.C.)\n\
-\t\t11 (trailing BC if appropriate)\n\
-\t\t12 (trailing AD or BC)\n\
-\t\t21 (trailing B.C.E. if appropriate)\n\
-\t\t22 (trailing C.E. or B.C.E.)\n\
-\t\t31 (trailing BC if appropriate)\n\
-\t\t32 (trailing CE or BCE)." },
-   { "dateformat",	llpy_dateformat, METH_VARARGS,
-     "dateformat(INT) --> VOID: set date format for stddate calls." },
    { "datepic",		llpy_datepic, METH_VARARGS,
      "datepic(STRING) --> VOID: set custom date format for stddate calls (what about errors?)." },
    { "stddate",		llpy_stddate, METH_VARARGS,
@@ -156,7 +119,7 @@ static struct PyMethodDef LifelinesMethods[] =
 
    /* User Interaction Functions */
 
-#if 0				/* XXX until we figure out what to do about setx XXX */
+#if 0				/* XXX until we figure out what to do about sets XXX */
    { "getindiset",	llpy_getindiset, METH_VARARGS,
      "identify set of persons through user interface" },
 #endif
@@ -169,10 +132,8 @@ static struct PyMethodDef LifelinesMethods[] =
 
    /* Person Set Functions and GEDCOM Extraction */
 
-#if 0				/* XXX until we figure out what to do about sets XXX */
+ #if 0				/* XXX until we figure out what to do about sets XXX */
    { "indiset",		llpy_indiset, METH_VARARGS,
-     "doc string" },
-   { "spouseset",	llpy_spouseset, METH_VARARGS,
      "doc string" },
 
    { "gengedcomstrong",	llpy_gengedcomstrong, METH_VARARGS,
@@ -181,10 +142,6 @@ static struct PyMethodDef LifelinesMethods[] =
 
    /* Miscellaneous Functions */
 
-#if 0
-   { "program",		llpy_program, METH_NOARGS,
-     "program(void) -> STRING: return name of the current program" },
-#endif
    { "version",		llpy_version, METH_NOARGS,
      "version(void) -> STRING: return version of current program" },
 
@@ -230,6 +187,9 @@ PyInit_llines(void)
     return NULL;
 
   if (PyType_Ready(&llines_iter_type) < 0)
+    return NULL;
+
+  if (PyType_Ready(&llines_nodeiter_type) < 0)
     return NULL;
 
   module = PyModule_Create (&lifelines_module);
@@ -331,10 +291,27 @@ PyInit_llines(void)
       return NULL;
     }
 
+  Py_INCREF (&llines_nodeiter_type);
+  if (PyModule_AddObject (module, "Iter", (PyObject *) &llines_nodeiter_type) < 0)
+    {
+      Py_DECREF (&llines_nodeiter_type);
+      Py_DECREF (&llines_iter_type);
+      Py_DECREF (&llines_record_type);
+      Py_DECREF (&llines_other_type);
+      Py_DECREF (&llines_source_type);
+      Py_DECREF (&llines_event_type);
+      Py_DECREF (&llines_individual_type);
+      Py_DECREF (&llines_family_type);
+      Py_DECREF (&llines_node_type);
+      Py_DECREF (module);
+      return NULL;
+    }
+
   Py_INCREF (&llines_database_type);
   if (PyModule_AddObject (module, "Database", (PyObject *) &llines_database_type) < 0)
     {
       Py_DECREF (&llines_database_type);
+      Py_DECREF (&llines_nodeiter_type);
       Py_DECREF (&llines_iter_type);
       Py_DECREF (&llines_record_type);
       Py_DECREF (&llines_other_type);
@@ -353,12 +330,13 @@ PyInit_llines(void)
   llpy_database_init ();
   llpy_nodes_init ();
   llpy_records_init ();
+  llpy_event_init ();
 
   return (module);
 }
 
-/* XXX when Python support is compiled in, this routine must be called
-   during the llines initialization phase. XXX */
+/* when Python support is compiled in, this routine must be called
+   during the llines initialization phase. */
 
 void llpy_init (void)
 {

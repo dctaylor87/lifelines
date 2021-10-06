@@ -14,38 +14,14 @@ typedef struct {
 
 typedef struct {
   PyObject_HEAD
-  int lni_type;
-  NODE lni_node;		/* Lifelines GEDCOM INDI NODE */
-} LLINES_PY_INDI_NODE;
-
-typedef struct {
-  PyObject_HEAD
-  int lnf_type;
-  NODE lnf_node;		/* Lifelines GEDCOM FAM NODE */
-} LLINES_PY_FAM_NODE;
-
-typedef struct {
-  PyObject_HEAD
   int lne_type;
   NODE lne_node;		/* Lifelines GEDCOM EVEN NODE */
 } LLINES_PY_EVEN_NODE;
 
-typedef struct {
-  PyObject_HEAD
-  int lns_type;
-  NODE lns_node;		/* Lifelines GEDCOM SOUR NODE */
-} LLINES_PY_SOUR_NODE;
-
-typedef struct {
-  PyObject_HEAD
-  int lno_type;
-  NODE lno_node;		/* Lifelines GEDCOM OTHR NODE */
-} LLINES_PY_OTHR_NODE;
-
 /* type values for records and nodes -- will likely be augmented in
-   the future.  And might become numerical rather than mnemonic.
-   Another possibility is uppercase for RECORDs and lowercase for
-   NODEs... with corresponding name changes. */
+   the future.  And might become numerical rather than mnemonic.  The
+   'OTHR' type should disappear -- it is a catchall -- and be broken
+   out into the types contained therein -- SUBM, SNOTE, OBJE, REPO. */
 
 #define LLINES_TYPE_INDI	'I' /* individual */
 #define LLINES_TYPE_FAM		'F' /* family */
@@ -80,17 +56,33 @@ typedef struct {
   int li_current;		/* argument to supply to xref_next* function */
 } LLINES_PY_ITER;
 
-/* various GEDCOM record types */
+/* iter functions for NODEs use a different underlying type */
+
+typedef struct {
+  PyObject_HEAD
+  NODE ni_top_node; /* top of the node tree that we are iterating over */
+  NODE ni_cur_node; /* most recently visited node in the node tree */
+  char *ni_tag;	    /* tag to search for if we are tag specific */
+  int ni_type;	    /* type of iteration -- whole tree or just children */
+  int ni_level;	    /* how far are we from the top of the tree */
+} LLINES_PY_NODEITER;
+
+#define NODE_ITER_CHILDREN	1
+#define NODE_ITER_TRAVERSE	2
 
 extern PyTypeObject llines_database_type;
-extern PyTypeObject llines_event_type;
+
+/* various GEDCOM record types */
+
+extern PyTypeObject llines_event_type; /* Lifelines extension */
 
 extern PyTypeObject llines_family_type;
 extern PyTypeObject llines_individual_type;
-extern PyTypeObject llines_other_type;
+extern PyTypeObject llines_other_type; /* catchall -- should be broken out */
 extern PyTypeObject llines_source_type;
 
 extern PyTypeObject llines_iter_type;
+extern PyTypeObject llines_nodeiter_type;
 
 /* generic GEDCOM record type -- not sure if we need this */
 

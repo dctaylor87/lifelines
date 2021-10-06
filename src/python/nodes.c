@@ -20,6 +20,7 @@ static PyObject *llpy_child_node (PyObject *self, PyObject *args);
 static PyObject *llpy_sibling_node (PyObject *self, PyObject *args);
 static PyObject *llpy_copy_node_tree (PyObject *self, PyObject *args);
 static PyObject *llpy_level (PyObject *self, PyObject *args);
+static PyObject *llpy_nodeiter (PyObject *self, PyObject *args, PyObject *kw);
 
 /* start of code */
 
@@ -56,7 +57,7 @@ static PyObject *llpy_parent_node (PyObject *self, PyObject *args ATTRIBUTE_UNUS
   NODE pnode = nparent (node->lnn_node);
 
   if (! pnode)
-    Py_RETURN_NONE;		/* can this happen?  No node parent? */
+    Py_RETURN_NONE;		/* No parent -- already top of the tree */
 
   parent = PyObject_New (LLINES_PY_NODE, &llines_node_type);
   if (! parent)
@@ -155,7 +156,7 @@ static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
     parent_node = ((LLINES_PY_NODE *) parent)->lnn_node;
   else
     {
-      /* error -- wrong type -- set exception and return NULL XXX */
+      /* error -- wrong type -- set exception and return NULL */
       PyErr_SetString (PyExc_TypeError, "add_node: parent must be a NODE or None");
       return NULL;
     }
@@ -166,15 +167,15 @@ static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
     prev_node = ((LLINES_PY_NODE *) prev)->lnn_node;
   else
     {
-      /* error -- wrong type -- set exception and return NULL XXX */
+      /* error -- wrong type -- set exception and return NULL */
       PyErr_SetString (PyExc_TypeError, "add_node: prev must be a NODE or None");
       return NULL;
     }
 
   if (prev_node && (nparent(prev_node) != parent_node))
     {
-      /* XXX prev_node has a different parent! -- set exception and
-	 return NULL XXX */
+      /* prev_node has a different parent! -- set exception and return
+	 NULL */
       PyErr_SetString (PyExc_ValueError, "add_node: prev is not a child of parent");
       return NULL;
     }
@@ -249,6 +250,49 @@ static PyObject *llpy_create_node (PyObject *self, PyObject *args, PyObject *kw)
   return ((PyObject *)py_node);
 }
 
+/* llpy_nodeiter -- returns an iterator for the input node tree.
+
+   The 'type' of iterator depends on the input arguments.
+
+   If TYPE is CHILD, we iterate over the immediate children of the
+   input node.
+
+   If TYPE is TRAVERSE, we iterate over all the nodes, depth first,
+   parent before child.
+
+   TAG is either None or a string.  If it is None, then we behave as
+   above.  If it is a string, then we behave as above *BUT* before
+   returning a node, we compare its tag against the string.  If they
+   match we return it, if they do not match, we continue the iteration
+   until we find a match or we exhaust the iteration.  */
+
+static PyObject *llpy_nodeiter (PyObject *self, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "type", "tag", NULL };
+  int type = 0;
+  char *tag = 0;
+  LLINES_PY_NODEITER *iter;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "i|z", keywords, &type, &tag))
+    return NULL;
+
+  if ((type != NODE_ITER_CHILDREN) && (type != NODE_ITER_TRAVERSE))
+    {
+      PyErr_SetString (PyExc_ValueError, "nodeiter: type must be either ITER_CHILDREN or ITER_TRAVERSE");
+      return NULL;
+    }
+  iter = PyObject_New (LLINES_PY_NODEITER, &llines_nodeiter_type);
+  if (! iter)
+    return NULL;
+
+  Py_INCREF (self);
+  iter->ni_top_node = self;
+  iter->ni_cur_node = NULL;
+  iter->ni_type = type;
+  iter->ni_level = 0;
+  iter->ni_tag = strdup (tag);
+}
+
 static void llpy_node_dealloc (PyObject *self)
 {
   LLINES_PY_NODE *node = (LLINES_PY_NODE *) self;
@@ -290,6 +334,10 @@ static struct PyMethodDef Lifelines_Node_Methods[] =
    { "add_node",	(PyCFunction)llpy_add_node, METH_VARARGS | METH_KEYWORDS,
      "(NODE).add_node([parent],[prev]) --> NODE.  Modifies node to have\n\
 parent PARENT and previous sibling PREV.  Returns modified NODE" },
+   { "nodeiter",	(PyCFunction)llpy_nodeiter, METH_VARARGS | METH_KEYWORDS,
+     "nodeiter(type, [tag]) --> Iterator over node tree.\n\
+TYPE is an int -- one of ITER_CHILDREN or ITER_TRAVERSE.\n\
+TAG, if specified, restricts the iterator to just those nodes having that tag." },
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 

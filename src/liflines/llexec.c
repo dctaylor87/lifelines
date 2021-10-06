@@ -261,7 +261,9 @@ main (int argc, char **argv)
 			python_interactive = TRUE;
 			break;
 		case 'p':
+#if HAVE_PYTHON
 			llpy_register_script (optarg);
+#endif
 			have_python_scripts = TRUE;
 			break;
 		case 'v': /* show version */

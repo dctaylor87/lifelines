@@ -47,7 +47,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
 	      int_type = 'F';
 	      break;
 	    }
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: TYPE has a bad value");
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: TYPE has a bad value");
 	  return NULL;
 
 	case 'I':
@@ -56,7 +56,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
 	      int_type = 'I';
 	      break;
 	    }
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: TYPE has a bad value");
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: TYPE has a bad value");
 	  return NULL;
 
 	case 'S':
@@ -70,7 +70,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
 	      int_type = 'O';
 	      break;
 	    }
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: TYPE has a bad value");
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: TYPE has a bad value");
 	  return NULL;
 
 	case 'E':
@@ -79,7 +79,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
 	      int_type = 'E';
 	      break;
 	    }
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: TYPE has a bad value");
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: TYPE has a bad value");
 	  return NULL;
 
 	case 'R':
@@ -88,7 +88,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
 	      int_type = 'X';
 	      break;
 	    }
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: TYPE has a bad value");
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: TYPE has a bad value");
 	  return NULL;
 
 	case 'O':
@@ -97,11 +97,11 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
 	      int_type = 'X';
 	      break;
 	    }
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: TYPE has a bad value");
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: TYPE has a bad value");
 	  return NULL;
 
 	default:
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: TYPE has a bad value");
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: TYPE has a bad value");
 	  return NULL;
 	}
 
@@ -109,7 +109,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
       if (! isdigit (key[0]) && (key[0] != int_type))
 	{
 	  /* key has prefix, but it does not match type's prefix */
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: key's prefix incompatible with type");
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: key's prefix incompatible with type");
 	  return NULL;
 	}
     }
@@ -129,7 +129,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
     {
       if (strlen (key) > (sizeof (key_buffer) - 2))
 	{
-	  PyErr_SetString (PyExc_TypeError, "key_to_record: key too long"); /* XXX */
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: key too long"); /* XXX */
 	  return NULL;
 	}
       snprintf (key_buffer, sizeof (key_buffer), "%c%s", int_type, key);
@@ -159,7 +159,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
       record = qkey_to_orecord (use_keybuf ? key_buffer : key);
       break;
     default:
-      PyErr_SetString (PyExc_TypeError, "key_to_record: bad key value");
+      PyErr_SetString (PyExc_ValueError, "key_to_record: bad key value");
       return NULL;
     }
 
@@ -206,7 +206,7 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
 	  int_type = 'F';
 	  break;
 	}
-      PyErr_SetString (PyExc_TypeError, "keynum_to_record: TYPE has a bad value");
+      PyErr_SetString (PyExc_ValueError, "keynum_to_record: TYPE has a bad value");
       return NULL;
 
     case 'I':
@@ -215,7 +215,7 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
 	  int_type = 'I';
 	  break;
 	}
-      PyErr_SetString (PyExc_TypeError, "keynum_to_record: TYPE has a bad value");
+      PyErr_SetString (PyExc_ValueError, "keynum_to_record: TYPE has a bad value");
       return NULL;
 
     case 'S':
@@ -229,7 +229,7 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
 	  int_type = 'O';
 	  break;
 	}
-      PyErr_SetString (PyExc_TypeError, "keynum_to_record: TYPE has a bad value");
+      PyErr_SetString (PyExc_ValueError, "keynum_to_record: TYPE has a bad value");
       return NULL;
 
     case 'E':
@@ -238,7 +238,7 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
 	  int_type = 'E';
 	  break;
 	}
-      PyErr_SetString (PyExc_TypeError, "keynum_to_record: TYPE has a bad value");
+      PyErr_SetString (PyExc_ValueError, "keynum_to_record: TYPE has a bad value");
       return NULL;
 
     case 'R':
@@ -247,7 +247,7 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
 	  int_type = 'X';
 	  break;
 	}
-      PyErr_SetString (PyExc_TypeError, "keynum_to_record: TYPE has a bad value");
+      PyErr_SetString (PyExc_ValueError, "keynum_to_record: TYPE has a bad value");
       return NULL;
 
     case 'O':
@@ -256,11 +256,11 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
 	  int_type = 'X';
 	  break;
 	}
-      PyErr_SetString (PyExc_TypeError, "keynum_to_record: TYPE has a bad value");
+      PyErr_SetString (PyExc_ValueError, "keynum_to_record: TYPE has a bad value");
       return NULL;
 
     default:
-      PyErr_SetString (PyExc_TypeError, "keynum_to_record: TYPE has a bad value");
+      PyErr_SetString (PyExc_ValueError, "keynum_to_record: TYPE has a bad value");
       return NULL;
     }
   snprintf (key_buffer, sizeof (key_buffer), "%c%lu", int_type, keynum);

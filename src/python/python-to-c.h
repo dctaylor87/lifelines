@@ -7,16 +7,11 @@
    and static variants of the declarations folded into the appropriate
    C file.  */
 
-PyObject *llpy_fam (PyObject *self, PyObject *args);
-
-PyObject *llpy_getindiset (PyObject *self, PyObject *args);
 PyObject *llpy_chooseindi (PyObject *self, PyObject *args);
 PyObject *llpy_choosesubset (PyObject *self, PyObject *args);
 
 PyObject *llpy_choosespouse (PyObject *self, PyObject *args);
 
-PyObject *llpy_indiset (PyObject *self, PyObject *args);
-PyObject *llpy_spouseset (PyObject *self, PyObject *args);
 PyObject *llpy_gengedcomstrong (PyObject *self, PyObject *args);
 PyObject *llpy_program (PyObject *self, PyObject *args);
 
@@ -28,6 +23,7 @@ extern void llpy_database_init (void);
 extern void llpy_person_init (void);
 extern void llpy_nodes_init (void);
 extern void llpy_records_init (void);
+extern void llpy_event_init (void);
 
 /* XXX TODO: make this a bitmask XXX */
 extern int llpy_debug;
