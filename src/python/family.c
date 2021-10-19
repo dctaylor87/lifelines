@@ -31,7 +31,7 @@ static PyObject *llpy_nextfam (PyObject *self, PyObject *args);
 static PyObject *llpy_prevfam (PyObject *self, PyObject *args);
 static PyObject *llpy_firstchild (PyObject *self, PyObject *args);
 static PyObject *llpy_lastchild (PyObject *self, PyObject *args);
-static PyObject *llpy_children (PyObject *self, PyObject *args);
+static PyObject *llpy_children_f (PyObject *self, PyObject *args);
 static PyObject *llpy_spouses_f (PyObject *self, PyObject *args);
 static PyObject *llpy_choosechild_f (PyObject *self, PyObject *args);
 static PyObject *llpy_choosespouse_f (PyObject *self, PyObject *args);
@@ -268,11 +268,11 @@ static PyObject *llpy_prevfam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return (PyObject *)fam;
 }
 
-/* llpy_children (FAM) --> set of INDI
+/* llpy_children_f (FAM) --> set of INDI
 
    Returns the set of children in the family.  */
 
-static PyObject *llpy_children (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_children_f (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   RECORD fam = ((LLINES_PY_RECORD *)self)->llr_record;
   PyObject *output_set = PySet_New (NULL);
@@ -401,6 +401,75 @@ static PyObject *llpy_choosespouse_f (PyObject *self, PyObject *args ATTRIBUTE_U
   return ((PyObject *)py_indi);
 }
 
+static PyObject *llpy_sync_fam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  LLINES_PY_RECORD *py_record = (LLINES_PY_RECORD *) self;
+  RECORD record = py_record->llr_record;
+  CNSTRING key = nzkey (record);
+  STRING rawrec = 0;
+  STRING msg = 0;
+  int on_disk = 1;
+  INT len;
+  INT cnt;
+  NODE old_tree = 0;
+  NODE new_tree = 0;
+
+  if (readonly)
+    {
+      PyErr_SetString (PyExc_PermissionError, "sync: database was opened read-only");
+      return NULL;
+    }
+
+  if (! key)
+    {
+      PyErr_SetString (PyExc_SystemError, "sync: unable to determine record's key");
+      return NULL;
+    }
+  new_tree = nztop (record);
+  if (! new_tree)
+    {
+      PyErr_SetString (PyExc_SystemError, "sync: unable to find top of record");
+      return NULL;
+    }
+  new_tree = copy_node_subtree (new_tree);
+
+  rawrec = retrieve_raw_record (key, &len);
+  if (! rawrec)
+    on_disk = 0;
+  else
+    {
+      ASSERT (old_tree = string_to_node (rawrec));
+    }
+
+  cnt = resolve_refn_links (new_tree);
+
+  if (! valid_fam_tree (new_tree, &msg, old_tree))
+    {
+      PyErr_SetString (PyExc_SystemError, msg);
+      stdfree (&rawrec);
+      return NULL;
+    }
+  if (cnt > 0)
+    {
+      /* XXX unresolvable refn links -- existing code does nothing XXX */
+    }
+  if (equal_tree (old_tree, new_tree))
+    {
+      /* no modifications -- return success */
+      stdfree (&rawrec);
+      Py_RETURN_TRUE;
+    }
+
+  if (on_disk)
+    replace_fam (old_tree, new_tree);
+#if 0				/* XXX */
+  else
+    add_new_indi_to_db (record);
+#endif
+  stdfree (&rawrec);
+  Py_RETURN_TRUE;
+}
+
 static void llpy_family_dealloc (PyObject *self)
 {
   LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
@@ -419,6 +488,7 @@ static void llpy_family_dealloc (PyObject *self)
 #endif
 }
 
+#if 0
 static PyObject *llpy_family_iter(PyObject *self ATTRIBUTE_UNUSED)
 {
   LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
@@ -431,6 +501,7 @@ static PyObject *llpy_family_iter(PyObject *self ATTRIBUTE_UNUSED)
 
   return (PyObject *)iter;
 }
+#endif
 
 static struct PyMethodDef Lifelines_Family_Methods[] =
   {
@@ -453,7 +524,7 @@ If STRIP_PREFIX is True (default: False), the non numeric prefix is stripped." }
      "(FAM).nextfam -> FAM: next family in database after FAM (in key order)" },
    { "prevfam",		llpy_prevfam, METH_NOARGS,
      "(FAM).prevfam -> FAM: previous family in database before FAM (in key order)" },
-   { "children",	llpy_children, METH_NOARGS,
+   { "children",	llpy_children_f, METH_NOARGS,
      "(FAM).children -> set of children in the family" },
    { "spouses",		llpy_spouses_f, METH_NOARGS,
      "(FAM).spouses -> set of spouses in the family" },
@@ -482,7 +553,9 @@ PyTypeObject llines_family_type =
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
    .tp_dealloc = llpy_family_dealloc,
+#if 0
    .tp_iter = llpy_family_iter,
+#endif
    .tp_hash = llines_record_hash,
    .tp_richcompare = llines_record_richcompare,
    .tp_methods = Lifelines_Family_Methods,

@@ -36,6 +36,7 @@ static void llpy_source_dealloc (PyObject *self)
 #endif
 }
 
+#if 0
 static PyObject *llpy_source_iter(PyObject *self)
 {
   LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
@@ -48,6 +49,7 @@ static PyObject *llpy_source_iter(PyObject *self)
 
   return (PyObject *)iter;
 }
+#endif
 
 static struct PyMethodDef Lifelines_Source_Methods[] =
   {
@@ -70,7 +72,9 @@ PyTypeObject llines_source_type =
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
    .tp_dealloc = llpy_source_dealloc,
+#if 0
    .tp_iter = llpy_source_iter,
+#endif
    .tp_hash = llines_record_hash,
    .tp_richcompare = llines_record_richcompare,
    .tp_methods = Lifelines_Source_Methods,

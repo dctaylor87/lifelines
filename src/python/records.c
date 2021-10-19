@@ -23,7 +23,7 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
 
 /* start of code */
 
-static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_key_to_record (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "key", "type", NULL };
   char *key = 0;
@@ -129,7 +129,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
     {
       if (strlen (key) > (sizeof (key_buffer) - 2))
 	{
-	  PyErr_SetString (PyExc_ValueError, "key_to_record: key too long"); /* XXX */
+	  PyErr_SetString (PyExc_ValueError, "key_to_record: key too long");
 	  return NULL;
 	}
       snprintf (key_buffer, sizeof (key_buffer), "%c%s", int_type, key);
@@ -185,7 +185,7 @@ static PyObject *llpy_key_to_record (PyObject *self, PyObject *args, PyObject *k
   return ((PyObject *) py_record);
 }
 
-static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_keynum_to_record (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "keynum", "type", NULL };
   unsigned long keynum = 0;
@@ -282,6 +282,9 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
     case 'X':
       record = qkey_to_orecord (key_buffer);
       break;
+    default:
+      PyErr_SetString (PyExc_TypeError, "keynum_to_record: bad type");
+      return NULL;
     }
   if (! record)
     Py_RETURN_NONE;		/* that keynum has no record */
@@ -295,6 +298,10 @@ static PyObject *llpy_keynum_to_record (PyObject *self, PyObject *args, PyObject
     case 'X':
       py_record = (LLINES_PY_RECORD *) PyObject_New (LLINES_PY_RECORD,
 						     &llines_individual_type);
+      break;
+
+    default:
+      py_record = 0;
       break;
     }
   if (! py_record)

@@ -21,16 +21,18 @@ llines_SOURCES = add.c advedit.c ask.c askgedc.c askprogram.c \
 # what goes into llexec ?
 llexec_SOURCES = ask.c error.c lines_usage.c llexec.c selectdb.c miscutls.c llexec.h
 
+PYTHON_LIBS = @PYTHON_LIBS@
+
 # extra stuff for lines
 llines_LDADD = ../interp/libinterp.a @LIBPYLLINES@ ../gedlib/libgedcom.a \
 	../btree/libbtree.a ../stdlib/libstdlib.a ../arch/libarch.a \
-	@PYTHON_LIBS@ @LIBINTL@ @LIBICONV@
+	$(PYTHON_LIBS) @LIBINTL@ @LIBICONV@
 
 # extra stuff for llexec
 llexec_LDADD = ../interp/libinterp.a @LIBPYLLINES@ ../gedlib/libgedcom.a \
 	../btree/libbtree.a ../stdlib/libstdlib.a ../arch/libarch.a \
 	../ui/libuicli.a \
-	@PYTHON_LIBS@ @LIBINTL@ @LIBICONV@
+	$(PYTHON_LIBS) @LIBINTL@ @LIBICONV@
 
 # $(top_builddir)        for config.h
 # $(top_srcdir)/src/hdrs for headers

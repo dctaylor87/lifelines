@@ -65,15 +65,17 @@ static int add_spouses (PyObject *record, PyObject *output_set);
 
 
 /* These four routines used to be in set.c, but got moved here because
-   llpy_children has to be here and either add_children needs to be
+   llpy_children_i has to be here and either add_children needs to be
    non-static or all four routines need to be in the same file.  */
 
-static PyObject *llpy_children (PyObject *self, PyObject *args);
+static PyObject *llpy_children_i (PyObject *self, PyObject *args);
 static PyObject *llpy_descendantset (PyObject *self, PyObject *args, PyObject *kw);
 static PyObject *llpy_childset (PyObject *self, PyObject *args, PyObject *kw);
 
-/* helper routine for llpy_descendantset, llpy_childset, and llpy_children */
+/* helper routine for llpy_descendantset, llpy_childset, and llpy_children_i */
 static int add_children (PyObject *obj, PyObject *working_set, PyObject *output_set);
+
+static PyObject *llpy_sync_indi (PyObject *self, PyObject *args);
 
 static void llpy_individual_dealloc (PyObject *self);
 
@@ -103,9 +105,10 @@ static PyObject *llpy_name (PyObject *self, PyObject *args, PyObject *kw)
   if (! (node_name = NAME (nztop (indi->llr_record))))
     {
       if (getlloptint("RequireNames", 0))
-	/* XXX figure out how to issue exceptions XXX _("name: person does not have a name") */
-	return NULL;
-
+	{
+	  PyErr_SetString (PyExc_ValueError, _("name: person does not have a name"));
+	  return NULL;
+	}
       Py_RETURN_NONE;
     }
   name = manip_name(nval(node_name), caps ? DOSURCAP : NOSURCAP, REGORDER, MAX_NAME_LENGTH);
@@ -142,8 +145,10 @@ static PyObject *llpy_fullname (PyObject *self, PyObject *args, PyObject *kw)
   if (! (node_name = NAME (nztop (indi->llr_record))) || ! nval(node_name))
     {
       if (getlloptint("RequireNames", 0))
-	/* XXX figure out how to issue exceptions XXX _("fullname: person does not have a name") */
-	return NULL;
+	{
+	  PyErr_SetString (PyExc_ValueError, _("fullname: person does not have a name"));
+	  return NULL;
+	}
       Py_RETURN_NONE;
     }
   if (max_length == 0)
@@ -168,11 +173,11 @@ static PyObject *llpy_surname (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! (node_name = NAME(node_name)) || ! nval(node_name))
     {
       if (getlloptint ("RequireNames", 0))
-	/* XXX figure out how to issue exceptions XXX _("surname:
-	   person does not have a name" */
-	return NULL;
-
-      Py_RETURN_NONE;		/* XXX should it be an empty string instead? */
+	{
+	  PyErr_SetString (PyExc_ValueError, _("surname: person does not have a name"));
+	  return NULL;
+	}
+      Py_RETURN_NONE;
     }
   name = getasurname(nval(node_name));
   return (Py_BuildValue ("s", name));
@@ -192,7 +197,7 @@ static PyObject *llpy_givens (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     {
       if (getlloptint("RequireNames", 0))
 	{
-	  /* XXX throw error _("(givens) person does not have a name") XXX */
+	  PyErr_SetString (PyExc_ValueError, _("givens: person does not have a name"));
 	  return NULL;
 	}
       Py_RETURN_NONE;
@@ -218,8 +223,11 @@ static PyObject *llpy_trimname (PyObject *self, PyObject *args, PyObject *kw)
   if (!(indi = NAME(indi)) || ! nval(indi))
     {
       if (getlloptint("RequireNames", 0))
-	/* XXX set exception -- _("(trimname) person does not have a name") XXX */
-	return NULL;
+	{
+	  PyErr_SetString (PyExc_ValueError, _("trimname: person does not have a name"));
+	  return NULL;
+	}
+      Py_RETURN_NONE;
     }
   str = name_string (trim_name (nval (indi), max_length));
   if (! str)
@@ -560,7 +568,7 @@ static PyObject *llpy_soundex (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     {
       if (getlloptint("RequireNames", 0))
 	{
-	  /* XXX throw error _("soundex: person does not have a name") XXX */
+	  PyErr_SetString (PyExc_ValueError, _("soundex: person does not have a name"));
 	  return NULL;
 	}
       Py_RETURN_NONE;
@@ -741,20 +749,18 @@ static PyObject *llpy_choosefam (PyObject *self, PyObject *args ATTRIBUTE_UNUSED
 static PyObject *llpy_spouses_i (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   PyObject *output_set;	/* represents INDIs that are part of the return value */
-  RECORD record = ((LLINES_PY_RECORD *)self)->llr_record;
-  RECORD spouse;
 
   output_set = PySet_New (NULL);
   if (! output_set)
     return NULL;
 
-  if (add_spouses(record, output_set) < 0)
+  if (add_spouses(self, output_set) < 0)
     return NULL;
 
   return (output_set);
 }
 
-static PyObject *llpy_spouseset (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_spouseset (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "set", NULL };
   PyObject *input_set;		/* set passed in */
@@ -834,7 +840,7 @@ static int add_spouses (PyObject *item, PyObject *output_set)
    output set of those INDIs that are the descendants of the input
    INDIs.  */
 
-static PyObject *llpy_descendantset (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_descendantset (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "set", NULL };
   PyObject *input_set;		/* set passed in */
@@ -921,10 +927,10 @@ static PyObject *llpy_descendantset (PyObject *self, PyObject *args, PyObject *k
   return (output_set);
 }
 
-/* llpy_children(INDI) -- given an INDI, produce an output set of
+/* llpy_children_i(INDI) -- given an INDI, produce an output set of
    those INDIs that are children of the INDI */
 
-static PyObject *llpy_children (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_children_i (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   PyObject *output_set = PySet_New (NULL);
   int status;
@@ -947,7 +953,7 @@ static PyObject *llpy_children (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
    output set of those INDIs that are the children of the input
    INDIs.  */
 
-static PyObject *llpy_childset (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_childset (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "set", NULL };
   PyObject *input_set;		/* set passed in */
@@ -1063,6 +1069,75 @@ static int add_children (PyObject *obj, PyObject *working_set, PyObject *output_
   return (0);
 }
 
+static PyObject *llpy_sync_indi (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  LLINES_PY_RECORD *py_record = (LLINES_PY_RECORD *) self;
+  RECORD record = py_record->llr_record;
+  CNSTRING key = nzkey (record);
+  STRING rawrec = 0;
+  STRING msg = 0;
+  int on_disk = 1;
+  INT len;
+  INT cnt;
+  NODE old_tree = 0;
+  NODE new_tree = 0;
+
+  if (readonly)
+    {
+      PyErr_SetString (PyExc_PermissionError, "sync: database was opened read-only");
+      return NULL;
+    }
+
+  if (! key)
+    {
+      PyErr_SetString (PyExc_SystemError, "sync: unable to determine record's key");
+      return NULL;
+    }
+  new_tree = nztop (record);
+  if (! new_tree)
+    {
+      PyErr_SetString (PyExc_SystemError, "sync: unable to find top of record");
+      return NULL;
+    }
+  new_tree = copy_node_subtree (new_tree);
+
+  rawrec = retrieve_raw_record (key, &len);
+  if (! rawrec)
+    on_disk = 0;
+  else
+    {
+      ASSERT (old_tree = string_to_node (rawrec));
+    }
+
+  cnt = resolve_refn_links (new_tree);
+
+  if (! valid_indi_tree (new_tree, &msg, old_tree))
+    {
+      PyErr_SetString (PyExc_SystemError, msg);
+      stdfree (&rawrec);
+      return NULL;
+    }
+  if (cnt > 0)
+    {
+      /* XXX unresolvable refn links -- existing code does nothing XXX */
+    }
+  if (equal_tree (old_tree, new_tree))
+    {
+      /* no modifications -- return success */
+      stdfree (&rawrec);
+      Py_RETURN_TRUE;
+    }
+
+  if (on_disk)
+    replace_indi (old_tree, new_tree);
+#if 0				/* XXX */
+  else
+    add_new_indi_to_db (record);
+#endif
+  stdfree (&rawrec);
+  Py_RETURN_TRUE;
+}
+
 static void llpy_individual_dealloc (PyObject *self)
 {
   LLINES_PY_RECORD *indi = (LLINES_PY_RECORD *) self;
@@ -1080,6 +1155,7 @@ static void llpy_individual_dealloc (PyObject *self)
 #endif
 }
 
+#if 0
 static PyObject *llpy_individual_iter(PyObject *self ATTRIBUTE_UNUSED)
 {
   LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
@@ -1092,6 +1168,7 @@ static PyObject *llpy_individual_iter(PyObject *self ATTRIBUTE_UNUSED)
 
   return (PyObject *)iter;
 }
+#endif
 
 static struct PyMethodDef Lifelines_Person_Methods[] =
   {
@@ -1152,7 +1229,7 @@ If STRIP_PREFIX is True (default: False), the non numeric prefix is stripped." }
    { "previndi",	(PyCFunction)llpy_previndi, METH_NOARGS,
      "previndi(void) -> INDI: Returns previous INDI (in database order)." },
 
-   { "children",	(PyCFunction)llpy_children, METH_NOARGS,
+   { "children",	(PyCFunction)llpy_children_i, METH_NOARGS,
      "children(void) --> SET.  Returns the set of children of INDI." },
    /* User Interaction Functions */
 
@@ -1178,6 +1255,10 @@ through user interface.  Returns None if individual has no spouses or user cance
    { "top_node", (PyCFunction)_llpy_top_node, METH_NOARGS,
      "top_nodevoid) --> NODE.  Returns the top of the NODE tree associated with the RECORD." },
 
+   { "sync", (PyCFunction)llpy_sync_indi, METH_NOARGS,
+     "sync(void) --> BOOLEAN.  Writes modified INDI to database.\n\
+Returns success or failure." },
+
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 
@@ -1202,7 +1283,9 @@ PyTypeObject llines_individual_type =
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
    .tp_dealloc = llpy_individual_dealloc,
+#if 0   
    .tp_iter = llpy_individual_iter,
+#endif
    .tp_hash = llines_record_hash,
    .tp_richcompare = llines_record_richcompare,
    .tp_methods = Lifelines_Person_Methods,

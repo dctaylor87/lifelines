@@ -118,7 +118,7 @@ static PyObject *llpy_lastfam (PyObject *Py_UNUSED(self), PyObject *args ATTRIBU
   return (PyObject *)rec;
 }
 
-static struct PyMethodDef Lifelines_Database_Methods[] =
+static struct PyMethodDef Lifelines_Database_Functions[] =
   {
    { "firstindi",	llpy_firstindi, METH_NOARGS,
      "firstindi(void) -> INDI: first individual in database (in key order)" },
@@ -141,14 +141,17 @@ PyTypeObject llines_database_type =
    .tp_itemsize = 0,
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
-   .tp_methods = Lifelines_Database_Methods,
+
+   /* XXX for now -- someday the functions in this file will be
+      instance functions XXX */
+   .tp_methods = 0,
   };
 
 void llpy_database_init (void)
 {
   int status;
 
-  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Database_Methods);
+  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Database_Functions);
   if (status != 0)
     fprintf (stderr, "llpy_database_init: attempt to add functions returned %d\n", status);
 }

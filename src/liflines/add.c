@@ -49,8 +49,6 @@ extern BOOLEAN traditional;
  * local function prototypes
  *********************************************/
 
-static void add_new_indi_to_db(RECORD indi0);
-static void add_new_fam_to_db(NODE fam2, NODE spouse1, NODE spouse2, NODE child);
 
 /*==========================================================
  * get_unresolved_ref_error -- get string for unresolved reference(s)
@@ -159,7 +157,7 @@ add_indi_by_edit (RFMT rfmt)
  * (no user interaction)
  * creates record & adds to cache
  *========================================================*/
-static void
+void
 add_new_indi_to_db (RECORD indi0)
 {
 	NODE name, refn, sex, body, dumb, node;
@@ -662,7 +660,7 @@ editfam:
  * (no user interaction)
  * creates record & adds to cache
  *========================================================*/
-static void
+void
 add_new_fam_to_db (NODE fam2, NODE spouse1, NODE spouse2, NODE child)
 {
 	NODE refn, husb, wife, chil, body;

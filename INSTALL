@@ -87,6 +87,11 @@ how you build lifelines.
    autoconf
    bison
 
+   If you wish to include the optional Python support, you will also
+   need the package
+
+   libpython3-dev
+
 3. Document Generation
 
    Regeneration of the docs requires tools to convert from xml to html, pdf,

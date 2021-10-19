@@ -38,7 +38,7 @@ static PyObject *llpy_siblingset (PyObject *self, PyObject *args, PyObject *kw);
    inputs are included in the output, otherwise they are not unless
    they are siblings of other INDIs in the input set.  */
 
-static PyObject *llpy_siblingset (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_siblingset (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "set", NULL };
   PyObject *set;	/* collection of input INDIs */
@@ -135,7 +135,7 @@ static PyObject *llpy_siblingset (PyObject *self, PyObject *args, PyObject *kw)
    output set of those INDIs that are the ancestors of the input
    INDIs.  */
 
-static PyObject *llpy_ancestorset (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_ancestorset (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "set", NULL };
   PyObject *input_set;		/* set passed in */
@@ -226,7 +226,7 @@ static PyObject *llpy_ancestorset (PyObject *self, PyObject *args, PyObject *kw)
    output set of those INDIs that are the parents of the input
    INDIs.  */
 
-static PyObject *llpy_parentset (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_parentset (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "set", NULL };
   PyObject *input_set;		/* set passed in */
@@ -395,7 +395,7 @@ static int add_parents (PyObject *obj, PyObject *working_set, PyObject *output_s
   return (0);
 }
 
-static struct PyMethodDef Lifelines_Set_Methods[] =
+static struct PyMethodDef Lifelines_Set_Functions[] =
   {
    { "siblingset",	(PyCFunction)llpy_siblingset, METH_VARARGS | METH_KEYWORDS,
      "siblingset(set) --> SET of INDIs.\n\
@@ -412,7 +412,7 @@ void llpy_set_init (void)
 {
   int status;
 
-  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Set_Methods);
+  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Set_Functions);
 
   if (status != 0)
     fprintf (stderr, "llpy_set_init: attempt to add functions returns %d\n", status);

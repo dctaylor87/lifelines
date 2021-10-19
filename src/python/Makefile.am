@@ -41,6 +41,6 @@ PYTHON_CFLAGS = @PYTHON_CFLAGS@
 PYTHON_LIBS = @PYTHON_LIBS@
 
 AM_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir)/src/hdrs $(PYTHON_CPPFLAGS)
-AM_CFLAGS= $(PYTHON_CFLAGS)
+AM_CFLAGS= $(PYTHON_CFLAGS) -Wno-cast-function-type
 
 EXTRA_DIST =

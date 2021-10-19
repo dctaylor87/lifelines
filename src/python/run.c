@@ -118,7 +118,7 @@ execute_script (CNSTRING report_name)
 
   if (! report_fp)
     {
-      /* XXX give the bad news XXX */
+      /* give the bad news */
       fprintf (stderr, "unable to open %s\n", report_name);
       return (-1);
     }

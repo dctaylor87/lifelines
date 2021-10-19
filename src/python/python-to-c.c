@@ -29,7 +29,7 @@ static PyObject *llpy_version (PyObject *self, PyObject *args);
 
 /* start of code */
 
-static PyObject *llpy_version (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+static PyObject *llpy_version (PyObject *self ATTRIBUTE_UNUSED, PyObject *args ATTRIBUTE_UNUSED)
 {
   return (Py_BuildValue ("s", get_lifelines_version(100)));
 }
@@ -50,7 +50,7 @@ PyObject *_llpy_key (PyObject *self, PyObject *args, PyObject *kw)
   return Py_BuildValue ("s", (strip_prefix ? key + 1 : key));
 }
 
-PyObject *_llpy_top_node (PyObject *self, PyObject *args)
+PyObject *_llpy_top_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_RECORD *py_record = (LLINES_PY_RECORD *) self;
   RECORD record = py_record->llr_record;
@@ -88,8 +88,6 @@ static struct PyMethodDef LifelinesMethods[] =
      "doc string" },
    { "datepic",		llpy_datepic, METH_VARARGS,
      "datepic(STRING) --> VOID: set custom date format for stddate calls (what about errors?)." },
-   { "stddate",		llpy_stddate, METH_VARARGS,
-     "doc string" },
    { "complexformat",	llpy_complexformat, METH_VARARGS,
      "doc string" },
    { "complexpic",	llpy_complexpic, METH_VARARGS,

@@ -52,6 +52,11 @@
 #define DATE(evnt)   find_tag(nchild(evnt),"DATE")
 #define PLAC(evnt)   find_tag(nchild(evnt),"PLAC")
 
+/* FIND_TAG and FIND_NEXT_TAG are for walking the immediate children
+   of a node looking for a random tag */
+#define FIND_TAG(node,tag)        find_tag(nchild(node),tag)
+#define FIND_NEXT_TAG(node,tag)   find_tag(nsibling(node),tag)
+
 /*=============================================
  * indi_to_key, fam_to_key - return key of node
  *  eg, "I21"

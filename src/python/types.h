@@ -3,11 +3,6 @@
 
 typedef struct {
   PyObject_HEAD
-  /* XXX place Lifelines member fields here XXX */
-} Lifelines_Object;
-
-typedef struct {
-  PyObject_HEAD
   int lnn_type;
   NODE lnn_node;		/* Lifelines GEDCOM generic NODE */
 } LLINES_PY_NODE;
@@ -67,8 +62,8 @@ typedef struct {
   int ni_level;	    /* how far are we from the top of the tree */
 } LLINES_PY_NODEITER;
 
-#define NODE_ITER_CHILDREN	1
-#define NODE_ITER_TRAVERSE	2
+#define ITER_CHILDREN	1
+#define ITER_TRAVERSE	2
 
 extern PyTypeObject llines_database_type;
 

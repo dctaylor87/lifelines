@@ -134,15 +134,24 @@ Py_hash_t llines_record_hash (PyObject *obj)
   Py_hash_t hash;
 
   if (! pyobj)
-    return -1;			/* XXX raise an exception -- invalid argument XXX */
+    {
+      PyErr_SetString (PyExc_TypeError, "llines_record_hash: NULL argument");
+      return -1;  /* raise an exception -- invalid argument */
+    }
 
   record = pyobj->llr_record;
   if (! record)
-    return -1;			/* XXX raise an exception -- invalid argument XXX */
+    {
+      PyErr_SetString (PyExc_TypeError, "llines_record_hash: not a RECORD");
+      return -1;  /* raise an exception -- invalid argument */
+    }
 
   key = nzkey (record);
   if (! key)
-    return -1;			/* XXX raise an exception -- nzkey failed */
+    {
+      PyErr_SetString (PyExc_SystemError, "llines_record_hash: unable to determine key");
+      return -1;	  /* raise an exception -- nzkey failed */
+    }
 
   hash_arg = Py_BuildValue ("s", key);
   if (! hash_arg)

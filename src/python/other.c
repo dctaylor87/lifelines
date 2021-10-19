@@ -36,6 +36,7 @@ static void llpy_other_dealloc (PyObject *self)
 #endif
 }
 
+#if 0
 static PyObject *llpy_other_iter(PyObject *self)
 {
   LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
@@ -48,6 +49,7 @@ static PyObject *llpy_other_iter(PyObject *self)
 
   return (PyObject *)iter;
 }
+#endif
 
 static struct PyMethodDef Lifelines_Other_Methods[] =
   {
@@ -71,6 +73,8 @@ PyTypeObject llines_other_type =
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
    .tp_dealloc = llpy_other_dealloc,
+#if 0   
    .tp_iter = llpy_other_iter,
+#endif
    .tp_methods = Lifelines_Other_Methods,
   };

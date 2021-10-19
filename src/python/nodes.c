@@ -116,6 +116,9 @@ static PyObject *llpy_copy_node_tree (PyObject *self, PyObject *args ATTRIBUTE_U
   LLINES_PY_NODE *node = (LLINES_PY_NODE *) self;
   LLINES_PY_NODE *copy = PyObject_New (LLINES_PY_NODE, &llines_node_type);
 
+  if (! copy)
+    return NULL;
+
   copy->lnn_type = node->lnn_type;
   copy->lnn_node = copy_nodes (node->lnn_node, TRUE, TRUE);
 
@@ -227,7 +230,7 @@ static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
 /* llpy_create_node (tag,[value]) --> NODE Returns the newly created
    node having specified TAG.  If VALUE is omitted, None, or empty,
    then the value is empty.*/
-static PyObject *llpy_create_node (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_create_node (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "tag", "value", NULL };
   STRING xref = 0;
@@ -276,7 +279,7 @@ static PyObject *llpy_nodeiter (PyObject *self, PyObject *args, PyObject *kw)
   if (! PyArg_ParseTupleAndKeywords (args, kw, "i|z", keywords, &type, &tag))
     return NULL;
 
-  if ((type != NODE_ITER_CHILDREN) && (type != NODE_ITER_TRAVERSE))
+  if ((type != ITER_CHILDREN) && (type != ITER_TRAVERSE))
     {
       PyErr_SetString (PyExc_ValueError, "nodeiter: type must be either ITER_CHILDREN or ITER_TRAVERSE");
       return NULL;
@@ -286,11 +289,16 @@ static PyObject *llpy_nodeiter (PyObject *self, PyObject *args, PyObject *kw)
     return NULL;
 
   Py_INCREF (self);
-  iter->ni_top_node = self;
+  iter->ni_top_node = ((LLINES_PY_NODE *)self)->lnn_node;
   iter->ni_cur_node = NULL;
   iter->ni_type = type;
   iter->ni_level = 0;
-  iter->ni_tag = strdup (tag);
+  if ((tag == 0) || (*tag == '\0'))
+    iter->ni_tag = 0;
+  else
+    iter->ni_tag = strdup (tag);
+
+  return (PyObject *) iter;
 }
 
 static void llpy_node_dealloc (PyObject *self)

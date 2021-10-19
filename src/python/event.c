@@ -127,7 +127,7 @@ static PyObject *llpy_short (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("s", str);
 }
 
-static PyObject *llpy_dayformat (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_dayformat (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "format", NULL };
   int format = -1;
@@ -147,7 +147,7 @@ static PyObject *llpy_dayformat (PyObject *self, PyObject *args, PyObject *kw)
   return Py_BuildValue ("i", old_format);
 }
 
-static PyObject *llpy_monthformat (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_monthformat (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "format", NULL };
   int format = -1;
@@ -167,7 +167,7 @@ static PyObject *llpy_monthformat (PyObject *self, PyObject *args, PyObject *kw)
   return Py_BuildValue ("i", old_format);
 }
 
-static PyObject *llpy_yearformat (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_yearformat (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "format", NULL };
   int format = -1;
@@ -187,7 +187,7 @@ static PyObject *llpy_yearformat (PyObject *self, PyObject *args, PyObject *kw)
   return Py_BuildValue ("i", old_format);
 }
 
-static PyObject *llpy_eraformat (PyObject *self, PyObject *args, PyObject *kw)
+static PyObject *llpy_eraformat (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "format", NULL };
   int format = -1;
@@ -218,7 +218,52 @@ static PyObject *llpy_eraformat (PyObject *self, PyObject *args, PyObject *kw)
     }
 }
 
-static PyObject *llpy_dateformat (PyObject *self, PyObject *args, PyObject *kw)
+/* llpy_stddate_str(STRING date) ==> STRING -- takes the given date,
+   breaks it apart, formats it according to the previously specified
+   formats, and returns the resulting string.  */
+
+static PyObject *llpy_stddate_str  (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "date", NULL };
+  char *input_date;
+  char *output_date;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "s", keywords, &input_date))
+    return NULL;
+
+  output_date = do_format_date (input_date,
+				py_dateformat.pyd_dayformat,
+				py_dateformat.pyd_monthformat,
+				py_dateformat.pyd_yearformat,
+				py_dateformat.pyd_dateformat,
+				py_dateformat.pyd_eraformat, FALSE);
+
+  return Py_BuildValue ("s", output_date);
+}
+
+/* llpy_stddate_node(NODE event) ==> STRING -- takes the given event,
+   finds the date, breaks it apart, formats it according to the
+   previously specified formats, and returns the resulting string.  */
+
+static PyObject *llpy_stddate_node  (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
+{
+  LLINES_PY_NODE *py_node = (LLINES_PY_NODE *) self;
+  char *input_date;
+  char *output_date;
+
+  input_date = event_to_date (py_node->lnn_node, FALSE);
+
+  output_date = do_format_date (input_date,
+				py_dateformat.pyd_dayformat,
+				py_dateformat.pyd_monthformat,
+				py_dateformat.pyd_yearformat,
+				py_dateformat.pyd_dateformat,
+				py_dateformat.pyd_eraformat, FALSE);
+
+  return Py_BuildValue ("s", output_date);
+}
+
+static PyObject *llpy_dateformat (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
 {
   static char *keywords[] = { "format", NULL };
   int format = -1;
@@ -268,19 +313,21 @@ static struct PyMethodDef Lifelines_Event_Methods[] =
      "long(EVENT) --> STRING: values of first DATE and PLAC lines of EVENT" },
    { "short",		llpy_short, METH_NOARGS,
      "short(EVENT) --> STRING: abbreviated values of DATE and PLAC lines of EVENT." },
+   { "stddate",		llpy_stddate_node, METH_NOARGS,
+     "stddate(EVENT) --> STRING: formatted date string." },
 
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 
 static struct PyMethodDef Lifelines_Date_Functions[] =
   {
-   { "dayformat",	llpy_dayformat, METH_VARARGS,
+   { "dayformat",	(PyCFunction)llpy_dayformat, METH_VARARGS,
      "dayformat(INT) --> INT: set day format for stddate calls\n\
 \t\t-1 (do not change format, just return existing format)\n\
 \t\t0 (leave space before single digit days)\n\
 \t\t1 (use leading 0 before single digit days)\n\
 \t\t2 (no space or leading 0 before single digit days)." },
-   { "monthformat",	llpy_monthformat, METH_VARARGS,
+   { "monthformat",	(PyCFunction)llpy_monthformat, METH_VARARGS,
      "monthformat(INT) --> INT: set month format for stddate calls.\n\
 \t\t-1 (do not change format, just return existing format)\n\
 \t\t0\tnumber with space before single digit months\n\
@@ -295,13 +342,13 @@ static struct PyMethodDef Lifelines_Date_Functions[] =
 \t\t9\tupper case abbreviation in English per GEDCOM (e.g., JAN, FEB)\n\
 \t\t10\tlower case roman letter (e.g., i, ii)\n\
 \t\t11\tupper case roman letter (e.g., I, II)\n" },
-   { "yearformat",	llpy_yearformat, METH_VARARGS,
+   { "yearformat",	(PyCFunction)llpy_yearformat, METH_VARARGS,
      "yearformat(INT) --> INT: set year format for stddate calls\n\
 \t\t-1 (do not change format, just return existing format)\n\
 \t\t0 (use leading spaces before years with less than four digits)\n\
 \t\t1 (use leading 0 before years with less than four digits\n\
 \t\t2 (no space or leading 0 before years)." },
-   { "eraformat",	llpy_eraformat, METH_VARARGS,
+   { "eraformat",	(PyCFunction)llpy_eraformat, METH_VARARGS,
      "eraformat(INT) --> INT: set era format for stddate calls\n\
 \t\t-1 (do not change format, just return existing format)\n\
 \t\t0 (no AD/BC markers)\n\
@@ -313,7 +360,7 @@ static struct PyMethodDef Lifelines_Date_Functions[] =
 \t\t22 (trailing C.E. or B.C.E.)\n\
 \t\t31 (trailing BC if appropriate)\n\
 \t\t32 (trailing CE or BCE)." },
-   { "dateformat",	llpy_dateformat, METH_VARARGS,
+   { "dateformat",	(PyCFunction)llpy_dateformat, METH_VARARGS,
      "dateformat(INT) --> INT: set date format for stddate calls.\n\
 \t\t-1 (do not change format, just return existing format\n\
 \t\t0  (d0 mo yr)\n\
@@ -331,6 +378,10 @@ static struct PyMethodDef Lifelines_Date_Functions[] =
 \t\t12 (yr, year only omitting all else)\n\
 \t\t13 (da/mo yr)\n\
 \t\t14 (As in GEDCOM" },
+   { "stddate",		llpy_stddate_str, METH_VARARGS | METH_KEYWORDS,
+     "stddate(EVENT) --> STRING: formatted date string." },
+
+   { NULL, 0, 0, NULL }		/* sentinel */
   };
 
 PyTypeObject llines_event_type =
