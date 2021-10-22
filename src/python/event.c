@@ -32,6 +32,7 @@ static PyObject *llpy_monthformat (PyObject *self, PyObject *args, PyObject *kw)
 static PyObject *llpy_yearformat (PyObject *self, PyObject *args, PyObject *kw);
 static PyObject *llpy_eraformat (PyObject *self, PyObject *args, PyObject *kw);
 static PyObject *llpy_dateformat (PyObject *self, PyObject *args, PyObject *kw);
+static PyObject *llpy_complexformat (PyObject *self, PyObject *args, PyObject *kw);
 
 static void llpy_event_dealloc (PyObject *self);
 
@@ -218,6 +219,98 @@ static PyObject *llpy_eraformat (PyObject *self ATTRIBUTE_UNUSED, PyObject *args
     }
 }
 
+/* llpy_complexformat (format) -- format must be -1 or in the range
+  [3,8].  The value -1 just returns the current value without changing
+  it, values in the range [3,8] get set and return the previous value.
+  The value says what to do with words such as 'about', 'between', and
+  'estimated' that accompany the date.  Format values:
+
+               upper case title case lower case
+  abbreviation          3          4          7
+  full word             5          6          8 */
+
+static PyObject *llpy_complexformat (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "format", NULL };
+  int format = -1;
+  int old_format = py_dateformat.pyd_complexformat;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "|i", keywords, &format))
+    return NULL;
+
+  if ((format >= 3) && (format <= 8))
+    py_dateformat.pyd_complexformat = format;
+  else if (format != -1)
+    {
+      PyErr_SetString (PyExc_ValueError, "complexformat: format has a bad value");
+      return NULL;
+    }
+  return Py_BuildValue ("i", old_format);
+}
+
+static PyObject *llpy_complexpic (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
+{
+  static char *keywords[] = { "which", "format", NULL };
+  int which = -1;
+  char *format = NULL;
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "i|z", keywords, &which, &format))
+    return NULL;
+
+  if ((which < 0) || (which >= ECMPLX_END))
+    {
+      PyErr_SetString (PyExc_ValueError, "complexpic: bad value for 'which'");
+      return NULL;
+    }
+  if (format && (*format == '\0'))
+    format = NULL;
+
+  if (! set_cmplx_pic (which, format))
+    {
+      PyErr_SetString (PyExc_ValueError, "complexpic: bad argument");
+      return NULL;
+    }
+  Py_RETURN_TRUE;
+}
+
+static PyObject *llpy_complexdate_str (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
+{
+  STRING input_str;
+  STRING output_str;
+  static char *keywords[] = { "date", NULL };
+
+  if (! PyArg_ParseTupleAndKeywords (args, kw, "s", keywords, &input_str))
+    return NULL;
+
+  output_str = do_format_date (input_str,
+			       py_dateformat.pyd_dayformat,
+			       py_dateformat.pyd_monthformat,
+			       py_dateformat.pyd_yearformat,
+			       py_dateformat.pyd_dateformat,
+			       py_dateformat.pyd_eraformat,
+			       py_dateformat.pyd_complexformat);
+
+  return Py_BuildValue ("s", output_str);
+}
+
+static PyObject *llpy_complexdate_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  LLINES_PY_NODE *py_node = (LLINES_PY_NODE *) self;
+  STRING input_str;
+  STRING output_str;
+
+  input_str = event_to_date (py_node->lnn_node, FALSE);
+  output_str = do_format_date (input_str,
+			       py_dateformat.pyd_dayformat,
+			       py_dateformat.pyd_monthformat,
+			       py_dateformat.pyd_yearformat,
+			       py_dateformat.pyd_dateformat,
+			       py_dateformat.pyd_eraformat,
+			       py_dateformat.pyd_complexformat);
+
+  return Py_BuildValue ("s", output_str);
+}
+
 /* llpy_stddate_str(STRING date) ==> STRING -- takes the given date,
    breaks it apart, formats it according to the previously specified
    formats, and returns the resulting string.  */
@@ -245,7 +338,7 @@ static PyObject *llpy_stddate_str  (PyObject *self ATTRIBUTE_UNUSED, PyObject *a
    finds the date, breaks it apart, formats it according to the
    previously specified formats, and returns the resulting string.  */
 
-static PyObject *llpy_stddate_node  (PyObject *self ATTRIBUTE_UNUSED, PyObject *args, PyObject *kw)
+static PyObject *llpy_stddate_node  (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_NODE *py_node = (LLINES_PY_NODE *) self;
   char *input_date;
@@ -291,8 +384,7 @@ static void llpy_event_dealloc (PyObject *self)
       fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
-  /* for now we do not do a release_record, since it is a NODE, not a
-     RECORD.  If that changes, this will need to be updated.  */
+  nrefcnt(even->lne_node)--;
   even->lne_node = 0;
   even->lne_type = 0;
   Py_TYPE(self)->tp_free (self);
@@ -315,6 +407,9 @@ static struct PyMethodDef Lifelines_Event_Methods[] =
      "short(EVENT) --> STRING: abbreviated values of DATE and PLAC lines of EVENT." },
    { "stddate",		llpy_stddate_node, METH_NOARGS,
      "stddate(EVENT) --> STRING: formatted date string." },
+   { "complexdate",	llpy_complexdate_node, METH_NOARGS,
+     "complexdate(void) --> STRING; Formats and returns NODEs date\n\
+using complex date formats previously specified." },
 
    { NULL, 0, 0, NULL }		/* sentinel */
   };
@@ -381,6 +476,29 @@ static struct PyMethodDef Lifelines_Date_Functions[] =
    { "stddate",		llpy_stddate_str, METH_VARARGS | METH_KEYWORDS,
      "stddate(EVENT) --> STRING: formatted date string." },
 
+   { "complexformat",	llpy_complexformat, METH_VARARGS | METH_KEYWORDS,
+     "complexformat([INT format]) --> INT:\n\
+Format must be either -1 or be in the range [3,8].\n\
+The value -1 just returns the current value without changing it.  Values in\n\
+the range [3,8] get set and return the previous value.  The value says what\n\
+to do with the words such as 'about', 'between', and 'estimated' that\n\
+accompany the date.  Format values:\n\
+\t3 abbreviated, upper case\n\
+\t4 abbreviated, title case\n\
+\t7 abbreviated, lower case\n\
+\t5 full words,  upper case\n\
+\t6 full words,  title case\n\
+\t8 full words,  lower case" },
+   { "complexdate",	llpy_complexdate_str, METH_VARARGS | METH_KEYWORDS,
+     "complexdate(date) --> STRING: formats and returns date\n\
+using complex date formats previously specified." },
+
+   { "complexpic",	llpy_complexpic, METH_VARARGS | METH_KEYWORDS,
+     "complexpic(which,[format] --> BOOLEAN\n\
+'which' is one of the constants: DATE_COMPLEX_ABT, DATE_COMPLEX_EST,\n\
+DATE_COMPLEX_CAL, DATE_COMPLEX_BEF, DATE_COMPLEX_AFT, DATE_COMPLEX_BET_AND,\n\
+DATE_COMPLEX_FROM, DATE_COMPLEX_TO, and DATE_COMPLEX_FROM_TO.\n\
+And 'format' is a STRING or None." },
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 
@@ -404,4 +522,58 @@ void llpy_event_init (void)
   status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Date_Functions);
   if (status != 0)
     fprintf (stderr, "llpy_event_init: attempt to add functions returned %d\n", status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_ABT", ECMPLX_ABT);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_ABT returned %d\n",
+	     status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_EST", ECMPLX_EST);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_EST returned %d\n",
+	     status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_CAL", ECMPLX_CAL);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_CAL returned %d\n",
+	     status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_BEF", ECMPLX_BEF);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_BEF returned %d\n",
+	     status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_AFT", ECMPLX_AFT);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_AFT returned %d\n",
+	     status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_BET_AND", ECMPLX_BET_AND);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_BET_AND returned %d\n",
+	     status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_FROM", ECMPLX_FROM);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_FROM returned %d\n",
+	     status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_TO", ECMPLX_TO);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_TO returned %d\n",
+	     status);
+
+  status = PyModule_AddIntConstant (Lifelines_Module, "DATE_COMPLEX_FROM_TO", ECMPLX_FROM_TO);
+  if (status != 0)
+    fprintf (stderr,
+	     "llpy_event_init: attempt to add int constant DATE_COMPLEX_FROM_TO returned %d\n",
+	     status);
 }

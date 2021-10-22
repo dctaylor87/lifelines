@@ -255,6 +255,7 @@ static PyObject *llpy_birth (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! event)
     return NULL;		/* PyObject_New failed */
 
+  nrefcnt(birth)++;
   event->lne_node = birth;
   event->lne_type = LLINES_TYPE_EVEN;
 
@@ -280,6 +281,7 @@ static PyObject *llpy_death (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! event)
     return NULL;		/* PyObject_New failed */
 
+  nrefcnt(death)++;
   event->lne_node = death;
   event->lne_type = LLINES_TYPE_EVEN;
 
@@ -305,6 +307,7 @@ static PyObject *llpy_burial (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! event)
     return NULL;		/* PyObject_New failed */
 
+  nrefcnt(burial)++;
   event->lne_node = burial;
   event->lne_type = LLINES_TYPE_EVEN;
 

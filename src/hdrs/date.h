@@ -36,6 +36,11 @@ struct tag_dnum {
 	STRING str; /* raw string that was in date */
 };
 
+/* complex picture strings */
+enum { ECMPLX_ABT, ECMPLX_EST, ECMPLX_CAL, ECMPLX_BEF, ECMPLX_AFT
+	, ECMPLX_BET_AND, ECMPLX_FROM, ECMPLX_TO, ECMPLX_FROM_TO
+	, ECMPLX_END };
+
 typedef struct tag_gdateval *GDATEVAL; /* definition of struct in datei.h */
 
 ZSTR approx_time(INT seconds);

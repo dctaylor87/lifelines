@@ -293,12 +293,22 @@ static PyObject *llpy_iter_iternext (PyObject *self)
 static void llpy_nodeiter_dealloc (PyObject *self)
 {
   PyTypeObject *tp = Py_TYPE (self);
+  LLINES_PY_NODEITER *nodeiter = (LLINES_PY_NODEITER *) self;
 
   if (llpy_debug)
     {
       fprintf (stderr, "llpy_nodeiter_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
+  nrefcnt(nodeiter->ni_top_node)--;
+  nodeiter->ni_top_node = 0;
+
+  nrefcnt(nodeiter->ni_cur_node)--;
+  nodeiter->ni_cur_node = 0;
+
+  if (nodeiter->ni_tag)
+    free (nodeiter->ni_tag);
+  nodeiter->ni_tag = 0;
 #if 0
   PyObject_Del (self);
   Py_DECREF (tp);
@@ -371,6 +381,7 @@ static PyObject *llpy_nodeiter_iternext (PyObject *self)
 		return NULL;
 	      py_node->lnn_type = 0;
 	      py_node->lnn_node = iter->ni_cur_node;
+	      nrefcnt(py_node->lnn_node)++;
 	      return (PyObject *) py_node;
 	    }
 	}
@@ -401,7 +412,10 @@ static int nodeiter_next_child (LLINES_PY_NODEITER *iter)
       iter->ni_cur_node = nchild (iter->ni_top_node);
 
       if (iter->ni_cur_node)
-	return (1);		/* we have a node */
+	{
+	  nrefcnt(iter->ni_cur_node)++;
+	  return (1);		/* we have a node */
+	}
       else
 	{
 	  iter->ni_level = -1;	/* mark that it is exhausted */
@@ -417,9 +431,13 @@ static int nodeiter_next_child (LLINES_PY_NODEITER *iter)
       iter->ni_level = -2;
       return (-1);
     }
+  nrefcnt(iter->ni_cur_node)--;
   iter->ni_cur_node = nsibling (iter->ni_cur_node);
   if (iter->ni_cur_node)
-    return (1);			/* we have a node */
+    {
+      nrefcnt(iter->ni_cur_node)++;
+      return (1);		/* we have a node */
+    }
 
   iter->ni_level = -1;		/* mark that it is exhausted */
   return (0);			/* exhausted -- no more children */
@@ -452,6 +470,7 @@ static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter)
     {
       /* first iteration */
       iter->ni_cur_node = iter->ni_top_node;
+      nrefcnt(iter->ni_cur_node)++;
       iter->ni_level = 0;
       return (1);		/* we have a node -- the top node */
     }
@@ -462,7 +481,9 @@ static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter)
 
   if (new_node)
     {
+      nrefcnt(iter->ni_cur_node)--;
       iter->ni_cur_node = new_node;
+      nrefcnt(iter->ni_cur_node)++;
       iter->ni_level = new_level;
       return (1);
     }
@@ -473,7 +494,9 @@ static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter)
 
   if (new_node)
     {
+      nrefcnt(iter->ni_cur_node)--;
       iter->ni_cur_node = new_node;
+      nrefcnt(iter->ni_cur_node)++;
       iter->ni_level = new_level;
       return (1);
     }
@@ -501,7 +524,9 @@ static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter)
       if (new_node)
 	{
 	  /* found one, return it */
+	  nrefcnt(iter->ni_cur_node)--;
 	  iter->ni_cur_node = new_node;
+	  nrefcnt(iter->ni_cur_node)++;
 	  iter->ni_level = new_level;
 	  return (1);
 	}

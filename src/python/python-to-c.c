@@ -68,6 +68,7 @@ PyObject *_llpy_top_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     return NULL;
 
   py_node->lnn_type = py_record->llr_type;
+  nrefcnt(top)++;
   py_node->lnn_node = top;
   return ((PyObject *) py_node);
 }

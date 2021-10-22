@@ -55,6 +55,7 @@ static PyObject *llpy_marriage (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! marr)
     return NULL;		/* PyObject_New failed? -- out of memory?  */
 
+  nrefcnt(event)++;
   marr->lne_node = event;
   marr->lne_type = LLINES_TYPE_EVEN;
 

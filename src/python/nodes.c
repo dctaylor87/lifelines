@@ -63,6 +63,7 @@ static PyObject *llpy_parent_node (PyObject *self, PyObject *args ATTRIBUTE_UNUS
   if (! parent)
     return NULL;		/* PyOBject_New failed and set an exception */
 
+  nrefcnt(pnode)++;
   parent->lnn_type = node->lnn_type; /* 'inherit' type from previous node */
   parent->lnn_node = pnode;
 
@@ -84,6 +85,7 @@ static PyObject *llpy_child_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSE
   if (! py_node)
     return NULL;
 
+  nrefcnt(node)++;
   py_node->lnn_type = type;
   py_node->lnn_node = node;
 
@@ -105,6 +107,7 @@ static PyObject *llpy_sibling_node (PyObject *self, PyObject *args ATTRIBUTE_UNU
   if (! py_node)
     return NULL;
 
+  nrefcnt(node)++;
   py_node->lnn_type = type;
   py_node->lnn_node = node;
 
@@ -121,6 +124,7 @@ static PyObject *llpy_copy_node_tree (PyObject *self, PyObject *args ATTRIBUTE_U
 
   copy->lnn_type = node->lnn_type;
   copy->lnn_node = copy_nodes (node->lnn_node, TRUE, TRUE);
+  nrefcnt(copy->lnn_node)++;
 
   return (PyObject *)copy;
 }
@@ -247,6 +251,7 @@ static PyObject *llpy_create_node (PyObject *self ATTRIBUTE_UNUSED, PyObject *ar
   if (! (py_node = PyObject_New(LLINES_PY_NODE, &llines_node_type)))
     return NULL;
 
+  nrefcnt(node)++;
   py_node->lnn_node = node;
   py_node->lnn_type = 0;	/* unknown */
 
@@ -290,6 +295,7 @@ static PyObject *llpy_nodeiter (PyObject *self, PyObject *args, PyObject *kw)
 
   Py_INCREF (self);
   iter->ni_top_node = ((LLINES_PY_NODE *)self)->lnn_node;
+  nrefcnt(iter->ni_top_node)++;
   iter->ni_cur_node = NULL;
   iter->ni_type = type;
   iter->ni_level = 0;
@@ -309,6 +315,7 @@ static void llpy_node_dealloc (PyObject *self)
       fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
+  nrefcnt(node->lnn_node)--;
   free_nodes (node->lnn_node);
   node->lnn_node = 0;
   node->lnn_type = 0;
