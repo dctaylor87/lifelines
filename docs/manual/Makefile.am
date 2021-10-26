@@ -14,7 +14,9 @@ MANUALS_en =	ll-reportmanual.html \
 		ll-userguide.txt \
 		ll-devguide.html \
 		ll-devguide.pdf \
-		ll-devguide.txt
+		ll-devguide.txt \
+		ll-python-api.pdf \
+		ll-python-internals.pdf
 
 MANUALS_sv =	ll-reportmanual.sv.html \
 		ll-reportmanual.sv.pdf \
@@ -25,7 +27,9 @@ MANUALS =	$(MANUALS_en) $(MANUALS_sv)
 
 MANUALSSRC_en = ll-reportmanual.xml \
 		ll-userguide.xml \
-		ll-devguide.xml
+		ll-devguide.xml \
+		ll-python-api.texi \
+		ll-python-internals.texi
 
 MANUALSSRC_sv = ll-reportmanual.sv.xml \
 		ll-userguide.sv.xml
@@ -59,6 +63,8 @@ CLEANFILES =
 if BUILD_DOCS
 CLEANFILES += $(MANUALS)
 
+TEXI2PDF = texi2pdf
+
 .xml.pdf:
 	@TOOL_DBLATEX@ $^
 
@@ -67,4 +73,7 @@ CLEANFILES += $(MANUALS)
 
 .xml.txt:
 	@TOOL_XMLTO@ --skip-validation txt $^
+
+.texi.pdf:
+	$(TEXI2PDF) $^
 endif
