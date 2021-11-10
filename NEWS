@@ -5,6 +5,7 @@ https://lifelines.github.io/lifelines/
 Changes in 3.2.0 (unreleased)
 =============================
 - full 64-bit port
+- embedded Python support
 
 Changes in 3.1.0 (stable)
 =========================

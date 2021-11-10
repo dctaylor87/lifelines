@@ -6,6 +6,10 @@ This is a high-level view of changes made to the source tree.
 For details on files changed and the changes themselves, consult the git
 commit logs.
 
+2021-YY-ZZ David Taylor
+
+	Embedded Python Support
+
 XXXX-YY-ZZ Matt Emmerton
 
 	Release 3.2.0 (under development)
@@ -41,7 +45,7 @@ XXXX-YY-ZZ Matt Emmerton
 	- Add string-unicode and string-utf8 tests
 	- Add standalone C test programa and fix nextfkey test
 	- Integrate tests to run with automake Parallel test Harness
-	
+
 2016-03-16 Matt Emmerton
 
 	Release 3.1.1
