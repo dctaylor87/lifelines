@@ -66,6 +66,7 @@ jobs:
     #   make bootstrap
     #   make release
     - run: |
+       ./build/autogen.sh
        ./configure
        make
 
