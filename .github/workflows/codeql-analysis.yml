@@ -67,7 +67,7 @@ jobs:
     #   make release
     - run: |
        (env AUTOPOINT=/bin/true ./build/autogen.sh)
-       ./configure
+       ./configure --disable-nls
        make
 
     - name: Perform CodeQL Analysis
