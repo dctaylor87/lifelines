@@ -1068,18 +1068,18 @@ check_set (INDISEQ seq, char ctype)
 	FORINDISEQ(seq, el, num)
 		while (i<element_ikey(el)) {
 			report_error(ERR_UNDELETED
-				, _("Missing undeleted record %c%d")
+				, _("Missing undeleted record %c" FMT_INT)
 				, ctype, i);
 			if (todo.fix_deletes) {
 				char key[33];
 				snprintf(key, sizeof(key), "%c" FMT_INT, ctype, i);
 				if (mark_deleted_record_as_deleted(key)) {
 					report_fix(ERR_UNDELETED
-						, _("Fixed missing undeleted record %c%d")
+						, _("Fixed missing undeleted record %c" FMT_INT)
 						, ctype, i);
 				} else {
 					report_error(-1
-						, _("Failed to fix missing undeleted record %c%d")
+						, _("Failed to fix missing undeleted record %c" FMT_INT)
 						, ctype, i);
 				}
 			}
@@ -1210,18 +1210,18 @@ check_block (BTREE btr, BLOCK block, RKEY * lo, RKEY * hi)
 	/* NOTE: block keys are 0..n-1 */
 	for (i = n; i < NORECS; i++) {
 		if (noisy)
-			report_progress("Checking File: %s Entry %d", fkey2path(ixself(block)), i);
+			report_progress("Checking File: %s Entry " FMT_INT, fkey2path(ixself(block)), i);
 		if ((cmpkeys(&rkeys(block, i), &nullrkey) != 0) ||
 		    (offs(block, i) != 0) ||
 		    (lens(block, i) != 0)) {
 			report_error(ERR_STALEBLOCKENTRY
-				, _("Found stale block directory entry (%s, %d)"), fkey2path(ixself(block)), i);
+				, _("Found stale block directory entry (%s, " FMT_INT ")"), fkey2path(ixself(block)), i);
 			if (todo.fix_block_splits) {
 				RKEY_INIT(rkeys(block, i));
 				offs(block, i) = 0;
 				lens(block, i) = 0;
 				report_fix(ERR_STALEBLOCKENTRY
-					, _("Fixed stale block directory entry (%s, %d)"), fkey2path(ixself(block)), i);
+					, _("Fixed stale block directory entry (%s, " FMT_INT ")"), fkey2path(ixself(block)), i);
 				altered=TRUE;
 			}
 		}

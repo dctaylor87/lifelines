@@ -185,7 +185,7 @@ validate_gedcom (IMPORT_FEEDBACK ifeed, FILE *fp)
 			}
 			if (rec_type == FAM_REC) {
 				if (!members) {
-					handle_warn(ifeed, _("Line %d: Family has no members (%s %s).")
+					handle_warn(ifeed, _("Line " FMT_INT ": Family has no members (%s %s).")
 						, defline, tag0, xref0);
 				}
 			}
@@ -381,7 +381,7 @@ add_sour_defn (IMPORT_FEEDBACK ifeed, STRING xref, INT line)
 	INT dex;
 	if (!xref || *xref == 0) {
 		handle_err(ifeed
-			, _("Line %d: The source defined here has no key.")
+			, _("Line " FMT_INT ": The source defined here has no key.")
 			, line);
 		return -1;
 	}
@@ -395,14 +395,14 @@ add_sour_defn (IMPORT_FEEDBACK ifeed, STRING xref, INT line)
 		el = index_data[dex];
 	if (KNOWNTYPE(el) && Type(el) != SOUR_REC) {
 		handle_err(ifeed
-			, _("Line %d: Source %s has an incorrect key.")
+			, _("Line " FMT_INT ": Source %s has an incorrect key.")
 			, line, xref);
 		return -1;
 	}
 	if (Type(el) == SOUR_REC) {
 		if (Line(el) && line) {
 			handle_err(ifeed
-				, _("Lines %d and %d: Source %s is multiply defined.")
+				, _("Lines %d and " FMT_INT ": Source %s is multiply defined.")
 				, Line(el), line, xref);
 			return -1;
 		}
@@ -425,7 +425,7 @@ add_even_defn (IMPORT_FEEDBACK ifeed, STRING xref, INT line)
 	INT dex;
 	if (!xref || *xref == 0) {
 		handle_err(ifeed
-			, _("Line %d: The event defined here has no key.")
+			, _("Line " FMT_INT ": The event defined here has no key.")
 			, line);
 		return -1;
 	}
@@ -438,14 +438,14 @@ add_even_defn (IMPORT_FEEDBACK ifeed, STRING xref, INT line)
 		el = index_data[dex];
 	if (KNOWNTYPE(el) && Type(el) != EVEN_REC) {
 		handle_err(ifeed
-			, _("Line %d: Event %s has an incorrect key.")
+			, _("Line " FMT_INT ": Event %s has an incorrect key.")
 			, line, xref);
 		return -1;
 	}
 	if (Type(el) == EVEN_REC) {
 		if (Line(el) && line) {
 			handle_err(ifeed
-				, _("Lines %d and %d: Event %s is multiply defined.")
+				, _("Lines %d and " FMT_INT ": Event %s is multiply defined.")
 				, Line(el), line, xref);
 			return -1;
 		}
@@ -468,7 +468,7 @@ add_othr_defn (IMPORT_FEEDBACK ifeed, STRING xref, INT line)
 	INT dex;
 	if (!xref || *xref == 0) {
 		handle_err(ifeed
-			, _("Line %d: The record defined here has no key.")
+			, _("Line " FMT_INT ": The record defined here has no key.")
 			, line);
 		return -1;
 	}
@@ -481,14 +481,14 @@ add_othr_defn (IMPORT_FEEDBACK ifeed, STRING xref, INT line)
 		el = index_data[dex];
 	if (KNOWNTYPE(el) && Type(el) != OTHR_REC) {
 		handle_err(ifeed
-			, _("Line %d: Record %s has an incorrect key.")
+			, _("Line " FMT_INT ": Record %s has an incorrect key.")
 			, line, xref);
 		return -1;
 	}
 	if (Type(el) == OTHR_REC) {
 		if (Line(el) && line) {
 			handle_err(ifeed
-				, _("Lines %d and %d: Record %s is multiply defined.")
+				, _("Lines %d and " FMT_INT ": Record %s is multiply defined.")
 				, Line(el), line, xref);
 			return -1;
 		}
@@ -530,7 +530,7 @@ handle_trlr_lev1 (IMPORT_FEEDBACK ifeed, STRING tag, STRING val, INT line)
 static void
 report_missing_value (IMPORT_FEEDBACK ifeed, STRING tag, INT line, CNSTRING tag0, CNSTRING xref0)
 {
-	handle_err(ifeed, _("Line %d: This %s line is missing a value field (%s %s).")
+	handle_err(ifeed, _("Line " FMT_INT ": This %s line is missing a value field (%s %s).")
 		, line, tag, tag0, xref0);
 }
 /*===========================================================
@@ -581,7 +581,7 @@ handle_indi_lev1 (IMPORT_FEEDBACK ifeed, STRING tag, STRING val, INT line, CNSTR
 	} else if (eqstr(tag, "NAME")) {
 		named = TRUE;
 		if (!val || *val == 0 || !valid_name(val)) {
-			handle_err(ifeed, _("Line %d: Bad NAME syntax (%s %s)."),
+			handle_err(ifeed, _("Line " FMT_INT ": Bad NAME syntax (%s %s)."),
 				line, tag0, xref0);
 			return;
 		}
