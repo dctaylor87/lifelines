@@ -13,10 +13,10 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ master, embedded-python ]
+    branches: [ embedded-python, master ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ master, embedded-python ]
+    branches: [ embedded-python, master ]
   schedule:
     - cron: '31 13 * * 5'
 
