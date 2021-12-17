@@ -228,8 +228,66 @@ static PyObject *llpy_add_node (PyObject *self, PyObject *args, PyObject *kw)
 	  nsibling(prev_node) = orig_node;
 	}
     }
+  /* parent_node might be a permanent node or a temporary node -- set
+     ND_TEMP flag of orig_node (and children) to match that of
+     parent_node */
+  set_temp_node (orig_node, is_temp_node (parent_node));
+
   return (self);
 }
+
+/* llpy_detach_node (void) --> NODE
+
+   Removes NODE from its GEDCOM tree.  Afterwards the node is marked
+   as a temporary node.  Currently fails (and raises an exception) if
+   NODE is the top node */
+static PyObject *llpy_detach_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+{
+  NODE node = ((LLINES_PY_NODE *) self)->lnn_node;
+  NODE parent = nparent(node);
+
+  if (! parent)
+    {
+      /* not currently supported -- possibly in the future? */
+      PyErr_SetString (PyExc_ValueError, "detach_node: detaching top-node of a record is not (currently?) supported");
+      return NULL;
+    }
+  NODE previous = NULL;
+  NODE current = nchild (parent);
+
+  /* walk list of immediate children of parent looking for node
+     being detached */
+  while (current && current != node)
+    {
+      previous = current;
+      current = nsibling (current);
+    }
+  if (! current)
+    {
+      /* tree is broken -- node is not a child of its parent! --
+	 internal error */
+      PyErr_SetString (PyExc_SystemError, "llpy_detach_node: node tree is inconsistent");
+      return NULL;
+    }
+  NODE next = nsibling (node);
+  if (previous == NULL)
+    nchild (parent) = next;	/* our node is the first child */
+  else
+    nsibling (previous) = next; /* not the first child */
+
+  /* unparent node, but ensure its locking is only releative to new parent */
+  dolock_node_in_cache (node, FALSE);
+  nparent (node) = NULL;
+  dolock_node_in_cache (node, TRUE);
+
+  nsibling (node) = NULL;
+
+  /* whether it was permanent before or not, it is now temporary */
+  set_temp_node (node, TRUE);
+
+  return (self);
+}
+
 
 /* llpy_create_node (tag,[value]) --> NODE Returns the newly created
    node having specified TAG.  If VALUE is omitted, None, or empty,
@@ -349,6 +407,9 @@ static struct PyMethodDef Lifelines_Node_Methods[] =
    { "add_node",	(PyCFunction)llpy_add_node, METH_VARARGS | METH_KEYWORDS,
      "(NODE).add_node([parent],[prev]) --> NODE.  Modifies node to have\n\
 parent PARENT and previous sibling PREV.  Returns modified NODE" },
+   { "detach_node",	(PyCFunction)llpy_detach_node, METH_NOARGS,
+     "(NODE).detach_node(void) --> NODE.  Detach NODE from its tree.\n\
+It is (currently) an error for it to be the top-node of the tree." },
    { "nodeiter",	(PyCFunction)llpy_nodeiter, METH_VARARGS | METH_KEYWORDS,
      "nodeiter(type, [tag]) --> Iterator over node tree.\n\
 TYPE is an int -- one of ITER_CHILDREN or ITER_TRAVERSE.\n\

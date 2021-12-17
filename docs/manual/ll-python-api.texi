@@ -747,6 +747,14 @@ specified previous sibling.  Returns the modified NODE.  Node
 then NODE becomes the first child of parent.
 
 @end deftypefun
+
+@deftypefun NODE detach_node (void) @arrow{} SELF
+@findex detach_node
+
+Detaches NODE from its node tree.  Returns the detached node.
+It is (currently) an error for it to be the top-node of the tree.
+@end deftypefun
+
 @deftypefun NODE copy_node_tree (void) @arrow{} NODE
 Returns a copy of the tree from the current node on down.
 @end deftypefun

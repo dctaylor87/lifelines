@@ -212,7 +212,7 @@ extern BOOLEAN alloclog;
 /* "FATAL2 (" -- see macro below */
 #define FATAL2(qq)    __fatal(__FILE__, __LINE__, qq)
 /* "ASSERT (" -- see macro below */
-#define ASSERT(b)     if(!(b)) __fatal(__FILE__, __LINE__, NULL)
+#define ASSERT(b)     do { if(!(b)) __fatal(__FILE__, __LINE__, NULL); } while (0)
 
 /*
 eqstr does exact byte compare

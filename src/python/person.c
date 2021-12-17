@@ -1184,7 +1184,7 @@ If CAPS (optional) is True (default), the surname is made all capitals." },
      "fullname(bool1, bool2, int) -->" },
    { "surname",		(PyCFunction)llpy_surname, METH_NOARGS,
      "surname(void) --> STRING: returns the surname as found in the first '1 NAME'\n\
-line.  Slashes aree removed." },
+line.  Slashes are removed." },
    { "givens",		(PyCFunction)llpy_givens, METH_NOARGS,
      "givens(void) --> STRING: returns the given names of the person in the\n\
 same order and format as found in the first '1 NAME' line of the record." },

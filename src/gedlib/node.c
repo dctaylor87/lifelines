@@ -154,13 +154,32 @@ alloc_node (void)
 void
 free_node (NODE node)
 {
-	if (nxref(node)) stdfree(nxref(node));
-	if (nval(node)) stdfree(nval(node));
+	ASSERT(nrefcnt(node) == 0);
 
-	/*
-	tag is pointer into shared tagtable
-	which we cannot delete until all nodes are freed
-	*/
+	if (nxref(node))
+	  {
+	    stdfree(nxref(node));
+	    nxref(node) = 0;	/* paranoia */
+	  }
+	if (nval(node))
+	  {
+	    stdfree(nval(node));
+	    nval(node) = 0;	/* paranoia */
+	  }
+
+	/* tag is pointer into shared tagtable which we cannot delete
+	   until all nodes are freed */
+	ntag(node) = 0;
+
+	/* these three should have been zeroed before we got here, but
+	   paranoia... */
+	nparent(node) = 0;
+	nchild(node) = 0;
+	nsibling(node) = 0;
+
+	nflag(node) = 0;	/* clear all flags */
+	ncel(node) = 0;
+
 	((NDALLOC) node)->next = first_blck;
 	first_blck = (NDALLOC) node;
 	--live_count;
@@ -230,6 +249,21 @@ is_temp_node (NODE node)
 {
 	return !!(nflag(node) & ND_TEMP);
 }
+
+/* set_temp_node_helper -- {sets|clears} ND_TEMP in node, children,
+   and siblings */
+
+static void
+set_temp_node_helper (NODE node, BOOLEAN temp)
+{
+  if (is_temp_node (node) ^ temp)
+    nflag (node) ^= ND_TEMP;
+  if (nchild (node))
+    set_temp_node_helper (nchild (node), temp);
+  if (nsibling (node))
+    set_temp_node_helper (nsibling (node), temp);
+}
+
 /*===================================
  * set_temp_node -- make node temp (or not)
  * Created: 2003-02-04 (Perry Rapp)
@@ -239,6 +273,8 @@ set_temp_node (NODE node, BOOLEAN temp)
 {
 	if (is_temp_node(node) ^ temp)
 		nflag(node) ^= ND_TEMP;
+	if (nchild (node))
+	  set_temp_node_helper (nchild (node), temp);
 }
 /*=====================================
  * free_nodes -- Free all NODEs in tree
