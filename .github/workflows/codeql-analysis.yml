@@ -66,6 +66,7 @@ jobs:
     #   make bootstrap
     #   make release
     - run: |
+        sudo apt install binutils-dev
        (env AUTOPOINT=/bin/true ./build/autogen.sh)
        ./configure --disable-nls
        make
