@@ -209,6 +209,8 @@ close_lifelines (void)
 {
 	lldb_close(&def_lldb); /* make sure database closed */
 	term_browse_lists();
+	term_refnrec();
+	term_namerec();
 	if (editfile) {
 		unlink(editfile);
 		stdfree(editfile);
@@ -241,9 +243,8 @@ is_codeset_utf8 (CNSTRING codename)
  * dependent on user options
  *=================================================*/
 void
-update_useropts (VPTR uparm)
+update_useropts (HINT_PARAM_UNUSED VPTR uparm)
 {
-	uparm = uparm; /* unused */
 	if (suppress_reload)
 		return;
 	/* deal with db-specific options */

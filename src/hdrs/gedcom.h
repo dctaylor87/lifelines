@@ -126,13 +126,13 @@ typedef BOOLEAN(*TRAV_RAWRECORDS_FUNC)(CNSTRING key, STRING data, INT len, void 
 #define TRAV_RAWRECORDS_FUNC_ARGS(zkey,zdata,zlen,zparam) CNSTRING zkey, STRING zdata, INT zlen, void *zparam
 
 typedef BOOLEAN(*TRAV_RECORDS_FUNC)(CNSTRING key, RECORD rec, void *param);
-#define TRAV_RECORDS_FUNC_ARGS(zkey,zrec,zparam) CNSTRING zkey, RECORD zrec, void *zparam
+#define TRAV_RECORDS_FUNC_ARGS(zkey,zrec,zparam) CNSTRING zkey, RECORD zrec, HINT_PARAM_UNUSED void *zparam
 
 typedef BOOLEAN(*TRAV_NAMES_FUNC)(CNSTRING key, CNSTRING name, BOOLEAN newset, void *param);
-#define TRAV_NAMES_FUNC_ARGS(zkey,zname,znewset,zparam) CNSTRING zkey, CNSTRING zname, BOOLEAN znewset, void *zparam
+#define TRAV_NAMES_FUNC_ARGS(zkey,zname,znewset,zparam) CNSTRING zkey, CNSTRING zname, BOOLEAN znewset, HINT_PARAM_UNUSED void *zparam
 
 typedef BOOLEAN(*TRAV_REFNS_FUNC)(CNSTRING key, CNSTRING refn, BOOLEAN newset, void *param);
-#define TRAV_REFNS_FUNC_ARGS(zkey,zrefn,znewset,zparam) CNSTRING zkey, CNSTRING zrefn, BOOLEAN znewset, void *zparam
+#define TRAV_REFNS_FUNC_ARGS(zkey,zrefn,znewset,zparam) CNSTRING zkey, CNSTRING zrefn, BOOLEAN znewset, HINT_PARAM_UNUSED void *zparam
 
 /*=====================================
  * LLDATABASE types -- LifeLines database
@@ -472,6 +472,8 @@ BOOLEAN store_record(CNSTRING key, STRING rec, INT len);
 RECORD string_to_record(STRING str, CNSTRING key, INT len);
 void termlocale(void);
 void term_browse_lists(void);
+void term_namerec(void);
+void term_refnrec(void);
 BOOLEAN traverse_nodes(NODE node, BOOLEAN (*func)(NODE, VPTR), VPTR param);
 void traverse_refns(TRAV_REFNS_FUNC func, void *param);
 INT tree_strlen(INT, NODE);
