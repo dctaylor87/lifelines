@@ -15,7 +15,7 @@
 @section Overview
 This document concerns itself with the needs of those that wish to
 modify Lifelines -- whether to extend the Python embedding or fix a
-bug in it -- or to modify the core Lifelines.
+bug in it -- or to modify the core of Lifelines.
 
 If your goal is to use the Python embedding, please consult the
 document ``Lifelines Python Extension''.  If your goal is to use the
@@ -51,8 +51,13 @@ as importing, exporting, and related activities.
 This document is meant to supplement, not replace, the ``Lifelines
 Developer Documentation'' document.
 
+While this document was written primarily for those wishing to modify
+the Python specific portions of Lifelines, the bulk of this document
+concerns the code of Lifelines and should be of value to those
+modifying the core of Lifelines.
+
 If is my hope that this document will grow over time.  Feedback,
-additions, and corrections are welcomed and encouraged.
+additions, and corrections are both welcomed and encouraged.
 
 @section Layout
 
@@ -196,7 +201,7 @@ found in here.
 
 @end itemize
 
-@section NODEs And RECORDs
+@section NODEs and RECORDs
 
 The Lifelines Report Writing language primarily deals with NODES.  By
 contrast, the Python Extension primarily deals with RECORDS.
@@ -217,6 +222,28 @@ bit is defined -- whether the NODE is a temporary NODE or not.  A
 tempoary NODE is a NODE that is not part of the NODE tree of any
 RECORD.
 
+@subsection Temporary NODEs
+
+Temporary nodes are created by @code{create_temp_node}.  They are
+freed by @code{free_temp_node_tree}.  The { temp | non-temp } status
+can be tested by calling @code{is_temp_node}.  And the { temp |
+non-temp } status can be { set | cleared } by calling
+@code{set_temp_node}.
+
+Temporary nodes, when created, are marked with flag @code{ND_TEMP}.
+
+When one node is made the { parent | child } of another node, the {
+temp | non-temp } status of the parent is @b{NOT} propagated to the
+new child(ren).  It should be.  This is a @b{BUG}.
+
+When the reference count of a node is { incremented | decremented },
+that change is not propagated down the tree.  It should be.  This is a
+@b{BUG}.
+
+When the reference count for a temporary node reaches zero, it, its
+children, and their siblings are all freed -- without checking their
+reference counts.  Oopps.  Another @b{BUG}.
+
 @section Application Programmer Interfaces
 
 The lists of functions, macros, and variables in the following
@@ -228,9 +255,9 @@ language.  Additions and corrections are both encouraged and welcomed.
 
 These entries are found in the @code{src/gedlib} directory.
 
-@section NODE Functions
+@section NODEs
 
-@subsection Tree Related NODE Functions
+@subsection Tree Related NODE Functions and Macros
 
 @defmac nchild (node) @arrow{} NODE
 Given a NODE @code{node}, return its first child.
@@ -265,6 +292,12 @@ true, then the copy has copies of the siblings as well.
 
 @deftypefun NODE copy_node_subtree (NODE node)
 Returns a copy of the tree rooted at @code{node}.
+@end deftypefun
+
+@deftypefun NODE create_node (STRING xref, STRING tag, STRING value, NODE parent)
+Creates a new node with the specified @code{xref}, @code{tag},
+@code{value}, and @code{parent}.  Returns the new node.
+
 @end deftypefun
 
 @deftypefun NODE create_temp_node (STRING xref, STRING tag, STRING value, NODE parent)
@@ -310,35 +343,51 @@ lines.  Might make other changes to @code{str}.
 
 Given a NODE @code{node} for a family, returns the top NODE of the first child.
 If there are no children, NULL is returned.
+
+Defined in @file{gedlib/node.c}, declared in @file{hdrs/gecom.h}.
 @end deftypefun
 
 @deftypefun NODE fam_to_last_chil (NODE node) @arrow{} top NODE of last child
 Given a NODE @code{node} for a family, returns the top NODE of the last child.
 If there are no children, NULL is returned.
+
+Defined in @file{gedlib/node.c}, declared in @file{hdrs/gecom.h}.
 @end deftypefun
 
-@deftypefun NODE FAMS (NODE indi) @arrow{} NODE
+@defmac FAMS (NODE indi) @arrow{} NODE
 Given an individual @code{indi}, return the tree pointed to by the
 first @code{FAMS} NODE.  Returns NULL if there are none.
-@end deftypefun
+@end defmac
 
 @deftypefun NODE indi_to_famc (NODE indi) @arrow{} NODE
 Returns the top NODE of the tree pointed to by the first @code{FAMC}
 node of @code{indi}.
+
+Defined in @file{gedlib/node.c}, declared in @file{hdrs/gecom.h}.
 @end deftypefun
 
 @deftypefun NODE indi_to_fath (NODE indi) @arrow{} NODE
-Returns the top-node of the first @code{HUSB} node of the family
-represented by the first @code{FAMC} node of this individual.
+Returns the father of @code{indi}.
+
+More precisely, returns the top-node of the first @code{HUSB} node of
+the family represented by the first @code{FAMC} node of this
+individual.
 
 Assumes that @code{indi} is the top-node of an INDI RECORD.
+
+Defined in @file{gedlib/node.c}, declared in @file{hdrs/gecom.h}.
 @end deftypefun
 
 @deftypefun NODE indi_to_moth (NODE) @arrow{} NODE
-Returns the top-node of the first @code{HUSB} node of the family
-represented by the first @code{FAMC} node of this individual.
+Returns the mother of @code{indi}.
+
+More precisely, returns the top-node of the first @code{WIFE} node of
+the family represented by the first @code{FAMC} node of this
+individual.
 
 Assumes that @code{indi} is the top-node of an INDI RECORD.
+
+Defined in @file{gedlib/node.c}, declared in @file{hdrs/gecom.h}.
 @end deftypefun
 
 @deftypefun NODE indi_to_next_sib_old (NODE)
@@ -361,9 +410,10 @@ version, @code{new_indi}.  Replaces all chilkdren nodes of
 @end deftypefun
 
 @deftypefun INT resolve_refn_links (NODE node)
-Check and resolve all links in node tree.  This convets something like
-@code{"<1850.Census>"} to something like @code{"@@S25@@"}.  Returns the
-number of unresolved links.
+Checks and attempts to resolve all links in the node tree having
+@code{node} as its parent.  This convets something like
+@code{"<1850.Census>"} to something like @code{"@@S25@@"}.  Returns
+the number of unresolved links.
 @end deftypefun
 
 @deftypefun BOOLEAN valid_indi_tree (NODE indi, STRING *pmsg, NODE orig)
@@ -410,6 +460,42 @@ strings.
 @deftypefun void remove_indiseq (INDISEQ seq)
 Frees @code{seq} and all the memory used by it.
 @end deftypefun
+
+@subsection NODE Reference Counts
+
+At one level, reference counts are only meaningful for temporary
+nodes.  A 'permanent' node is not freed unless the containing record
+is freed.
+
+However...
+
+A permanent node can be detached, at which time it is then a temporary
+node (ditto for its children and their siblings), not a permanent
+node, and therefore subject to being freed if it has a zero reference
+count.
+
+Since a permanent node may at any time be detached and therefore
+become a temporary node, the reference count needs to kept correct at
+all times for all nodes.
+
+The reference count does @b{NOT} reflect references from within the
+node tree itself.  Nor does it reflect references from records.  It
+@b{DOES} reflect references from the Lifelines Report Writing language
+(@code{PVALUE}'s) and reference from within Python (from within
+@code{PyObject}'s).
+
+@defmac nrefcnt (node) @arrow{} INT
+Given a NODE @code{node}, returns the reference count of the NODE.
+
+There is not, as of this writing, a function for incrementing nor a
+function for decrementing the reference count of a NODE (though
+perhaps there should be).
+
+To increment the reference count of a NODE @code{node}, use either
+@code{nrefcnt(node)++} or @code{++nrefcnt(node)}.  And to decrement
+the reference count use either @code{nrefcnt(node)--} or
+@code{--nrefcnt(node)}.
+@end defmac
 
 @section NODE to RECORD traversal
 @deftypefun RECORD node_to_record (NODE node) @arrow{} RECORD
@@ -761,24 +847,35 @@ These entries are found in the @code{src/python} directory.
 @deftypefunx void llpy_set_init (void)
 @deftypefunx void llpy_user_init (void)
 These are the initialization routines for the respective files.
+
+These functions have one caller -- @code{PyInit_llines} -- found in
+file @file{python/python-to-c.c}.
 @end deftypefun
 
 @section Dellocation Functions
 @deftypefun void llpy_event_dealloc (PyObject *self)
+Deallocates the iterator created by @code{llpy_events}.
 @end deftypefun
 @deftypefun void llpy_family_dealloc (PyObject *self)
+Deallocates the iterator created by @code{llpy_families}.
 @end deftypefun
 @deftypefun void llpy_individual_dealloc (PyObject *self)
+Deallocates the iterator created by @code{llpy_individuals}.
 @end deftypefun
 @deftypefun void llpy_iter_dealloc (PyObject *self)
+Deallocates the iterator created by @code{llpy_}.
 @end deftypefun
 @deftypefun void llpy_node_dealloc (PyObject *self)
+Deallocates the iterator created by @code{llpy_}.
 @end deftypefun
 @deftypefun void llpy_nodeiter_dealloc (PyObject *self)
+Deallocates the iterator created by @code{llpy_nodeiter}.
 @end deftypefun
 @deftypefun void llpy_other_dealloc (PyObject *self)
+Deallocates the iterator created by @code{llpy_others}.
 @end deftypefun
 @deftypefun void llpy_source_dealloc (PyObject *self)
+Deallocates the iterator created by @code{llpy_sources}.
 @end deftypefun
 
 @section Iterator Functions
@@ -935,36 +1032,50 @@ From a Python perspective, the types are:
 The following arrays define instance methods of their datatype:
 
 @deftypevar PyMethodDef Lifelines_Event_Methods
+Static variable defined in @file{python/event.c}.
 @end deftypevar
 @deftypevar PyMethodDef Lifelines_Family_Methods
+Static variable defined in @file{python/family.c}.
 @end deftypevar
 @deftypevar PyMethodDef Lifelines_Iter_Methods
-@end deftypevar
-@deftypevar PyMethodDef Lifelines_Other_Methods
-@end deftypevar
-@deftypevar PyMethodDef Lifelines_Person_Methods
-@end deftypevar
-@deftypevar PyMethodDef Lifelines_Source_Methods
+Static variable defined in @file{python/iter.c}.
 @end deftypevar
 @deftypevar PyMethodDef Liflines_Node_Methods
+Static variable defined in @file{python/nodes.c}.
+@end deftypevar
+@deftypevar PyMethodDef Lifelines_Other_Methods
+Static variable defined in @file{python/other.c}.
+@end deftypevar
+@deftypevar PyMethodDef Lifelines_Person_Methods
+Static variable defined in @file{python/person.c}.
+@end deftypevar
+@deftypevar PyMethodDef Lifelines_Source_Methods
+Static variable defined in @file{python/source.c}.
 @end deftypevar
 
 @sp 1
 The following arrays define additional @code{llines} module functions:
 
 @deftypevar PyMethodDef Lifelines_Database_Functions
+Static variable defined in @file{python/database.c}.
 @end deftypevar
 @deftypevar PyMethodDef Lifelines_Date_Functions
+Static variable defined in @file{python/event.c}.
 @end deftypevar
 @deftypevar PyMethodDef Liflines_Node_Functions
+Static variable defined in @file{python/nodes.c}.
 @end deftypevar
 @deftypevar PyMethodDef Lifelines_Person_Functions
+Static variable defined in @file{python/person.c}.
 @end deftypevar
 @deftypevar PyMethodDef Lifelines_Records_Functions
+Static variable defined in @file{python/records.c}.
 @end deftypevar
 @deftypevar PyMethodDef Lifelines_Set_Functions
+Static variable defined in @file{python/set.c}.
 @end deftypevar
 @deftypevar PyMethodDef Lifelines_User_Functions
+Static variable defined in @file{python/user.c}.
 @end deftypevar
 
 @sp 1
