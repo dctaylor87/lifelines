@@ -66,11 +66,10 @@ jobs:
     #   make bootstrap
     #   make release
     - run: |
-       ls -l /bin /usr/bin /sbin /usr/sbin
        sudo apt-get -y install binutils-dev
        (env AUTOPOINT=/bin/true ./build/autogen.sh)
        ./configure --disable-nls
-       make
+       make -k
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
