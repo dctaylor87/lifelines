@@ -217,7 +217,7 @@ valid_node_type (NODE node, char ntype, STRING *pmsg, NODE node0)
  *  orig:  [IN]  SOUR node to match 
  *====================================*/
 BOOLEAN
-valid_sour_tree (NODE node, STRING *pmsg, NODE orig)
+valid_sour_tree (NODE node, STRING *pmsg, HINT_PARAM_UNUSED NODE orig)
 {
 	*pmsg = NULL;
 	if (!node) {
@@ -245,7 +245,7 @@ valid_sour_tree (NODE node, STRING *pmsg, NODE orig)
  *  orig:  [IN]  EVEN node to match
  *====================================*/
 BOOLEAN
-valid_even_tree (NODE node, STRING *pmsg, NODE orig)
+valid_even_tree (NODE node, STRING *pmsg, HINT_PARAM_UNUSED NODE orig)
 {
 	*pmsg = NULL;
 	if (!node) {
@@ -273,7 +273,7 @@ valid_even_tree (NODE node, STRING *pmsg, NODE orig)
  *  orig:  [IN]  OTHR node to match
  *====================================*/
 BOOLEAN
-valid_othr_tree (NODE node, STRING *pmsg, NODE orig)
+valid_othr_tree (NODE node, STRING *pmsg, HINT_PARAM_UNUSED NODE orig)
 {
 	*pmsg = NULL;
 	if (!node) {

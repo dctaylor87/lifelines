@@ -388,7 +388,6 @@ prompt_for_db:
 			goto finish;
 		}
 	}
-	strfree(&dbrequested);
 
 	/* Start Program */
 	if (!init_lifelines_postdb()) {
@@ -430,6 +429,7 @@ finish:
 	/* we free this not because we care so much about these tiny amounts
 	of memory, but to ensure we have the memory management right */
 	/* strfree frees memory & nulls pointer */
+	strfree(&dbrequested);
 	strfree(&dbused);
 	strfree(&readpath_file);
 	shutdown_interpreter();

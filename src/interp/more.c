@@ -763,10 +763,8 @@ llrpt_runsystem (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: firstindi() -> INDI
  *===========================================*/
 PVALUE
-llrpt_firstindi (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_firstindi (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, BOOLEAN *eflg)
 {
-	node=node; /* unused */
-	stab=stab; /* unused */
 	*eflg = FALSE;
 	return create_pvalue_from_indi_keynum(xref_firsti());
 }
@@ -819,10 +817,8 @@ llrpt_previndi (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: lastindi() -> INDI
  *=========================================*/
 PVALUE
-llrpt_lastindi (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_lastindi (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, BOOLEAN *eflg)
 {
-	node=node; /* unused */
-	stab=stab; /* unused */
 	*eflg = FALSE;
 	return create_pvalue_from_indi_keynum(xref_lasti());
 }
@@ -831,10 +827,8 @@ llrpt_lastindi (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: firstfam() -> FAM
  *==========================================*/
 PVALUE
-llrpt_firstfam (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_firstfam (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, BOOLEAN *eflg)
 {
-	node=node; /* unused */
-	stab=stab; /* unused */
 	*eflg = FALSE;
 	return create_pvalue_from_fam_keynum(xref_firstf());
 }
@@ -887,10 +881,8 @@ llrpt_prevfam (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: lastfam() -> FAM
  *========================================*/
 PVALUE
-llrpt_lastfam (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_lastfam (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, BOOLEAN *eflg)
 {
-	node=node; /* unused */
-	stab=stab; /* unused */
 	*eflg = FALSE;
 	return create_pvalue_from_fam_keynum(xref_lastf());
 }
@@ -1163,10 +1155,8 @@ llrpt_genindiset (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: version() -> STRING
  *===============================================*/
 PVALUE
-llrpt_version (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_version (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, BOOLEAN *eflg)
 {
-	node=node; /* unused */
-	stab=stab; /* unused */
 	*eflg = FALSE;
 	return create_pvalue_from_string(get_lifelines_version(120));
 }
@@ -1200,10 +1190,8 @@ llrpt_pvalue (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: program() -> STRING
  *===========================================*/
 PVALUE
-llrpt_program (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_program (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, HINT_PARAM_UNUSED BOOLEAN *eflg)
 {
-	stab=stab; /* unused */
-	eflg=eflg; /* unused */
 	return create_pvalue_from_string(irptinfo(node)->fullpath);
 }
 /*============================================+

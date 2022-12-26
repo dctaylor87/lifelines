@@ -5,6 +5,8 @@
 #define _GEDCOM_PRIV_H
 
 #include "btree.h" /* for RKEY */
+#include "llstdlib.h" /* for CALLBACK_FNC */
+#include "gedcom.h" /* for CACHEEL */
 
 /* charmaps.c */
 ZSTR custom_translate(CNSTRING str, TRANTABLE tt);
@@ -14,6 +16,10 @@ BOOLEAN init_map_from_file(CNSTRING file, CNSTRING mapname, TRANTABLE*, ZSTR zer
 /* keytonod.c */
 void cel_remove_record(CACHEEL cel, RECORD rec);
 NODE is_cel_loaded(CACHEEL cel);
+
+/* leaks.c */
+void open_leak_log(void);
+void close_leak_log(void);
 
 /* llgettext.c */
 void init_win32_gettext_shim(void);
@@ -28,6 +34,7 @@ BOOLEAN rkey_eq(const RKEY * rkey1, const RKEY * rkey2);
 /* node.c */
 void check_node_leaks(void);
 void set_record_key_info(RECORD rec, CNSTRING key);
+void term_node_allocator(void);
 
 /* record.c */
 void check_record_leaks(void);

@@ -270,13 +270,10 @@ llrpt_gettext (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: gettoday() --> EVENT
  *=================================*/
 PVALUE
-llrpt_gettoday (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_gettoday (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, HINT_PARAM_UNUSED BOOLEAN *eflg)
 {
 	NODE prnt = create_temp_node(NULL, "EVEN", NULL, NULL);
 	NODE chil = create_temp_node(NULL, "DATE", get_todays_date(), prnt);
-	node=node; /* unused */
-	stab=stab; /* unused */
-	eflg=eflg; /* unused */
 
 	nchild(prnt) = chil;
 	return create_pvalue_from_node(prnt);
@@ -3478,10 +3475,8 @@ copyfile_end:
  * usage: nl() -> STRING
  *=======================*/
 PVALUE
-llrpt_nl (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_nl (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, BOOLEAN *eflg)
 {
-	node=node; /* unused */
-	stab=stab; /* unused */
 	*eflg = FALSE;
 	return create_pvalue_from_string("\n");
 }
@@ -3490,10 +3485,8 @@ llrpt_nl (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: sp() -> STRING
  *========================*/
 PVALUE
-llrpt_space (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_space (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, BOOLEAN *eflg)
 {
-	node=node; /* unused */
-	stab=stab; /* unused */
 	*eflg = FALSE;
 	return create_pvalue_from_string(" ");
 }
@@ -3502,10 +3495,8 @@ llrpt_space (PNODE node, SYMTAB stab, BOOLEAN *eflg)
  * usage: qt() -> STRING
  *============================*/
 PVALUE
-llrpt_qt (PNODE node, SYMTAB stab, BOOLEAN *eflg)
+llrpt_qt (HINT_PARAM_UNUSED PNODE node, HINT_PARAM_UNUSED SYMTAB stab, BOOLEAN *eflg)
 {
-	node=node; /* unused */
-	stab=stab; /* unused */
 	*eflg = FALSE;
 	return create_pvalue_from_string("\"");
 }

@@ -435,9 +435,8 @@ wipe_pactx (PACTX pactx)
  * remove_tables -- Remove interpreter's tables
  *==========================================*/
 static void
-remove_tables (PACTX pactx)
+remove_tables (HINT_PARAM_UNUSED PACTX pactx)
 {
-	pactx=pactx; /* unused */
 	destroy_table(gproctab);
 	gproctab=NULL;
 	remove_symtab(globtab);
@@ -1907,10 +1906,9 @@ pa_handle_option (CNSTRING optname)
  * Called directly from generated parser code (ie, from code in yacc.y)
  *=============================================*/
 void
-pa_handle_char_encoding (PACTX pactx, PNODE node)
+pa_handle_char_encoding (HINT_PARAM_UNUSED PACTX pactx, PNODE node)
 {
 	CNSTRING codeset = get_internal_string_node_value(node);
-	pactx=pactx; /* unused */
 	strupdate(&irptinfo(node)->codeset, codeset);
 }
 /*=============================================+
@@ -1938,14 +1936,13 @@ make_internal_string_node (PACTX pactx, STRING str)
  *  parse-time handling of report command
  *=============================================*/
 void
-pa_handle_include (PACTX pactx, PNODE node)
+pa_handle_include (HINT_PARAM_UNUSED PACTX pactx, PNODE node)
 {
 	/*STRING fname = ifname(node); */ /* current file */
 	CNSTRING newfname = get_internal_string_node_value(node);
 	STRING fullpath=0, localpath=0;
 	ZSTR zstr=0;
 	PATHINFO pathinfo = 0;
-	pactx=pactx; /* unused */
 
 	/* if it is relative, get local path to give to find_program */
 	if (!is_path(newfname)) {
@@ -1968,12 +1965,11 @@ pa_handle_include (PACTX pactx, PNODE node)
  *  node:  [IN]  current parse node
  *=============================================*/
 void
-pa_handle_require (PACTX pactx, PNODE node)
+pa_handle_require (HINT_PARAM_UNUSED PACTX pactx, PNODE node)
 {
 	CNSTRING reqver = get_internal_string_node_value(node);
 	STRING propstr = "requires_lifelines-reports.version:";
 	TABLE tab=0;
-	pactx=pactx; /* unused */
 
 	tab = (TABLE)valueof_obj(pactx->filetab, pactx->fullpath);
 	if (!tab) {
