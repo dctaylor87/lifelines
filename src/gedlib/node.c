@@ -224,21 +224,27 @@ create_temp_node (STRING xref, STRING tag, STRING val, NODE prnt)
 }
 /*===========================
  * free_temp_node_tree -- Free a node created by create_temp_node
- * Created: 2003-02-01 (Perry Rapp)
+ * If the reference count is non-zero, we do not delete it nor its
+ * children -- siblings are still fair game, though.
+ * Created: 2003-02-01 (Perry Rapp).  Modified: David Taylor.
  *=========================*/
 void
 free_temp_node_tree (NODE node)
 {
 	NODE n2;
-	if ((n2 = nchild(node))) {
-		free_temp_node_tree(n2);
-		nchild(node) = 0;
+	if (nrefcnt (node) == 0) {
+		if ((n2 = nchild(node))) {
+			free_temp_node_tree(n2);
+			nchild(node) = 0;
+		}
 	}
 	if ((n2 = nsibling(node))) {
 		free_temp_node_tree(n2);
 		nsibling(node) = 0;
 	}
-	free_node(node);
+	if (nrefcnt (node) == 0) {
+		free_node(node);
+	}
 }
 /*===================================
  * is_temp_node -- Return whether node is a temp
@@ -284,7 +290,10 @@ free_nodes (NODE node)
 {
 	NODE sib;
 	while (node) {
-		if (nchild(node)) free_nodes(nchild(node));
+		if (nchild(node)) {
+			free_nodes(nchild(node));
+			nchild (node) = 0;
+		}
 		sib = nsibling(node);
 		free_node(node);
 		node = sib;
