@@ -9,8 +9,8 @@ dnl **************************************************************
 dnl Autoconf Section
 dnl **************************************************************
 
-AC_INIT(lifelines, 3.2.0)
-AC_PREREQ(2.50)
+AC_INIT([lifelines],[3.2.0])
+AC_PREREQ([2.71])
 AC_REVISION([for lifelines, built with autoconf] AC_ACVERSION)
 AC_DISABLE_OPTION_CHECKING
 AC_CONFIG_AUX_DIR(build/autotools)
@@ -67,7 +67,7 @@ dnl OS/Compiler-Specific Section
 dnl **************************************************************
 
 dnl Add warning flags when using The GNU C Compiler
-if test "${ac_cv_prog_gcc}" = "yes"; then
+if test "${ac_cv_c_compiler_gnu}" = "yes"; then
   CFLAGS="${CFLAGS} -W -Wall -Wextra"
   CFLAGS="${CFLAGS} -Wcast-align -Wmissing-declarations -Wmissing-prototypes"
   CFLAGS="${CFLAGS} -Wreturn-type -Wstrict-prototypes -pedantic"
@@ -102,7 +102,7 @@ AC_ARG_WITH(64bit,
 
 if test "$build_32bit" = "yes"
 then
-  if test "${ac_cv_prog_gcc}" = "yes"; then
+  if test "${ac_cv_c_compiler_gnu}" = "yes"; then
     CFLAGS="${CFLAGS} -m32"
     LDFLAGS="${LDFLAGS} -m32"
   else
@@ -113,7 +113,7 @@ fi
 
 if test "$build_64bit" = "yes"
 then
-  if test "${ac_cv_prog_gcc}" = "yes"; then
+  if test "${ac_cv_c_compiler_gnu}" = "yes"; then
     CFLAGS="${CFLAGS} -m64"
     LDFLAGS="${LDFLAGS} -m64"
   else
@@ -130,7 +130,7 @@ AC_ARG_WITH(coverage,
 
 if test "$build_coverage" = "yes"
 then
-  if test "${ac_cv_prog_gcc}" = "yes"; then
+  if test "${ac_cv_c_compiler_gnu}" = "yes"; then
     CFLAGS="${CFLAGS} --coverage"
   else
     echo "The use of --with-coverage is only supported when using gcc!"
@@ -146,7 +146,7 @@ AC_ARG_WITH(full-debug,
 
 if test "$build_full_debug" = "yes"
 then
-  if test "${ac_cv_prog_gcc}" = "yes"; then
+  if test "${ac_cv_c_compiler_gnu}" = "yes"; then
     CFLAGS="${CFLAGS} -rdynamic"
   else
     echo "The use of --with-full-debug only supported when using gcc!"
@@ -208,7 +208,7 @@ dnl **************************************************************
 AC_ARG_WITH(profiling,
   [  --with-profiling        Compile with profiling support],
   [# Does it work for other compilers then GCC? [pere 2000-12-30]
-   if test "${ac_cv_prog_gcc}" = "yes"; then
+   if test "${ac_cv_c_compiler_gnu}" = "yes"; then
       CFLAGS="${CFLAGS} -pg -a"
       LDFLAGS="${LDFLAGS} -pg -a"
 
@@ -336,7 +336,12 @@ AC_DEFUN([AC_TRY_LIBPYTHON],
   AC_MSG_NOTICE(AC TRY LIBPYTHON entered; CPPFLAGS: $CPPFLAGS)
   AC_MSG_NOTICE(AC TRY LIBPYTHON entered; LIBS: $LIBS)
   AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include "Python.h"]],
-                                 [[Py_Initialize ();]])],
+                                 [[
+				    #if PY_MAJOR_VERSION != 3
+				    # error "We only support Python 3"
+				    #endif
+				    Py_Initialize ();
+				 ]])],
                  [have_libpython_var=yes
                   found_usable_python=yes
                   PYTHON_CPPFLAGS=$new_CPPFLAGS
@@ -390,13 +395,13 @@ else
   [[\\/]]* | ?:[[\\/]]*)
     if test -d "${with_python}"; then
       # Assume the python binary is ${with_python}/bin/python.
-      python_prog="${with_python}/bin/python"
+      python_prog="${with_python}/bin/python3"
       python_prefix=
       # If python does not exit ${with_python}/bin, then try in
       # ${with_python}.  On Windows/MinGW, this is where the Python
       # executable is.
       if test ! -x "${python_prog}"; then
-        python_prog="${with_python}/python"
+        python_prog="${with_python}/python3"
         python_prefix=
       fi
       if test ! -x "${python_prog}"; then
@@ -425,7 +430,7 @@ else
     case "${with_python}" in
     yes | auto)
       if test "${build}" = "${host}"; then
-        AC_PATH_PROG(python_prog_path, python, missing)
+        AC_PATH_PROG(python_prog_path, python3, missing)
         if test "${python_prog_path}" = missing; then
           python_prog=missing
         else
@@ -494,21 +499,6 @@ else
   if test "${have_python_config}" = yes; then
     AC_TRY_LIBPYTHON(have_libpython,
                      ${python_includes}, ${python_libs})
-    AC_MSG_NOTICE(first call to AC TRY LIBPYTHON: have_python_config: $have_python_config) 
-    AC_MSG_NOTICE(first call to AC TRY LIBPYTHON: have_libpython: $have_libpython) 
-  elif test "${have_python_config}" != failed; then
-    if test "${have_libpython}" = no; then
-      AC_TRY_LIBPYTHON(have_libpython,
-                       ${python_includes}, "-lpython3.9 ${python_libs}")
-      AC_MSG_NOTICE(second call to AC TRY LIBPYTHON: have_python_config: $have_python_config) 
-      AC_MSG_NOTICE(second call to AC TRY LIBPYTHON: have_libpython: $have_libpython) 
-    fi
-    if test "${have_libpython}" = no; then
-      AC_TRY_LIBPYTHON(have_libpython,
-                       ${python_includes}, "-lpython3.8 ${python_libs}")
-      AC_MSG_NOTICE(third call to AC TRY LIBPYTHON: have_python_config: $have_python_config) 
-      AC_MSG_NOTICE(third call to AC TRY LIBPYTHON: have_libpython: $have_libpython) 
-    fi
   fi
 
   AC_MSG_NOTICE(final PYTHON_CPPFLAGS: $PYTHON_CPPFLAGS)
@@ -618,6 +608,13 @@ else
   CONFIG_SRCS="$CONFIG_SRCS python/python.c"
 fi
 
+# Work around Python http://bugs.python.org/issue10112.  See also
+# http://bugs.python.org/issue11410, otherwise -Wl,--dynamic-list has
+# no effect.  Note that the only test after this that uses Python is
+# the -rdynamic/-Wl,--dynamic-list test, and we do want that one to be
+# run without -export-dynamic too.
+PYTHON_LIBS=`echo $PYTHON_LIBS | sed -e 's/-Xlinker -export-dynamic//'`
+
 if test "${have_libpython}" != "no"; then
   LIBPYLLINES="../python/libpyllines.a"
   PYTHON_DIR="python"
@@ -662,7 +659,7 @@ dnl **************************************************************
 dnl Generate Makefiles
 dnl **************************************************************
 
-AC_OUTPUT(Makefile \
+AC_CONFIG_FILES([Makefile \
         src/Makefile \
         src/arch/Makefile \
         src/arch/mswin/Makefile \
@@ -689,4 +686,5 @@ AC_OUTPUT(Makefile \
         tt/Makefile \
         build/Makefile \
         tests/Makefile \
-        po/Makefile.in)
+        po/Makefile.in])
+AC_OUTPUT
