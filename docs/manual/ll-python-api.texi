@@ -1249,13 +1249,132 @@ Returns the version of Lifelines.
 
 @itemize
 @item Arithmetic and Logic Functions
-@item List Functions
-@item Table Functions
-@item String Functions
-@item Deprecated Functions
 
-The functions mentioned in the aforementioned sections
-in their entirety will NOT be implemented.
+The functions
+ @code{add},
+@findex add
+ @code{sub},
+@findex sub
+ @code{mul},
+@findex mul
+ @code{div},
+@findex div
+ @code{mod},
+@findex mod
+ @code{exp},
+@findex exp
+ @code{neg},
+@findex neg
+ @code{float},
+@findex float
+ @code{int},
+@findex int
+ @code{incr},
+@findex incr
+ @code{decr},
+@findex decr
+ @code{and},
+@findex and
+ @code{or},
+@findex or
+ @code{not},
+@findex not
+ @code{eq},
+@findex eq
+will not be implemented.
+
+@item List Functions
+
+The functions
+@code{list},
+@findex list
+@code{clear},
+@findex clear
+@code{empty},
+@findex empty
+@code{length},
+@findex length
+@code{enqueue},
+@findex enqueue
+@code{dequeue},
+@findex dequeue
+@code{requeue},
+@findex requeue
+@code{push},
+@findex push
+@code{pop},
+@findex pop
+@code{setel},
+@findex setel
+@code{getel},
+@findex getel
+@code{inlist},
+@findex inlist
+@code{sort},
+@findex sort
+@code{rsort},
+@findex rsort
+@code{dup},
+@findex dup
+@code{forlist},
+@findex forlist
+will not be implemented.
+
+@item Table Functions
+
+The functions
+@code{table},
+@findex table
+@code{insert},
+@findex insert
+@code{lookup},
+@findex lookup
+@code{length},
+@findex length
+@code{empty},
+@findex empty
+will not be implemented.
+
+@item String Functions
+
+The functions
+@code{lower},
+@findex lower
+@code{upper},
+@findex upper
+@code{capitalize},
+@findex capitalize
+@code{titlecase},
+@findex titlecase
+@code{trim},
+@findex trim
+@code{rjustify},
+@findex rjustify
+@code{concat},
+@findex concat
+@code{strconcat},
+@findex strconcat
+@code{strlen},
+@findex strlen
+@code{substring},
+@findex substring
+@code{index},
+@findex index
+@code{d},
+@findex d
+@code{f},
+@findex f
+@code{strtoint},
+@findex strtoint
+@code{atoi},
+@findex atoi
+@code{strcmp},
+@findex strcmp
+@code{eqstr},
+@findex eqstr
+@code{nestr},
+@findex nestr
+will not be implemented.
 
 @item Trigonometric and Spherical Calculations
 
@@ -1267,6 +1386,30 @@ The functions @code{sin}, @code{cos}, @code{tan}, @code{arcsin},
 @findex arcsin
 @findex arccos
 @findex arctan
+
+The functions mentioned in the aforementioned sections will not be
+implemented as Python provides equivalent functionality natively.
+
+@item Deprecated Functions
+
+The functions
+@code{baptism}
+@findex baptism
+@code{getindimsg}
+@findex getindimsg
+@code{getintmsg}
+@findex getintmsg
+@code{getstrmsg}
+@findex getstrmsg
+@code{save}
+@findex save
+@code{strsave}
+@findex strsave
+@code{deletenode}
+@findex deletenode
+@code{lengthset}
+@findex lengthset
+will not be implemented.
 
 @item Output Mode Functions
 
