@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lifelines 3.0.29\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 14:55-0400\n"
+"POT-Creation-Date: 2020-12-24 13:58-0500\n"
 "PO-Revision-Date: 2005-04-04 10:55-0700\n"
 "Last-Translator: Steven Michael Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -25,63 +25,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/btree/btrec.c:369
+#: src/btree/btrec.c:361
 #, c-format
 msgid "Failed (errno=%d) to open blockfile (rkey=%s): %s"
 msgstr ""
 
-#: src/btree/btrec.c:438
+#: src/btree/btrec.c:433
 #, c-format
-msgid "Btree lookup looped back to master (%ld)!"
+msgid "Btree lookup looped back to master ("
 msgstr ""
 
-#: src/gedlib/charmaps.c:779
+#: src/gedlib/charmaps.c:781
 #, fuzzy
 msgid "<unnamed>"
 msgstr "<kitiswe-"
 
-# basctl/source\basicide\basidesh.src:RID_IMGBTN_REMOVEWATCH.text
 #. TRANSLATORS: seconds time interval
 #: src/gedlib/dateprint.c:783
-#, fuzzy, c-format
-msgid "%02ds"
-msgstr "%02ds"
+msgid "s"
+msgstr ""
 
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
 #. TRANSLATORS: minutes & seconds time interval
 #: src/gedlib/dateprint.c:789
-#, fuzzy, c-format
-msgid "%dm%02ds"
-msgstr "%dm%03ds"
+msgid "m"
+msgstr ""
 
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
 #. TRANSLATORS: hours & minutes time interval
 #: src/gedlib/dateprint.c:795
-#, fuzzy, c-format
-msgid "%dh%02dm"
-msgstr "%dy%03dd"
+msgid "h"
+msgstr ""
 
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
 #. TRANSLATORS: days & hours time interval
 #: src/gedlib/dateprint.c:801
-#, fuzzy, c-format
-msgid "%dd%02dh"
-msgstr "%dy%03dd"
+msgid "d"
+msgstr ""
 
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
 #. TRANSLATORS: years & days time interval
 #: src/gedlib/dateprint.c:805
-#, fuzzy, c-format
-msgid "%dy%03dd"
-msgstr "%dy%03dd"
+msgid "y"
+msgstr ""
 
 #: src/gedlib/dbcontext.c:275
 #, fuzzy
@@ -197,38 +179,38 @@ msgstr "Ububikoshingiro Ikosa Porogaramu"
 msgid "Missing NAME line in INDI record; record ignored.\n"
 msgstr "Umurongo in Icyabitswe Icyabitswe"
 
-#: src/gedlib/keytonod.c:687
+#: src/gedlib/keytonod.c:685
 #, c-format
 msgid "Database error caused by reference to nonexisting key <%s>."
 msgstr ""
 
-#: src/gedlib/keytonod.c:688
+#: src/gedlib/keytonod.c:686
 msgid "It might be possible to fix this with btedit."
 msgstr ""
 
-#: src/gedlib/keytonod.c:689
+#: src/gedlib/keytonod.c:687
 msgid "Neighboring keys include:"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1046
+#: src/gedlib/keytonod.c:1043
 #, c-format
 msgid "Bad cache entry <%s> != <%s>"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1073
+#: src/gedlib/keytonod.c:1070
 #, c-format
-msgid "Cache [%s] overflowed its max size (%d)"
+msgid "Cache [%s] overflowed its max size ("
 msgstr ""
 
-#: src/gedlib/keytonod.c:1221
+#: src/gedlib/keytonod.c:1218
 msgid "Locked cache element found when deleting cache"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1224
+#: src/gedlib/keytonod.c:1221
 msgid "Locked cache element found when releasing cache element"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1227
+#: src/gedlib/keytonod.c:1224
 #, c-format
 msgid " (node %s)"
 msgstr ""
@@ -258,12 +240,12 @@ msgstr "Injiza Inzira"
 
 #: src/gedlib/messages.c:47
 #, fuzzy
-msgid "There is no LifeLines database in that directory."
-msgstr "ni Oya Ububikoshingiro in bushyinguro"
+msgid "No LifeLines database found."
+msgstr "Ububikoshingiro Byabonetse"
 
 #: src/gedlib/messages.c:48
-#, fuzzy
-msgid "Do you want to create a database there?"
+#, fuzzy, c-format
+msgid "Do you want to create a database at '%s'?"
 msgstr "Kuri Kurema a Ububikoshingiro"
 
 #: src/gedlib/messages.c:49
@@ -1778,8 +1760,7 @@ msgid "Database records"
 msgstr "Ibyabitswe"
 
 #: src/gedlib/messages.c:417
-#, c-format
-msgid "%dI, %dF, %dS, %dE, %dX"
+msgid "I, "
 msgstr ""
 
 #: src/gedlib/messages.c:420
@@ -1863,7 +1844,7 @@ msgstr "Ibikubiyemo"
 
 #: src/gedlib/messages.c:445
 #, fuzzy
-msgid "Commands:   Select by number, u Page Up, d Page Down, i Select, q Quit"
+msgid "Commands:   Select by number, u Page Up, d Page Down, q Quit"
 msgstr "ku Umubare u D i Q"
 
 #: src/gedlib/messages.c:446
@@ -2808,6 +2789,33 @@ msgstr ""
 msgid "jour_complementairs"
 msgstr ""
 
+#: src/gedlib/messages.c:694
+#, fuzzy
+msgid "Copyright (C) 1991-2019 Thomas T. Wetmore IV and contributors."
+msgstr "C Kuri ku"
+
+#: src/gedlib/messages.c:695
+msgid ""
+"This is free software; see the source for copying conditions.  There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+msgstr ""
+
+#: src/gedlib/messages.c:697
+msgid ""
+"Lifelines is distributed under an X/MIT Open Source license.\n"
+"\tSee file LICENSE in the program directory."
+msgstr ""
+
+#: src/gedlib/messages.c:699
+msgid ""
+"For more information, visit our web site at https://lifelines.github.io/"
+"lifelines/"
+msgstr ""
+
+#: src/gedlib/messages.c:700
+msgid "Please report bugs to https://github.com/lifelines/lifelines/issues"
+msgstr ""
+
 #: src/gedlib/node.c:610
 msgid "NO NAME"
 msgstr ""
@@ -2817,7 +2825,7 @@ msgstr ""
 msgid "Node memory leaks:"
 msgstr ""
 
-#: src/gedlib/node.c:1172 src/gedlib/record.c:361 src/interp/pvalalloc.c:301
+#: src/gedlib/node.c:1172 src/gedlib/record.c:361
 #, c-format
 msgid "%d item leaked"
 msgid_plural "%d items leaked"
@@ -2961,38 +2969,38 @@ msgstr ""
 msgid "ttpath checking dir <%s>"
 msgstr ""
 
-#: src/gedlib/xlat.c:478
+#: src/gedlib/xlat.c:477
 #, fuzzy, c-format
-msgid "ttpath file <%s> typed as %d"
+msgid "ttpath file <%s> typed as "
 msgstr "IDOSIYE ku Umurongo"
 
-#: src/gedlib/xlat.c:690
+#: src/gedlib/xlat.c:683
 #, fuzzy
 msgid "(no conversion)"
 msgstr "Ihindurangero"
 
 # sw/source\ui\utlui\initui.src:RID_SW_SHELLRES.STR_FIELD_FIXED.text
 #. TRANSLATORS: steps in a chain of codeset conversions, eg, Editor-to-Internal
-#: src/gedlib/xlat.c:713
+#: src/gedlib/xlat.c:706
 #, fuzzy, c-format
 msgid "%d step"
 msgid_plural "%d steps"
 msgstr[0] "%dbidahinduka)"
 msgstr[1] "%dbidahinduka)"
 
-#: src/gedlib/xreffile.c:400
+#: src/gedlib/xreffile.c:460
 #, c-format
 msgid "Corrupt DELETESET %c"
 msgstr ""
 
-#: src/gedlib/xreffile.c:425
+#: src/gedlib/xreffile.c:485
 #, c-format
-msgid "Tried to add already-deleted record (%ld) to xref (%c)!"
+msgid "Tried to add already-deleted record ("
 msgstr ""
 
 #: src/interp/alloc.c:956
 #, fuzzy, c-format
-msgid "Error: file \"%s\": line %d: "
+msgid "Error: file \"%s\": line "
 msgstr "IDOSIYE Umurongo"
 
 #: src/interp/alloc.c:1070
@@ -3180,223 +3188,222 @@ msgstr "Urutonde Bya kugirango Porogaramu"
 msgid "name: person does not have a name"
 msgstr "Izina: OYA a Izina:"
 
-#: src/interp/builtin.c:376
+#: src/interp/builtin.c:384
 #, fuzzy
 msgid "fullname: person does not have a name"
 msgstr "OYA a Izina:"
 
-#: src/interp/builtin.c:403
+#: src/interp/builtin.c:413
 #, fuzzy
 msgid "surname: person does not have a name"
 msgstr "OYA a Izina:"
 
-#: src/interp/builtin.c:428
+#: src/interp/builtin.c:438
 #, fuzzy
 msgid "soundex: person does not have a name"
 msgstr "OYA a Izina:"
 
-#: src/interp/builtin.c:491
-#, fuzzy, c-format
-msgid "Bad escape code at offset %d in bytecode string <%s>"
+#: src/interp/builtin.c:501
+#, fuzzy
+msgid "Bad escape code at offset "
 msgstr "ITEGEKONGENGA ku Nta- boneza in Ikurikiranyanyuguti"
 
-#: src/interp/builtin.c:637
+#: src/interp/builtin.c:647
 #, fuzzy
 msgid "(givens) person does not have a name"
 msgstr "(OYA a Izina:"
 
-#: src/interp/builtin.c:664
+#: src/interp/builtin.c:674
 #, fuzzy, c-format
 msgid "set(%s, <Null>) is invalid"
 msgstr "Gushyiraho ni Sibyo"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 #, fuzzy
 msgid "first"
 msgstr "Itangira"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "second"
 msgstr "isegonda"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "third"
 msgstr ""
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "fourth"
 msgstr ""
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "fifth"
 msgstr ""
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "sixth"
 msgstr ""
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "seventh"
 msgstr ""
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "eighth"
 msgstr ""
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "ninth"
 msgstr ""
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "tenth"
 msgstr ""
 
-#: src/interp/builtin.c:1157
+#: src/interp/builtin.c:1167
 msgid "eleventh"
 msgstr ""
 
-#: src/interp/builtin.c:1157
+#: src/interp/builtin.c:1167
 msgid "twelfth"
 msgstr ""
 
-# basctl/source\basicide\basidesh.src:RID_IMGBTN_REMOVEWATCH.text
-#: src/interp/builtin.c:1174
-#, fuzzy, c-format
-msgid "%ldth"
-msgstr "%dth"
+#: src/interp/builtin.c:1184
+#, c-format
+msgid "th"
+msgstr ""
 
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....AlignmentType.Position..0.text
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 #, fuzzy
 msgid "zero"
 msgstr "Zeru"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "one"
 msgstr ""
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "two"
 msgstr ""
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "three"
 msgstr ""
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "four"
 msgstr ""
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "five"
 msgstr ""
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "six"
 msgstr ""
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "seven"
 msgstr ""
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "eight"
 msgstr ""
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "nine"
 msgstr ""
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "ten"
 msgstr ""
 
-#: src/interp/builtin.c:1186
+#: src/interp/builtin.c:1196
 msgid "eleven"
 msgstr ""
 
-#: src/interp/builtin.c:1186
+#: src/interp/builtin.c:1196
 msgid "twelve"
 msgstr ""
 
-#: src/interp/builtin.c:1952
+#: src/interp/builtin.c:1962
 msgid "the arg to empty is not a list, table or set"
 msgstr ""
 
-#: src/interp/builtin.c:1985
+#: src/interp/builtin.c:1995
 msgid "the arg to length is not a list, table or set"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "He"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "he"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "His"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "his"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "him"
 msgstr ""
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "She"
 msgstr ""
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "she"
 msgstr ""
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "Her"
 msgstr ""
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "her"
 msgstr ""
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "her_"
 msgstr ""
 
-#: src/interp/builtin.c:2567
+#: src/interp/builtin.c:2577
 #, fuzzy
 msgid "(trimname) person does not have a name"
 msgstr "(OYA a Izina:"
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Sunday"
 msgstr ""
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Monday"
 msgstr ""
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Tuesday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Wednesday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Thursday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Friday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Saturday"
 msgstr ""
 
@@ -3412,7 +3419,7 @@ msgstr "Kuri"
 
 #: src/interp/interp.c:243
 #, fuzzy, c-format
-msgid "Report not found: %s "
+msgid "Report not found: %s"
 msgstr "OYA Byabonetse"
 
 #: src/interp/interp.c:254
@@ -3432,7 +3439,7 @@ msgstr "a"
 
 #: src/interp/interp.c:336
 #, fuzzy, c-format
-msgid "Proc %s must be called with %d (not %d) parameters."
+msgid "Proc %s must be called with "
 msgstr "Na: OYA Ibigenga"
 
 #: src/interp/interp.c:351
@@ -3460,44 +3467,57 @@ msgstr "OYA Gukoresha Bya Amakosa"
 msgid "Error: file <%s> not found: %s\n"
 msgstr "IDOSIYE OYA Byabonetse"
 
-#: src/interp/interp.c:534
+#: src/interp/interp.c:537
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Report duration %s (ui duration %s)\n"
 msgstr "Igihe- ngombwa Igihe- ngombwa"
 
-#: src/interp/interp.c:606
+#: src/interp/interp.c:602
+msgid "integer constant not allowed here.  Use d(constant) instead.\n"
+msgstr ""
+
+#: src/interp/interp.c:605
+msgid "floating-point constant not allowed here.  Use f(constant) instead.\n"
+msgstr ""
+
+#: src/interp/interp.c:615
 #, fuzzy, c-format
 msgid "identifier: %s should be a string\n"
 msgstr "Ikiranga a"
 
-#: src/interp/interp.c:1779
+#: src/interp/interp.c:891
+#, c-format
+msgid "Unexpected node type (%d)"
+msgstr ""
+
+#: src/interp/interp.c:1775
 #, c-format
 msgid "Undefined proc: %s"
 msgstr ""
 
-#: src/interp/interp.c:1781
+#: src/interp/interp.c:1777
 #, fuzzy, c-format
 msgid "Ambiguous call to proc: %s"
 msgstr "Kuri"
 
-#: src/interp/interp.c:2006
+#: src/interp/interp.c:2002
 #, fuzzy, c-format
 msgid "Duplicate proc %s (lines %d and %d) in report: %s"
 msgstr "Imirongo Na in Icyegeranyo"
 
-#: src/interp/interp.c:2036
+#: src/interp/interp.c:2032
 #, fuzzy, c-format
 msgid "Duplicate func %s (lines %d and %d) in report: %s"
 msgstr "Imirongo Na in Icyegeranyo"
 
-#: src/interp/interp.c:2099
+#: src/interp/interp.c:2095
 #, fuzzy
 msgid "This report requires a newer program to run\n"
 msgstr "Icyegeranyo a Porogaramu Kuri"
 
-#: src/interp/interp.c:2155
+#: src/interp/interp.c:2151
 #, c-format
 msgid "Program forgot to unlock %d record"
 msgid_plural "Program forgot to unlock %d records"
@@ -3508,11 +3528,9 @@ msgstr[1] ""
 msgid "missing or incorrect value for sort"
 msgstr ""
 
-#: src/interp/lex.c:219
+#: src/interp/lex.c:218
 #, c-format
-msgid ""
-"String constant overflowing internal buffer tokbuf len=%d, file: %s, start "
-"line: %ld"
+msgid "String constant overflowing internal buffer tokbuf len="
 msgstr ""
 
 #: src/interp/more.c:689
@@ -3569,6 +3587,12 @@ msgstr "i Kuri a Cyangwa"
 msgid "PVALUE memory leak report:"
 msgstr ""
 
+#: src/interp/pvalalloc.c:301
+msgid " item leaked"
+msgid_plural " items leaked"
+msgstr[0] ""
+msgstr[1] ""
+
 #: src/interp/pvalmath.c:70
 #, c-format
 msgid "Nonnumeric type to operation %s: %s"
@@ -3584,165 +3608,157 @@ msgstr "Kuri"
 msgid "%s: not compatible numeric types: %s and %s"
 msgstr ""
 
-#: src/interp/pvalue.c:866
+#: src/interp/pvalue.c:869
 #, c-format
 msgid "%s: Incomparable types: %s and %s"
 msgstr ""
 
-#: src/interp/pvalue.c:963
+#: src/interp/pvalue.c:966
 msgid "NOT PVALUE: NULL!"
 msgstr ""
 
-#: src/interp/pvalue.c:967
+#: src/interp/pvalue.c:970
 #, c-format
 msgid "NOT PVALUE: invalid type=%d)!"
 msgstr ""
 
-#: src/interp/pvalue.c:985
+#: src/interp/pvalue.c:989
 msgid "True"
 msgstr ""
 
-#: src/interp/pvalue.c:985
+#: src/interp/pvalue.c:989
 msgid "False"
 msgstr ""
 
 # sw/source\ui\utlui\initui.src:RID_SW_SHELLRES.STR_FIELD_FIXED.text
-#: src/interp/pvalue.c:1021
-#, fuzzy, c-format
-msgid "%d item"
-msgid_plural "%d items"
+#: src/interp/pvalue.c:1025
+#, fuzzy
+msgid " item"
+msgid_plural " items"
 msgstr[0] "%dbidahinduka)"
 msgstr[1] "%dbidahinduka)"
 
-#: src/interp/pvalue.c:1028
-#, fuzzy, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
+#: src/interp/pvalue.c:1032
+#, fuzzy
+msgid " entry"
+msgid_plural " entries"
 msgstr[0] "%dIkosa rya"
 msgstr[1] "%dIkosa rya"
 
-#: src/interp/pvalue.c:1035
-#, fuzzy, c-format
-msgid "%d record"
-msgid_plural "%d records"
+#: src/interp/pvalue.c:1039
+#, fuzzy
+msgid " record"
+msgid_plural " records"
 msgstr[0] "%dIkosa rya"
 msgstr[1] "%dIkosa rya"
 
-#: src/interp/pvalue.c:1042
-#, fuzzy, c-format
-msgid "%d element"
-msgid_plural "%d elements"
+#: src/interp/pvalue.c:1046
+#, fuzzy
+msgid " element"
+msgid_plural " elements"
 msgstr[0] "%eIcyabaye"
 msgstr[1] "%eIcyabaye"
 
-#: src/interp/progerr.c:136
+#: src/interp/progerr.c:135
 #, fuzzy
 msgid "Enter d for debugger, q to quit"
 msgstr "D kugirango Q Kuri Kuvamo"
 
-#: src/interp/progerr.c:151
-#, c-format
-msgid "Display local (%d var)"
-msgid_plural "Display locals (%d vars)"
+#: src/interp/progerr.c:152
+#, fuzzy
+msgid "Display local ("
+msgid_plural "Display locals ("
+msgstr[0] "g Kuri Igereranya"
+msgstr[1] "g Kuri Igereranya"
+
+#: src/interp/progerr.c:158
+#, fuzzy
+msgid "Display global ("
+msgid_plural "Display globals ("
+msgstr[0] "g Kuri Igereranya"
+msgstr[1] "g Kuri Igereranya"
+
+#: src/interp/progerr.c:163 src/interp/progerr.c:173
+msgid "Call stack has "
+msgid_plural "Call stack has "
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/interp/progerr.c:157
-#, c-format
-msgid "Display global (%d var)"
-msgid_plural "Display globals (%d vars)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/interp/progerr.c:162
-#, c-format
-msgid "Call stack has %d higher level"
-msgid_plural "Call stack has %d higher levels"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/interp/progerr.c:165
+#: src/interp/progerr.c:167
 #, fuzzy
 msgid " Go up one level"
 msgstr "urwego"
 
-#: src/interp/progerr.c:171
-#, c-format
-msgid "Call stack has %d lower level"
-msgid_plural "Call stack has %d lower levels"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/interp/progerr.c:175
+#: src/interp/progerr.c:178
 #, fuzzy
 msgid " Go down one level"
 msgstr "urwego"
 
-#: src/interp/progerr.c:180
+#: src/interp/progerr.c:183
 msgid "Quit debugger"
 msgstr ""
 
-#: src/interp/progerr.c:182
+#: src/interp/progerr.c:185
 msgid "Report debugger"
 msgstr ""
 
-#: src/interp/progerr.c:186
+#: src/interp/progerr.c:189
 #, fuzzy
 msgid "Local variables"
 msgstr "Ibihinduka"
 
-#: src/interp/progerr.c:189
+#: src/interp/progerr.c:192
 #, fuzzy
 msgid "Global variables"
 msgstr "Ibihinduka"
 
-#: src/interp/progerr.c:414
+#: src/interp/progerr.c:417
 #, fuzzy
 msgid "list is empty"
 msgstr "(Urutonde ni ubusa"
 
-#: src/interp/progerr.c:432
+#: src/interp/progerr.c:435
 msgid "LIST contents"
 msgstr ""
 
-#: src/interp/progerr.c:447
+#: src/interp/progerr.c:450
 msgid "table is empty"
 msgstr ""
 
-#: src/interp/progerr.c:465
+#: src/interp/progerr.c:468
 msgid "TABLE contents"
 msgstr ""
 
-#: src/interp/progerr.c:481
+#: src/interp/progerr.c:484
 #, fuzzy
 msgid "sequence is empty"
 msgstr "Icyabitswe ni ubusa"
 
-#: src/interp/progerr.c:495
+#: src/interp/progerr.c:498
 msgid "SEQ contents"
 msgstr ""
 
-#: src/interp/progerr.c:533
+#: src/interp/progerr.c:536
 #, fuzzy
 msgid "Report cancelled"
 msgstr "Kureka"
 
-#: src/interp/progerr.c:541
+#: src/interp/progerr.c:544
 #, fuzzy
 msgid "Report file: "
 msgstr "IDOSIYE"
 
-#: src/interp/progerr.c:550
-#, fuzzy, c-format
-msgid "Parsing Error at line %d: "
-msgstr "ku Umurongo"
-
-#: src/interp/progerr.c:552
-#, fuzzy, c-format
-msgid "Runtime Error at line %d: "
+#: src/interp/progerr.c:553
+#, fuzzy
+msgid "Parsing Error at line "
 msgstr "ku Umurongo"
 
 #: src/interp/progerr.c:555
+#, fuzzy
+msgid "Runtime Error at line "
+msgstr "ku Umurongo"
+
+#: src/interp/progerr.c:558
 msgid "Aborting: "
 msgstr ""
 
@@ -3761,7 +3777,7 @@ msgstr "Kuri Ikosa Gufungura%S Ibisohoka IDOSIYE"
 msgid "Report stopping due to lack of output file"
 msgstr "Kuri Bya Ibisohoka IDOSIYE"
 
-#: src/interp/rptsort.c:117 src/interp/rptsort.c:129
+#: src/interp/rptsort.c:123 src/interp/rptsort.c:135
 #, fuzzy
 msgid "Arguments to (r)sort must be of same size"
 msgstr "Kuri R Ishungura Bya Ingano"
@@ -4168,27 +4184,27 @@ msgstr "D Hejuru: Kuri Hasi:"
 msgid "j  Merge bottom to top"
 msgstr "j Hasi: Kuri Hejuru:"
 
-#: src/liflines/brwsmenu.c:148 src/liflines/listui.c:842
+#: src/liflines/brwsmenu.c:148 src/liflines/listui.c:841
 #, fuzzy
 msgid "j  Move down list"
 msgstr "j Hasi Urutonde"
 
-#: src/liflines/brwsmenu.c:149 src/liflines/listui.c:843
+#: src/liflines/brwsmenu.c:149 src/liflines/listui.c:842
 #, fuzzy
 msgid "k  Move up list"
 msgstr "K Hejuru Urutonde"
 
-#: src/liflines/brwsmenu.c:150 src/liflines/listui.c:844
+#: src/liflines/brwsmenu.c:150 src/liflines/listui.c:843
 #, fuzzy
 msgid "e  Edit this person"
 msgstr "E iyi"
 
-#: src/liflines/brwsmenu.c:151 src/liflines/listui.c:845
+#: src/liflines/brwsmenu.c:151 src/liflines/listui.c:844
 #, fuzzy
 msgid "i  Browse this person"
 msgstr "i iyi"
 
-#: src/liflines/brwsmenu.c:152 src/liflines/listui.c:846
+#: src/liflines/brwsmenu.c:152 src/liflines/listui.c:845
 #, fuzzy
 msgid "m  Mark this person"
 msgstr "M iyi"
@@ -4198,22 +4214,22 @@ msgstr "M iyi"
 msgid "d  Delete from list"
 msgstr "D Bivuye Urutonde"
 
-#: src/liflines/brwsmenu.c:154 src/liflines/listui.c:849
+#: src/liflines/brwsmenu.c:154 src/liflines/listui.c:848
 #, fuzzy
 msgid "n  Name this list"
 msgstr "N iyi Urutonde"
 
-#: src/liflines/brwsmenu.c:155 src/liflines/listui.c:850
+#: src/liflines/brwsmenu.c:155 src/liflines/listui.c:849
 #, fuzzy
 msgid "b  Browse new persons"
 msgstr "B Gishya"
 
-#: src/liflines/brwsmenu.c:156 src/liflines/listui.c:851
+#: src/liflines/brwsmenu.c:156 src/liflines/listui.c:850
 #, fuzzy
 msgid "a  Add to this list"
 msgstr "a Kuri iyi Urutonde"
 
-#: src/liflines/brwsmenu.c:157 src/liflines/listui.c:852
+#: src/liflines/brwsmenu.c:157 src/liflines/listui.c:851
 #, fuzzy
 msgid "x  Swap mark/current"
 msgstr "X Ikimenyetso KIGEZWEHO"
@@ -4297,33 +4313,32 @@ msgid "Missing title"
 msgstr "Umutwe"
 
 #: src/liflines/delete.c:85
-#, c-format
-msgid "%d spouse"
-msgid_plural "%d spouses"
-msgstr[0] ""
-msgstr[1] ""
+#, fuzzy
+msgid " spouse"
+msgid_plural " spouses"
+msgstr[0] "h Nka"
+msgstr[1] "h Nka"
 
 #: src/liflines/delete.c:88
-#, c-format
-msgid "%d child"
-msgid_plural "%d children"
+msgid " child"
+msgid_plural " children"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/liflines/error.c:63 src/tools/dbverify.c:1506
+#: src/liflines/error.c:64 src/tools/dbverify.c:1611
 msgid "Fatal Error"
 msgstr ""
 
-#: src/liflines/error.c:66
+#: src/liflines/error.c:67
 msgid "FATAL ERROR"
 msgstr ""
 
-#: src/liflines/error.c:70
+#: src/liflines/error.c:71
 #, fuzzy, c-format
 msgid "  in file <%s> at line %d\n"
 msgstr "in IDOSIYE ku Umurongo"
 
-#: src/liflines/error.c:72 src/tools/dbverify.c:1517
+#: src/liflines/error.c:74 src/tools/dbverify.c:1622
 msgid "ASSERT failure"
 msgstr ""
 
@@ -4353,9 +4368,9 @@ msgid "Lossy codeset conversion (from <%s> to <%s>) likely"
 msgstr "GUHINDURA Bivuye Kuri"
 
 #: src/liflines/import.c:219
-#, fuzzy, c-format
-msgid "%d warning during import"
-msgid_plural "%d warnings during import"
+#, fuzzy
+msgid " warning during import"
+msgid_plural " warnings during import"
 msgstr[0] "%dIburira Kuzana"
 
 #: src/liflines/import.c:235
@@ -4369,27 +4384,27 @@ msgid "Enter codeset to assume (* for none)"
 msgstr "Kuri kugirango Ntacyo"
 
 #: src/liflines/import.c:261
-#, fuzzy, c-format
-msgid "Using original keys, %d deleted record will be in the database."
-msgid_plural "Using original keys, %d deleted records will be in the database."
-msgstr[0] "Umwimerere Utubuto Cyasibwe Ibyabitswe in i Ububikoshingiro"
-msgstr[1] "Umwimerere Utubuto Cyasibwe Ibyabitswe in i Ububikoshingiro"
+#, fuzzy
+msgid "Using original keys, "
+msgid_plural "Using original keys, "
+msgstr[0] "Umwimerere Utubuto Bivuye IDOSIYE"
+msgstr[1] "Umwimerere Utubuto Bivuye IDOSIYE"
 
 #: src/liflines/lbrowse.c:219
 msgid "Tandom browse only compatible with persons or families."
 msgstr ""
 
-#: src/liflines/lines_usage.c:21
+#: src/liflines/lines_usage.c:22
 #, c-format
 msgid "%s invokes the Lifelines report execution program without GUI."
 msgstr ""
 
-#: src/liflines/lines_usage.c:23
+#: src/liflines/lines_usage.c:24
 #, c-format
 msgid "%s invokes the Lifelines GUI."
 msgstr ""
 
-#: src/liflines/lines_usage.c:26
+#: src/liflines/lines_usage.c:27
 #, c-format
 msgid ""
 "Lifelines is a program to manipulate genealogical information\n"
@@ -4403,232 +4418,232 @@ msgid ""
 "custom report language and comes with a collection of reports."
 msgstr ""
 
-#: src/liflines/lines_usage.c:36
+#: src/liflines/lines_usage.c:37
 #, c-format
 msgid "Usage: %s [OPTIONS] [database]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:38 src/tools/btedit.c:216
+#: src/liflines/lines_usage.c:39 src/tools/btedit.c:218
 #, c-format
 msgid "Options:"
 msgstr ""
 
-#: src/liflines/lines_usage.c:40
+#: src/liflines/lines_usage.c:41
 #, c-format
 msgid "-C[FILE]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:42
+#: src/liflines/lines_usage.c:43
 #, fuzzy, c-format
 msgid "Specify configuration file location"
 msgstr "Iboneza IDOSIYE Umurongo"
 
-#: src/liflines/lines_usage.c:44
+#: src/liflines/lines_usage.c:45
 #, c-format
 msgid "Finnish option (if compiled to allow Finnish option)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:46
+#: src/liflines/lines_usage.c:47
 #, c-format
 msgid "-I[KEY=VALUE]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:48
+#: src/liflines/lines_usage.c:49
 #, c-format
 msgid "Specify a user property (e.g. -ILLEDITOR=gvim)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:50
+#: src/liflines/lines_usage.c:51
 #, c-format
 msgid "log dynamic memory operation (for debugging)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:52
+#: src/liflines/lines_usage.c:53
 #, c-format
 msgid "-c[TYPE][DIRECT,INDIRECT]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:54
+#: src/liflines/lines_usage.c:55
 #, c-format
 msgid ""
 "supply cache values (eg, -ci400,4000f400,4000 sets direct indi\n"
 "\t\t& fam caches to 400, and indirect indi & fam caches to 4000)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:57
+#: src/liflines/lines_usage.c:58
 #, c-format
 msgid "debug mode (disable signal trapping)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:59
+#: src/liflines/lines_usage.c:60
 #, c-format
 msgid "force open (for recovery from errors or power failure)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:61
+#: src/liflines/lines_usage.c:62
 #, c-format
 msgid "open database with immutable access (for use on read-only media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:63
+#: src/liflines/lines_usage.c:64
 #, c-format
 msgid "always show keys (even if REFN available)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:65
+#: src/liflines/lines_usage.c:66
 #, c-format
 msgid "unlock a database (for correct access on read-write media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:67
+#: src/liflines/lines_usage.c:68
 #, c-format
 msgid "lock a database (for use on read-only media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:69
+#: src/liflines/lines_usage.c:70
 #, c-format
 msgid "do not use traditional family rules"
 msgstr ""
 
-#: src/liflines/lines_usage.c:71
+#: src/liflines/lines_usage.c:72
 #, c-format
 msgid "Specify program output filename (eg, -o/tmp/mytests)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:73
+#: src/liflines/lines_usage.c:74
 #, c-format
 msgid ""
 "open database with read-only access (prohibiting other\n"
 "\t\twrite access)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:76
+#: src/liflines/lines_usage.c:77
 #, c-format
 msgid "trace function calls in report programs (for debugging)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:78
+#: src/liflines/lines_usage.c:79
 #, c-format
 msgid "-u[HEIGHT,WIDTH]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:80
+#: src/liflines/lines_usage.c:81
 #, c-format
 msgid ""
 "specify window size (eg, -u120,34 specifies 120 columns\n"
 "\t\tby 34 rows)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:83
+#: src/liflines/lines_usage.c:84
 #, c-format
 msgid "display this help and exit"
 msgstr ""
 
-#: src/liflines/lines_usage.c:85
+#: src/liflines/lines_usage.c:86
 #, c-format
 msgid "open database with writeable access (this is the default)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:87
+#: src/liflines/lines_usage.c:88
 #, c-format
 msgid "-x[REPORT]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:89
+#: src/liflines/lines_usage.c:90
 #, c-format
 msgid "execute a single lifelines report program directly"
 msgstr ""
 
-#: src/liflines/lines_usage.c:91
+#: src/liflines/lines_usage.c:92
 #, c-format
 msgid ""
 "Use normal ASCII characters for drawing lines, instead of\n"
 "\t\tspecial VT100 terminal characters"
 msgstr ""
 
-#: src/liflines/lines_usage.c:94
+#: src/liflines/lines_usage.c:95
 #, c-format
 msgid "output version information and exit"
 msgstr ""
 
-#: src/liflines/lines_usage.c:96 src/tools/btedit.c:222
+#: src/liflines/lines_usage.c:97 src/tools/btedit.c:224
 #, c-format
 msgid "Examples:"
 msgstr ""
 
-#: src/liflines/lines_usage.c:99
+#: src/liflines/lines_usage.c:100
 #, c-format
 msgid "%s myfamily -x eol"
 msgstr ""
 
-#: src/liflines/lines_usage.c:101
+#: src/liflines/lines_usage.c:102
 #, c-format
 msgid "Open the database 'myfamily' with Lifelines"
 msgstr ""
 
-#: src/liflines/lines_usage.c:103
+#: src/liflines/lines_usage.c:104
 #, c-format
 msgid "and run the eol.ll report"
 msgstr ""
 
-#: src/liflines/lines_usage.c:105
+#: src/liflines/lines_usage.c:106
 #, c-format
 msgid "%s -f myfamily -x eol"
 msgstr ""
 
-#: src/liflines/lines_usage.c:107
+#: src/liflines/lines_usage.c:108
 #, c-format
 msgid "Unlock database 'myfamily', after a power failure left the"
 msgstr ""
 
-#: src/liflines/lines_usage.c:109
+#: src/liflines/lines_usage.c:110
 #, c-format
 msgid "database locked and run 'eol.ll' report"
 msgstr ""
 
-#: src/liflines/lines_usage.c:112
+#: src/liflines/lines_usage.c:113
 #, c-format
 msgid "%s myfamily"
 msgstr ""
 
-#: src/liflines/lines_usage.c:114
+#: src/liflines/lines_usage.c:115
 #, c-format
 msgid "Open database 'myfamily' with Lifelines"
 msgstr ""
 
-#: src/liflines/lines_usage.c:116
+#: src/liflines/lines_usage.c:117
 #, c-format
 msgid "%s -f myfamily"
 msgstr ""
 
-#: src/liflines/lines_usage.c:118
+#: src/liflines/lines_usage.c:119
 #, c-format
 msgid ""
 "Unlock database 'myfamily', after a power failure left\n"
 "\t\tthe database locked"
 msgstr ""
 
-#: src/liflines/lines_usage.c:122
+#: src/liflines/lines_usage.c:123
 #, c-format
 msgid "REPORTING BUGS"
 msgstr ""
 
-#: src/liflines/lines_usage.c:124 src/tools/btedit.c:228
-#, c-format
-msgid "Report bugs to https://github.com/lifelines/lifelines/issues"
-msgstr ""
-
-#: src/liflines/lines_usage.c:126
+#: src/liflines/lines_usage.c:127
 #, c-format
 msgid "COPYRIGHT"
 msgstr ""
 
 #: src/liflines/lines_usage.c:131
 #, c-format
+msgid "LICENSE"
+msgstr ""
+
+#: src/liflines/lines_usage.c:135
+#, c-format
 msgid "SEE ALSO"
 msgstr ""
 
-#: src/liflines/listui.c:155 src/liflines/listui.c:252
+#: src/liflines/listui.c:155 src/liflines/listui.c:253
 #, fuzzy
 msgid "Commands:   j Move down     k Move up    i Select     q Quit"
 msgstr "j Hasi K Hejuru i Q"
@@ -4638,34 +4653,34 @@ msgstr "j Hasi K Hejuru i Q"
 msgid "Commands:   j Move down     k Move up    q Quit"
 msgstr "j Hasi K Hejuru Q"
 
-#: src/liflines/listui.c:249
+#: src/liflines/listui.c:250
 #, fuzzy
 msgid "Commands:  j Move down   k Move up  d Delete   i Select   q Quit"
 msgstr "j Hasi K Hejuru D i Q"
 
-#: src/liflines/listui.c:431
+#: src/liflines/listui.c:432
 msgid "--- CURRENT SELECTION ---"
 msgstr ""
 
-#: src/liflines/listui.c:434 src/liflines/listui.c:597
+#: src/liflines/listui.c:435 src/liflines/listui.c:597
 msgid "--- LIST ---"
 msgstr ""
 
-#: src/liflines/listui.c:628
+#: src/liflines/listui.c:626
 msgid "-- CURRENT SELECTION --"
 msgstr ""
 
-#: src/liflines/listui.c:840
+#: src/liflines/listui.c:839
 #, fuzzy
 msgid "Choose an operation:"
 msgstr "Guhitamo"
 
-#: src/liflines/listui.c:847
+#: src/liflines/listui.c:846
 #, fuzzy
 msgid "r  Remove from list"
 msgstr "R Bivuye Urutonde"
 
-#: src/liflines/listui.c:848
+#: src/liflines/listui.c:847
 #, fuzzy
 msgid "t  Enter tandem mode"
 msgstr "T Ubwoko"
@@ -4710,7 +4725,7 @@ msgstr[1] "Ikindi"
 
 #: src/liflines/loadsave.c:160
 #, fuzzy
-msgid "Checking GEDCOM file for errors.\n"
+msgid "Checking GEDCOM file for errors."
 msgstr "IDOSIYE kugirango Amakosa"
 
 #: src/liflines/loadsave.c:163
@@ -4753,12 +4768,12 @@ msgstr "Ububikoshingiro OYA"
 msgid "Saving database `%s' in file `%s'."
 msgstr "in"
 
-#: src/liflines/main.c:386
+#: src/liflines/main.c:398
 #, fuzzy
 msgid "Warning: database codeset unspecified"
 msgstr "Ububikoshingiro"
 
-#: src/liflines/main.c:388
+#: src/liflines/main.c:400
 #, fuzzy
 msgid "Warning: not all conversions available"
 msgstr "OYA Byose Bihari"
@@ -4800,7 +4815,7 @@ msgstr ""
 
 #: src/liflines/merge.c:800 src/liflines/merge.c:919
 #, c-format
-msgid "Mismatched lineage spouse links between %s and %s: %ld and %ld"
+msgid "Mismatched lineage spouse links between %s and %s: "
 msgstr ""
 
 #: src/liflines/merge.c:816 src/liflines/merge.c:935
@@ -4810,7 +4825,7 @@ msgstr ""
 
 #: src/liflines/merge.c:844 src/liflines/merge.c:963
 #, c-format
-msgid "Mismatched lineage child links between %s and %s: %ld and %ld"
+msgid "Mismatched lineage child links between %s and %s: "
 msgstr ""
 
 #: src/liflines/merge.c:882 src/liflines/merge.c:891
@@ -4818,23 +4833,23 @@ msgstr ""
 msgid "Bad HUSB tag: %s"
 msgstr ""
 
-#: src/liflines/miscutls.c:51
+#: src/liflines/miscutls.c:55
 #, fuzzy
 msgid "Whose key value do you want?"
 msgstr "Urufunguzo Agaciro"
 
-#: src/liflines/miscutls.c:67
+#: src/liflines/miscutls.c:71
 #, fuzzy
 msgid "Please enter person's internal key value."
 msgstr "Injiza By'imbere Urufunguzo Agaciro"
 
-#: src/liflines/miscutls.c:68
+#: src/liflines/miscutls.c:72
 #, fuzzy
 msgid "enter key:"
 msgstr "Injiza Urufunguzo"
 
-#: src/liflines/miscutls.c:78 src/liflines/miscutls.c:82
-#: src/liflines/miscutls.c:87
+#: src/liflines/miscutls.c:82 src/liflines/miscutls.c:86
+#: src/liflines/miscutls.c:91
 #, fuzzy, c-format
 msgid "No one in database has key value %s."
 msgstr "in Ububikoshingiro Urufunguzo Agaciro"
@@ -4850,247 +4865,249 @@ msgid "Enter pattern to match against full name."
 msgstr "Ishusho Kuri BIHUYE Izina:"
 
 # sc/source\ui\src\autofmt.src:RID_SCDLG_AUTOFORMAT.BTN_PATTERN.text
-#: src/liflines/scan.c:130 src/liflines/scan.c:180 src/liflines/scan.c:203
+#: src/liflines/scan.c:130 src/liflines/scan.c:179 src/liflines/scan.c:201
 #, fuzzy
 msgid "pattern: "
 msgstr "Ishusho"
 
-#: src/liflines/scan.c:153
+#: src/liflines/scan.c:152
 #, fuzzy
 msgid "Enter pattern to match against author."
 msgstr "Ishusho Kuri BIHUYE"
 
-#: src/liflines/scan.c:167
+#: src/liflines/scan.c:166
 #, fuzzy
 msgid "Enter pattern to match against title."
 msgstr "Ishusho Kuri BIHUYE"
 
-#: src/liflines/screen.c:317
+#: src/liflines/screen.c:318
 #, c-format
 msgid "initscr failed"
 msgstr ""
 
-#: src/liflines/screen.c:334
-#, fuzzy, c-format
-msgid ""
-"The requested window size (%ld,%ld) is too large for your terminal (%d,%d).\n"
-msgstr "Idirishya Ingano ni Binini kugirango"
+#: src/liflines/screen.c:335 src/liflines/screen.c:343
+#, c-format
+msgid "The requested window size ("
+msgstr ""
 
-#: src/liflines/screen.c:342
-#, fuzzy, c-format
-msgid ""
-"The requested window size (%ld,%ld) is too small for LifeLines (%d,%d).\n"
-msgstr "Idirishya Ingano ni Gitoya kugirango"
-
-#: src/liflines/screen.c:706
+#: src/liflines/screen.c:707
 #, fuzzy
 msgid "Search results"
 msgstr "Ibisubizo ku"
 
-#: src/liflines/screen.c:813
-#, c-format
-msgid "(pg %d/%d)"
+#: src/liflines/screen.c:814
+msgid "(pg "
 msgstr ""
 
-#: src/liflines/screen.c:1433
+#: src/liflines/screen.c:1434
 #, fuzzy
 msgid "No conversion"
 msgstr "Ihindurangero"
 
-#: src/liflines/screen.c:1519
+#: src/liflines/screen.c:1520
 msgid "Internal codeset"
 msgstr ""
 
-#: src/liflines/screen.c:1522
+#: src/liflines/screen.c:1523
 msgid "Internal UTF-8: Yes"
 msgstr ""
 
-#: src/liflines/screen.c:1524
+#: src/liflines/screen.c:1525
 #, fuzzy
 msgid "Internal UTF-8: No"
 msgstr "M Kuri Igereranya"
 
-#: src/liflines/screen.c:1528
+#: src/liflines/screen.c:1529
 #, fuzzy
 msgid "Locales are enabled."
 msgstr "Bikora"
 
-#: src/liflines/screen.c:1530
+#: src/liflines/screen.c:1531
 #, fuzzy
 msgid "Locales are disabled."
 msgstr "Yahagaritswe"
 
-#: src/liflines/screen.c:1533
+#: src/liflines/screen.c:1534
 #, fuzzy
 msgid "NLS (National Language Support) is compiled in."
 msgstr "ni Yahagaritswe"
 
-#: src/liflines/screen.c:1539
+#: src/liflines/screen.c:1540
 #, fuzzy
 msgid "NLS (National Language Support) is not compiled in."
 msgstr "ni Bikora"
 
-#: src/liflines/screen.c:1552
+#: src/liflines/screen.c:1553
 #, fuzzy
 msgid "iconv (codeset conversion) is compiled in."
 msgstr "Ihindurangero ni Yahagaritswe"
 
-#: src/liflines/screen.c:1554
+#: src/liflines/screen.c:1555
 #, fuzzy
 msgid "iconv (codeset conversion) is not compiled in."
 msgstr "Ihindurangero ni Bikora"
 
-#: src/liflines/screen.c:1556
+#: src/liflines/screen.c:1557
 #, fuzzy, c-format
 msgid "Startup collate locale: %s"
 msgstr "Guteranya Umwanya"
 
-#: src/liflines/screen.c:1559
+#: src/liflines/screen.c:1560
 #, fuzzy, c-format
 msgid "Startup messages locale: %s"
 msgstr "Ubutumwa Umwanya"
 
-#: src/liflines/screen.c:1562
+#: src/liflines/screen.c:1563
 #, fuzzy, c-format
 msgid "Current collate locale: %s"
 msgstr "Guteranya Umwanya"
 
-#: src/liflines/screen.c:1565
+#: src/liflines/screen.c:1566
 #, fuzzy, c-format
 msgid "Current messages locale: %s"
 msgstr "Ubutumwa Umwanya"
 
-#: src/liflines/screen.c:1568
+#: src/liflines/screen.c:1569
 #, c-format
 msgid "Collation routine: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1572
+#: src/liflines/screen.c:1573
 #, c-format
 msgid "GUI codeset: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1575
+#: src/liflines/screen.c:1576
 #, fuzzy, c-format
 msgid "GUI output codeset: %s"
 msgstr "Ibisohoka"
 
-#: src/liflines/screen.c:1577
+#: src/liflines/screen.c:1578
 #, fuzzy, c-format
 msgid "GUI input codeset: %s"
 msgstr "Iyinjiza"
 
-#: src/liflines/screen.c:1582
+#: src/liflines/screen.c:1583
 #, fuzzy, c-format
 msgid "editor codeset: %s"
 msgstr "Muhinduzi"
 
-#: src/liflines/screen.c:1585
+#: src/liflines/screen.c:1586
 #, fuzzy, c-format
 msgid "editor output codeset: %s"
 msgstr "Muhinduzi Ibisohoka"
 
-#: src/liflines/screen.c:1587
+#: src/liflines/screen.c:1588
 #, fuzzy, c-format
 msgid "editor input codeset: %s"
 msgstr "Muhinduzi Iyinjiza"
 
-#: src/liflines/screen.c:1592
+#: src/liflines/screen.c:1593
 #, fuzzy, c-format
 msgid "report codeset: %s"
 msgstr "Icyegeranyo"
 
-#: src/liflines/screen.c:1595
+#: src/liflines/screen.c:1596
 #, fuzzy, c-format
 msgid "report output codeset: %s"
 msgstr "Icyegeranyo Ibisohoka"
 
-#: src/liflines/screen.c:1597
+#: src/liflines/screen.c:1598
 #, fuzzy, c-format
 msgid "report input codeset: %s"
 msgstr "Icyegeranyo Iyinjiza"
 
-#: src/liflines/screen.c:1602
+#: src/liflines/screen.c:1603
 #, c-format
 msgid "GEDCOM codeset: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1605
+#: src/liflines/screen.c:1606
 #, fuzzy, c-format
 msgid "gedcom output codeset: %s"
 msgstr "Ibisohoka"
 
-#: src/liflines/screen.c:1607
+#: src/liflines/screen.c:1608
 #, fuzzy, c-format
 msgid "gedcom input codeset: %s"
 msgstr "Iyinjiza"
 
-#: src/liflines/screen.c:1615
+#: src/liflines/screen.c:1616
 msgid "UTF-8 charprops loaded"
 msgstr ""
 
-#: src/liflines/screen.c:1617
+#: src/liflines/screen.c:1618
 msgid "UTF-8 charprops not loaded"
 msgstr ""
 
-#: src/liflines/screen.c:1621
+#: src/liflines/screen.c:1622
 #, fuzzy
 msgid "Codeset information"
 msgstr "Ibisobanuro"
 
-#: src/liflines/screen.c:1638
+#: src/liflines/screen.c:1639
 #, c-format
 msgid "gettext dll: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1642
+#: src/liflines/screen.c:1643
 #, fuzzy, c-format
 msgid "gettext dll version: %s"
 msgstr "Verisiyo"
 
-#: src/liflines/screen.c:1647
+#: src/liflines/screen.c:1648
 #, fuzzy
 msgid "gettext dll had no version"
 msgstr "Oya Verisiyo"
 
-#: src/liflines/screen.c:1652
+#: src/liflines/screen.c:1653
 #, fuzzy
 msgid "no gettext dll found"
 msgstr "Oya Byabonetse"
 
-#: src/liflines/screen.c:1661
+#: src/liflines/screen.c:1662
 #, c-format
 msgid "iconv dll: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1665
+#: src/liflines/screen.c:1666
 #, fuzzy, c-format
 msgid "iconv dll version: %s"
 msgstr "Verisiyo"
 
-#: src/liflines/screen.c:1670
+#: src/liflines/screen.c:1671
 #, fuzzy
 msgid "iconv dll had no version"
 msgstr "Oya Verisiyo"
 
-#: src/liflines/screen.c:1675
+#: src/liflines/screen.c:1676
 #, fuzzy
 msgid "no iconv dll found"
 msgstr "Oya Byabonetse"
 
-#: src/liflines/screen.c:1933
+#: src/liflines/screen.c:1934
 #, fuzzy
 msgid "Impermissible to change codeset in a populated database"
 msgstr "Kuri Guhindura>> in a Ububikoshingiro"
 
-#: src/liflines/screen.c:2034
+#: src/liflines/screen.c:2035
 msgid "LifeLines -- Main Menu"
 msgstr ""
 
+#: src/liflines/screen.c:2267 src/tools/btedit.c:136 src/ui/ui_cli.c:142
+#, c-format
+msgid "Editor or system call failed."
+msgstr ""
+
+#: src/liflines/screen.c:2929
+#, c-format
+msgid "System command failed."
+msgstr ""
+
 #: src/liflines/searchui.c:133
-#, fuzzy, c-format
-msgid "v  Review visit history (%d record)"
-msgid_plural "v  Review visit history (%d records)"
+#, fuzzy
+msgid "v  Review visit history ("
+msgid_plural "v  Review visit history ("
 msgstr[0] "v Urutonde Icyabitswe"
 
 #: src/liflines/searchui.c:137
@@ -5099,9 +5116,9 @@ msgid "(visit history is empty)"
 msgstr "(Urutonde ni ubusa"
 
 #: src/liflines/searchui.c:143
-#, fuzzy, c-format
-msgid "c  Review change history (%d record)"
-msgid_plural "c  Review change history (%d records)"
+#, fuzzy
+msgid "c  Review change history ("
+msgid_plural "c  Review change history ("
 msgstr[0] "C Guhindura>> Urutonde Icyabitswe"
 
 #: src/liflines/searchui.c:147
@@ -5151,17 +5168,17 @@ msgstr ""
 msgid "t  Scan by title"
 msgstr ""
 
-#: src/liflines/selectdb.c:95
+#: src/liflines/selectdb.c:96
 #, fuzzy
 msgid "Choose database to open"
 msgstr "Ububikoshingiro Kuri Gufungura"
 
-#: src/liflines/selectdb.c:103
+#: src/liflines/selectdb.c:104
 #, fuzzy
 msgid "No databases found in database path"
 msgstr "Ububikoshingiro Byabonetse in Ububikoshingiro Inzira"
 
-#: src/liflines/selectdb.c:154
+#: src/liflines/selectdb.c:158
 msgid "Cannot create new database with -r, -i, -l, or -f flags."
 msgstr ""
 
@@ -5205,7 +5222,7 @@ msgstr ""
 msgid "crem"
 msgstr ""
 
-#: src/liflines/show.c:1015
+#: src/liflines/show.c:1023
 #, c-format
 msgid "Cached: I:%s; F:%s"
 msgstr ""
@@ -5225,168 +5242,168 @@ msgstr "Icyabaye Oya Urufunguzo"
 msgid "Line %d: Tag %s found in unexpected record: %s %s."
 msgstr "Icyabitswe"
 
-#: src/liflines/valgdcom.c:190
+#: src/liflines/valgdcom.c:193
 #, fuzzy, c-format
 msgid "Line %d: Family has no members (%s %s)."
 msgstr "Oya"
 
-#: src/liflines/valgdcom.c:390
+#: src/liflines/valgdcom.c:389
 #, fuzzy, c-format
 msgid "Line %d: The source defined here has no key."
 msgstr "Inkomoko Oya Urufunguzo"
 
-#: src/liflines/valgdcom.c:404
+#: src/liflines/valgdcom.c:403
 #, fuzzy, c-format
 msgid "Line %d: Source %s has an incorrect key."
 msgstr "Urufunguzo"
 
-#: src/liflines/valgdcom.c:411
+#: src/liflines/valgdcom.c:410
 #, fuzzy, c-format
 msgid "Lines %d and %d: Source %s is multiply defined."
 msgstr "Na ni Gukuba"
 
-#: src/liflines/valgdcom.c:434
+#: src/liflines/valgdcom.c:433
 #, fuzzy, c-format
 msgid "Line %d: The event defined here has no key."
 msgstr "Icyabaye Oya Urufunguzo"
 
-#: src/liflines/valgdcom.c:447
+#: src/liflines/valgdcom.c:446
 #, fuzzy, c-format
 msgid "Line %d: Event %s has an incorrect key."
 msgstr "Urufunguzo"
 
-#: src/liflines/valgdcom.c:454
+#: src/liflines/valgdcom.c:453
 #, fuzzy, c-format
 msgid "Lines %d and %d: Event %s is multiply defined."
 msgstr "Na ni Gukuba"
 
-#: src/liflines/valgdcom.c:477
+#: src/liflines/valgdcom.c:476
 #, fuzzy, c-format
 msgid "Line %d: The record defined here has no key."
 msgstr "Icyabitswe Oya Urufunguzo"
 
-#: src/liflines/valgdcom.c:490
+#: src/liflines/valgdcom.c:489
 #, fuzzy, c-format
 msgid "Line %d: Record %s has an incorrect key."
 msgstr "Urufunguzo"
 
-#: src/liflines/valgdcom.c:497
+#: src/liflines/valgdcom.c:496
 #, fuzzy, c-format
 msgid "Lines %d and %d: Record %s is multiply defined."
 msgstr "Na ni Gukuba"
 
-#: src/liflines/valgdcom.c:539
+#: src/liflines/valgdcom.c:538
 #, fuzzy, c-format
 msgid "Line %d: This %s line is missing a value field (%s %s)."
 msgstr "Umurongo ni Ibuze a Agaciro Umwanya"
 
-#: src/liflines/valgdcom.c:590
+#: src/liflines/valgdcom.c:589
 #, c-format
 msgid "Line %d: Bad NAME syntax (%s %s)."
 msgstr ""
 
-#: src/liflines/valgdcom.c:820
+#: src/liflines/valgdcom.c:819
 #, fuzzy, c-format
 msgid "Line %d: Person %s has multiple father links."
 msgstr "Igikubo amahuza"
 
-#: src/liflines/valgdcom.c:824
+#: src/liflines/valgdcom.c:823
 #, fuzzy, c-format
 msgid "Line %d: Person %s has multiple mother links."
 msgstr "Igikubo amahuza"
 
-#: src/liflines/valgdcom.c:836
+#: src/liflines/valgdcom.c:835
 #, fuzzy, c-format
 msgid "Line %d: Person %s is both male and female."
 msgstr "ni Byombi Gabo Na Gore"
 
-#: src/liflines/valgdcom.c:840
+#: src/liflines/valgdcom.c:839
 #, fuzzy, c-format
 msgid "Line %d: Person %s is male but must be female."
 msgstr "ni Gabo Gore"
 
-#: src/liflines/valgdcom.c:844
+#: src/liflines/valgdcom.c:843
 #, fuzzy, c-format
 msgid "Line %d: Person %s is female but must be male."
 msgstr "ni Gore Gabo"
 
-#: src/liflines/valgdcom.c:848
+#: src/liflines/valgdcom.c:847
 #, fuzzy, c-format
 msgid "Line %d: Person %s is implied to be both male and female."
 msgstr "ni Kuri Byombi Gabo Na Gore"
 
-#: src/liflines/valgdcom.c:860
+#: src/liflines/valgdcom.c:859
 #, fuzzy, c-format
 msgid "Line %d: Family %s has multiple husband links."
 msgstr "Igikubo amahuza"
 
-#: src/liflines/valgdcom.c:864
+#: src/liflines/valgdcom.c:863
 #, fuzzy, c-format
 msgid "Line %d: Family %s has multiple wife links."
 msgstr "Igikubo amahuza"
 
-#: src/liflines/valgdcom.c:920
+#: src/liflines/valgdcom.c:919
 #, fuzzy
 msgid "error"
 msgstr "Ikosa"
 
-#: src/liflines/valgdcom.c:928
-#, fuzzy, c-format
-msgid "%6d Error"
-msgid_plural "%6d Errors"
-msgstr[0] "%6dIkosa rya"
-msgstr[1] "%6dIkosa rya"
+#: src/liflines/valgdcom.c:927
+#, fuzzy
+msgid " Error"
+msgid_plural " Errors"
+msgstr[0] "Ikosa"
+msgstr[1] "Ikosa"
 
-#: src/liflines/valgdcom.c:930 src/liflines/valgdcom.c:958
+#: src/liflines/valgdcom.c:929 src/liflines/valgdcom.c:957
 #, fuzzy, c-format
 msgid " (see log file <%s>)"
 msgstr "(LOG IDOSIYE"
 
-#: src/liflines/valgdcom.c:932 src/liflines/valgdcom.c:960
+#: src/liflines/valgdcom.c:931 src/liflines/valgdcom.c:959
 #, fuzzy
 msgid " (no log file)"
 msgstr "(Oya LOG IDOSIYE"
 
-#: src/liflines/valgdcom.c:948
+#: src/liflines/valgdcom.c:947
 #, fuzzy
 msgid "warning"
 msgstr "Iburira"
 
-#: src/liflines/valgdcom.c:956
-#, fuzzy, c-format
-msgid "%6d Warning"
-msgid_plural "%6d Warnings"
-msgstr[0] "%6dIburira"
-msgstr[1] "%6dIburira"
+#: src/liflines/valgdcom.c:955
+#, fuzzy
+msgid " Warning"
+msgid_plural " Warnings"
+msgstr[0] "Iburira"
+msgstr[1] "Iburira"
 
-#: src/liflines/valgdcom.c:1067
-#, fuzzy, c-format
-msgid "Processed %d lines without finding end of HEAD"
-msgstr "Imirongo Impera Bya"
+#: src/liflines/valgdcom.c:1078
+#, fuzzy
+msgid "Processed "
+msgstr "Komeza ibyarbyo byose"
 
-#: src/liflines/valgdcom.c:1072
-#, fuzzy, c-format
-msgid "End of file at line %d"
+#: src/liflines/valgdcom.c:1083
+#, fuzzy
+msgid "End of file at line "
 msgstr "Impera Bya IDOSIYE ku Umurongo"
 
-#: src/liflines/valgdcom.c:1076
-#, fuzzy, c-format
-msgid "Error at line %d: %s"
+#: src/liflines/valgdcom.c:1087
+#, fuzzy
+msgid "Error at line "
 msgstr "ku Umurongo"
 
-#: src/liflines/valgdcom.c:1080
-#, fuzzy, c-format
-msgid "Bad level at line %d"
+#: src/liflines/valgdcom.c:1091
+#, fuzzy
+msgid "Bad level at line "
 msgstr "urwego ku Umurongo"
 
-#: src/liflines/valgdcom.c:1086
-#, fuzzy, c-format
-msgid "Duplicate HEAD line at line %d"
+#: src/liflines/valgdcom.c:1097
+#, fuzzy
+msgid "Duplicate HEAD line at line "
 msgstr "Umurongo ku Umurongo"
 
-#: src/liflines/valgdcom.c:1092
-#, fuzzy, c-format
-msgid "Missing HEAD line at line %d"
+#: src/liflines/valgdcom.c:1103
+#, fuzzy
+msgid "Missing HEAD line at line "
 msgstr "Umurongo ku Umurongo"
 
 #: src/stdlib/errlog.c:61
@@ -5400,67 +5417,62 @@ msgstr "in IDOSIYE ku Umurongo"
 msgid "Current database"
 msgstr "ibyibanze bihari"
 
-#: src/tools/btedit.c:107
+#: src/tools/btedit.c:109
 #, c-format
 msgid "btedit requires 2 arguments (btree and key)."
 msgstr ""
 
-#: src/tools/btedit.c:109
+#: src/tools/btedit.c:111
 #, c-format
 msgid "See `btedit --help' for more information."
 msgstr ""
 
-#: src/tools/btedit.c:116
+#: src/tools/btedit.c:118
 #, fuzzy, c-format
 msgid "Failed to open btree: %s."
 msgstr "OYA Gufungura IDOSIYE"
 
-#: src/tools/btedit.c:123
+#: src/tools/btedit.c:125
 #, fuzzy, c-format
 msgid "There is no record with key: %s"
 msgstr "ni Oya Icyabitswe Na: Urufunguzo Cyangwa Indango"
 
-#: src/tools/btedit.c:125
+#: src/tools/btedit.c:127
 #, fuzzy, c-format
 msgid "Error accessing record: %s"
 msgstr "Ibyatanzwe"
 
-#: src/tools/btedit.c:134
-#, c-format
-msgid "Editor or system call failed."
-msgstr ""
-
-#: src/tools/btedit.c:136
+#: src/tools/btedit.c:138
 #, fuzzy, c-format
 msgid "Database was not be modified."
 msgstr "Ububikoshingiro OYA"
 
-#: src/tools/btedit.c:142
+#: src/tools/btedit.c:144
 #, fuzzy, c-format
 msgid "Readonly database can not be modified."
 msgstr "Ububikoshingiro OYA"
 
-#: src/tools/btedit.c:149
+#: src/tools/btedit.c:151
 #, c-format
 msgid "Error writing file 'btedit.tmp'."
 msgstr ""
 
-#: src/tools/btedit.c:155
+#: src/tools/btedit.c:157
 #, c-format
 msgid "Record %s modified."
 msgstr ""
 
-#: src/tools/btedit.c:204
+#: src/tools/btedit.c:206
 #, fuzzy
 msgid "\"\\My Documents\\LifeLines\\Databases\\MyFamily\""
 msgstr "\\MY"
 
-#: src/tools/btedit.c:206 src/tools/dbverify.c:234
+#: src/tools/btedit.c:208 src/tools/dbverify.c:237
 #, fuzzy
 msgid "/home/users/myname/lifelines/databases/myfamily"
 msgstr "/Ku Ntangiriro Ububikoshingiro"
 
-#: src/tools/btedit.c:209
+#: src/tools/btedit.c:211
 #, c-format
 msgid ""
 "lifelines `btedit' edits raw binary btree blocks\n"
@@ -5469,476 +5481,500 @@ msgid ""
 "your database."
 msgstr ""
 
-#: src/tools/btedit.c:214
+#: src/tools/btedit.c:216
 #, c-format
 msgid "Usage btedit [database] [rkey]"
 msgstr ""
 
-#: src/tools/btedit.c:218
+#: src/tools/btedit.c:220
 #, c-format
 msgid "\t--help\tdisplay this help and exit"
 msgstr ""
 
-#: src/tools/btedit.c:220
+#: src/tools/btedit.c:222
 #, c-format
 msgid "\t--version\toutput version information and exit"
 msgstr ""
 
-#: src/tools/btedit.c:224
+#: src/tools/btedit.c:226
 #, c-format
 msgid "\tbtedit %s I34"
 msgstr ""
 
-#: src/tools/btedit.c:226
+#: src/tools/btedit.c:228
 #, c-format
 msgid "edit raw btree block for person I34"
 msgstr ""
 
-#: src/tools/dbverify.c:177
+#: src/tools/dbverify.c:179
 #, fuzzy
 msgid "Orphan names"
 msgstr "Amazina"
 
-#: src/tools/dbverify.c:178
+#: src/tools/dbverify.c:180
 #, fuzzy
 msgid "Ghost names"
 msgstr "Amazina"
 
-#: src/tools/dbverify.c:179 src/tools/dbverify.c:180
+#: src/tools/dbverify.c:181 src/tools/dbverify.c:182
 #, fuzzy
 msgid "Duplicate names"
 msgstr "Amazina"
 
-#: src/tools/dbverify.c:181
+#: src/tools/dbverify.c:183
 #, fuzzy
 msgid "Non-indi names"
 msgstr "Amazina"
 
-#: src/tools/dbverify.c:182
+#: src/tools/dbverify.c:184
 msgid "Duplicate individuals"
 msgstr ""
 
-#: src/tools/dbverify.c:183
+#: src/tools/dbverify.c:185
 msgid "Duplicate families"
 msgstr ""
 
-#: src/tools/dbverify.c:184
+#: src/tools/dbverify.c:186
 msgid "Duplicate sources"
 msgstr ""
 
-#: src/tools/dbverify.c:185
+#: src/tools/dbverify.c:187
 #, fuzzy
 msgid "Duplicate events"
 msgstr "Ibyabaye"
 
-#: src/tools/dbverify.c:186
+#: src/tools/dbverify.c:188
 #, fuzzy
 msgid "Duplicate others"
 msgstr "Ibindi"
 
-#: src/tools/dbverify.c:187
+#: src/tools/dbverify.c:189
 #, fuzzy
 msgid "Missing records (from deleteset)"
 msgstr "Ibyabitswe"
 
-#: src/tools/dbverify.c:188
+#: src/tools/dbverify.c:190
 #, fuzzy
 msgid "Deleted records"
 msgstr "Ibyabitswe"
 
-#: src/tools/dbverify.c:189
+#: src/tools/dbverify.c:191
 #, fuzzy
 msgid "Bad name"
 msgstr "Izina:"
 
-#: src/tools/dbverify.c:190
+#: src/tools/dbverify.c:192
 #, fuzzy
 msgid "Bad family reference"
 msgstr "Indango"
 
-#: src/tools/dbverify.c:191
+#: src/tools/dbverify.c:193
 msgid "Missing child"
 msgstr ""
 
-#: src/tools/dbverify.c:192
+#: src/tools/dbverify.c:194
 msgid "Missing spouse"
 msgstr ""
 
-#: src/tools/dbverify.c:193
+#: src/tools/dbverify.c:195
 #, fuzzy
 msgid "Bad HUSB reference"
 msgstr "Indango"
 
-#: src/tools/dbverify.c:194
+#: src/tools/dbverify.c:196
 #, fuzzy
 msgid "Bad WIFE reference"
 msgstr "Indango"
 
-#: src/tools/dbverify.c:195
+#: src/tools/dbverify.c:197
 #, fuzzy
 msgid "Bad CHIL reference"
 msgstr "Indango"
 
-#: src/tools/dbverify.c:196
+#: src/tools/dbverify.c:198
 msgid "Improper HUSB"
 msgstr ""
 
-#: src/tools/dbverify.c:197
+#: src/tools/dbverify.c:199
 msgid "Improper WIFE"
 msgstr ""
 
-#: src/tools/dbverify.c:198
+#: src/tools/dbverify.c:200
 msgid "Improper child"
 msgstr ""
 
-#: src/tools/dbverify.c:199
+#: src/tools/dbverify.c:201
 msgid "Empty family"
 msgstr ""
 
-#: src/tools/dbverify.c:200
+#: src/tools/dbverify.c:202
 msgid "Single person family"
 msgstr ""
 
-#: src/tools/dbverify.c:201
+#: src/tools/dbverify.c:203
 #, fuzzy
 msgid "Bad pointer"
 msgstr "Mweretsi"
 
-#: src/tools/dbverify.c:202
+#: src/tools/dbverify.c:204
 #, fuzzy
 msgid "Missing data records"
 msgstr "Ibyabitswe"
 
-#: src/tools/dbverify.c:232
+#: src/tools/dbverify.c:205
+msgid "Stale block directory entry"
+msgstr ""
+
+#: src/tools/dbverify.c:235
 #, fuzzy
 msgid "\\My Documents\\LifeLines\\Databases\\MyFamily"
 msgstr "\\MY"
 
-#: src/tools/dbverify.c:238
-#, c-format
-msgid "usage: dbverify -(flags) <btree>\n"
-msgstr ""
-
-#: src/tools/dbverify.c:239
-#, c-format
-msgid "flags:\n"
-msgstr ""
-
-#: src/tools/dbverify.c:240
-#, c-format
-msgid "\t-a = Perform all checks (does not include fixes)\n"
-msgstr ""
-
 #: src/tools/dbverify.c:241
 #, c-format
-msgid "\t-g = Check for ghosts (names/refns)\n"
+msgid "usage: dbverify [flags] <btree>\n"
 msgstr ""
 
 #: src/tools/dbverify.c:242
 #, c-format
-msgid "\t-G = Check for & fix ghosts (names/refns)\n"
+msgid "flags:\n"
 msgstr ""
 
 #: src/tools/dbverify.c:243
 #, c-format
-msgid "\t-i = Check individuals\n"
+msgid "\t-a = Perform all checks (does not include fixes)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:244
 #, c-format
-msgid "\t-f = Check families\n"
+msgid "\t-g = Check for ghosts (names/refns)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:245
 #, c-format
-msgid "\t-F = Alter any bad family lineage pointers (to _badptr)\n"
+msgid "\t-G = Fix ghosts (names/refns)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:246
 #, c-format
-msgid "\t-h = Display help text (this text)\n"
+msgid "\t-i = Check individuals\n"
 msgstr ""
 
 #: src/tools/dbverify.c:247
 #, c-format
-msgid "\t-s = Check sours\n"
+msgid "\t-f = Check families\n"
 msgstr ""
 
 #: src/tools/dbverify.c:248
 #, c-format
-msgid "\t-e = Check events\n"
+msgid "\t-F = Alter any bad family lineage pointers (to _badptr)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:249
 #, c-format
-msgid "\t-x = Check others\n"
+msgid "\t-h = Display help text (this text)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:250
 #, c-format
-msgid "\t-l = Check database structure\n"
+msgid "\t-s = Check sours\n"
 msgstr ""
 
 #: src/tools/dbverify.c:251
 #, c-format
-msgid "\t-m = Check for records missing data entries\n"
+msgid "\t-e = Check events\n"
 msgstr ""
 
 #: src/tools/dbverify.c:252
 #, c-format
-msgid "\t-M = Fix records missing data entries\n"
+msgid "\t-x = Check others\n"
 msgstr ""
 
 #: src/tools/dbverify.c:253
 #, c-format
-msgid "\t-D = Fix bad delete entries\n"
+msgid "\t-l = Check database structure\n"
 msgstr ""
 
 #: src/tools/dbverify.c:254
 #, c-format
-msgid "\t-n = Noisy (echo every record processed)\n"
+msgid "\t-m = Check for records missing data entries\n"
 msgstr ""
 
 #: src/tools/dbverify.c:255
+#, c-format
+msgid "\t-M = Fix records missing data entries\n"
+msgstr ""
+
+#: src/tools/dbverify.c:256
+#, c-format
+msgid "\t-D = Fix bad delete entries\n"
+msgstr ""
+
+#: src/tools/dbverify.c:257
+#, c-format
+msgid "\t-B = Fix block splits with stale data\n"
+msgstr ""
+
+#: src/tools/dbverify.c:258
+#, c-format
+msgid "\t-n = Noisy (echo every record processed)\n"
+msgstr ""
+
+#: src/tools/dbverify.c:259
 #, fuzzy, c-format
 msgid "example: dbverify -ifsex \"%s\"\n"
 msgstr "Urugero"
 
-#: src/tools/dbverify.c:388
+#: src/tools/dbverify.c:392
 #, fuzzy, c-format
 msgid "Non-indi name, key=%s, name=%s"
 msgstr "Izina: Urufunguzo Izina:"
 
-#: src/tools/dbverify.c:405
+#: src/tools/dbverify.c:410
 #, fuzzy, c-format
 msgid "Orphaned name: %s"
 msgstr "Izina:"
 
-#: src/tools/dbverify.c:419
+#: src/tools/dbverify.c:424
 #, fuzzy, c-format
 msgid "Ghost name: %s -> %s"
 msgstr "Izina:"
 
-#: src/tools/dbverify.c:451
+#: src/tools/dbverify.c:456
 #, c-format
 msgid "Orphaned refn: %s"
 msgstr ""
 
-#: src/tools/dbverify.c:491
+#: src/tools/dbverify.c:496
 #, fuzzy, c-format
 msgid "Duplicate name for %s (%s)"
 msgstr "Izina: kugirango"
 
-#: src/tools/dbverify.c:526
+#: src/tools/dbverify.c:531
 #, fuzzy, c-format
 msgid "Duplicate refn for %s (%s)"
 msgstr "kugirango"
 
-#: src/tools/dbverify.c:639
+#: src/tools/dbverify.c:644
 #, fuzzy, c-format
 msgid "Duplicate individual for %s"
 msgstr "kugirango"
 
-#: src/tools/dbverify.c:681
+#: src/tools/dbverify.c:686
 #, fuzzy, c-format
 msgid "Bad name for individual %s: %s"
 msgstr "Izina: kugirango"
 
-#: src/tools/dbverify.c:699 src/tools/dbverify.c:723
+#: src/tools/dbverify.c:704 src/tools/dbverify.c:728
 #, fuzzy, c-format
 msgid "Bad family reference (%s) individual %s"
 msgstr "Indango"
 
-#: src/tools/dbverify.c:705
+#: src/tools/dbverify.c:710
 #, fuzzy, c-format
 msgid "Missing child (%s) in family (%s)"
 msgstr "in"
 
-#: src/tools/dbverify.c:709
+#: src/tools/dbverify.c:714
 #, fuzzy, c-format
 msgid "Fixed missing child (%s) in family (%s)"
 msgstr "in"
 
-#: src/tools/dbverify.c:729
+#: src/tools/dbverify.c:734
 #, fuzzy, c-format
 msgid "Missing spouse (%s) in family (%s)"
 msgstr "in"
 
-#: src/tools/dbverify.c:733
+#: src/tools/dbverify.c:738
 #, fuzzy, c-format
 msgid "Fixed missing spouse (%s) in family (%s)"
 msgstr "in"
 
-#: src/tools/dbverify.c:767
+#: src/tools/dbverify.c:772
 #, fuzzy, c-format
 msgid "Duplicate family for %s"
 msgstr "kugirango"
 
-#: src/tools/dbverify.c:818
+#: src/tools/dbverify.c:823
 #, fuzzy, c-format
 msgid "Bad HUSB reference (%s) in family %s"
 msgstr "Indango in"
 
-#: src/tools/dbverify.c:824
+#: src/tools/dbverify.c:829
 #, fuzzy, c-format
 msgid "Fixed Bad HUSB reference (%s) in family %s"
 msgstr "Indango in"
 
-#: src/tools/dbverify.c:833
+#: src/tools/dbverify.c:838
 #, fuzzy, c-format
 msgid "Improper HUSB (%s) in family (%s)"
 msgstr "in"
 
-#: src/tools/dbverify.c:846
+#: src/tools/dbverify.c:851
 #, fuzzy, c-format
 msgid "Bad wife reference (%s) in family %s"
 msgstr "Indango in"
 
-#: src/tools/dbverify.c:852
+#: src/tools/dbverify.c:857
 #, fuzzy, c-format
 msgid "Fixed Bad wife reference (%s) in family %s"
 msgstr "Indango in"
 
-#: src/tools/dbverify.c:861
+#: src/tools/dbverify.c:866
 #, fuzzy, c-format
 msgid "Improper wife (%s) in family (%s)"
 msgstr "in"
 
-#: src/tools/dbverify.c:874
+#: src/tools/dbverify.c:879
 #, fuzzy, c-format
 msgid "Bad child reference (%s) in family %s"
 msgstr "Indango in"
 
-#: src/tools/dbverify.c:880
+#: src/tools/dbverify.c:885
 #, fuzzy, c-format
 msgid "Fixed bad child reference (%s) in family %s"
 msgstr "Indango in"
 
-#: src/tools/dbverify.c:889
+#: src/tools/dbverify.c:894
 #, fuzzy, c-format
 msgid "Improper child: Child (%s) without FAMC reference to family (%s)"
 msgstr "in"
 
-#: src/tools/dbverify.c:897
+#: src/tools/dbverify.c:902
 #, c-format
 msgid "Empty family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:899
+#: src/tools/dbverify.c:904
 #, c-format
 msgid "Single person family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:925
+#: src/tools/dbverify.c:930
 #, fuzzy, c-format
 msgid "Duplicate source for %s"
 msgstr "Inkomoko kugirango"
 
-#: src/tools/dbverify.c:941
+#: src/tools/dbverify.c:946
 #, fuzzy, c-format
 msgid "Duplicate event for %s"
 msgstr "Icyabaye kugirango"
 
-#: src/tools/dbverify.c:957
+#: src/tools/dbverify.c:962
 #, fuzzy, c-format
 msgid "Duplicate record for %s"
 msgstr "Icyabitswe kugirango"
 
-#: src/tools/dbverify.c:1028
+#: src/tools/dbverify.c:1033
 #, fuzzy, c-format
 msgid "Bad pointer (in %s): %s"
 msgstr "Mweretsi in"
 
-#: src/tools/dbverify.c:1066
+#: src/tools/dbverify.c:1071
 #, fuzzy, c-format
 msgid "Missing undeleted record %c%d"
 msgstr "Icyabitswe"
 
-#: src/tools/dbverify.c:1073
+#: src/tools/dbverify.c:1078
 #, fuzzy, c-format
 msgid "Fixed missing undeleted record %c%d"
 msgstr "Icyabitswe"
 
-#: src/tools/dbverify.c:1077
+#: src/tools/dbverify.c:1082
 #, fuzzy, c-format
 msgid "Failed to fix missing undeleted record %c%d"
 msgstr "Icyabitswe"
 
-#: src/tools/dbverify.c:1089
+#: src/tools/dbverify.c:1094
 #, fuzzy, c-format
 msgid "Delete set contains valid record %s"
 msgstr "Gushyiraho Kirimo Byemewe Icyabitswe"
 
-#: src/tools/dbverify.c:1094
+#: src/tools/dbverify.c:1099
 #, fuzzy, c-format
 msgid "Fixed delete set contains valid record %s"
 msgstr "Gushyiraho Kirimo Byemewe Icyabitswe"
 
-#: src/tools/dbverify.c:1098
+#: src/tools/dbverify.c:1103
 #, fuzzy, c-format
 msgid "Failed to fix missing undeleted record %s"
 msgstr "Icyabitswe"
 
-#: src/tools/dbverify.c:1119
+#: src/tools/dbverify.c:1127
 #, c-format
 msgid "Master fkey misaligned"
 msgstr ""
 
-#: src/tools/dbverify.c:1146
+#: src/tools/dbverify.c:1135
+#, c-format
+msgid "Index or block keys invalid\n"
+msgstr ""
+
+#: src/tools/dbverify.c:1164
 #, c-format
 msgid "Cycle in indexes, file %s found again!\n"
 msgstr ""
 
-#: src/tools/dbverify.c:1153
+#: src/tools/dbverify.c:1171
 #, fuzzy, c-format
 msgid "Error loading index at key"
 msgstr "Ibyatanzwe"
 
-#: src/tools/dbverify.c:1201
+#: src/tools/dbverify.c:1218
+#, c-format
+msgid "Found stale block directory entry (%s, %d)"
+msgstr ""
+
+#: src/tools/dbverify.c:1224
+#, c-format
+msgid "Fixed stale block directory entry (%s, %d)"
+msgstr ""
+
+#: src/tools/dbverify.c:1295
 #, c-format
 msgid "First key in block below parent's limit\n"
 msgstr ""
 
-#: src/tools/dbverify.c:1209
+#: src/tools/dbverify.c:1303
 #, c-format
 msgid "Last key in block above parent's limit\n"
 msgstr ""
 
-#: src/tools/dbverify.c:1217
+#: src/tools/dbverify.c:1311
 #, c-format
 msgid "Key not below next key"
 msgstr ""
 
-#: src/tools/dbverify.c:1234 src/tools/dbverify.c:1236
+#: src/tools/dbverify.c:1328 src/tools/dbverify.c:1330
 msgid "data block"
 msgstr ""
 
-#: src/tools/dbverify.c:1237
+#: src/tools/dbverify.c:1331
 #, c-format
 msgid "%s fkey=%d, file=%s"
 msgstr ""
 
-#: src/tools/dbverify.c:1250
+#: src/tools/dbverify.c:1344
 #, fuzzy, c-format
 msgid "Invalid errs array[%d] in dbverify - fix program\n"
 msgstr "Imbonerahamwe in"
 
-#: src/tools/dbverify.c:1287
+#: src/tools/dbverify.c:1381
 #, fuzzy, c-format
 msgid "Missing data record (%s)"
 msgstr "Ibyabitswe"
 
-#: src/tools/dbverify.c:1291
+#: src/tools/dbverify.c:1385
 #, fuzzy, c-format
 msgid "Fixed missing data record (%s)"
 msgstr "Ibyabitswe"
 
-#: src/tools/dbverify.c:1422
+#: src/tools/dbverify.c:1520
 #, c-format
 msgid "Checking %s"
 msgstr ""
 
-#: src/tools/dbverify.c:1478
+#: src/tools/dbverify.c:1582
 #, fuzzy, c-format
 msgid "%d error"
 msgid_plural "%d errors"
@@ -5946,31 +5982,103 @@ msgstr[0] "%dIkosa rya"
 msgstr[1] "%dIkosa rya"
 
 # sw/source\ui\utlui\initui.src:RID_SW_SHELLRES.STR_FIELD_FIXED.text
-#: src/tools/dbverify.c:1482
+#: src/tools/dbverify.c:1586
 #, fuzzy, c-format
 msgid "%d fixed"
 msgid_plural "%d fixed"
 msgstr[0] "%dbidahinduka)"
 msgstr[1] "%dbidahinduka)"
 
-#: src/tools/dbverify.c:1489
+#: src/tools/dbverify.c:1593
 #, fuzzy
 msgid "No errors found"
 msgstr "Amakosa Byabonetse"
 
-#: src/tools/dbverify.c:1508
+#: src/tools/dbverify.c:1613
 #, c-format
 msgid "FATAL ERROR: "
 msgstr ""
 
-#: src/tools/dbverify.c:1513
+#: src/tools/dbverify.c:1618
 #, fuzzy, c-format
 msgid "In file <%s> at line %d"
 msgstr "IDOSIYE ku Umurongo"
 
+# basctl/source\basicide\basidesh.src:RID_IMGBTN_REMOVEWATCH.text
 #, fuzzy
-#~ msgid "Copyright (C) 1991-2007 Thomas T. Wetmore IV et al."
-#~ msgstr "C Kuri ku"
+#~ msgid "%02ds"
+#~ msgstr "%02ds"
+
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+#, fuzzy
+#~ msgid "%dm%02ds"
+#~ msgstr "%dm%03ds"
+
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+#, fuzzy
+#~ msgid "%dh%02dm"
+#~ msgstr "%dy%03dd"
+
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+#, fuzzy
+#~ msgid "%dd%02dh"
+#~ msgstr "%dy%03dd"
+
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+#, fuzzy
+#~ msgid "%dy%03dd"
+#~ msgstr "%dy%03dd"
+
+#, fuzzy
+#~ msgid "There is no LifeLines database in that directory."
+#~ msgstr "ni Oya Ububikoshingiro in bushyinguro"
+
+# basctl/source\basicide\basidesh.src:RID_IMGBTN_REMOVEWATCH.text
+#, fuzzy
+#~ msgid "%ldth"
+#~ msgstr "%dth"
+
+#, fuzzy
+#~ msgid "Using original keys, %d deleted record will be in the database."
+#~ msgid_plural ""
+#~ "Using original keys, %d deleted records will be in the database."
+#~ msgstr[0] "Umwimerere Utubuto Cyasibwe Ibyabitswe in i Ububikoshingiro"
+#~ msgstr[1] "Umwimerere Utubuto Cyasibwe Ibyabitswe in i Ububikoshingiro"
+
+#, fuzzy
+#~ msgid ""
+#~ "The requested window size (%ld,%ld) is too large for your terminal (%d,"
+#~ "%d).\n"
+#~ msgstr "Idirishya Ingano ni Binini kugirango"
+
+#, fuzzy
+#~ msgid ""
+#~ "The requested window size (%ld,%ld) is too small for LifeLines (%d,%d).\n"
+#~ msgstr "Idirishya Ingano ni Gitoya kugirango"
+
+#, fuzzy
+#~ msgid "%6d Error"
+#~ msgid_plural "%6d Errors"
+#~ msgstr[0] "%6dIkosa rya"
+#~ msgstr[1] "%6dIkosa rya"
+
+#, fuzzy
+#~ msgid "%6d Warning"
+#~ msgid_plural "%6d Warnings"
+#~ msgstr[0] "%6dIburira"
+#~ msgstr[1] "%6dIburira"
+
+#, fuzzy
+#~ msgid "Processed %d lines without finding end of HEAD"
+#~ msgstr "Imirongo Impera Bya"
 
 #, fuzzy
 #~ msgid "illegal call to pos."

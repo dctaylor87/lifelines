@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LifeLines 3.0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 14:55-0400\n"
+"POT-Creation-Date: 2020-12-24 13:58-0500\n"
 "PO-Revision-Date: 2005-07-08 01:17-0700\n"
 "Last-Translator: Chip Richards <karchjo@niestu.com>\n"
 "Language-Team: Esperantistoj <karchjo@niestu.com>\n"
@@ -17,49 +17,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: src/btree/btrec.c:369
+#: src/btree/btrec.c:361
 #, c-format
 msgid "Failed (errno=%d) to open blockfile (rkey=%s): %s"
 msgstr ""
 
-#: src/btree/btrec.c:438
+#: src/btree/btrec.c:433
 #, c-format
-msgid "Btree lookup looped back to master (%ld)!"
+msgid "Btree lookup looped back to master ("
 msgstr ""
 
-#: src/gedlib/charmaps.c:779
+#: src/gedlib/charmaps.c:781
 msgid "<unnamed>"
 msgstr "<sennomita>"
 
 #. TRANSLATORS: seconds time interval
 #: src/gedlib/dateprint.c:783
-#, c-format
-msgid "%02ds"
-msgstr "%02ds"
+msgid "s"
+msgstr ""
 
 #. TRANSLATORS: minutes & seconds time interval
 #: src/gedlib/dateprint.c:789
-#, c-format
-msgid "%dm%02ds"
-msgstr "%dm%02ds"
+msgid "m"
+msgstr ""
 
 #. TRANSLATORS: hours & minutes time interval
 #: src/gedlib/dateprint.c:795
-#, c-format
-msgid "%dh%02dm"
-msgstr "%dh%02dm"
+#, fuzzy
+msgid "h"
+msgstr "li"
 
 #. TRANSLATORS: days & hours time interval
 #: src/gedlib/dateprint.c:801
-#, c-format
-msgid "%dd%02dh"
-msgstr "%dt%02dh"
+msgid "d"
+msgstr ""
 
 #. TRANSLATORS: years & days time interval
 #: src/gedlib/dateprint.c:805
-#, c-format
-msgid "%dy%03dd"
-msgstr "%dj%03dt"
+#, fuzzy
+msgid "y"
+msgstr "jJ"
 
 #: src/gedlib/dbcontext.c:275
 msgid "Database error: -- "
@@ -157,38 +154,38 @@ msgstr "Malkonita datumbaza eraro -- riparu programon."
 msgid "Missing NAME line in INDI record; record ignored.\n"
 msgstr "Mankanta NOMO linio en INDI rikordo; rikordo ignorita.\n"
 
-#: src/gedlib/keytonod.c:687
+#: src/gedlib/keytonod.c:685
 #, c-format
 msgid "Database error caused by reference to nonexisting key <%s>."
 msgstr ""
 
-#: src/gedlib/keytonod.c:688
+#: src/gedlib/keytonod.c:686
 msgid "It might be possible to fix this with btedit."
 msgstr ""
 
-#: src/gedlib/keytonod.c:689
+#: src/gedlib/keytonod.c:687
 msgid "Neighboring keys include:"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1046
+#: src/gedlib/keytonod.c:1043
 #, c-format
 msgid "Bad cache entry <%s> != <%s>"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1073
+#: src/gedlib/keytonod.c:1070
 #, c-format
-msgid "Cache [%s] overflowed its max size (%d)"
+msgid "Cache [%s] overflowed its max size ("
 msgstr ""
 
-#: src/gedlib/keytonod.c:1221
+#: src/gedlib/keytonod.c:1218
 msgid "Locked cache element found when deleting cache"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1224
+#: src/gedlib/keytonod.c:1221
 msgid "Locked cache element found when releasing cache element"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1227
+#: src/gedlib/keytonod.c:1224
 #, c-format
 msgid " (node %s)"
 msgstr ""
@@ -206,11 +203,13 @@ msgid "enter path: "
 msgstr "enmetu dosierindikon: "
 
 #: src/gedlib/messages.c:47
-msgid "There is no LifeLines database in that directory."
-msgstr "Ne ekzistas LifeLines datumbazo en tiu dosierujo."
+#, fuzzy
+msgid "No LifeLines database found."
+msgstr "Ekzistantan datumbazon trovis."
 
 #: src/gedlib/messages.c:48
-msgid "Do you want to create a database there?"
+#, fuzzy, c-format
+msgid "Do you want to create a database at '%s'?"
 msgstr "Æu vi volas krei datumbazon tie?"
 
 #: src/gedlib/messages.c:49
@@ -1516,9 +1515,8 @@ msgid "Database records"
 msgstr "Datumbazaj rikordoj"
 
 #: src/gedlib/messages.c:417
-#, c-format
-msgid "%dI, %dF, %dS, %dE, %dX"
-msgstr "%dI, %dF, %dS, %dE, %dX"
+msgid "I, "
+msgstr ""
 
 #: src/gedlib/messages.c:420
 #, c-format
@@ -1587,7 +1585,8 @@ msgid "LifeLines -- List Browse Screen (* toggles menu)"
 msgstr "LifeLines -- Lista Krozada Ekrano (* baskulas menuon)"
 
 #: src/gedlib/messages.c:445
-msgid "Commands:   Select by number, u Page Up, d Page Down, i Select, q Quit"
+#, fuzzy
+msgid "Commands:   Select by number, u Page Up, d Page Down, q Quit"
 msgstr ""
 "Komandoj:   Elektu per numero, u Foliumu Supren, d Foliumu Suben, i Elektu, "
 "q Eliru"
@@ -2388,6 +2387,33 @@ msgstr "comp"
 msgid "jour_complementairs"
 msgstr "jour_complementairs"
 
+#: src/gedlib/messages.c:694
+#, fuzzy
+msgid "Copyright (C) 1991-2019 Thomas T. Wetmore IV and contributors."
+msgstr "Kopirajtita(c) 1991 al 1996, de T. T. Wetmore IV"
+
+#: src/gedlib/messages.c:695
+msgid ""
+"This is free software; see the source for copying conditions.  There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+msgstr ""
+
+#: src/gedlib/messages.c:697
+msgid ""
+"Lifelines is distributed under an X/MIT Open Source license.\n"
+"\tSee file LICENSE in the program directory."
+msgstr ""
+
+#: src/gedlib/messages.c:699
+msgid ""
+"For more information, visit our web site at https://lifelines.github.io/"
+"lifelines/"
+msgstr ""
+
+#: src/gedlib/messages.c:700
+msgid "Please report bugs to https://github.com/lifelines/lifelines/issues"
+msgstr ""
+
 #: src/gedlib/node.c:610
 msgid "NO NAME"
 msgstr "NE NOMO"
@@ -2397,7 +2423,7 @@ msgstr "NE NOMO"
 msgid "Node memory leaks:"
 msgstr "Nod-memora likoj:"
 
-#: src/gedlib/node.c:1172 src/gedlib/record.c:361 src/interp/pvalalloc.c:301
+#: src/gedlib/node.c:1172 src/gedlib/record.c:361
 #, c-format
 msgid "%d item leaked"
 msgid_plural "%d items leaked"
@@ -2533,37 +2559,37 @@ msgstr ""
 msgid "ttpath checking dir <%s>"
 msgstr ""
 
-#: src/gedlib/xlat.c:478
+#: src/gedlib/xlat.c:477
 #, fuzzy, c-format
-msgid "ttpath file <%s> typed as %d"
+msgid "ttpath file <%s> typed as "
 msgstr "En dosiero <%s> æe linio %d"
 
-#: src/gedlib/xlat.c:690
+#: src/gedlib/xlat.c:683
 #, fuzzy
 msgid "(no conversion)"
 msgstr "Neniu þanøigo"
 
 #. TRANSLATORS: steps in a chain of codeset conversions, eg, Editor-to-Internal
-#: src/gedlib/xlat.c:713
+#: src/gedlib/xlat.c:706
 #, fuzzy, c-format
 msgid "%d step"
 msgid_plural "%d steps"
 msgstr[0] "%d riparita"
 msgstr[1] "%d riparitaj"
 
-#: src/gedlib/xreffile.c:400
+#: src/gedlib/xreffile.c:460
 #, c-format
 msgid "Corrupt DELETESET %c"
 msgstr ""
 
-#: src/gedlib/xreffile.c:425
+#: src/gedlib/xreffile.c:485
 #, c-format
-msgid "Tried to add already-deleted record (%ld) to xref (%c)!"
+msgid "Tried to add already-deleted record ("
 msgstr ""
 
 #: src/interp/alloc.c:956
-#, c-format
-msgid "Error: file \"%s\": line %d: "
+#, fuzzy, c-format
+msgid "Error: file \"%s\": line "
 msgstr "Eraro: dosiero \"%s\": linio %d: "
 
 #: src/interp/alloc.c:1070
@@ -2745,214 +2771,214 @@ msgstr "Indiku liston da homoj por programo."
 msgid "name: person does not have a name"
 msgstr "nomo: homo ne havas nomon"
 
-#: src/interp/builtin.c:376
+#: src/interp/builtin.c:384
 msgid "fullname: person does not have a name"
 msgstr "plenanomo: homo ne havas nomon"
 
-#: src/interp/builtin.c:403
+#: src/interp/builtin.c:413
 msgid "surname: person does not have a name"
 msgstr "familnomo: homo ne havas nomon"
 
-#: src/interp/builtin.c:428
+#: src/interp/builtin.c:438
 msgid "soundex: person does not have a name"
 msgstr "sonsimilado: homo ne havas nomon"
 
-#: src/interp/builtin.c:491
-#, c-format
-msgid "Bad escape code at offset %d in bytecode string <%s>"
+#: src/interp/builtin.c:501
+#, fuzzy
+msgid "Bad escape code at offset "
 msgstr "Maløusta eskapsigna kodo æe deþovo %d en bitokkoda æeno <%s>"
 
-#: src/interp/builtin.c:637
+#: src/interp/builtin.c:647
 msgid "(givens) person does not have a name"
 msgstr "(dona¼oj) homo ne havas nomon"
 
-#: src/interp/builtin.c:664
+#: src/interp/builtin.c:674
 #, c-format
 msgid "set(%s, <Null>) is invalid"
 msgstr "aro(%s, <Nulo>) estas malvalida"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "first"
 msgstr "unua"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "second"
 msgstr "dua"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "third"
 msgstr "tria"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "fourth"
 msgstr "kvara"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "fifth"
 msgstr "kvina"
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "sixth"
 msgstr "sesa"
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "seventh"
 msgstr "sepa"
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "eighth"
 msgstr "oka"
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "ninth"
 msgstr "naýa"
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "tenth"
 msgstr "deka"
 
-#: src/interp/builtin.c:1157
+#: src/interp/builtin.c:1167
 msgid "eleventh"
 msgstr "dekunua"
 
-#: src/interp/builtin.c:1157
+#: src/interp/builtin.c:1167
 msgid "twelfth"
 msgstr "dekdua"
 
-#: src/interp/builtin.c:1174
-#, fuzzy, c-format
-msgid "%ldth"
-msgstr "%da"
-
 #: src/interp/builtin.c:1184
+#, fuzzy, c-format
+msgid "th"
+msgstr "tsh"
+
+#: src/interp/builtin.c:1194
 msgid "zero"
 msgstr "nulo"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "one"
 msgstr "unu"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "two"
 msgstr "du"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "three"
 msgstr "tri"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "four"
 msgstr "kvar"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "five"
 msgstr "kvin"
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "six"
 msgstr "ses"
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "seven"
 msgstr "sep"
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "eight"
 msgstr "ok"
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "nine"
 msgstr "naý"
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "ten"
 msgstr "dek"
 
-#: src/interp/builtin.c:1186
+#: src/interp/builtin.c:1196
 msgid "eleven"
 msgstr "dekunu"
 
-#: src/interp/builtin.c:1186
+#: src/interp/builtin.c:1196
 msgid "twelve"
 msgstr "dekdu"
 
-#: src/interp/builtin.c:1952
+#: src/interp/builtin.c:1962
 msgid "the arg to empty is not a list, table or set"
 msgstr "la opcio por malplenigo ne estas listo, tabelo, aý aro"
 
-#: src/interp/builtin.c:1985
+#: src/interp/builtin.c:1995
 msgid "the arg to length is not a list, table or set"
 msgstr "la opcio por grandeco ne estas listo, tabelo, aý aro"
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "He"
 msgstr "Li"
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "he"
 msgstr "li"
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "His"
 msgstr "Lia"
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "his"
 msgstr "lia"
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "him"
 msgstr "lin"
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "She"
 msgstr "Þi"
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "she"
 msgstr "þi"
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "Her"
 msgstr "Þia"
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "her"
 msgstr "þia"
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "her_"
 msgstr "þia_"
 
-#: src/interp/builtin.c:2567
+#: src/interp/builtin.c:2577
 msgid "(trimname) person does not have a name"
 msgstr "(tondunomo) homo ne havas nomon"
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Sunday"
 msgstr ""
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Monday"
 msgstr ""
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Tuesday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Wednesday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Thursday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Friday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Saturday"
 msgstr ""
 
@@ -2967,8 +2993,8 @@ msgid "Ambiguous call to func: %s"
 msgstr "Dubasenca voko al proc: %s"
 
 #: src/interp/interp.c:243
-#, c-format
-msgid "Report not found: %s "
+#, fuzzy, c-format
+msgid "Report not found: %s"
 msgstr "Raporto ne trovita: %s"
 
 #: src/interp/interp.c:254
@@ -2987,8 +3013,8 @@ msgid "Program needs a starting procedure.\n"
 msgstr "bezonas komencan proceduron.\n"
 
 #: src/interp/interp.c:336
-#, c-format
-msgid "Proc %s must be called with %d (not %d) parameters."
+#, fuzzy, c-format
+msgid "Proc %s must be called with "
 msgstr "Proc %s devas esti vokita kun %d (ne %d) parametroj."
 
 #: src/interp/interp.c:351
@@ -3016,7 +3042,7 @@ msgstr "ne rulis pro eraroj.\n"
 msgid "Error: file <%s> not found: %s\n"
 msgstr "Eraro: dosiero <%s> ne trovita: %s\n"
 
-#: src/interp/interp.c:534
+#: src/interp/interp.c:537
 #, c-format
 msgid ""
 "\n"
@@ -3025,36 +3051,49 @@ msgstr ""
 "\n"
 "Raporta daýro %s (ui daýro %s)\n"
 
-#: src/interp/interp.c:606
+#: src/interp/interp.c:602
+msgid "integer constant not allowed here.  Use d(constant) instead.\n"
+msgstr ""
+
+#: src/interp/interp.c:605
+msgid "floating-point constant not allowed here.  Use f(constant) instead.\n"
+msgstr ""
+
+#: src/interp/interp.c:615
 #, c-format
 msgid "identifier: %s should be a string\n"
 msgstr "identigilo: %s devus esti signoæeno\n"
 
-#: src/interp/interp.c:1779
+#: src/interp/interp.c:891
+#, c-format
+msgid "Unexpected node type (%d)"
+msgstr ""
+
+#: src/interp/interp.c:1775
 #, c-format
 msgid "Undefined proc: %s"
 msgstr "Maldifinita proc: %s"
 
-#: src/interp/interp.c:1781
+#: src/interp/interp.c:1777
 #, c-format
 msgid "Ambiguous call to proc: %s"
 msgstr "Dubasenca voko al proc: %s"
 
-#: src/interp/interp.c:2006
+#: src/interp/interp.c:2002
 #, c-format
 msgid "Duplicate proc %s (lines %d and %d) in report: %s"
 msgstr "Multoble difinita proc %s (linioj %d kaj %d) en raporto: %s"
 
-#: src/interp/interp.c:2036
+#: src/interp/interp.c:2032
 #, c-format
 msgid "Duplicate func %s (lines %d and %d) in report: %s"
 msgstr "Multoble difinita funk %s (linioj %d kaj %d) en raporto: %s"
 
-#: src/interp/interp.c:2099
+#: src/interp/interp.c:2095
 msgid "This report requires a newer program to run\n"
 msgstr "Æi tiu raporto bezonas pli novan programon por ruli\n"
 
-#: src/interp/interp.c:2155
+#: src/interp/interp.c:2151
 #, c-format
 msgid "Program forgot to unlock %d record"
 msgid_plural "Program forgot to unlock %d records"
@@ -3065,11 +3104,9 @@ msgstr[1] ""
 msgid "missing or incorrect value for sort"
 msgstr ""
 
-#: src/interp/lex.c:219
+#: src/interp/lex.c:218
 #, c-format
-msgid ""
-"String constant overflowing internal buffer tokbuf len=%d, file: %s, start "
-"line: %ld"
+msgid "String constant overflowing internal buffer tokbuf len="
 msgstr ""
 
 #: src/interp/more.c:689
@@ -3124,6 +3161,13 @@ msgstr "la opcio por malþlosu devas esti homo aý familio"
 msgid "PVALUE memory leak report:"
 msgstr ""
 
+#: src/interp/pvalalloc.c:301
+#, fuzzy
+msgid " item leaked"
+msgid_plural " items leaked"
+msgstr[0] "%d ero likita"
+msgstr[1] "%d eroj likitaj"
+
 #: src/interp/pvalmath.c:70
 #, c-format
 msgid "Nonnumeric type to operation %s: %s"
@@ -3139,159 +3183,151 @@ msgstr "kontraýleøa voko al pos."
 msgid "%s: not compatible numeric types: %s and %s"
 msgstr ""
 
-#: src/interp/pvalue.c:866
+#: src/interp/pvalue.c:869
 #, c-format
 msgid "%s: Incomparable types: %s and %s"
 msgstr ""
 
-#: src/interp/pvalue.c:963
+#: src/interp/pvalue.c:966
 msgid "NOT PVALUE: NULL!"
 msgstr ""
 
-#: src/interp/pvalue.c:967
+#: src/interp/pvalue.c:970
 #, c-format
 msgid "NOT PVALUE: invalid type=%d)!"
 msgstr ""
 
-#: src/interp/pvalue.c:985
+#: src/interp/pvalue.c:989
 msgid "True"
 msgstr ""
 
-#: src/interp/pvalue.c:985
+#: src/interp/pvalue.c:989
 msgid "False"
 msgstr ""
 
-#: src/interp/pvalue.c:1021
-#, fuzzy, c-format
-msgid "%d item"
-msgid_plural "%d items"
+#: src/interp/pvalue.c:1025
+#, fuzzy
+msgid " item"
+msgid_plural " items"
 msgstr[0] "%d riparita"
 msgstr[1] "%d riparitaj"
 
-#: src/interp/pvalue.c:1028
-#, fuzzy, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
+#: src/interp/pvalue.c:1032
+#, fuzzy
+msgid " entry"
+msgid_plural " entries"
 msgstr[0] "%d eraro"
 msgstr[1] "%d eraroj"
 
-#: src/interp/pvalue.c:1035
-#, fuzzy, c-format
-msgid "%d record"
-msgid_plural "%d records"
+#: src/interp/pvalue.c:1039
+#, fuzzy
+msgid " record"
+msgid_plural " records"
 msgstr[0] "%d eraro"
 msgstr[1] "%d eraroj"
 
-#: src/interp/pvalue.c:1042
-#, fuzzy, c-format
-msgid "%d element"
-msgid_plural "%d elements"
+#: src/interp/pvalue.c:1046
+#, fuzzy
+msgid " element"
+msgid_plural " elements"
 msgstr[0] "dekunua"
 msgstr[1] "dekunua"
 
-#: src/interp/progerr.c:136
+#: src/interp/progerr.c:135
 msgid "Enter d for debugger, q to quit"
 msgstr "Enmetu d por erarseræilo, q por eliro"
 
-#: src/interp/progerr.c:151
-#, fuzzy, c-format
-msgid "Display local (%d var)"
-msgid_plural "Display locals (%d vars)"
+#: src/interp/progerr.c:152
+#, fuzzy
+msgid "Display local ("
+msgid_plural "Display locals ("
 msgstr[0] "Montrigu loka¼ojn (%d)"
 msgstr[1] "Montrigu loka¼ojn (%d)"
 
-#: src/interp/progerr.c:157
-#, fuzzy, c-format
-msgid "Display global (%d var)"
-msgid_plural "Display globals (%d vars)"
+#: src/interp/progerr.c:158
+#, fuzzy
+msgid "Display global ("
+msgid_plural "Display globals ("
 msgstr[0] "Montrigu malloka¼ojn (%d)"
 msgstr[1] "Montrigu malloka¼ojn (%d)"
 
-#: src/interp/progerr.c:162
-#, c-format
-msgid "Call stack has %d higher level"
-msgid_plural "Call stack has %d higher levels"
+#: src/interp/progerr.c:163 src/interp/progerr.c:173
+msgid "Call stack has "
+msgid_plural "Call stack has "
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/interp/progerr.c:165
+#: src/interp/progerr.c:167
 #, fuzzy
 msgid " Go up one level"
 msgstr "Elstakigu unu nivelon"
 
-#: src/interp/progerr.c:171
-#, c-format
-msgid "Call stack has %d lower level"
-msgid_plural "Call stack has %d lower levels"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/interp/progerr.c:175
+#: src/interp/progerr.c:178
 #, fuzzy
 msgid " Go down one level"
 msgstr "Elstakigu unu nivelon"
 
-#: src/interp/progerr.c:180
+#: src/interp/progerr.c:183
 msgid "Quit debugger"
 msgstr "Eliru erarseræilon"
 
-#: src/interp/progerr.c:182
+#: src/interp/progerr.c:185
 msgid "Report debugger"
 msgstr "Raporta erarseræilo"
 
-#: src/interp/progerr.c:186
+#: src/interp/progerr.c:189
 msgid "Local variables"
 msgstr "Lokaj variabloj"
 
-#: src/interp/progerr.c:189
+#: src/interp/progerr.c:192
 msgid "Global variables"
 msgstr "Mallokaj variabloj"
 
-#: src/interp/progerr.c:414
+#: src/interp/progerr.c:417
 #, fuzzy
 msgid "list is empty"
 msgstr "(vizita historio estas malplena)"
 
-#: src/interp/progerr.c:432
+#: src/interp/progerr.c:435
 msgid "LIST contents"
 msgstr ""
 
-#: src/interp/progerr.c:447
+#: src/interp/progerr.c:450
 msgid "table is empty"
 msgstr ""
 
-#: src/interp/progerr.c:465
+#: src/interp/progerr.c:468
 msgid "TABLE contents"
 msgstr ""
 
-#: src/interp/progerr.c:481
+#: src/interp/progerr.c:484
 #, fuzzy
 msgid "sequence is empty"
 msgstr "La rikordo estas malplena."
 
-#: src/interp/progerr.c:495
+#: src/interp/progerr.c:498
 msgid "SEQ contents"
 msgstr ""
 
-#: src/interp/progerr.c:533
+#: src/interp/progerr.c:536
 msgid "Report cancelled"
 msgstr "Raporto æesiøis"
 
-#: src/interp/progerr.c:541
+#: src/interp/progerr.c:544
 msgid "Report file: "
 msgstr "Raporta dosiero: "
 
-#: src/interp/progerr.c:550
-#, c-format
-msgid "Parsing Error at line %d: "
+#: src/interp/progerr.c:553
+#, fuzzy
+msgid "Parsing Error at line "
 msgstr "Sintaksanaliza Eraro æe linio %d: "
 
-#: src/interp/progerr.c:552
-#, c-format
-msgid "Runtime Error at line %d: "
+#: src/interp/progerr.c:555
+#, fuzzy
+msgid "Runtime Error at line "
 msgstr "Dumrulada Eraro æe linio %d: "
 
-#: src/interp/progerr.c:555
+#: src/interp/progerr.c:558
 msgid "Aborting: "
 msgstr "Misfinigas: "
 
@@ -3308,7 +3344,7 @@ msgstr "Raporto haltas pro eraro dum malfermado de celdosiero"
 msgid "Report stopping due to lack of output file"
 msgstr "Raporto haltas pro manko de celdosiero"
 
-#: src/interp/rptsort.c:117 src/interp/rptsort.c:129
+#: src/interp/rptsort.c:123 src/interp/rptsort.c:135
 msgid "Arguments to (r)sort must be of same size"
 msgstr "Opcioj por (r)ordigu devas havi la saman grandecon"
 
@@ -3632,23 +3668,23 @@ msgstr "d  Kopiu supron al fundo"
 msgid "j  Merge bottom to top"
 msgstr "j  Kunfandigu fundon al supro"
 
-#: src/liflines/brwsmenu.c:148 src/liflines/listui.c:842
+#: src/liflines/brwsmenu.c:148 src/liflines/listui.c:841
 msgid "j  Move down list"
 msgstr "j  Iru suben en listo"
 
-#: src/liflines/brwsmenu.c:149 src/liflines/listui.c:843
+#: src/liflines/brwsmenu.c:149 src/liflines/listui.c:842
 msgid "k  Move up list"
 msgstr "k  Iru supren en listo"
 
-#: src/liflines/brwsmenu.c:150 src/liflines/listui.c:844
+#: src/liflines/brwsmenu.c:150 src/liflines/listui.c:843
 msgid "e  Edit this person"
 msgstr "e  Redaktu æi tiun homon"
 
-#: src/liflines/brwsmenu.c:151 src/liflines/listui.c:845
+#: src/liflines/brwsmenu.c:151 src/liflines/listui.c:844
 msgid "i  Browse this person"
 msgstr "i  Krozu æi tiun homon"
 
-#: src/liflines/brwsmenu.c:152 src/liflines/listui.c:846
+#: src/liflines/brwsmenu.c:152 src/liflines/listui.c:845
 msgid "m  Mark this person"
 msgstr "m  Marku æi tiun homon"
 
@@ -3656,19 +3692,19 @@ msgstr "m  Marku æi tiun homon"
 msgid "d  Delete from list"
 msgstr "d  Forstreku el listo"
 
-#: src/liflines/brwsmenu.c:154 src/liflines/listui.c:849
+#: src/liflines/brwsmenu.c:154 src/liflines/listui.c:848
 msgid "n  Name this list"
 msgstr "n  Nomigu æi tiun liston"
 
-#: src/liflines/brwsmenu.c:155 src/liflines/listui.c:850
+#: src/liflines/brwsmenu.c:155 src/liflines/listui.c:849
 msgid "b  Browse new persons"
 msgstr "b  Krozu novajn homojn"
 
-#: src/liflines/brwsmenu.c:156 src/liflines/listui.c:851
+#: src/liflines/brwsmenu.c:156 src/liflines/listui.c:850
 msgid "a  Add to this list"
 msgstr "a  Aldonu al æi tiu listo"
 
-#: src/liflines/brwsmenu.c:157 src/liflines/listui.c:852
+#: src/liflines/brwsmenu.c:157 src/liflines/listui.c:851
 msgid "x  Swap mark/current"
 msgstr "x  Interþanøu markon/nunon"
 
@@ -3740,33 +3776,33 @@ msgid "Missing title"
 msgstr "Mankanta titolo"
 
 #: src/liflines/delete.c:85
-#, c-format
-msgid "%d spouse"
-msgid_plural "%d spouses"
-msgstr[0] "%d geedzo"
-msgstr[1] "%d geedzoj"
+#, fuzzy
+msgid " spouse"
+msgid_plural " spouses"
+msgstr[0] "geedzo"
+msgstr[1] "geedzo"
 
 #: src/liflines/delete.c:88
-#, c-format
-msgid "%d child"
-msgid_plural "%d children"
-msgstr[0] "%d infano"
-msgstr[1] "%d infanoj"
+#, fuzzy
+msgid " child"
+msgid_plural " children"
+msgstr[0] "infano"
+msgstr[1] "infano"
 
-#: src/liflines/error.c:63 src/tools/dbverify.c:1506
+#: src/liflines/error.c:64 src/tools/dbverify.c:1611
 msgid "Fatal Error"
 msgstr "Neriparebla Eraro"
 
-#: src/liflines/error.c:66
+#: src/liflines/error.c:67
 msgid "FATAL ERROR"
 msgstr "NERIPAREBLA ERARO"
 
-#: src/liflines/error.c:70
+#: src/liflines/error.c:71
 #, c-format
 msgid "  in file <%s> at line %d\n"
 msgstr "  en dosiero <%s> sur linio %d\n"
 
-#: src/liflines/error.c:72 src/tools/dbverify.c:1517
+#: src/liflines/error.c:74 src/tools/dbverify.c:1622
 msgid "ASSERT failure"
 msgstr "ASERTA fiasko"
 
@@ -3792,9 +3828,9 @@ msgid "Lossy codeset conversion (from <%s> to <%s>) likely"
 msgstr "Ne povas þanøigi kodpaøon (de <%s> al <%s>)"
 
 #: src/liflines/import.c:219
-#, c-format
-msgid "%d warning during import"
-msgid_plural "%d warnings during import"
+#, fuzzy
+msgid " warning during import"
+msgid_plural " warnings during import"
 msgstr[0] "%d averto dum importado"
 msgstr[1] "%d avertoj dum importado"
 
@@ -3808,31 +3844,27 @@ msgid "Enter codeset to assume (* for none)"
 msgstr "Enmetu kodpaøon por premiso (* por neniu)"
 
 #: src/liflines/import.c:261
-#, fuzzy, c-format
-msgid "Using original keys, %d deleted record will be in the database."
-msgid_plural "Using original keys, %d deleted records will be in the database."
-msgstr[0] ""
-"Uzante originalajn þlosilojn, %d forstrekitaj rikordoj ekzistos en la "
-"datumbazo."
-msgstr[1] ""
-"Uzante originalajn þlosilojn, %d forstrekitaj rikordoj ekzistos en la "
-"datumbazo."
+#, fuzzy
+msgid "Using original keys, "
+msgid_plural "Using original keys, "
+msgstr[0] "Æu uzu originalajn þlosilojn el GEDCOM dosiero?"
+msgstr[1] "Æu uzu originalajn þlosilojn el GEDCOM dosiero?"
 
 #: src/liflines/lbrowse.c:219
 msgid "Tandom browse only compatible with persons or families."
 msgstr ""
 
-#: src/liflines/lines_usage.c:21
+#: src/liflines/lines_usage.c:22
 #, c-format
 msgid "%s invokes the Lifelines report execution program without GUI."
 msgstr ""
 
-#: src/liflines/lines_usage.c:23
+#: src/liflines/lines_usage.c:24
 #, c-format
 msgid "%s invokes the Lifelines GUI."
 msgstr ""
 
-#: src/liflines/lines_usage.c:26
+#: src/liflines/lines_usage.c:27
 #, c-format
 msgid ""
 "Lifelines is a program to manipulate genealogical information\n"
@@ -3846,232 +3878,232 @@ msgid ""
 "custom report language and comes with a collection of reports."
 msgstr ""
 
-#: src/liflines/lines_usage.c:36
+#: src/liflines/lines_usage.c:37
 #, c-format
 msgid "Usage: %s [OPTIONS] [database]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:38 src/tools/btedit.c:216
+#: src/liflines/lines_usage.c:39 src/tools/btedit.c:218
 #, c-format
 msgid "Options:"
 msgstr ""
 
-#: src/liflines/lines_usage.c:40
+#: src/liflines/lines_usage.c:41
 #, c-format
 msgid "-C[FILE]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:42
+#: src/liflines/lines_usage.c:43
 #, fuzzy, c-format
 msgid "Specify configuration file location"
 msgstr "Maløuste formita konfigura¼a dosiero: linio tro longas."
 
-#: src/liflines/lines_usage.c:44
+#: src/liflines/lines_usage.c:45
 #, c-format
 msgid "Finnish option (if compiled to allow Finnish option)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:46
+#: src/liflines/lines_usage.c:47
 #, c-format
 msgid "-I[KEY=VALUE]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:48
+#: src/liflines/lines_usage.c:49
 #, c-format
 msgid "Specify a user property (e.g. -ILLEDITOR=gvim)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:50
+#: src/liflines/lines_usage.c:51
 #, c-format
 msgid "log dynamic memory operation (for debugging)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:52
+#: src/liflines/lines_usage.c:53
 #, c-format
 msgid "-c[TYPE][DIRECT,INDIRECT]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:54
+#: src/liflines/lines_usage.c:55
 #, c-format
 msgid ""
 "supply cache values (eg, -ci400,4000f400,4000 sets direct indi\n"
 "\t\t& fam caches to 400, and indirect indi & fam caches to 4000)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:57
+#: src/liflines/lines_usage.c:58
 #, c-format
 msgid "debug mode (disable signal trapping)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:59
+#: src/liflines/lines_usage.c:60
 #, c-format
 msgid "force open (for recovery from errors or power failure)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:61
+#: src/liflines/lines_usage.c:62
 #, c-format
 msgid "open database with immutable access (for use on read-only media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:63
+#: src/liflines/lines_usage.c:64
 #, c-format
 msgid "always show keys (even if REFN available)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:65
+#: src/liflines/lines_usage.c:66
 #, c-format
 msgid "unlock a database (for correct access on read-write media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:67
+#: src/liflines/lines_usage.c:68
 #, c-format
 msgid "lock a database (for use on read-only media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:69
+#: src/liflines/lines_usage.c:70
 #, c-format
 msgid "do not use traditional family rules"
 msgstr ""
 
-#: src/liflines/lines_usage.c:71
+#: src/liflines/lines_usage.c:72
 #, c-format
 msgid "Specify program output filename (eg, -o/tmp/mytests)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:73
+#: src/liflines/lines_usage.c:74
 #, c-format
 msgid ""
 "open database with read-only access (prohibiting other\n"
 "\t\twrite access)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:76
+#: src/liflines/lines_usage.c:77
 #, c-format
 msgid "trace function calls in report programs (for debugging)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:78
+#: src/liflines/lines_usage.c:79
 #, c-format
 msgid "-u[HEIGHT,WIDTH]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:80
+#: src/liflines/lines_usage.c:81
 #, c-format
 msgid ""
 "specify window size (eg, -u120,34 specifies 120 columns\n"
 "\t\tby 34 rows)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:83
+#: src/liflines/lines_usage.c:84
 #, c-format
 msgid "display this help and exit"
 msgstr ""
 
-#: src/liflines/lines_usage.c:85
+#: src/liflines/lines_usage.c:86
 #, c-format
 msgid "open database with writeable access (this is the default)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:87
+#: src/liflines/lines_usage.c:88
 #, c-format
 msgid "-x[REPORT]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:89
+#: src/liflines/lines_usage.c:90
 #, c-format
 msgid "execute a single lifelines report program directly"
 msgstr ""
 
-#: src/liflines/lines_usage.c:91
+#: src/liflines/lines_usage.c:92
 #, c-format
 msgid ""
 "Use normal ASCII characters for drawing lines, instead of\n"
 "\t\tspecial VT100 terminal characters"
 msgstr ""
 
-#: src/liflines/lines_usage.c:94
+#: src/liflines/lines_usage.c:95
 #, c-format
 msgid "output version information and exit"
 msgstr ""
 
-#: src/liflines/lines_usage.c:96 src/tools/btedit.c:222
+#: src/liflines/lines_usage.c:97 src/tools/btedit.c:224
 #, c-format
 msgid "Examples:"
 msgstr ""
 
-#: src/liflines/lines_usage.c:99
+#: src/liflines/lines_usage.c:100
 #, c-format
 msgid "%s myfamily -x eol"
 msgstr ""
 
-#: src/liflines/lines_usage.c:101
+#: src/liflines/lines_usage.c:102
 #, c-format
 msgid "Open the database 'myfamily' with Lifelines"
 msgstr ""
 
-#: src/liflines/lines_usage.c:103
+#: src/liflines/lines_usage.c:104
 #, c-format
 msgid "and run the eol.ll report"
 msgstr ""
 
-#: src/liflines/lines_usage.c:105
+#: src/liflines/lines_usage.c:106
 #, c-format
 msgid "%s -f myfamily -x eol"
 msgstr ""
 
-#: src/liflines/lines_usage.c:107
+#: src/liflines/lines_usage.c:108
 #, c-format
 msgid "Unlock database 'myfamily', after a power failure left the"
 msgstr ""
 
-#: src/liflines/lines_usage.c:109
+#: src/liflines/lines_usage.c:110
 #, c-format
 msgid "database locked and run 'eol.ll' report"
 msgstr ""
 
-#: src/liflines/lines_usage.c:112
+#: src/liflines/lines_usage.c:113
 #, fuzzy, c-format
 msgid "%s myfamily"
 msgstr "Malplena familio"
 
-#: src/liflines/lines_usage.c:114
+#: src/liflines/lines_usage.c:115
 #, c-format
 msgid "Open database 'myfamily' with Lifelines"
 msgstr ""
 
-#: src/liflines/lines_usage.c:116
+#: src/liflines/lines_usage.c:117
 #, fuzzy, c-format
 msgid "%s -f myfamily"
 msgstr "Malplena familio"
 
-#: src/liflines/lines_usage.c:118
+#: src/liflines/lines_usage.c:119
 #, c-format
 msgid ""
 "Unlock database 'myfamily', after a power failure left\n"
 "\t\tthe database locked"
 msgstr ""
 
-#: src/liflines/lines_usage.c:122
+#: src/liflines/lines_usage.c:123
 #, c-format
 msgid "REPORTING BUGS"
 msgstr ""
 
-#: src/liflines/lines_usage.c:124 src/tools/btedit.c:228
-#, c-format
-msgid "Report bugs to https://github.com/lifelines/lifelines/issues"
-msgstr ""
-
-#: src/liflines/lines_usage.c:126
+#: src/liflines/lines_usage.c:127
 #, c-format
 msgid "COPYRIGHT"
 msgstr ""
 
 #: src/liflines/lines_usage.c:131
 #, c-format
+msgid "LICENSE"
+msgstr ""
+
+#: src/liflines/lines_usage.c:135
+#, c-format
 msgid "SEE ALSO"
 msgstr ""
 
-#: src/liflines/listui.c:155 src/liflines/listui.c:252
+#: src/liflines/listui.c:155 src/liflines/listui.c:253
 msgid "Commands:   j Move down     k Move up    i Select     q Quit"
 msgstr "Komandoj:   j Iru suben     k Iru supren i Elektu     q Eliru"
 
@@ -4079,31 +4111,31 @@ msgstr "Komandoj:   j Iru suben     k Iru supren i Elektu     q Eliru"
 msgid "Commands:   j Move down     k Move up    q Quit"
 msgstr "Komandoj:   j Iru suben     k Iru supren q Eliru"
 
-#: src/liflines/listui.c:249
+#: src/liflines/listui.c:250
 msgid "Commands:  j Move down   k Move up  d Delete   i Select   q Quit"
 msgstr "Komandoj:  j Iru suben   k Iru supren d Forigu   i Elektu   q Eliru"
 
-#: src/liflines/listui.c:431
+#: src/liflines/listui.c:432
 msgid "--- CURRENT SELECTION ---"
 msgstr "--- NUNA ELEKTO ---"
 
-#: src/liflines/listui.c:434 src/liflines/listui.c:597
+#: src/liflines/listui.c:435 src/liflines/listui.c:597
 msgid "--- LIST ---"
 msgstr "--- LISTO ---"
 
-#: src/liflines/listui.c:628
+#: src/liflines/listui.c:626
 msgid "-- CURRENT SELECTION --"
 msgstr "-- NUNA ELEKTO --"
 
-#: src/liflines/listui.c:840
+#: src/liflines/listui.c:839
 msgid "Choose an operation:"
 msgstr "Elektu funkciadon:"
 
-#: src/liflines/listui.c:847
+#: src/liflines/listui.c:846
 msgid "r  Remove from list"
 msgstr "r  Forigu el la listo"
 
-#: src/liflines/listui.c:848
+#: src/liflines/listui.c:847
 msgid "t  Enter tandem mode"
 msgstr "t  Eniru tandeman modalon"
 
@@ -4138,7 +4170,8 @@ msgstr[0] "Alio"
 msgstr[1] "Alioj"
 
 #: src/liflines/loadsave.c:160
-msgid "Checking GEDCOM file for errors.\n"
+#, fuzzy
+msgid "Checking GEDCOM file for errors."
 msgstr "Kontrolas GEDCOM dosieron por eraroj.\n"
 
 #: src/liflines/loadsave.c:163
@@ -4176,11 +4209,11 @@ msgstr "La datumbazo ne estas registrita."
 msgid "Saving database `%s' in file `%s'."
 msgstr "Datumbazo `%s' estas registrita en `%s'."
 
-#: src/liflines/main.c:386
+#: src/liflines/main.c:398
 msgid "Warning: database codeset unspecified"
 msgstr "Averto: datumbaza kodpaøo ne estas indikita"
 
-#: src/liflines/main.c:388
+#: src/liflines/main.c:400
 msgid "Warning: not all conversions available"
 msgstr "Averto: ne æiuj þanøigoj estas haveblaj"
 
@@ -4221,7 +4254,7 @@ msgstr ""
 
 #: src/liflines/merge.c:800 src/liflines/merge.c:919
 #, c-format
-msgid "Mismatched lineage spouse links between %s and %s: %ld and %ld"
+msgid "Mismatched lineage spouse links between %s and %s: "
 msgstr ""
 
 #: src/liflines/merge.c:816 src/liflines/merge.c:935
@@ -4231,7 +4264,7 @@ msgstr ""
 
 #: src/liflines/merge.c:844 src/liflines/merge.c:963
 #, c-format
-msgid "Mismatched lineage child links between %s and %s: %ld and %ld"
+msgid "Mismatched lineage child links between %s and %s: "
 msgstr ""
 
 #: src/liflines/merge.c:882 src/liflines/merge.c:891
@@ -4239,20 +4272,20 @@ msgstr ""
 msgid "Bad HUSB tag: %s"
 msgstr ""
 
-#: src/liflines/miscutls.c:51
+#: src/liflines/miscutls.c:55
 msgid "Whose key value do you want?"
 msgstr "Kies þlosilvaloron vi deziras?"
 
-#: src/liflines/miscutls.c:67
+#: src/liflines/miscutls.c:71
 msgid "Please enter person's internal key value."
 msgstr "Bonvole enmetu la internan þlosilvaloron de la homo:"
 
-#: src/liflines/miscutls.c:68
+#: src/liflines/miscutls.c:72
 msgid "enter key:"
 msgstr "enmetu þlosilon:"
 
-#: src/liflines/miscutls.c:78 src/liflines/miscutls.c:82
-#: src/liflines/miscutls.c:87
+#: src/liflines/miscutls.c:82 src/liflines/miscutls.c:86
+#: src/liflines/miscutls.c:91
 #, c-format
 msgid "No one in database has key value %s."
 msgstr "Neniu el la datumbazo havas la þlosilvaloron %s."
@@ -4266,236 +4299,236 @@ msgstr ""
 msgid "Enter pattern to match against full name."
 msgstr "Enmetu þablonon kontraý kiu kongrui plenan nomon."
 
-#: src/liflines/scan.c:130 src/liflines/scan.c:180 src/liflines/scan.c:203
+#: src/liflines/scan.c:130 src/liflines/scan.c:179 src/liflines/scan.c:201
 msgid "pattern: "
 msgstr "þablono: "
 
-#: src/liflines/scan.c:153
+#: src/liflines/scan.c:152
 #, fuzzy
 msgid "Enter pattern to match against author."
 msgstr "Enmetu þablonon kontraý kiu kongrui refn."
 
-#: src/liflines/scan.c:167
+#: src/liflines/scan.c:166
 #, fuzzy
 msgid "Enter pattern to match against title."
 msgstr "Enmetu þablonon kontraý kiu kongrui refn."
 
-#: src/liflines/screen.c:317
+#: src/liflines/screen.c:318
 #, c-format
 msgid "initscr failed"
 msgstr ""
 
-#: src/liflines/screen.c:334
-#, fuzzy, c-format
-msgid ""
-"The requested window size (%ld,%ld) is too large for your terminal (%d,%d).\n"
+#: src/liflines/screen.c:335 src/liflines/screen.c:343
+#, c-format
+msgid "The requested window size ("
 msgstr ""
-"La petita fenestra grandeco (%d,%d) tro grandas por via ekrano (%d,%d).\n"
 
-#: src/liflines/screen.c:342
-#, fuzzy, c-format
-msgid ""
-"The requested window size (%ld,%ld) is too small for LifeLines (%d,%d).\n"
-msgstr ""
-"La petita fenestra grandeco (%d,%d) tro malgrandas por LifeLines (%d,%d).\n"
-
-#: src/liflines/screen.c:706
+#: src/liflines/screen.c:707
 #, fuzzy
 msgid "Search results"
 msgstr "Ekzamenu rezultojn:"
 
-#: src/liflines/screen.c:813
-#, c-format
-msgid "(pg %d/%d)"
-msgstr "(pø %d/%d)"
+#: src/liflines/screen.c:814
+msgid "(pg "
+msgstr ""
 
-#: src/liflines/screen.c:1433
+#: src/liflines/screen.c:1434
 msgid "No conversion"
 msgstr "Neniu þanøigo"
 
-#: src/liflines/screen.c:1519
+#: src/liflines/screen.c:1520
 msgid "Internal codeset"
 msgstr "Interna kodpaøo"
 
-#: src/liflines/screen.c:1522
+#: src/liflines/screen.c:1523
 #, fuzzy
 msgid "Internal UTF-8: Yes"
 msgstr "Interna kodpaøo"
 
-#: src/liflines/screen.c:1524
+#: src/liflines/screen.c:1525
 #, fuzzy
 msgid "Internal UTF-8: No"
 msgstr "Interna al Redaktila"
 
-#: src/liflines/screen.c:1528
+#: src/liflines/screen.c:1529
 msgid "Locales are enabled."
 msgstr "Loka¼aroj ebliøitaj"
 
-#: src/liflines/screen.c:1530
+#: src/liflines/screen.c:1531
 msgid "Locales are disabled."
 msgstr "Loka¼aroj malebliøitaj"
 
-#: src/liflines/screen.c:1533
+#: src/liflines/screen.c:1534
 msgid "NLS (National Language Support) is compiled in."
 msgstr "NLS (Nacia Lingva Subtenado) estas entradukigita"
 
-#: src/liflines/screen.c:1539
+#: src/liflines/screen.c:1540
 msgid "NLS (National Language Support) is not compiled in."
 msgstr "NLS (Nacia Lingva Subtenado) ne estas entradukigita"
 
-#: src/liflines/screen.c:1552
+#: src/liflines/screen.c:1553
 msgid "iconv (codeset conversion) is compiled in."
 msgstr "iconv (kodpaøa þanøigado) estas entradukigita"
 
-#: src/liflines/screen.c:1554
+#: src/liflines/screen.c:1555
 msgid "iconv (codeset conversion) is not compiled in."
 msgstr "iconv (kodpaøa þanøigado) ne estas entradukigita"
 
-#: src/liflines/screen.c:1556
+#: src/liflines/screen.c:1557
 #, c-format
 msgid "Startup collate locale: %s"
 msgstr "Komenca ordiza loka¼aro: %s"
 
-#: src/liflines/screen.c:1559
+#: src/liflines/screen.c:1560
 #, c-format
 msgid "Startup messages locale: %s"
 msgstr "Komenca mesaøa loka¼aro: %s"
 
-#: src/liflines/screen.c:1562
+#: src/liflines/screen.c:1563
 #, c-format
 msgid "Current collate locale: %s"
 msgstr "Nuna ordiza loka¼aro: %s"
 
-#: src/liflines/screen.c:1565
+#: src/liflines/screen.c:1566
 #, c-format
 msgid "Current messages locale: %s"
 msgstr "Nuna mesaøa loka¼aro: %s"
 
-#: src/liflines/screen.c:1568
+#: src/liflines/screen.c:1569
 #, c-format
 msgid "Collation routine: %s"
 msgstr "Ordizigada subprogramo: %s"
 
-#: src/liflines/screen.c:1572
+#: src/liflines/screen.c:1573
 #, c-format
 msgid "GUI codeset: %s"
 msgstr "GUI-a kodpaøo: %s"
 
-#: src/liflines/screen.c:1575
+#: src/liflines/screen.c:1576
 #, c-format
 msgid "GUI output codeset: %s"
 msgstr "GUI-a eliga kodpaøo: %s"
 
-#: src/liflines/screen.c:1577
+#: src/liflines/screen.c:1578
 #, c-format
 msgid "GUI input codeset: %s"
 msgstr "GUI-a eniga kodpaøo: %s"
 
-#: src/liflines/screen.c:1582
+#: src/liflines/screen.c:1583
 #, c-format
 msgid "editor codeset: %s"
 msgstr "redaktila kodpaøo: %s"
 
-#: src/liflines/screen.c:1585
+#: src/liflines/screen.c:1586
 #, c-format
 msgid "editor output codeset: %s"
 msgstr "redaktila eliga kodpaøo: %s"
 
-#: src/liflines/screen.c:1587
+#: src/liflines/screen.c:1588
 #, c-format
 msgid "editor input codeset: %s"
 msgstr "redaktila eniga kodpaøo: %s"
 
-#: src/liflines/screen.c:1592
+#: src/liflines/screen.c:1593
 #, c-format
 msgid "report codeset: %s"
 msgstr "raporta kodpaøo: %s"
 
-#: src/liflines/screen.c:1595
+#: src/liflines/screen.c:1596
 #, c-format
 msgid "report output codeset: %s"
 msgstr "raporta eliga kodpaøo: %s"
 
-#: src/liflines/screen.c:1597
+#: src/liflines/screen.c:1598
 #, c-format
 msgid "report input codeset: %s"
 msgstr "raporta eniga kodpaøo: %s"
 
-#: src/liflines/screen.c:1602
+#: src/liflines/screen.c:1603
 #, c-format
 msgid "GEDCOM codeset: %s"
 msgstr "GEDCOM-a kodpaøo: %s"
 
-#: src/liflines/screen.c:1605
+#: src/liflines/screen.c:1606
 #, c-format
 msgid "gedcom output codeset: %s"
 msgstr "gedcom-a eliga kodpaøo: %s"
 
-#: src/liflines/screen.c:1607
+#: src/liflines/screen.c:1608
 #, c-format
 msgid "gedcom input codeset: %s"
 msgstr "gedcom-a eniga kodpaøo: %s"
 
-#: src/liflines/screen.c:1615
+#: src/liflines/screen.c:1616
 msgid "UTF-8 charprops loaded"
 msgstr ""
 
-#: src/liflines/screen.c:1617
+#: src/liflines/screen.c:1618
 msgid "UTF-8 charprops not loaded"
 msgstr ""
 
-#: src/liflines/screen.c:1621
+#: src/liflines/screen.c:1622
 msgid "Codeset information"
 msgstr "Kodpaøa informo"
 
-#: src/liflines/screen.c:1638
+#: src/liflines/screen.c:1639
 #, c-format
 msgid "gettext dll: %s"
 msgstr "gettext (akirteksa¼a) dll: %s"
 
-#: src/liflines/screen.c:1642
+#: src/liflines/screen.c:1643
 #, c-format
 msgid "gettext dll version: %s"
 msgstr "gettext (akirteksa¼a) dll eldono: %s"
 
-#: src/liflines/screen.c:1647
+#: src/liflines/screen.c:1648
 msgid "gettext dll had no version"
 msgstr "gettext (akirteksa¼a) dll ne havis eldonon: %s"
 
-#: src/liflines/screen.c:1652
+#: src/liflines/screen.c:1653
 msgid "no gettext dll found"
 msgstr "trovis neniun gettext (akirteksa¼an) dll-on"
 
-#: src/liflines/screen.c:1661
+#: src/liflines/screen.c:1662
 #, c-format
 msgid "iconv dll: %s"
 msgstr "iconv dll: %s"
 
-#: src/liflines/screen.c:1665
+#: src/liflines/screen.c:1666
 #, c-format
 msgid "iconv dll version: %s"
 msgstr "iconv dll eldono: %s"
 
-#: src/liflines/screen.c:1670
+#: src/liflines/screen.c:1671
 msgid "iconv dll had no version"
 msgstr "iconv dll ne havis eldonon"
 
-#: src/liflines/screen.c:1675
+#: src/liflines/screen.c:1676
 msgid "no iconv dll found"
 msgstr "trovis neniun iconv dll"
 
-#: src/liflines/screen.c:1933
+#: src/liflines/screen.c:1934
 msgid "Impermissible to change codeset in a populated database"
 msgstr "Þanøante kodpaøon malpermesita en enhaviøita datumbazo"
 
-#: src/liflines/screen.c:2034
+#: src/liflines/screen.c:2035
 msgid "LifeLines -- Main Menu"
 msgstr "LifeLines -- Æefa Menuo"
 
-#: src/liflines/searchui.c:133
+#: src/liflines/screen.c:2267 src/tools/btedit.c:136 src/ui/ui_cli.c:142
 #, c-format
-msgid "v  Review visit history (%d record)"
-msgid_plural "v  Review visit history (%d records)"
+msgid "Editor or system call failed."
+msgstr ""
+
+#: src/liflines/screen.c:2929
+#, c-format
+msgid "System command failed."
+msgstr ""
+
+#: src/liflines/searchui.c:133
+#, fuzzy
+msgid "v  Review visit history ("
+msgid_plural "v  Review visit history ("
 msgstr[0] "v  Revizu vizitan historion (%d rikordo)"
 msgstr[1] "v  Revizu vizitan historion (%d rikordoj)"
 
@@ -4504,9 +4537,9 @@ msgid "(visit history is empty)"
 msgstr "(vizita historio estas malplena)"
 
 #: src/liflines/searchui.c:143
-#, c-format
-msgid "c  Review change history (%d record)"
-msgid_plural "c  Review change history (%d records)"
+#, fuzzy
+msgid "c  Review change history ("
+msgid_plural "c  Review change history ("
 msgstr[0] "c  Revizu þanøan historion (%d rikordo)"
 msgstr[1] "c  Revizu þanøan historion (%d rikordoj)"
 
@@ -4551,15 +4584,15 @@ msgstr ""
 msgid "t  Scan by title"
 msgstr ""
 
-#: src/liflines/selectdb.c:95
+#: src/liflines/selectdb.c:96
 msgid "Choose database to open"
 msgstr "Elektu datumbazon por malfermi"
 
-#: src/liflines/selectdb.c:103
+#: src/liflines/selectdb.c:104
 msgid "No databases found in database path"
 msgstr "Trovis neniujn datumbazojn en datumbaza dosierindiko"
 
-#: src/liflines/selectdb.c:154
+#: src/liflines/selectdb.c:158
 msgid "Cannot create new database with -r, -i, -l, or -f flags."
 msgstr ""
 
@@ -4603,7 +4636,7 @@ msgstr "entr"
 msgid "crem"
 msgstr "brul"
 
-#: src/liflines/show.c:1015
+#: src/liflines/show.c:1023
 #, c-format
 msgid "Cached: I:%s; F:%s"
 msgstr "Kaþmemoriøis: I:%s; F:%s"
@@ -4623,165 +4656,165 @@ msgstr "Linio %d: La okazo æi tie difinita ne havas þlosilon."
 msgid "Line %d: Tag %s found in unexpected record: %s %s."
 msgstr "Ne povis ripari forstrekaron kiu enhavas validan rikordon %s"
 
-#: src/liflines/valgdcom.c:190
+#: src/liflines/valgdcom.c:193
 #, fuzzy, c-format
 msgid "Line %d: Family has no members (%s %s)."
 msgstr "Linio %d: Familio ne havas membrojn."
 
-#: src/liflines/valgdcom.c:390
+#: src/liflines/valgdcom.c:389
 #, c-format
 msgid "Line %d: The source defined here has no key."
 msgstr "Linio %d: La fonto æi tie difinita ne havas þlosilon."
 
-#: src/liflines/valgdcom.c:404
+#: src/liflines/valgdcom.c:403
 #, c-format
 msgid "Line %d: Source %s has an incorrect key."
 msgstr "Linio %d: Fonto %s havas maløustan þlosilon."
 
-#: src/liflines/valgdcom.c:411
+#: src/liflines/valgdcom.c:410
 #, c-format
 msgid "Lines %d and %d: Source %s is multiply defined."
 msgstr "Linioj %d kaj %d: Fonto %s estas multoble difinita."
 
-#: src/liflines/valgdcom.c:434
+#: src/liflines/valgdcom.c:433
 #, c-format
 msgid "Line %d: The event defined here has no key."
 msgstr "Linio %d: La okazo æi tie difinita ne havas þlosilon."
 
-#: src/liflines/valgdcom.c:447
+#: src/liflines/valgdcom.c:446
 #, c-format
 msgid "Line %d: Event %s has an incorrect key."
 msgstr "Linio %d: Okazo %s havas maløustan þlosilon."
 
-#: src/liflines/valgdcom.c:454
+#: src/liflines/valgdcom.c:453
 #, c-format
 msgid "Lines %d and %d: Event %s is multiply defined."
 msgstr "Linioj %d kaj %d: Okazo %s estas multoble difinita."
 
-#: src/liflines/valgdcom.c:477
+#: src/liflines/valgdcom.c:476
 #, c-format
 msgid "Line %d: The record defined here has no key."
 msgstr "Linio %d: La rikordo æi tie difinita ne havas þlosilon."
 
-#: src/liflines/valgdcom.c:490
+#: src/liflines/valgdcom.c:489
 #, c-format
 msgid "Line %d: Record %s has an incorrect key."
 msgstr "Linio %d: Rikordo %s havas maløustan þlosilon."
 
-#: src/liflines/valgdcom.c:497
+#: src/liflines/valgdcom.c:496
 #, c-format
 msgid "Lines %d and %d: Record %s is multiply defined."
 msgstr "Linioj %d kaj %d: Rikordo %s estas multoble difinita."
 
-#: src/liflines/valgdcom.c:539
+#: src/liflines/valgdcom.c:538
 #, fuzzy, c-format
 msgid "Line %d: This %s line is missing a value field (%s %s)."
 msgstr "Linio %d: Æi tiu %s linio mankas valoran kampon."
 
-#: src/liflines/valgdcom.c:590
+#: src/liflines/valgdcom.c:589
 #, fuzzy, c-format
 msgid "Line %d: Bad NAME syntax (%s %s)."
 msgstr "Linio %d: Maløusta NOMO sintakso."
 
-#: src/liflines/valgdcom.c:820
+#: src/liflines/valgdcom.c:819
 #, c-format
 msgid "Line %d: Person %s has multiple father links."
 msgstr "Linio %d: Homo %s havas multoblajn patrajn ligilojn."
 
-#: src/liflines/valgdcom.c:824
+#: src/liflines/valgdcom.c:823
 #, c-format
 msgid "Line %d: Person %s has multiple mother links."
 msgstr "Linio %d: Homo %s havas multoblajn patrinajn ligilojn."
 
-#: src/liflines/valgdcom.c:836
+#: src/liflines/valgdcom.c:835
 #, c-format
 msgid "Line %d: Person %s is both male and female."
 msgstr "Linio %d: Homo %s estas ambaý vira kaj ina."
 
-#: src/liflines/valgdcom.c:840
+#: src/liflines/valgdcom.c:839
 #, c-format
 msgid "Line %d: Person %s is male but must be female."
 msgstr "Linio %d: Homo %s estas vira sed devas esti ina."
 
-#: src/liflines/valgdcom.c:844
+#: src/liflines/valgdcom.c:843
 #, c-format
 msgid "Line %d: Person %s is female but must be male."
 msgstr "Linio %d: Homo %s estas ina sed devas esti vira."
 
-#: src/liflines/valgdcom.c:848
+#: src/liflines/valgdcom.c:847
 #, c-format
 msgid "Line %d: Person %s is implied to be both male and female."
 msgstr "Linio %d: Homo %s implice estas ambaý vira kaj ina."
 
-#: src/liflines/valgdcom.c:860
+#: src/liflines/valgdcom.c:859
 #, c-format
 msgid "Line %d: Family %s has multiple husband links."
 msgstr "Linio %d: Familio %s havas multoblajn edzajn ligilojn."
 
-#: src/liflines/valgdcom.c:864
+#: src/liflines/valgdcom.c:863
 #, c-format
 msgid "Line %d: Family %s has multiple wife links."
 msgstr "Linio %d: Familio %s havas multoblajn edzinajn ligilojn."
 
-#: src/liflines/valgdcom.c:920
+#: src/liflines/valgdcom.c:919
 msgid "error"
 msgstr "eraro"
 
-#: src/liflines/valgdcom.c:928
-#, c-format
-msgid "%6d Error"
-msgid_plural "%6d Errors"
-msgstr[0] "%6d Eraro"
-msgstr[1] "%6d Eraroj"
+#: src/liflines/valgdcom.c:927
+#, fuzzy
+msgid " Error"
+msgid_plural " Errors"
+msgstr[0] "Eraro"
+msgstr[1] "Eraroj"
 
-#: src/liflines/valgdcom.c:930 src/liflines/valgdcom.c:958
+#: src/liflines/valgdcom.c:929 src/liflines/valgdcom.c:957
 #, c-format
 msgid " (see log file <%s>)"
 msgstr " (vidu protokolan dosieron <%s>)"
 
-#: src/liflines/valgdcom.c:932 src/liflines/valgdcom.c:960
+#: src/liflines/valgdcom.c:931 src/liflines/valgdcom.c:959
 msgid " (no log file)"
 msgstr " (neniu protokola dosiero)"
 
-#: src/liflines/valgdcom.c:948
+#: src/liflines/valgdcom.c:947
 msgid "warning"
 msgstr "averto"
 
-#: src/liflines/valgdcom.c:956
-#, c-format
-msgid "%6d Warning"
-msgid_plural "%6d Warnings"
-msgstr[0] "%6d Averto"
-msgstr[1] "%6d Avertoj"
+#: src/liflines/valgdcom.c:955
+#, fuzzy
+msgid " Warning"
+msgid_plural " Warnings"
+msgstr[0] "Averto"
+msgstr[1] "Avertoj"
 
-#: src/liflines/valgdcom.c:1067
-#, c-format
-msgid "Processed %d lines without finding end of HEAD"
-msgstr "Traktis %d liniojn sed ne trovis finon de HEAD"
+#: src/liflines/valgdcom.c:1078
+#, fuzzy
+msgid "Processed "
+msgstr "Æu daýru?"
 
-#: src/liflines/valgdcom.c:1072
-#, c-format
-msgid "End of file at line %d"
+#: src/liflines/valgdcom.c:1083
+#, fuzzy
+msgid "End of file at line "
 msgstr "Fino de dosiero æe linio %d"
 
-#: src/liflines/valgdcom.c:1076
-#, c-format
-msgid "Error at line %d: %s"
+#: src/liflines/valgdcom.c:1087
+#, fuzzy
+msgid "Error at line "
 msgstr "Eraro æe linio %d: %s"
 
-#: src/liflines/valgdcom.c:1080
-#, c-format
-msgid "Bad level at line %d"
+#: src/liflines/valgdcom.c:1091
+#, fuzzy
+msgid "Bad level at line "
 msgstr "Maløustaj niveloj æe linio %d"
 
-#: src/liflines/valgdcom.c:1086
-#, c-format
-msgid "Duplicate HEAD line at line %d"
+#: src/liflines/valgdcom.c:1097
+#, fuzzy
+msgid "Duplicate HEAD line at line "
 msgstr "Multoble difinita HEAD linio æe linio %d"
 
-#: src/liflines/valgdcom.c:1092
-#, c-format
-msgid "Missing HEAD line at line %d"
+#: src/liflines/valgdcom.c:1103
+#, fuzzy
+msgid "Missing HEAD line at line "
 msgstr "Mankanta HEAD linio æe linio %d"
 
 #: src/stdlib/errlog.c:61
@@ -4793,66 +4826,61 @@ msgstr "    en dosiero <%s> sur linio %d\n"
 msgid "Current database"
 msgstr "Nuna datumbazo"
 
-#: src/tools/btedit.c:107
+#: src/tools/btedit.c:109
 #, c-format
 msgid "btedit requires 2 arguments (btree and key)."
 msgstr ""
 
-#: src/tools/btedit.c:109
+#: src/tools/btedit.c:111
 #, c-format
 msgid "See `btedit --help' for more information."
 msgstr ""
 
-#: src/tools/btedit.c:116
+#: src/tools/btedit.c:118
 #, fuzzy, c-format
 msgid "Failed to open btree: %s."
 msgstr "Ne povas malfermi dosiero %s."
 
-#: src/tools/btedit.c:123
+#: src/tools/btedit.c:125
 #, fuzzy, c-format
 msgid "There is no record with key: %s"
 msgstr "Ne ekzistas rikordo kun tiu þlosilo aý referenco."
 
-#: src/tools/btedit.c:125
+#: src/tools/btedit.c:127
 #, fuzzy, c-format
 msgid "Error accessing record: %s"
 msgstr "Eraro dum datumalirado"
 
-#: src/tools/btedit.c:134
-#, c-format
-msgid "Editor or system call failed."
-msgstr ""
-
-#: src/tools/btedit.c:136
+#: src/tools/btedit.c:138
 #, fuzzy, c-format
 msgid "Database was not be modified."
 msgstr "La datumbazo ne estas registrita."
 
-#: src/tools/btedit.c:142
+#: src/tools/btedit.c:144
 #, fuzzy, c-format
 msgid "Readonly database can not be modified."
 msgstr "La datumbazo ne estas registrita."
 
-#: src/tools/btedit.c:149
+#: src/tools/btedit.c:151
 #, c-format
 msgid "Error writing file 'btedit.tmp'."
 msgstr ""
 
-#: src/tools/btedit.c:155
+#: src/tools/btedit.c:157
 #, c-format
 msgid "Record %s modified."
 msgstr ""
 
-#: src/tools/btedit.c:204
+#: src/tools/btedit.c:206
 #, fuzzy
 msgid "\"\\My Documents\\LifeLines\\Databases\\MyFamily\""
 msgstr "\\Miaj Datumaroj\\LifeLines\\Datumbazoj\\MiaFamilio"
 
-#: src/tools/btedit.c:206 src/tools/dbverify.c:234
+#: src/tools/btedit.c:208 src/tools/dbverify.c:237
 msgid "/home/users/myname/lifelines/databases/myfamily"
 msgstr "/hejmo/uzantoj/mianomo/lifelines/datumbazoj/miafamilio"
 
-#: src/tools/btedit.c:209
+#: src/tools/btedit.c:211
 #, c-format
 msgid ""
 "lifelines `btedit' edits raw binary btree blocks\n"
@@ -4861,490 +4889,586 @@ msgid ""
 "your database."
 msgstr ""
 
-#: src/tools/btedit.c:214
+#: src/tools/btedit.c:216
 #, c-format
 msgid "Usage btedit [database] [rkey]"
 msgstr ""
 
-#: src/tools/btedit.c:218
+#: src/tools/btedit.c:220
 #, c-format
 msgid "\t--help\tdisplay this help and exit"
 msgstr ""
 
-#: src/tools/btedit.c:220
+#: src/tools/btedit.c:222
 #, c-format
 msgid "\t--version\toutput version information and exit"
 msgstr ""
 
-#: src/tools/btedit.c:224
+#: src/tools/btedit.c:226
 #, c-format
 msgid "\tbtedit %s I34"
 msgstr ""
 
-#: src/tools/btedit.c:226
+#: src/tools/btedit.c:228
 #, c-format
 msgid "edit raw btree block for person I34"
 msgstr ""
 
-#: src/tools/dbverify.c:177
+#: src/tools/dbverify.c:179
 msgid "Orphan names"
 msgstr "Ofraj nomoj"
 
-#: src/tools/dbverify.c:178
+#: src/tools/dbverify.c:180
 msgid "Ghost names"
 msgstr "Fantomaj nomoj"
 
-#: src/tools/dbverify.c:179 src/tools/dbverify.c:180
+#: src/tools/dbverify.c:181 src/tools/dbverify.c:182
 msgid "Duplicate names"
 msgstr "Multoble difinitaj nomoj"
 
-#: src/tools/dbverify.c:181
+#: src/tools/dbverify.c:183
 msgid "Non-indi names"
 msgstr "Ne-indi-aj nomoj"
 
-#: src/tools/dbverify.c:182
+#: src/tools/dbverify.c:184
 msgid "Duplicate individuals"
 msgstr "Multoble difinitaj apartuloj"
 
-#: src/tools/dbverify.c:183
+#: src/tools/dbverify.c:185
 msgid "Duplicate families"
 msgstr "Multoble difinitaj familioj"
 
-#: src/tools/dbverify.c:184
+#: src/tools/dbverify.c:186
 msgid "Duplicate sources"
 msgstr "Multoble difinitaj fontoj"
 
-#: src/tools/dbverify.c:185
+#: src/tools/dbverify.c:187
 msgid "Duplicate events"
 msgstr "Multoble difinitaj okazoj"
 
-#: src/tools/dbverify.c:186
+#: src/tools/dbverify.c:188
 msgid "Duplicate others"
 msgstr "Multoble difinitaj alioj"
 
-#: src/tools/dbverify.c:187
+#: src/tools/dbverify.c:189
 msgid "Missing records (from deleteset)"
 msgstr "Mankantaj rikordoj (el forstrekaro)"
 
-#: src/tools/dbverify.c:188
+#: src/tools/dbverify.c:190
 msgid "Deleted records"
 msgstr "Forstrekiøitaj rikordoj"
 
-#: src/tools/dbverify.c:189
+#: src/tools/dbverify.c:191
 msgid "Bad name"
 msgstr "Maløusta nomo"
 
-#: src/tools/dbverify.c:190
+#: src/tools/dbverify.c:192
 msgid "Bad family reference"
 msgstr "Maløusta familia referenco"
 
-#: src/tools/dbverify.c:191
+#: src/tools/dbverify.c:193
 msgid "Missing child"
 msgstr "Mankanta infano"
 
-#: src/tools/dbverify.c:192
+#: src/tools/dbverify.c:194
 msgid "Missing spouse"
 msgstr "Mankanta geedzo"
 
-#: src/tools/dbverify.c:193
+#: src/tools/dbverify.c:195
 msgid "Bad HUSB reference"
 msgstr "Maløusta HUSB referenco"
 
-#: src/tools/dbverify.c:194
+#: src/tools/dbverify.c:196
 msgid "Bad WIFE reference"
 msgstr "Maløusta WIFE referenco"
 
-#: src/tools/dbverify.c:195
+#: src/tools/dbverify.c:197
 msgid "Bad CHIL reference"
 msgstr "Maløusta CHIL referenco"
 
-#: src/tools/dbverify.c:196
+#: src/tools/dbverify.c:198
 msgid "Improper HUSB"
 msgstr "Maltaýga HUSB"
 
-#: src/tools/dbverify.c:197
+#: src/tools/dbverify.c:199
 msgid "Improper WIFE"
 msgstr "Maltaýga WIFE"
 
-#: src/tools/dbverify.c:198
+#: src/tools/dbverify.c:200
 msgid "Improper child"
 msgstr "Maltaýga infano"
 
-#: src/tools/dbverify.c:199
+#: src/tools/dbverify.c:201
 msgid "Empty family"
 msgstr "Malplena familio"
 
-#: src/tools/dbverify.c:200
+#: src/tools/dbverify.c:202
 msgid "Single person family"
 msgstr "Unuhoma familio"
 
-#: src/tools/dbverify.c:201
+#: src/tools/dbverify.c:203
 msgid "Bad pointer"
 msgstr "Maløusta indikilo"
 
-#: src/tools/dbverify.c:202
+#: src/tools/dbverify.c:204
 msgid "Missing data records"
 msgstr "Mankantaj datumaj rikordoj"
 
-#: src/tools/dbverify.c:232
+#: src/tools/dbverify.c:205
+msgid "Stale block directory entry"
+msgstr ""
+
+#: src/tools/dbverify.c:235
 msgid "\\My Documents\\LifeLines\\Databases\\MyFamily"
 msgstr "\\Miaj Datumaroj\\LifeLines\\Datumbazoj\\MiaFamilio"
 
-#: src/tools/dbverify.c:238
-#, c-format
-msgid "usage: dbverify -(flags) <btree>\n"
+#: src/tools/dbverify.c:241
+#, fuzzy, c-format
+msgid "usage: dbverify [flags] <btree>\n"
 msgstr "uzado: dbverify -(opcioj) <btree>\n"
 
-#: src/tools/dbverify.c:239
+#: src/tools/dbverify.c:242
 #, c-format
 msgid "flags:\n"
 msgstr "opcioj:\n"
 
-#: src/tools/dbverify.c:240
+#: src/tools/dbverify.c:243
 #, c-format
 msgid "\t-a = Perform all checks (does not include fixes)\n"
 msgstr "\t-a = Plenumu æiujn kontrolojn (ne anigas riparojn)\n"
 
-#: src/tools/dbverify.c:241
+#: src/tools/dbverify.c:244
 #, c-format
 msgid "\t-g = Check for ghosts (names/refns)\n"
 msgstr "\t-g = Kontrolu por fantomoj (nomoj/refnoj)\n"
 
-#: src/tools/dbverify.c:242
-#, c-format
-msgid "\t-G = Check for & fix ghosts (names/refns)\n"
+#: src/tools/dbverify.c:245
+#, fuzzy, c-format
+msgid "\t-G = Fix ghosts (names/refns)\n"
 msgstr "\t-G = Kontrolu por kaj riparu fantomojn (nomoj/refnoj)\n"
 
-#: src/tools/dbverify.c:243
+#: src/tools/dbverify.c:246
 #, c-format
 msgid "\t-i = Check individuals\n"
 msgstr "\t-i = Kontrolu apartulojn\n"
 
-#: src/tools/dbverify.c:244
+#: src/tools/dbverify.c:247
 #, c-format
 msgid "\t-f = Check families\n"
 msgstr "\t-f = Kontrolu familiojn\n"
 
-#: src/tools/dbverify.c:245
+#: src/tools/dbverify.c:248
 #, c-format
 msgid "\t-F = Alter any bad family lineage pointers (to _badptr)\n"
 msgstr "\t-F = Þanøu iun ajn maløustajn familiajn devenligilojn (al _badptr)\n"
 
-#: src/tools/dbverify.c:246
+#: src/tools/dbverify.c:249
 #, c-format
 msgid "\t-h = Display help text (this text)\n"
 msgstr ""
 
-#: src/tools/dbverify.c:247
+#: src/tools/dbverify.c:250
 #, c-format
 msgid "\t-s = Check sours\n"
 msgstr "\t-s = Kontrolu sours (fontojn)\n"
 
-#: src/tools/dbverify.c:248
+#: src/tools/dbverify.c:251
 #, c-format
 msgid "\t-e = Check events\n"
 msgstr "\t-e = Kontrolu okazojn\n"
 
-#: src/tools/dbverify.c:249
+#: src/tools/dbverify.c:252
 #, c-format
 msgid "\t-x = Check others\n"
 msgstr "\t-x = Kontrolu aliojn\n"
 
-#: src/tools/dbverify.c:250
+#: src/tools/dbverify.c:253
 #, c-format
 msgid "\t-l = Check database structure\n"
 msgstr "\t-l = Kontrolu datumbazan strukturon\n"
 
-#: src/tools/dbverify.c:251
+#: src/tools/dbverify.c:254
 #, c-format
 msgid "\t-m = Check for records missing data entries\n"
 msgstr "\t-m = Kontrolu rikordojn por mankantaj datumeroj\n"
 
-#: src/tools/dbverify.c:252
+#: src/tools/dbverify.c:255
 #, c-format
 msgid "\t-M = Fix records missing data entries\n"
 msgstr "\t-M = Riparu rikordojn kiu mankas datumerojn\n"
 
-#: src/tools/dbverify.c:253
+#: src/tools/dbverify.c:256
 #, c-format
 msgid "\t-D = Fix bad delete entries\n"
 msgstr "\t-D = Riparu maløustajn forstrekerojn\n"
 
-#: src/tools/dbverify.c:254
+#: src/tools/dbverify.c:257
+#, c-format
+msgid "\t-B = Fix block splits with stale data\n"
+msgstr ""
+
+#: src/tools/dbverify.c:258
 #, c-format
 msgid "\t-n = Noisy (echo every record processed)\n"
 msgstr "\t-n = Brua (e¶u æiun rikordon traktitan)\n"
 
-#: src/tools/dbverify.c:255
+#: src/tools/dbverify.c:259
 #, c-format
 msgid "example: dbverify -ifsex \"%s\"\n"
 msgstr "ekzemplo: dbverify -ifsex \"%s\"\n"
 
-#: src/tools/dbverify.c:388
+#: src/tools/dbverify.c:392
 #, c-format
 msgid "Non-indi name, key=%s, name=%s"
 msgstr "Ne-indi nomo, þlosilo=%s, nomo=%s"
 
-#: src/tools/dbverify.c:405
+#: src/tools/dbverify.c:410
 #, c-format
 msgid "Orphaned name: %s"
 msgstr "Ofra nomo: %s"
 
-#: src/tools/dbverify.c:419
+#: src/tools/dbverify.c:424
 #, c-format
 msgid "Ghost name: %s -> %s"
 msgstr "Fantoma nomo: %s -> %s"
 
-#: src/tools/dbverify.c:451
+#: src/tools/dbverify.c:456
 #, c-format
 msgid "Orphaned refn: %s"
 msgstr "Ofra refn: %s"
 
-#: src/tools/dbverify.c:491
+#: src/tools/dbverify.c:496
 #, c-format
 msgid "Duplicate name for %s (%s)"
 msgstr "Multoble difinita nomo por %s (%s)"
 
-#: src/tools/dbverify.c:526
+#: src/tools/dbverify.c:531
 #, c-format
 msgid "Duplicate refn for %s (%s)"
 msgstr "Multoble difinita refn por %s (%s)"
 
-#: src/tools/dbverify.c:639
+#: src/tools/dbverify.c:644
 #, c-format
 msgid "Duplicate individual for %s"
 msgstr "Multoble difinita apartulo por %s"
 
-#: src/tools/dbverify.c:681
+#: src/tools/dbverify.c:686
 #, c-format
 msgid "Bad name for individual %s: %s"
 msgstr "Maløusta nomo por apartulo %s: %s"
 
-#: src/tools/dbverify.c:699 src/tools/dbverify.c:723
+#: src/tools/dbverify.c:704 src/tools/dbverify.c:728
 #, c-format
 msgid "Bad family reference (%s) individual %s"
 msgstr "Maløusta familia referenco (%s) apartulo %s"
 
-#: src/tools/dbverify.c:705
+#: src/tools/dbverify.c:710
 #, c-format
 msgid "Missing child (%s) in family (%s)"
 msgstr "Mankanta infano (%s) en familio (%s)"
 
-#: src/tools/dbverify.c:709
+#: src/tools/dbverify.c:714
 #, c-format
 msgid "Fixed missing child (%s) in family (%s)"
 msgstr "Riparis mankantan infanon (%s) en familio (%s)"
 
-#: src/tools/dbverify.c:729
+#: src/tools/dbverify.c:734
 #, c-format
 msgid "Missing spouse (%s) in family (%s)"
 msgstr "Mankanta geedzo (%s) en familio (%s)"
 
-#: src/tools/dbverify.c:733
+#: src/tools/dbverify.c:738
 #, c-format
 msgid "Fixed missing spouse (%s) in family (%s)"
 msgstr "Riparis mankantan geedzon (%s) en familio (%s)"
 
-#: src/tools/dbverify.c:767
+#: src/tools/dbverify.c:772
 #, c-format
 msgid "Duplicate family for %s"
 msgstr "Multoble difinita familio por %s"
 
-#: src/tools/dbverify.c:818
+#: src/tools/dbverify.c:823
 #, c-format
 msgid "Bad HUSB reference (%s) in family %s"
 msgstr "Maløusta HUSB referenco (%s) en familio %s"
 
-#: src/tools/dbverify.c:824
+#: src/tools/dbverify.c:829
 #, c-format
 msgid "Fixed Bad HUSB reference (%s) in family %s"
 msgstr "Riparis maløustan HUSB referencon (%s) en familio %s"
 
-#: src/tools/dbverify.c:833
+#: src/tools/dbverify.c:838
 #, c-format
 msgid "Improper HUSB (%s) in family (%s)"
 msgstr "Maltaýga HUSB (%s) en familio (%s)"
 
-#: src/tools/dbverify.c:846
+#: src/tools/dbverify.c:851
 #, c-format
 msgid "Bad wife reference (%s) in family %s"
 msgstr "Maløusta edzina referenco (%s) en familio %s"
 
-#: src/tools/dbverify.c:852
+#: src/tools/dbverify.c:857
 #, c-format
 msgid "Fixed Bad wife reference (%s) in family %s"
 msgstr "Riparis maløustan edzinan referencon (%s) en familio %s"
 
-#: src/tools/dbverify.c:861
+#: src/tools/dbverify.c:866
 #, c-format
 msgid "Improper wife (%s) in family (%s)"
 msgstr "Maltaýga edzino (%s) en familio (%s)"
 
-#: src/tools/dbverify.c:874
+#: src/tools/dbverify.c:879
 #, c-format
 msgid "Bad child reference (%s) in family %s"
 msgstr "Maløusta infana referenco (%s) en familio %s"
 
-#: src/tools/dbverify.c:880
+#: src/tools/dbverify.c:885
 #, c-format
 msgid "Fixed bad child reference (%s) in family %s"
 msgstr "Riparis maløustan infanan referencon (%s) en familio %s"
 
-#: src/tools/dbverify.c:889
+#: src/tools/dbverify.c:894
 #, fuzzy, c-format
 msgid "Improper child: Child (%s) without FAMC reference to family (%s)"
 msgstr "Maltaýga infano (%s) en familio (%s)"
 
-#: src/tools/dbverify.c:897
+#: src/tools/dbverify.c:902
 #, c-format
 msgid "Empty family (%s)"
 msgstr "Malplena familio (%s)"
 
-#: src/tools/dbverify.c:899
+#: src/tools/dbverify.c:904
 #, c-format
 msgid "Single person family (%s)"
 msgstr "Unuhoma familio (%s)"
 
-#: src/tools/dbverify.c:925
+#: src/tools/dbverify.c:930
 #, c-format
 msgid "Duplicate source for %s"
 msgstr "Multoble difinita fonto por %s"
 
-#: src/tools/dbverify.c:941
+#: src/tools/dbverify.c:946
 #, c-format
 msgid "Duplicate event for %s"
 msgstr "Multoble difinita okazo por %s"
 
-#: src/tools/dbverify.c:957
+#: src/tools/dbverify.c:962
 #, c-format
 msgid "Duplicate record for %s"
 msgstr "Multoble difinita rikordo por %s"
 
-#: src/tools/dbverify.c:1028
+#: src/tools/dbverify.c:1033
 #, c-format
 msgid "Bad pointer (in %s): %s"
 msgstr "Maløusta indikilo (en %s): %s"
 
-#: src/tools/dbverify.c:1066
+#: src/tools/dbverify.c:1071
 #, c-format
 msgid "Missing undeleted record %c%d"
 msgstr "Mankanta malforstrekita rikordo %c%d"
 
-#: src/tools/dbverify.c:1073
+#: src/tools/dbverify.c:1078
 #, c-format
 msgid "Fixed missing undeleted record %c%d"
 msgstr "Riparis mankantan malforstrekitan rikordon %c%d"
 
-#: src/tools/dbverify.c:1077
+#: src/tools/dbverify.c:1082
 #, c-format
 msgid "Failed to fix missing undeleted record %c%d"
 msgstr "Ne povis ripari mankantan malforstrekitan rikordon %c%d"
 
-#: src/tools/dbverify.c:1089
+#: src/tools/dbverify.c:1094
 #, c-format
 msgid "Delete set contains valid record %s"
 msgstr "Forstrekaro enhavas validan rikordon %s"
 
-#: src/tools/dbverify.c:1094
+#: src/tools/dbverify.c:1099
 #, c-format
 msgid "Fixed delete set contains valid record %s"
 msgstr "Riparis forstrekaron kiu enhavas validan rikordon %s"
 
-#: src/tools/dbverify.c:1098
+#: src/tools/dbverify.c:1103
 #, c-format
 msgid "Failed to fix missing undeleted record %s"
 msgstr "Ne povis ripari forstrekaron kiu enhavas validan rikordon %s"
 
-#: src/tools/dbverify.c:1119
+#: src/tools/dbverify.c:1127
 #, fuzzy, c-format
 msgid "Master fkey misaligned"
 msgstr "Mastra dosierþlosilo misaranøiøis (%d != %d)\n"
 
-#: src/tools/dbverify.c:1146
+#: src/tools/dbverify.c:1135
+#, c-format
+msgid "Index or block keys invalid\n"
+msgstr ""
+
+#: src/tools/dbverify.c:1164
 #, c-format
 msgid "Cycle in indexes, file %s found again!\n"
 msgstr "Ciklo en indeksoj, dosieron %s trovas denove!\n"
 
-#: src/tools/dbverify.c:1153
+#: src/tools/dbverify.c:1171
 #, fuzzy, c-format
 msgid "Error loading index at key"
 msgstr "Eraro dum þarøado de indekso æe þlosilo %d\n"
 
-#: src/tools/dbverify.c:1201
+#: src/tools/dbverify.c:1218
+#, c-format
+msgid "Found stale block directory entry (%s, %d)"
+msgstr ""
+
+#: src/tools/dbverify.c:1224
+#, c-format
+msgid "Fixed stale block directory entry (%s, %d)"
+msgstr ""
+
+#: src/tools/dbverify.c:1295
 #, c-format
 msgid "First key in block below parent's limit\n"
 msgstr "Unua þlosilo en bloko subas limon de patro\n"
 
-#: src/tools/dbverify.c:1209
+#: src/tools/dbverify.c:1303
 #, c-format
 msgid "Last key in block above parent's limit\n"
 msgstr "Fina þlosilo en bloko superas limon de patro\n"
 
-#: src/tools/dbverify.c:1217
+#: src/tools/dbverify.c:1311
 #, fuzzy, c-format
 msgid "Key not below next key"
 msgstr "Þlosilo %d ne subas la sekvan þlosilon\n"
 
-#: src/tools/dbverify.c:1234 src/tools/dbverify.c:1236
+#: src/tools/dbverify.c:1328 src/tools/dbverify.c:1330
 msgid "data block"
 msgstr "datuma bloko"
 
-#: src/tools/dbverify.c:1237
+#: src/tools/dbverify.c:1331
 #, c-format
 msgid "%s fkey=%d, file=%s"
 msgstr "%s dosierþlosilo=%d, dosiero=%s"
 
-#: src/tools/dbverify.c:1250
+#: src/tools/dbverify.c:1344
 #, fuzzy, c-format
 msgid "Invalid errs array[%d] in dbverify - fix program\n"
 msgstr "Malvalida errs (eraroj) vektoro[%d] en dbverify - riparu programon\n"
 
-#: src/tools/dbverify.c:1287
+#: src/tools/dbverify.c:1381
 #, c-format
 msgid "Missing data record (%s)"
 msgstr "Mankanta datuma rikordo (%s)"
 
-#: src/tools/dbverify.c:1291
+#: src/tools/dbverify.c:1385
 #, c-format
 msgid "Fixed missing data record (%s)"
 msgstr "Riparis mankanta datuma rikordo (%s)"
 
-#: src/tools/dbverify.c:1422
+#: src/tools/dbverify.c:1520
 #, c-format
 msgid "Checking %s"
 msgstr ""
 
-#: src/tools/dbverify.c:1478
+#: src/tools/dbverify.c:1582
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d eraro"
 msgstr[1] "%d eraroj"
 
-#: src/tools/dbverify.c:1482
+#: src/tools/dbverify.c:1586
 #, c-format
 msgid "%d fixed"
 msgid_plural "%d fixed"
 msgstr[0] "%d riparita"
 msgstr[1] "%d riparitaj"
 
-#: src/tools/dbverify.c:1489
+#: src/tools/dbverify.c:1593
 msgid "No errors found"
 msgstr "Neniun eraron trovis"
 
-#: src/tools/dbverify.c:1508
+#: src/tools/dbverify.c:1613
 #, c-format
 msgid "FATAL ERROR: "
 msgstr "NERIPAREBLA ERARO"
 
-#: src/tools/dbverify.c:1513
+#: src/tools/dbverify.c:1618
 #, c-format
 msgid "In file <%s> at line %d"
 msgstr "En dosiero <%s> æe linio %d"
 
+#~ msgid "%02ds"
+#~ msgstr "%02ds"
+
+#~ msgid "%dm%02ds"
+#~ msgstr "%dm%02ds"
+
+#~ msgid "%dh%02dm"
+#~ msgstr "%dh%02dm"
+
+#~ msgid "%dd%02dh"
+#~ msgstr "%dt%02dh"
+
+#~ msgid "%dy%03dd"
+#~ msgstr "%dj%03dt"
+
+#~ msgid "There is no LifeLines database in that directory."
+#~ msgstr "Ne ekzistas LifeLines datumbazo en tiu dosierujo."
+
+#~ msgid "%dI, %dF, %dS, %dE, %dX"
+#~ msgstr "%dI, %dF, %dS, %dE, %dX"
+
 #, fuzzy
-#~ msgid "Copyright (C) 1991-2007 Thomas T. Wetmore IV et al."
-#~ msgstr "Kopirajtita(c) 1991 al 1996, de T. T. Wetmore IV"
+#~ msgid "%ldth"
+#~ msgstr "%da"
+
+#~ msgid "%d spouse"
+#~ msgid_plural "%d spouses"
+#~ msgstr[0] "%d geedzo"
+#~ msgstr[1] "%d geedzoj"
+
+#~ msgid "%d child"
+#~ msgid_plural "%d children"
+#~ msgstr[0] "%d infano"
+#~ msgstr[1] "%d infanoj"
+
+#, fuzzy
+#~ msgid "Using original keys, %d deleted record will be in the database."
+#~ msgid_plural ""
+#~ "Using original keys, %d deleted records will be in the database."
+#~ msgstr[0] ""
+#~ "Uzante originalajn þlosilojn, %d forstrekitaj rikordoj ekzistos en la "
+#~ "datumbazo."
+#~ msgstr[1] ""
+#~ "Uzante originalajn þlosilojn, %d forstrekitaj rikordoj ekzistos en la "
+#~ "datumbazo."
+
+#, fuzzy
+#~ msgid ""
+#~ "The requested window size (%ld,%ld) is too large for your terminal (%d,"
+#~ "%d).\n"
+#~ msgstr ""
+#~ "La petita fenestra grandeco (%d,%d) tro grandas por via ekrano (%d,%d).\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "The requested window size (%ld,%ld) is too small for LifeLines (%d,%d).\n"
+#~ msgstr ""
+#~ "La petita fenestra grandeco (%d,%d) tro malgrandas por LifeLines (%d,"
+#~ "%d).\n"
+
+#~ msgid "(pg %d/%d)"
+#~ msgstr "(pø %d/%d)"
+
+#~ msgid "%6d Error"
+#~ msgid_plural "%6d Errors"
+#~ msgstr[0] "%6d Eraro"
+#~ msgstr[1] "%6d Eraroj"
+
+#~ msgid "%6d Warning"
+#~ msgid_plural "%6d Warnings"
+#~ msgstr[0] "%6d Averto"
+#~ msgstr[1] "%6d Avertoj"
+
+#~ msgid "Processed %d lines without finding end of HEAD"
+#~ msgstr "Traktis %d liniojn sed ne trovis finon de HEAD"
 
 #~ msgid "illegal call to pos."
 #~ msgstr "kontraýleøa voko al pos."

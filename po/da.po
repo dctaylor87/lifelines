@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lifelines 3.0.21\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 14:55-0400\n"
+"POT-Creation-Date: 2020-12-24 13:58-0500\n"
 "PO-Revision-Date: 2002-11-09 19:20+0100\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -15,49 +15,46 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/btree/btrec.c:369
+#: src/btree/btrec.c:361
 #, c-format
 msgid "Failed (errno=%d) to open blockfile (rkey=%s): %s"
 msgstr ""
 
-#: src/btree/btrec.c:438
+#: src/btree/btrec.c:433
 #, c-format
-msgid "Btree lookup looped back to master (%ld)!"
+msgid "Btree lookup looped back to master ("
 msgstr ""
 
-#: src/gedlib/charmaps.c:779
+#: src/gedlib/charmaps.c:781
 msgid "<unnamed>"
 msgstr ""
 
 #. TRANSLATORS: seconds time interval
 #: src/gedlib/dateprint.c:783
-#, c-format
-msgid "%02ds"
+msgid "s"
 msgstr ""
 
 #. TRANSLATORS: minutes & seconds time interval
 #: src/gedlib/dateprint.c:789
-#, c-format
-msgid "%dm%02ds"
+msgid "m"
 msgstr ""
 
 #. TRANSLATORS: hours & minutes time interval
 #: src/gedlib/dateprint.c:795
-#, c-format
-msgid "%dh%02dm"
-msgstr ""
+#, fuzzy
+msgid "h"
+msgstr "ther"
 
 #. TRANSLATORS: days & hours time interval
 #: src/gedlib/dateprint.c:801
-#, c-format
-msgid "%dd%02dh"
+msgid "d"
 msgstr ""
 
 #. TRANSLATORS: years & days time interval
 #: src/gedlib/dateprint.c:805
-#, c-format
-msgid "%dy%03dd"
-msgstr ""
+#, fuzzy
+msgid "y"
+msgstr "yYjJ"
 
 #: src/gedlib/dbcontext.c:275
 msgid "Database error: -- "
@@ -156,38 +153,38 @@ msgstr ""
 msgid "Missing NAME line in INDI record; record ignored.\n"
 msgstr ""
 
-#: src/gedlib/keytonod.c:687
+#: src/gedlib/keytonod.c:685
 #, c-format
 msgid "Database error caused by reference to nonexisting key <%s>."
 msgstr ""
 
-#: src/gedlib/keytonod.c:688
+#: src/gedlib/keytonod.c:686
 msgid "It might be possible to fix this with btedit."
 msgstr ""
 
-#: src/gedlib/keytonod.c:689
+#: src/gedlib/keytonod.c:687
 msgid "Neighboring keys include:"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1046
+#: src/gedlib/keytonod.c:1043
 #, c-format
 msgid "Bad cache entry <%s> != <%s>"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1073
+#: src/gedlib/keytonod.c:1070
 #, c-format
-msgid "Cache [%s] overflowed its max size (%d)"
+msgid "Cache [%s] overflowed its max size ("
 msgstr ""
 
-#: src/gedlib/keytonod.c:1221
+#: src/gedlib/keytonod.c:1218
 msgid "Locked cache element found when deleting cache"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1224
+#: src/gedlib/keytonod.c:1221
 msgid "Locked cache element found when releasing cache element"
 msgstr ""
 
-#: src/gedlib/keytonod.c:1227
+#: src/gedlib/keytonod.c:1224
 #, c-format
 msgid " (node %s)"
 msgstr ""
@@ -206,11 +203,13 @@ msgid "enter path: "
 msgstr "indtast søgesti: "
 
 #: src/gedlib/messages.c:47
-msgid "There is no LifeLines database in that directory."
+#, fuzzy
+msgid "No LifeLines database found."
 msgstr "Der findes ingen LifeLinesdatabase i det katalog."
 
 #: src/gedlib/messages.c:48
-msgid "Do you want to create a database there?"
+#, fuzzy, c-format
+msgid "Do you want to create a database at '%s'?"
 msgstr "Vil du oprette en database dér?"
 
 #: src/gedlib/messages.c:49
@@ -1530,9 +1529,8 @@ msgid "Database records"
 msgstr ""
 
 #: src/gedlib/messages.c:417
-#, fuzzy, c-format
-msgid "%dI, %dF, %dS, %dE, %dX"
-msgstr "Databaseposter (%dP, %dF, %dS, %dE, %dX)"
+msgid "I, "
+msgstr ""
 
 #: src/gedlib/messages.c:420
 #, c-format
@@ -1602,7 +1600,7 @@ msgstr "LifeLines -- Listevindue (* viser/skjuler menu)"
 
 #: src/gedlib/messages.c:445
 #, fuzzy
-msgid "Commands:   Select by number, u Page Up, d Page Down, i Select, q Quit"
+msgid "Commands:   Select by number, u Page Up, d Page Down, q Quit"
 msgstr "Kommandoer: j Flyt ned      k Flyt op    i Vælg       q Afslut"
 
 #: src/gedlib/messages.c:446
@@ -2407,6 +2405,33 @@ msgstr "comp"
 msgid "jour_complementairs"
 msgstr "jour_complementairs"
 
+#: src/gedlib/messages.c:694
+#, fuzzy
+msgid "Copyright (C) 1991-2019 Thomas T. Wetmore IV and contributors."
+msgstr "Copyright© 1991 til 1996, af T. T. Wetmore IV"
+
+#: src/gedlib/messages.c:695
+msgid ""
+"This is free software; see the source for copying conditions.  There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+msgstr ""
+
+#: src/gedlib/messages.c:697
+msgid ""
+"Lifelines is distributed under an X/MIT Open Source license.\n"
+"\tSee file LICENSE in the program directory."
+msgstr ""
+
+#: src/gedlib/messages.c:699
+msgid ""
+"For more information, visit our web site at https://lifelines.github.io/"
+"lifelines/"
+msgstr ""
+
+#: src/gedlib/messages.c:700
+msgid "Please report bugs to https://github.com/lifelines/lifelines/issues"
+msgstr ""
+
 #: src/gedlib/node.c:610
 msgid "NO NAME"
 msgstr ""
@@ -2416,7 +2441,7 @@ msgstr ""
 msgid "Node memory leaks:"
 msgstr ""
 
-#: src/gedlib/node.c:1172 src/gedlib/record.c:361 src/interp/pvalalloc.c:301
+#: src/gedlib/node.c:1172 src/gedlib/record.c:361
 #, c-format
 msgid "%d item leaked"
 msgid_plural "%d items leaked"
@@ -2561,37 +2586,37 @@ msgstr ""
 msgid "ttpath checking dir <%s>"
 msgstr ""
 
-#: src/gedlib/xlat.c:478
+#: src/gedlib/xlat.c:477
 #, c-format
-msgid "ttpath file <%s> typed as %d"
+msgid "ttpath file <%s> typed as "
 msgstr ""
 
-#: src/gedlib/xlat.c:690
+#: src/gedlib/xlat.c:683
 #, fuzzy
 msgid "(no conversion)"
 msgstr "Findes ingen sådan person."
 
 #. TRANSLATORS: steps in a chain of codeset conversions, eg, Editor-to-Internal
-#: src/gedlib/xlat.c:713
+#: src/gedlib/xlat.c:706
 #, fuzzy, c-format
 msgid "%d step"
 msgid_plural "%d steps"
 msgstr[0] "ægtefælle"
 msgstr[1] "ægtefælle"
 
-#: src/gedlib/xreffile.c:400
+#: src/gedlib/xreffile.c:460
 #, c-format
 msgid "Corrupt DELETESET %c"
 msgstr ""
 
-#: src/gedlib/xreffile.c:425
+#: src/gedlib/xreffile.c:485
 #, c-format
-msgid "Tried to add already-deleted record (%ld) to xref (%c)!"
+msgid "Tried to add already-deleted record ("
 msgstr ""
 
 #: src/interp/alloc.c:956
 #, c-format
-msgid "Error: file \"%s\": line %d: "
+msgid "Error: file \"%s\": line "
 msgstr ""
 
 #: src/interp/alloc.c:1070
@@ -2778,234 +2803,234 @@ msgstr "Identificér den anden person at bladre til."
 msgid "name: person does not have a name"
 msgstr ""
 
-#: src/interp/builtin.c:376
+#: src/interp/builtin.c:384
 msgid "fullname: person does not have a name"
 msgstr ""
 
-#: src/interp/builtin.c:403
+#: src/interp/builtin.c:413
 msgid "surname: person does not have a name"
 msgstr ""
 
-#: src/interp/builtin.c:428
+#: src/interp/builtin.c:438
 msgid "soundex: person does not have a name"
 msgstr ""
 
-#: src/interp/builtin.c:491
-#, c-format
-msgid "Bad escape code at offset %d in bytecode string <%s>"
-msgstr ""
+#: src/interp/builtin.c:501
+#, fuzzy
+msgid "Bad escape code at offset "
+msgstr "Fejlagtigt kontrolsekvensformat."
 
-#: src/interp/builtin.c:637
+#: src/interp/builtin.c:647
 #, fuzzy
 msgid "(givens) person does not have a name"
 msgstr "Denne persons moder findes ikke i databasen."
 
-#: src/interp/builtin.c:664
+#: src/interp/builtin.c:674
 #, c-format
 msgid "set(%s, <Null>) is invalid"
 msgstr ""
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "first"
 msgstr ""
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 #, fuzzy
 msgid "second"
 msgstr "vend"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 #, fuzzy
 msgid "third"
 msgstr "ther"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 #, fuzzy
 msgid "fourth"
 msgstr "flor"
 
-#: src/interp/builtin.c:1155
+#: src/interp/builtin.c:1165
 msgid "fifth"
 msgstr ""
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "sixth"
 msgstr ""
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 #, fuzzy
 msgid "seventh"
 msgstr "vent"
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 msgid "eighth"
 msgstr ""
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 #, fuzzy
 msgid "ninth"
 msgstr "nisan"
 
-#: src/interp/builtin.c:1156
+#: src/interp/builtin.c:1166
 #, fuzzy
 msgid "tenth"
 msgstr "vent"
 
-#: src/interp/builtin.c:1157
+#: src/interp/builtin.c:1167
 #, fuzzy
 msgid "eleventh"
 msgstr "vent"
 
-#: src/interp/builtin.c:1157
+#: src/interp/builtin.c:1167
 msgid "twelfth"
 msgstr ""
 
-#: src/interp/builtin.c:1174
-#, c-format
-msgid "%ldth"
-msgstr ""
-
 #: src/interp/builtin.c:1184
+#, fuzzy, c-format
+msgid "th"
+msgstr "tsh"
+
+#: src/interp/builtin.c:1194
 #, fuzzy
 msgid "zero"
 msgstr "person"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "one"
 msgstr ""
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 msgid "two"
 msgstr ""
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 #, fuzzy
 msgid "three"
 msgstr "ther"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 #, fuzzy
 msgid "four"
 msgstr "flor"
 
-#: src/interp/builtin.c:1184
+#: src/interp/builtin.c:1194
 #, fuzzy
 msgid "five"
 msgstr "nivose"
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "six"
 msgstr ""
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 #, fuzzy
 msgid "seven"
 msgstr "svn"
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "eight"
 msgstr ""
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 #, fuzzy
 msgid "nine"
 msgstr "nisan"
 
-#: src/interp/builtin.c:1185
+#: src/interp/builtin.c:1195
 msgid "ten"
 msgstr ""
 
-#: src/interp/builtin.c:1186
+#: src/interp/builtin.c:1196
 #, fuzzy
 msgid "eleven"
 msgstr "vent"
 
-#: src/interp/builtin.c:1186
+#: src/interp/builtin.c:1196
 #, fuzzy
 msgid "twelve"
 msgstr "tevet"
 
-#: src/interp/builtin.c:1952
+#: src/interp/builtin.c:1962
 msgid "the arg to empty is not a list, table or set"
 msgstr ""
 
-#: src/interp/builtin.c:1985
+#: src/interp/builtin.c:1995
 msgid "the arg to length is not a list, table or set"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "He"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 #, fuzzy
 msgid "he"
 msgstr "ther"
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "His"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "his"
 msgstr ""
 
-#: src/interp/builtin.c:2173
+#: src/interp/builtin.c:2183
 msgid "him"
 msgstr ""
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "She"
 msgstr ""
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 #, fuzzy
 msgid "she"
 msgstr "shevat"
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 msgid "Her"
 msgstr ""
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 #, fuzzy
 msgid "her"
 msgstr "ther"
 
-#: src/interp/builtin.c:2175
+#: src/interp/builtin.c:2185
 #, fuzzy
 msgid "her_"
 msgstr "ther"
 
-#: src/interp/builtin.c:2567
+#: src/interp/builtin.c:2577
 msgid "(trimname) person does not have a name"
 msgstr ""
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Sunday"
 msgstr ""
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Monday"
 msgstr ""
 
-#: src/interp/builtin.c:2661
+#: src/interp/builtin.c:2671
 msgid "Tuesday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Wednesday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Thursday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Friday"
 msgstr ""
 
-#: src/interp/builtin.c:2662
+#: src/interp/builtin.c:2672
 msgid "Saturday"
 msgstr ""
 
@@ -3021,7 +3046,7 @@ msgstr ""
 
 #: src/interp/interp.c:243
 #, fuzzy, c-format
-msgid "Report not found: %s "
+msgid "Report not found: %s"
 msgstr "Tegnkodning for rapporter:"
 
 #: src/interp/interp.c:254
@@ -3039,7 +3064,7 @@ msgstr ""
 
 #: src/interp/interp.c:336
 #, c-format
-msgid "Proc %s must be called with %d (not %d) parameters."
+msgid "Proc %s must be called with "
 msgstr ""
 
 #: src/interp/interp.c:351
@@ -3064,43 +3089,56 @@ msgstr ""
 msgid "Error: file <%s> not found: %s\n"
 msgstr ""
 
-#: src/interp/interp.c:534
+#: src/interp/interp.c:537
 #, c-format
 msgid ""
 "\n"
 "Report duration %s (ui duration %s)\n"
 msgstr ""
 
-#: src/interp/interp.c:606
+#: src/interp/interp.c:602
+msgid "integer constant not allowed here.  Use d(constant) instead.\n"
+msgstr ""
+
+#: src/interp/interp.c:605
+msgid "floating-point constant not allowed here.  Use f(constant) instead.\n"
+msgstr ""
+
+#: src/interp/interp.c:615
 #, c-format
 msgid "identifier: %s should be a string\n"
 msgstr ""
 
-#: src/interp/interp.c:1779
+#: src/interp/interp.c:891
+#, c-format
+msgid "Unexpected node type (%d)"
+msgstr ""
+
+#: src/interp/interp.c:1775
 #, c-format
 msgid "Undefined proc: %s"
 msgstr ""
 
-#: src/interp/interp.c:1781
+#: src/interp/interp.c:1777
 #, c-format
 msgid "Ambiguous call to proc: %s"
 msgstr ""
 
-#: src/interp/interp.c:2006
+#: src/interp/interp.c:2002
 #, c-format
 msgid "Duplicate proc %s (lines %d and %d) in report: %s"
 msgstr ""
 
-#: src/interp/interp.c:2036
+#: src/interp/interp.c:2032
 #, c-format
 msgid "Duplicate func %s (lines %d and %d) in report: %s"
 msgstr ""
 
-#: src/interp/interp.c:2099
+#: src/interp/interp.c:2095
 msgid "This report requires a newer program to run\n"
 msgstr ""
 
-#: src/interp/interp.c:2155
+#: src/interp/interp.c:2151
 #, c-format
 msgid "Program forgot to unlock %d record"
 msgid_plural "Program forgot to unlock %d records"
@@ -3111,11 +3149,9 @@ msgstr[1] ""
 msgid "missing or incorrect value for sort"
 msgstr ""
 
-#: src/interp/lex.c:219
+#: src/interp/lex.c:218
 #, c-format
-msgid ""
-"String constant overflowing internal buffer tokbuf len=%d, file: %s, start "
-"line: %ld"
+msgid "String constant overflowing internal buffer tokbuf len="
 msgstr ""
 
 #: src/interp/more.c:689
@@ -3170,6 +3206,12 @@ msgstr "Kan ikke fjerne den sidste person fra en familie."
 msgid "PVALUE memory leak report:"
 msgstr ""
 
+#: src/interp/pvalalloc.c:301
+msgid " item leaked"
+msgid_plural " items leaked"
+msgstr[0] ""
+msgstr[1] ""
+
 #: src/interp/pvalmath.c:70
 #, c-format
 msgid "Nonnumeric type to operation %s: %s"
@@ -3185,159 +3227,147 @@ msgstr ""
 msgid "%s: not compatible numeric types: %s and %s"
 msgstr ""
 
-#: src/interp/pvalue.c:866
+#: src/interp/pvalue.c:869
 #, c-format
 msgid "%s: Incomparable types: %s and %s"
 msgstr ""
 
-#: src/interp/pvalue.c:963
+#: src/interp/pvalue.c:966
 msgid "NOT PVALUE: NULL!"
 msgstr ""
 
-#: src/interp/pvalue.c:967
+#: src/interp/pvalue.c:970
 #, c-format
 msgid "NOT PVALUE: invalid type=%d)!"
 msgstr ""
 
-#: src/interp/pvalue.c:985
+#: src/interp/pvalue.c:989
 msgid "True"
 msgstr ""
 
-#: src/interp/pvalue.c:985
+#: src/interp/pvalue.c:989
 msgid "False"
 msgstr ""
 
-#: src/interp/pvalue.c:1021
-#, c-format
-msgid "%d item"
-msgid_plural "%d items"
+#: src/interp/pvalue.c:1025
+msgid " item"
+msgid_plural " items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/interp/pvalue.c:1028
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
+#: src/interp/pvalue.c:1032
+msgid " entry"
+msgid_plural " entries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/interp/pvalue.c:1035
-#, fuzzy, c-format
-msgid "%d record"
-msgid_plural "%d records"
+#: src/interp/pvalue.c:1039
+#, fuzzy
+msgid " record"
+msgid_plural " records"
 msgstr[0] "e  Redigér post"
 msgstr[1] "e  Redigér post"
 
-#: src/interp/pvalue.c:1042
-#, fuzzy, c-format
-msgid "%d element"
-msgid_plural "%d elements"
+#: src/interp/pvalue.c:1046
+#, fuzzy
+msgid " element"
+msgid_plural " elements"
 msgstr[0] "vent"
 msgstr[1] "vent"
 
-#: src/interp/progerr.c:136
+#: src/interp/progerr.c:135
 msgid "Enter d for debugger, q to quit"
 msgstr ""
 
-#: src/interp/progerr.c:151
-#, fuzzy, c-format
-msgid "Display local (%d var)"
-msgid_plural "Display locals (%d vars)"
+#: src/interp/progerr.c:152
+#, fuzzy
+msgid "Display local ("
+msgid_plural "Display locals ("
 msgstr[0] "Vis lokale: "
 msgstr[1] "Vis lokale: "
 
-#: src/interp/progerr.c:157
-#, fuzzy, c-format
-msgid "Display global (%d var)"
-msgid_plural "Display globals (%d vars)"
+#: src/interp/progerr.c:158
+#, fuzzy
+msgid "Display global ("
+msgid_plural "Display globals ("
 msgstr[0] "Vis lokale: "
 msgstr[1] "Vis lokale: "
 
-#: src/interp/progerr.c:162
-#, c-format
-msgid "Call stack has %d higher level"
-msgid_plural "Call stack has %d higher levels"
+#: src/interp/progerr.c:163 src/interp/progerr.c:173
+msgid "Call stack has "
+msgid_plural "Call stack has "
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/interp/progerr.c:165
+#: src/interp/progerr.c:167
 msgid " Go up one level"
 msgstr ""
 
-#: src/interp/progerr.c:171
-#, c-format
-msgid "Call stack has %d lower level"
-msgid_plural "Call stack has %d lower levels"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/interp/progerr.c:175
+#: src/interp/progerr.c:178
 msgid " Go down one level"
 msgstr ""
 
-#: src/interp/progerr.c:180
+#: src/interp/progerr.c:183
 msgid "Quit debugger"
 msgstr ""
 
-#: src/interp/progerr.c:182
+#: src/interp/progerr.c:185
 msgid "Report debugger"
 msgstr ""
 
-#: src/interp/progerr.c:186
+#: src/interp/progerr.c:189
 msgid "Local variables"
 msgstr ""
 
-#: src/interp/progerr.c:189
+#: src/interp/progerr.c:192
 msgid "Global variables"
 msgstr ""
 
-#: src/interp/progerr.c:414
+#: src/interp/progerr.c:417
 #, fuzzy
 msgid "list is empty"
 msgstr "Posten er tom."
 
-#: src/interp/progerr.c:432
+#: src/interp/progerr.c:435
 msgid "LIST contents"
 msgstr ""
 
-#: src/interp/progerr.c:447
+#: src/interp/progerr.c:450
 msgid "table is empty"
 msgstr ""
 
-#: src/interp/progerr.c:465
+#: src/interp/progerr.c:468
 msgid "TABLE contents"
 msgstr ""
 
-#: src/interp/progerr.c:481
+#: src/interp/progerr.c:484
 #, fuzzy
 msgid "sequence is empty"
 msgstr "Posten er tom."
 
-#: src/interp/progerr.c:495
+#: src/interp/progerr.c:498
 msgid "SEQ contents"
 msgstr ""
 
-#: src/interp/progerr.c:533
+#: src/interp/progerr.c:536
 #, fuzzy
 msgid "Report cancelled"
 msgstr "Lokale for rapporter: "
 
-#: src/interp/progerr.c:541
+#: src/interp/progerr.c:544
 #, fuzzy
 msgid "Report file: "
 msgstr "Tegnkodning for rapporter:"
 
-#: src/interp/progerr.c:550
-#, c-format
-msgid "Parsing Error at line %d: "
-msgstr ""
-
-#: src/interp/progerr.c:552
-#, c-format
-msgid "Runtime Error at line %d: "
+#: src/interp/progerr.c:553
+msgid "Parsing Error at line "
 msgstr ""
 
 #: src/interp/progerr.c:555
+msgid "Runtime Error at line "
+msgstr ""
+
+#: src/interp/progerr.c:558
 #, fuzzy
 msgid "Aborting: "
 msgstr "født: "
@@ -3355,7 +3385,7 @@ msgstr ""
 msgid "Report stopping due to lack of output file"
 msgstr ""
 
-#: src/interp/rptsort.c:117 src/interp/rptsort.c:129
+#: src/interp/rptsort.c:123 src/interp/rptsort.c:135
 #, fuzzy
 msgid "Arguments to (r)sort must be of same size"
 msgstr "Argumentet til at låse (-l) skal være y (ja) eller n (nej)."
@@ -3681,23 +3711,23 @@ msgstr "d  Kopiér top t. bund"
 msgid "j  Merge bottom to top"
 msgstr "j  Flet bund til top"
 
-#: src/liflines/brwsmenu.c:148 src/liflines/listui.c:842
+#: src/liflines/brwsmenu.c:148 src/liflines/listui.c:841
 msgid "j  Move down list"
 msgstr "j  Gå nedad i liste"
 
-#: src/liflines/brwsmenu.c:149 src/liflines/listui.c:843
+#: src/liflines/brwsmenu.c:149 src/liflines/listui.c:842
 msgid "k  Move up list"
 msgstr "k  Gå opad i liste"
 
-#: src/liflines/brwsmenu.c:150 src/liflines/listui.c:844
+#: src/liflines/brwsmenu.c:150 src/liflines/listui.c:843
 msgid "e  Edit this person"
 msgstr "e Redigér denne pers."
 
-#: src/liflines/brwsmenu.c:151 src/liflines/listui.c:845
+#: src/liflines/brwsmenu.c:151 src/liflines/listui.c:844
 msgid "i  Browse this person"
 msgstr "i  Bladr til denne pers"
 
-#: src/liflines/brwsmenu.c:152 src/liflines/listui.c:846
+#: src/liflines/brwsmenu.c:152 src/liflines/listui.c:845
 msgid "m  Mark this person"
 msgstr "m  Markér denne pers."
 
@@ -3705,19 +3735,19 @@ msgstr "m  Markér denne pers."
 msgid "d  Delete from list"
 msgstr "d  Fjern fra liste"
 
-#: src/liflines/brwsmenu.c:154 src/liflines/listui.c:849
+#: src/liflines/brwsmenu.c:154 src/liflines/listui.c:848
 msgid "n  Name this list"
 msgstr "n  Giv denne liste navn"
 
-#: src/liflines/brwsmenu.c:155 src/liflines/listui.c:850
+#: src/liflines/brwsmenu.c:155 src/liflines/listui.c:849
 msgid "b  Browse new persons"
 msgstr "b  Bladr til nye pers."
 
-#: src/liflines/brwsmenu.c:156 src/liflines/listui.c:851
+#: src/liflines/brwsmenu.c:156 src/liflines/listui.c:850
 msgid "a  Add to this list"
 msgstr "a  Tilføj i denne liste"
 
-#: src/liflines/brwsmenu.c:157 src/liflines/listui.c:852
+#: src/liflines/brwsmenu.c:157 src/liflines/listui.c:851
 msgid "x  Swap mark/current"
 msgstr "x  Skift mellem mærke/aktuel"
 
@@ -3793,34 +3823,34 @@ msgid "Missing title"
 msgstr "Titel mangler"
 
 #: src/liflines/delete.c:85
-#, fuzzy, c-format
-msgid "%d spouse"
-msgid_plural "%d spouses"
+#, fuzzy
+msgid " spouse"
+msgid_plural " spouses"
 msgstr[0] "ægtefælle"
 msgstr[1] "ægtefælle"
 
 #: src/liflines/delete.c:88
-#, fuzzy, c-format
-msgid "%d child"
-msgid_plural "%d children"
+#, fuzzy
+msgid " child"
+msgid_plural " children"
 msgstr[0] "barn"
 msgstr[1] "barn"
 
-#: src/liflines/error.c:63 src/tools/dbverify.c:1506
+#: src/liflines/error.c:64 src/tools/dbverify.c:1611
 msgid "Fatal Error"
 msgstr ""
 
-#: src/liflines/error.c:66
+#: src/liflines/error.c:67
 #, fuzzy
 msgid "FATAL ERROR"
 msgstr "SYSTEMKALDSFEJL"
 
-#: src/liflines/error.c:70
+#: src/liflines/error.c:71
 #, c-format
 msgid "  in file <%s> at line %d\n"
 msgstr ""
 
-#: src/liflines/error.c:72 src/tools/dbverify.c:1517
+#: src/liflines/error.c:74 src/tools/dbverify.c:1622
 msgid "ASSERT failure"
 msgstr ""
 
@@ -3846,9 +3876,8 @@ msgid "Lossy codeset conversion (from <%s> to <%s>) likely"
 msgstr ""
 
 #: src/liflines/import.c:219
-#, c-format
-msgid "%d warning during import"
-msgid_plural "%d warnings during import"
+msgid " warning during import"
+msgid_plural " warnings during import"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -3862,29 +3891,27 @@ msgid "Enter codeset to assume (* for none)"
 msgstr ""
 
 #: src/liflines/import.c:261
-#, fuzzy, c-format
-msgid "Using original keys, %d deleted record will be in the database."
-msgid_plural "Using original keys, %d deleted records will be in the database."
-msgstr[0] ""
-"Med oprindelige nøgler vil der findes %d fjernede poster i databasen."
-msgstr[1] ""
-"Med oprindelige nøgler vil der findes %d fjernede poster i databasen."
+#, fuzzy
+msgid "Using original keys, "
+msgid_plural "Using original keys, "
+msgstr[0] "Vil du bruge oprindelige nøgler fra GEDCOM-filen?"
+msgstr[1] "Vil du bruge oprindelige nøgler fra GEDCOM-filen?"
 
 #: src/liflines/lbrowse.c:219
 msgid "Tandom browse only compatible with persons or families."
 msgstr ""
 
-#: src/liflines/lines_usage.c:21
+#: src/liflines/lines_usage.c:22
 #, c-format
 msgid "%s invokes the Lifelines report execution program without GUI."
 msgstr ""
 
-#: src/liflines/lines_usage.c:23
+#: src/liflines/lines_usage.c:24
 #, c-format
 msgid "%s invokes the Lifelines GUI."
 msgstr ""
 
-#: src/liflines/lines_usage.c:26
+#: src/liflines/lines_usage.c:27
 #, c-format
 msgid ""
 "Lifelines is a program to manipulate genealogical information\n"
@@ -3898,232 +3925,232 @@ msgid ""
 "custom report language and comes with a collection of reports."
 msgstr ""
 
-#: src/liflines/lines_usage.c:36
+#: src/liflines/lines_usage.c:37
 #, c-format
 msgid "Usage: %s [OPTIONS] [database]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:38 src/tools/btedit.c:216
+#: src/liflines/lines_usage.c:39 src/tools/btedit.c:218
 #, c-format
 msgid "Options:"
 msgstr ""
 
-#: src/liflines/lines_usage.c:40
+#: src/liflines/lines_usage.c:41
 #, c-format
 msgid "-C[FILE]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:42
+#: src/liflines/lines_usage.c:43
 #, fuzzy, c-format
 msgid "Specify configuration file location"
 msgstr "Fejl i konfigurationsfil: for lang linje."
 
-#: src/liflines/lines_usage.c:44
+#: src/liflines/lines_usage.c:45
 #, c-format
 msgid "Finnish option (if compiled to allow Finnish option)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:46
+#: src/liflines/lines_usage.c:47
 #, c-format
 msgid "-I[KEY=VALUE]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:48
+#: src/liflines/lines_usage.c:49
 #, c-format
 msgid "Specify a user property (e.g. -ILLEDITOR=gvim)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:50
+#: src/liflines/lines_usage.c:51
 #, c-format
 msgid "log dynamic memory operation (for debugging)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:52
+#: src/liflines/lines_usage.c:53
 #, c-format
 msgid "-c[TYPE][DIRECT,INDIRECT]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:54
+#: src/liflines/lines_usage.c:55
 #, c-format
 msgid ""
 "supply cache values (eg, -ci400,4000f400,4000 sets direct indi\n"
 "\t\t& fam caches to 400, and indirect indi & fam caches to 4000)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:57
+#: src/liflines/lines_usage.c:58
 #, c-format
 msgid "debug mode (disable signal trapping)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:59
+#: src/liflines/lines_usage.c:60
 #, c-format
 msgid "force open (for recovery from errors or power failure)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:61
+#: src/liflines/lines_usage.c:62
 #, c-format
 msgid "open database with immutable access (for use on read-only media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:63
+#: src/liflines/lines_usage.c:64
 #, c-format
 msgid "always show keys (even if REFN available)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:65
+#: src/liflines/lines_usage.c:66
 #, c-format
 msgid "unlock a database (for correct access on read-write media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:67
+#: src/liflines/lines_usage.c:68
 #, c-format
 msgid "lock a database (for use on read-only media)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:69
+#: src/liflines/lines_usage.c:70
 #, c-format
 msgid "do not use traditional family rules"
 msgstr ""
 
-#: src/liflines/lines_usage.c:71
+#: src/liflines/lines_usage.c:72
 #, c-format
 msgid "Specify program output filename (eg, -o/tmp/mytests)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:73
+#: src/liflines/lines_usage.c:74
 #, c-format
 msgid ""
 "open database with read-only access (prohibiting other\n"
 "\t\twrite access)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:76
+#: src/liflines/lines_usage.c:77
 #, c-format
 msgid "trace function calls in report programs (for debugging)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:78
+#: src/liflines/lines_usage.c:79
 #, c-format
 msgid "-u[HEIGHT,WIDTH]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:80
+#: src/liflines/lines_usage.c:81
 #, c-format
 msgid ""
 "specify window size (eg, -u120,34 specifies 120 columns\n"
 "\t\tby 34 rows)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:83
+#: src/liflines/lines_usage.c:84
 #, c-format
 msgid "display this help and exit"
 msgstr ""
 
-#: src/liflines/lines_usage.c:85
+#: src/liflines/lines_usage.c:86
 #, c-format
 msgid "open database with writeable access (this is the default)"
 msgstr ""
 
-#: src/liflines/lines_usage.c:87
+#: src/liflines/lines_usage.c:88
 #, c-format
 msgid "-x[REPORT]"
 msgstr ""
 
-#: src/liflines/lines_usage.c:89
+#: src/liflines/lines_usage.c:90
 #, c-format
 msgid "execute a single lifelines report program directly"
 msgstr ""
 
-#: src/liflines/lines_usage.c:91
+#: src/liflines/lines_usage.c:92
 #, c-format
 msgid ""
 "Use normal ASCII characters for drawing lines, instead of\n"
 "\t\tspecial VT100 terminal characters"
 msgstr ""
 
-#: src/liflines/lines_usage.c:94
+#: src/liflines/lines_usage.c:95
 #, c-format
 msgid "output version information and exit"
 msgstr ""
 
-#: src/liflines/lines_usage.c:96 src/tools/btedit.c:222
+#: src/liflines/lines_usage.c:97 src/tools/btedit.c:224
 #, c-format
 msgid "Examples:"
 msgstr ""
 
-#: src/liflines/lines_usage.c:99
+#: src/liflines/lines_usage.c:100
 #, c-format
 msgid "%s myfamily -x eol"
 msgstr ""
 
-#: src/liflines/lines_usage.c:101
+#: src/liflines/lines_usage.c:102
 #, c-format
 msgid "Open the database 'myfamily' with Lifelines"
 msgstr ""
 
-#: src/liflines/lines_usage.c:103
+#: src/liflines/lines_usage.c:104
 #, c-format
 msgid "and run the eol.ll report"
 msgstr ""
 
-#: src/liflines/lines_usage.c:105
+#: src/liflines/lines_usage.c:106
 #, c-format
 msgid "%s -f myfamily -x eol"
 msgstr ""
 
-#: src/liflines/lines_usage.c:107
+#: src/liflines/lines_usage.c:108
 #, c-format
 msgid "Unlock database 'myfamily', after a power failure left the"
 msgstr ""
 
-#: src/liflines/lines_usage.c:109
+#: src/liflines/lines_usage.c:110
 #, c-format
 msgid "database locked and run 'eol.ll' report"
 msgstr ""
 
-#: src/liflines/lines_usage.c:112
+#: src/liflines/lines_usage.c:113
 #, fuzzy, c-format
 msgid "%s myfamily"
 msgstr "e  Redigér familien"
 
-#: src/liflines/lines_usage.c:114
+#: src/liflines/lines_usage.c:115
 #, c-format
 msgid "Open database 'myfamily' with Lifelines"
 msgstr ""
 
-#: src/liflines/lines_usage.c:116
+#: src/liflines/lines_usage.c:117
 #, fuzzy, c-format
 msgid "%s -f myfamily"
 msgstr "e  Redigér familien"
 
-#: src/liflines/lines_usage.c:118
+#: src/liflines/lines_usage.c:119
 #, c-format
 msgid ""
 "Unlock database 'myfamily', after a power failure left\n"
 "\t\tthe database locked"
 msgstr ""
 
-#: src/liflines/lines_usage.c:122
+#: src/liflines/lines_usage.c:123
 #, c-format
 msgid "REPORTING BUGS"
 msgstr ""
 
-#: src/liflines/lines_usage.c:124 src/tools/btedit.c:228
-#, c-format
-msgid "Report bugs to https://github.com/lifelines/lifelines/issues"
-msgstr ""
-
-#: src/liflines/lines_usage.c:126
+#: src/liflines/lines_usage.c:127
 #, c-format
 msgid "COPYRIGHT"
 msgstr ""
 
 #: src/liflines/lines_usage.c:131
 #, c-format
+msgid "LICENSE"
+msgstr ""
+
+#: src/liflines/lines_usage.c:135
+#, c-format
 msgid "SEE ALSO"
 msgstr ""
 
-#: src/liflines/listui.c:155 src/liflines/listui.c:252
+#: src/liflines/listui.c:155 src/liflines/listui.c:253
 msgid "Commands:   j Move down     k Move up    i Select     q Quit"
 msgstr "Kommandoer: j Flyt ned      k Flyt op    i Vælg       q Afslut"
 
@@ -4131,34 +4158,34 @@ msgstr "Kommandoer: j Flyt ned      k Flyt op    i Vælg       q Afslut"
 msgid "Commands:   j Move down     k Move up    q Quit"
 msgstr "Kommandoer: j Flyt ned      k Flyt op    q Afslut"
 
-#: src/liflines/listui.c:249
+#: src/liflines/listui.c:250
 #, fuzzy
 msgid "Commands:  j Move down   k Move up  d Delete   i Select   q Quit"
 msgstr "Kommandoer: j Flyt ned      k Flyt op    i Vælg       q Afslut"
 
-#: src/liflines/listui.c:431
+#: src/liflines/listui.c:432
 msgid "--- CURRENT SELECTION ---"
 msgstr ""
 
-#: src/liflines/listui.c:434 src/liflines/listui.c:597
+#: src/liflines/listui.c:435 src/liflines/listui.c:597
 msgid "--- LIST ---"
 msgstr ""
 
-#: src/liflines/listui.c:628
+#: src/liflines/listui.c:626
 msgid "-- CURRENT SELECTION --"
 msgstr ""
 
-#: src/liflines/listui.c:840
+#: src/liflines/listui.c:839
 #, fuzzy
 msgid "Choose an operation:"
 msgstr "Vælg en kommando:"
 
-#: src/liflines/listui.c:847
+#: src/liflines/listui.c:846
 #, fuzzy
 msgid "r  Remove from list"
 msgstr "d  Fjern fra liste"
 
-#: src/liflines/listui.c:848
+#: src/liflines/listui.c:847
 #, fuzzy
 msgid "t  Enter tandem mode"
 msgstr "tt Skift mellem t. tandemtilstand"
@@ -4198,7 +4225,7 @@ msgstr[1] "ther"
 
 #: src/liflines/loadsave.c:160
 #, fuzzy
-msgid "Checking GEDCOM file for errors.\n"
+msgid "Checking GEDCOM file for errors."
 msgstr "Leder i GEDCOM-filen %s efter fejl.\n"
 
 #: src/liflines/loadsave.c:163
@@ -4237,11 +4264,11 @@ msgstr "Databasen er skrivebeskyttet; du kan ikke tilføje poster."
 msgid "Saving database `%s' in file `%s'."
 msgstr "Databasen \"%s\" er gemt i \"%s\"."
 
-#: src/liflines/main.c:386
+#: src/liflines/main.c:398
 msgid "Warning: database codeset unspecified"
 msgstr ""
 
-#: src/liflines/main.c:388
+#: src/liflines/main.c:400
 msgid "Warning: not all conversions available"
 msgstr ""
 
@@ -4282,7 +4309,7 @@ msgstr ""
 
 #: src/liflines/merge.c:800 src/liflines/merge.c:919
 #, c-format
-msgid "Mismatched lineage spouse links between %s and %s: %ld and %ld"
+msgid "Mismatched lineage spouse links between %s and %s: "
 msgstr ""
 
 #: src/liflines/merge.c:816 src/liflines/merge.c:935
@@ -4292,7 +4319,7 @@ msgstr ""
 
 #: src/liflines/merge.c:844 src/liflines/merge.c:963
 #, c-format
-msgid "Mismatched lineage child links between %s and %s: %ld and %ld"
+msgid "Mismatched lineage child links between %s and %s: "
 msgstr ""
 
 #: src/liflines/merge.c:882 src/liflines/merge.c:891
@@ -4300,23 +4327,23 @@ msgstr ""
 msgid "Bad HUSB tag: %s"
 msgstr ""
 
-#: src/liflines/miscutls.c:51
+#: src/liflines/miscutls.c:55
 #, fuzzy
 msgid "Whose key value do you want?"
 msgstr "Hvad vil du tilføje?"
 
-#: src/liflines/miscutls.c:67
+#: src/liflines/miscutls.c:71
 #, fuzzy
 msgid "Please enter person's internal key value."
 msgstr "k  Find nøgleværdi for en person"
 
-#: src/liflines/miscutls.c:68
+#: src/liflines/miscutls.c:72
 #, fuzzy
 msgid "enter key:"
 msgstr "indtast navn: "
 
-#: src/liflines/miscutls.c:78 src/liflines/miscutls.c:82
-#: src/liflines/miscutls.c:87
+#: src/liflines/miscutls.c:82 src/liflines/miscutls.c:86
+#: src/liflines/miscutls.c:91
 #, c-format
 msgid "No one in database has key value %s."
 msgstr ""
@@ -4329,240 +4356,238 @@ msgstr "Angiv mønster til at matche alenestående efter- eller fornavn."
 msgid "Enter pattern to match against full name."
 msgstr "Angiv mønster til at matche fuldstændigt navn."
 
-#: src/liflines/scan.c:130 src/liflines/scan.c:180 src/liflines/scan.c:203
+#: src/liflines/scan.c:130 src/liflines/scan.c:179 src/liflines/scan.c:201
 msgid "pattern: "
 msgstr "mønster: "
 
-#: src/liflines/scan.c:153
+#: src/liflines/scan.c:152
 #, fuzzy
 msgid "Enter pattern to match against author."
 msgstr "Angiv mønster til at matche refn."
 
-#: src/liflines/scan.c:167
+#: src/liflines/scan.c:166
 #, fuzzy
 msgid "Enter pattern to match against title."
 msgstr "Angiv mønster til at matche refn."
 
-#: src/liflines/screen.c:317
+#: src/liflines/screen.c:318
 #, c-format
 msgid "initscr failed"
 msgstr ""
 
-#: src/liflines/screen.c:334
-#, fuzzy, c-format
-msgid ""
-"The requested window size (%ld,%ld) is too large for your terminal (%d,%d).\n"
+#: src/liflines/screen.c:335 src/liflines/screen.c:343
+#, c-format
+msgid "The requested window size ("
 msgstr ""
-"Den forespurgte vinduestørrelse (%d,%d) er for stor til din terminal (%d,"
-"%d).\n"
 
-#: src/liflines/screen.c:342
-#, fuzzy, c-format
-msgid ""
-"The requested window size (%ld,%ld) is too small for LifeLines (%d,%d).\n"
-msgstr ""
-"Den forespurgte vinduestørrelse (%d,%d) er for lille for LifeLines (%d,"
-"%d). \n"
-
-#: src/liflines/screen.c:706
+#: src/liflines/screen.c:707
 #, fuzzy
 msgid "Search results"
 msgstr "Søgeresultat:"
 
-#: src/liflines/screen.c:813
-#, c-format
-msgid "(pg %d/%d)"
+#: src/liflines/screen.c:814
+msgid "(pg "
 msgstr ""
 
-#: src/liflines/screen.c:1433
+#: src/liflines/screen.c:1434
 #, fuzzy
 msgid "No conversion"
 msgstr "Findes ingen sådan person."
 
-#: src/liflines/screen.c:1519
+#: src/liflines/screen.c:1520
 #, fuzzy
 msgid "Internal codeset"
 msgstr "Intern tegnsæt: "
 
-#: src/liflines/screen.c:1522
+#: src/liflines/screen.c:1523
 #, fuzzy
 msgid "Internal UTF-8: Yes"
 msgstr "Intern tegnsæt: "
 
-#: src/liflines/screen.c:1524
+#: src/liflines/screen.c:1525
 #, fuzzy
 msgid "Internal UTF-8: No"
 msgstr "m  Mapning fra intern til editor "
 
-#: src/liflines/screen.c:1528
+#: src/liflines/screen.c:1529
 msgid "Locales are enabled."
 msgstr ""
 
-#: src/liflines/screen.c:1530
+#: src/liflines/screen.c:1531
 msgid "Locales are disabled."
 msgstr ""
 
-#: src/liflines/screen.c:1533
+#: src/liflines/screen.c:1534
 msgid "NLS (National Language Support) is compiled in."
 msgstr ""
 
-#: src/liflines/screen.c:1539
+#: src/liflines/screen.c:1540
 msgid "NLS (National Language Support) is not compiled in."
 msgstr ""
 
-#: src/liflines/screen.c:1552
+#: src/liflines/screen.c:1553
 msgid "iconv (codeset conversion) is compiled in."
 msgstr ""
 
-#: src/liflines/screen.c:1554
+#: src/liflines/screen.c:1555
 msgid "iconv (codeset conversion) is not compiled in."
 msgstr ""
 
-#: src/liflines/screen.c:1556
+#: src/liflines/screen.c:1557
 #, c-format
 msgid "Startup collate locale: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1559
+#: src/liflines/screen.c:1560
 #, c-format
 msgid "Startup messages locale: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1562
+#: src/liflines/screen.c:1563
 #, fuzzy, c-format
 msgid "Current collate locale: %s"
 msgstr "Aktuel database - %s"
 
-#: src/liflines/screen.c:1565
+#: src/liflines/screen.c:1566
 #, c-format
 msgid "Current messages locale: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1568
+#: src/liflines/screen.c:1569
 #, c-format
 msgid "Collation routine: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1572
+#: src/liflines/screen.c:1573
 #, fuzzy, c-format
 msgid "GUI codeset: %s"
 msgstr "Intern tegnsæt: "
 
-#: src/liflines/screen.c:1575
+#: src/liflines/screen.c:1576
 #, fuzzy, c-format
 msgid "GUI output codeset: %s"
 msgstr "Intern tegnsæt: "
 
-#: src/liflines/screen.c:1577
+#: src/liflines/screen.c:1578
 #, fuzzy, c-format
 msgid "GUI input codeset: %s"
 msgstr "Intern tegnsæt: "
 
-#: src/liflines/screen.c:1582
+#: src/liflines/screen.c:1583
 #, fuzzy, c-format
 msgid "editor codeset: %s"
 msgstr "Tegnkodning for rapporter:"
 
-#: src/liflines/screen.c:1585
+#: src/liflines/screen.c:1586
 #, fuzzy, c-format
 msgid "editor output codeset: %s"
 msgstr "Tegnkodning for rapporter:"
 
-#: src/liflines/screen.c:1587
+#: src/liflines/screen.c:1588
 #, fuzzy, c-format
 msgid "editor input codeset: %s"
 msgstr "Tegnkodning for rapporter:"
 
-#: src/liflines/screen.c:1592
+#: src/liflines/screen.c:1593
 #, fuzzy, c-format
 msgid "report codeset: %s"
 msgstr "Tegnkodning for rapporter:"
 
-#: src/liflines/screen.c:1595
+#: src/liflines/screen.c:1596
 #, fuzzy, c-format
 msgid "report output codeset: %s"
 msgstr "Tegnkodning for rapporter:"
 
-#: src/liflines/screen.c:1597
+#: src/liflines/screen.c:1598
 #, fuzzy, c-format
 msgid "report input codeset: %s"
 msgstr "Tegnkodning for rapporter:"
 
-#: src/liflines/screen.c:1602
+#: src/liflines/screen.c:1603
 #, fuzzy, c-format
 msgid "GEDCOM codeset: %s"
 msgstr "!g GEDCOM-tilstand"
 
-#: src/liflines/screen.c:1605
+#: src/liflines/screen.c:1606
 #, fuzzy, c-format
 msgid "gedcom output codeset: %s"
 msgstr "Tegnkodning for rapporter:"
 
-#: src/liflines/screen.c:1607
+#: src/liflines/screen.c:1608
 #, fuzzy, c-format
 msgid "gedcom input codeset: %s"
 msgstr "Tegnkodning for rapporter:"
 
-#: src/liflines/screen.c:1615
+#: src/liflines/screen.c:1616
 msgid "UTF-8 charprops loaded"
 msgstr ""
 
-#: src/liflines/screen.c:1617
+#: src/liflines/screen.c:1618
 msgid "UTF-8 charprops not loaded"
 msgstr ""
 
-#: src/liflines/screen.c:1621
+#: src/liflines/screen.c:1622
 msgid "Codeset information"
 msgstr ""
 
-#: src/liflines/screen.c:1638
+#: src/liflines/screen.c:1639
 #, c-format
 msgid "gettext dll: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1642
+#: src/liflines/screen.c:1643
 #, c-format
 msgid "gettext dll version: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1647
+#: src/liflines/screen.c:1648
 msgid "gettext dll had no version"
 msgstr ""
 
-#: src/liflines/screen.c:1652
+#: src/liflines/screen.c:1653
 msgid "no gettext dll found"
 msgstr ""
 
-#: src/liflines/screen.c:1661
+#: src/liflines/screen.c:1662
 #, c-format
 msgid "iconv dll: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1665
+#: src/liflines/screen.c:1666
 #, c-format
 msgid "iconv dll version: %s"
 msgstr ""
 
-#: src/liflines/screen.c:1670
+#: src/liflines/screen.c:1671
 msgid "iconv dll had no version"
 msgstr ""
 
-#: src/liflines/screen.c:1675
+#: src/liflines/screen.c:1676
 msgid "no iconv dll found"
 msgstr ""
 
-#: src/liflines/screen.c:1933
+#: src/liflines/screen.c:1934
 msgid "Impermissible to change codeset in a populated database"
 msgstr ""
 
-#: src/liflines/screen.c:2034
+#: src/liflines/screen.c:2035
 msgid "LifeLines -- Main Menu"
 msgstr ""
 
+#: src/liflines/screen.c:2267 src/tools/btedit.c:136 src/ui/ui_cli.c:142
+#, c-format
+msgid "Editor or system call failed."
+msgstr ""
+
+#: src/liflines/screen.c:2929
+#, c-format
+msgid "System command failed."
+msgstr ""
+
 #: src/liflines/searchui.c:133
-#, fuzzy, c-format
-msgid "v  Review visit history (%d record)"
-msgid_plural "v  Review visit history (%d records)"
+#, fuzzy
+msgid "v  Review visit history ("
+msgid_plural "v  Review visit history ("
 msgstr[0] "Fjern historik (%d poster)?"
 msgstr[1] "Fjern historik (%d poster)?"
 
@@ -4572,9 +4597,9 @@ msgid "(visit history is empty)"
 msgstr "Posten er tom."
 
 #: src/liflines/searchui.c:143
-#, fuzzy, c-format
-msgid "c  Review change history (%d record)"
-msgid_plural "c  Review change history (%d records)"
+#, fuzzy
+msgid "c  Review change history ("
+msgid_plural "c  Review change history ("
 msgstr[0] "Fjern historik (%d poster)?"
 msgstr[1] "Fjern historik (%d poster)?"
 
@@ -4621,16 +4646,16 @@ msgstr ""
 msgid "t  Scan by title"
 msgstr ""
 
-#: src/liflines/selectdb.c:95
+#: src/liflines/selectdb.c:96
 #, fuzzy
 msgid "Choose database to open"
 msgstr "Databasen er skrivebeskyttet; du kan ikke tilføje poster."
 
-#: src/liflines/selectdb.c:103
+#: src/liflines/selectdb.c:104
 msgid "No databases found in database path"
 msgstr ""
 
-#: src/liflines/selectdb.c:154
+#: src/liflines/selectdb.c:158
 msgid "Cannot create new database with -r, -i, -l, or -f flags."
 msgstr ""
 
@@ -4679,7 +4704,7 @@ msgstr "begr: "
 msgid "crem"
 msgstr ""
 
-#: src/liflines/show.c:1015
+#: src/liflines/show.c:1023
 #, c-format
 msgid "Cached: I:%s; F:%s"
 msgstr ""
@@ -4699,166 +4724,160 @@ msgstr "Linje %d: Denne linje har intet niveaunummer."
 msgid "Line %d: Tag %s found in unexpected record: %s %s."
 msgstr ""
 
-#: src/liflines/valgdcom.c:190
+#: src/liflines/valgdcom.c:193
 #, fuzzy, c-format
 msgid "Line %d: Family has no members (%s %s)."
 msgstr "Linje %d: Denne linje har intet niveaunummer."
 
-#: src/liflines/valgdcom.c:390
+#: src/liflines/valgdcom.c:389
 #, fuzzy, c-format
 msgid "Line %d: The source defined here has no key."
 msgstr "Linje %d: Denne linje har intet niveaunummer."
 
-#: src/liflines/valgdcom.c:404
+#: src/liflines/valgdcom.c:403
 #, fuzzy, c-format
 msgid "Line %d: Source %s has an incorrect key."
 msgstr "Linje %d: Denne linje er ufuldstændig."
 
-#: src/liflines/valgdcom.c:411
+#: src/liflines/valgdcom.c:410
 #, c-format
 msgid "Lines %d and %d: Source %s is multiply defined."
 msgstr ""
 
-#: src/liflines/valgdcom.c:434
+#: src/liflines/valgdcom.c:433
 #, fuzzy, c-format
 msgid "Line %d: The event defined here has no key."
 msgstr "Linje %d: Denne linje har intet niveaunummer."
 
-#: src/liflines/valgdcom.c:447
+#: src/liflines/valgdcom.c:446
 #, fuzzy, c-format
 msgid "Line %d: Event %s has an incorrect key."
 msgstr "Linje %d: Denne linje er ufuldstændig."
 
-#: src/liflines/valgdcom.c:454
+#: src/liflines/valgdcom.c:453
 #, c-format
 msgid "Lines %d and %d: Event %s is multiply defined."
 msgstr ""
 
-#: src/liflines/valgdcom.c:477
+#: src/liflines/valgdcom.c:476
 #, fuzzy, c-format
 msgid "Line %d: The record defined here has no key."
 msgstr "Linje %d: Denne linje har intet niveaunummer."
 
-#: src/liflines/valgdcom.c:490
+#: src/liflines/valgdcom.c:489
 #, fuzzy, c-format
 msgid "Line %d: Record %s has an incorrect key."
 msgstr "Linje %d: Denne linje er ufuldstændig."
 
-#: src/liflines/valgdcom.c:497
+#: src/liflines/valgdcom.c:496
 #, c-format
 msgid "Lines %d and %d: Record %s is multiply defined."
 msgstr ""
 
-#: src/liflines/valgdcom.c:539
+#: src/liflines/valgdcom.c:538
 #, fuzzy, c-format
 msgid "Line %d: This %s line is missing a value field (%s %s)."
 msgstr "Linje %d: Denne linje er ufuldstændig."
 
-#: src/liflines/valgdcom.c:590
+#: src/liflines/valgdcom.c:589
 #, c-format
 msgid "Line %d: Bad NAME syntax (%s %s)."
 msgstr ""
 
-#: src/liflines/valgdcom.c:820
+#: src/liflines/valgdcom.c:819
 #, fuzzy, c-format
 msgid "Line %d: Person %s has multiple father links."
 msgstr "Linje %d: Denne linje har en ugyldig lænke."
 
-#: src/liflines/valgdcom.c:824
+#: src/liflines/valgdcom.c:823
 #, c-format
 msgid "Line %d: Person %s has multiple mother links."
 msgstr ""
 
-#: src/liflines/valgdcom.c:836
+#: src/liflines/valgdcom.c:835
 #, c-format
 msgid "Line %d: Person %s is both male and female."
 msgstr ""
 
-#: src/liflines/valgdcom.c:840
+#: src/liflines/valgdcom.c:839
 #, c-format
 msgid "Line %d: Person %s is male but must be female."
 msgstr ""
 
-#: src/liflines/valgdcom.c:844
+#: src/liflines/valgdcom.c:843
 #, c-format
 msgid "Line %d: Person %s is female but must be male."
 msgstr ""
 
-#: src/liflines/valgdcom.c:848
+#: src/liflines/valgdcom.c:847
 #, c-format
 msgid "Line %d: Person %s is implied to be both male and female."
 msgstr ""
 
-#: src/liflines/valgdcom.c:860
+#: src/liflines/valgdcom.c:859
 #, fuzzy, c-format
 msgid "Line %d: Family %s has multiple husband links."
 msgstr "Linje %d: Denne linje har en ugyldig lænke."
 
-#: src/liflines/valgdcom.c:864
+#: src/liflines/valgdcom.c:863
 #, c-format
 msgid "Line %d: Family %s has multiple wife links."
 msgstr ""
 
-#: src/liflines/valgdcom.c:920
+#: src/liflines/valgdcom.c:919
 msgid "error"
 msgstr ""
 
-#: src/liflines/valgdcom.c:928
-#, c-format
-msgid "%6d Error"
-msgid_plural "%6d Errors"
+#: src/liflines/valgdcom.c:927
+msgid " Error"
+msgid_plural " Errors"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/liflines/valgdcom.c:930 src/liflines/valgdcom.c:958
+#: src/liflines/valgdcom.c:929 src/liflines/valgdcom.c:957
 #, c-format
 msgid " (see log file <%s>)"
 msgstr ""
 
-#: src/liflines/valgdcom.c:932 src/liflines/valgdcom.c:960
+#: src/liflines/valgdcom.c:931 src/liflines/valgdcom.c:959
 msgid " (no log file)"
 msgstr ""
 
-#: src/liflines/valgdcom.c:948
+#: src/liflines/valgdcom.c:947
 msgid "warning"
 msgstr ""
 
-#: src/liflines/valgdcom.c:956
-#, c-format
-msgid "%6d Warning"
-msgid_plural "%6d Warnings"
+#: src/liflines/valgdcom.c:955
+msgid " Warning"
+msgid_plural " Warnings"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/liflines/valgdcom.c:1067
-#, c-format
-msgid "Processed %d lines without finding end of HEAD"
+#: src/liflines/valgdcom.c:1078
+msgid "Processed "
 msgstr ""
 
-#: src/liflines/valgdcom.c:1072
-#, c-format
-msgid "End of file at line %d"
+#: src/liflines/valgdcom.c:1083
+msgid "End of file at line "
 msgstr ""
 
-#: src/liflines/valgdcom.c:1076
-#, c-format
-msgid "Error at line %d: %s"
+#: src/liflines/valgdcom.c:1087
+#, fuzzy
+msgid "Error at line "
+msgstr "Fejl ved dataadgang"
+
+#: src/liflines/valgdcom.c:1091
+msgid "Bad level at line "
 msgstr ""
 
-#: src/liflines/valgdcom.c:1080
-#, c-format
-msgid "Bad level at line %d"
+#: src/liflines/valgdcom.c:1097
+msgid "Duplicate HEAD line at line "
 msgstr ""
 
-#: src/liflines/valgdcom.c:1086
-#, c-format
-msgid "Duplicate HEAD line at line %d"
-msgstr ""
-
-#: src/liflines/valgdcom.c:1092
-#, c-format
-msgid "Missing HEAD line at line %d"
-msgstr ""
+#: src/liflines/valgdcom.c:1103
+#, fuzzy
+msgid "Missing HEAD line at line "
+msgstr "Titel mangler"
 
 #: src/stdlib/errlog.c:61
 #, c-format
@@ -4870,65 +4889,60 @@ msgstr ""
 msgid "Current database"
 msgstr "Aktuel database - %s"
 
-#: src/tools/btedit.c:107
+#: src/tools/btedit.c:109
 #, c-format
 msgid "btedit requires 2 arguments (btree and key)."
 msgstr ""
 
-#: src/tools/btedit.c:109
+#: src/tools/btedit.c:111
 #, c-format
 msgid "See `btedit --help' for more information."
 msgstr ""
 
-#: src/tools/btedit.c:116
+#: src/tools/btedit.c:118
 #, fuzzy, c-format
 msgid "Failed to open btree: %s."
 msgstr "Kunne ikke åbne filen %s."
 
-#: src/tools/btedit.c:123
+#: src/tools/btedit.c:125
 #, fuzzy, c-format
 msgid "There is no record with key: %s"
 msgstr "Der findes ingen post med den nøgle eller reference."
 
-#: src/tools/btedit.c:125
+#: src/tools/btedit.c:127
 #, fuzzy, c-format
 msgid "Error accessing record: %s"
 msgstr "Fejl ved dataadgang"
 
-#: src/tools/btedit.c:134
-#, c-format
-msgid "Editor or system call failed."
-msgstr ""
-
-#: src/tools/btedit.c:136
+#: src/tools/btedit.c:138
 #, fuzzy, c-format
 msgid "Database was not be modified."
 msgstr "Databasen er skrivebeskyttet; du kan ikke tilføje poster."
 
-#: src/tools/btedit.c:142
+#: src/tools/btedit.c:144
 #, fuzzy, c-format
 msgid "Readonly database can not be modified."
 msgstr "Databasen er skrivebeskyttet; du kan ikke tilføje poster."
 
-#: src/tools/btedit.c:149
+#: src/tools/btedit.c:151
 #, c-format
 msgid "Error writing file 'btedit.tmp'."
 msgstr ""
 
-#: src/tools/btedit.c:155
+#: src/tools/btedit.c:157
 #, c-format
 msgid "Record %s modified."
 msgstr ""
 
-#: src/tools/btedit.c:204
+#: src/tools/btedit.c:206
 msgid "\"\\My Documents\\LifeLines\\Databases\\MyFamily\""
 msgstr ""
 
-#: src/tools/btedit.c:206 src/tools/dbverify.c:234
+#: src/tools/btedit.c:208 src/tools/dbverify.c:237
 msgid "/home/users/myname/lifelines/databases/myfamily"
 msgstr ""
 
-#: src/tools/btedit.c:209
+#: src/tools/btedit.c:211
 #, c-format
 msgid ""
 "lifelines `btedit' edits raw binary btree blocks\n"
@@ -4937,502 +4951,562 @@ msgid ""
 "your database."
 msgstr ""
 
-#: src/tools/btedit.c:214
+#: src/tools/btedit.c:216
 #, c-format
 msgid "Usage btedit [database] [rkey]"
 msgstr ""
 
-#: src/tools/btedit.c:218
+#: src/tools/btedit.c:220
 #, c-format
 msgid "\t--help\tdisplay this help and exit"
 msgstr ""
 
-#: src/tools/btedit.c:220
+#: src/tools/btedit.c:222
 #, c-format
 msgid "\t--version\toutput version information and exit"
 msgstr ""
 
-#: src/tools/btedit.c:224
+#: src/tools/btedit.c:226
 #, c-format
 msgid "\tbtedit %s I34"
 msgstr ""
 
-#: src/tools/btedit.c:226
+#: src/tools/btedit.c:228
 #, c-format
 msgid "edit raw btree block for person I34"
 msgstr ""
 
-#: src/tools/dbverify.c:177
+#: src/tools/dbverify.c:179
 msgid "Orphan names"
 msgstr ""
 
-#: src/tools/dbverify.c:178
+#: src/tools/dbverify.c:180
 msgid "Ghost names"
 msgstr ""
 
-#: src/tools/dbverify.c:179 src/tools/dbverify.c:180
+#: src/tools/dbverify.c:181 src/tools/dbverify.c:182
 msgid "Duplicate names"
 msgstr ""
 
-#: src/tools/dbverify.c:181
+#: src/tools/dbverify.c:183
 msgid "Non-indi names"
 msgstr ""
 
-#: src/tools/dbverify.c:182
+#: src/tools/dbverify.c:184
 msgid "Duplicate individuals"
 msgstr ""
 
-#: src/tools/dbverify.c:183
-msgid "Duplicate families"
-msgstr ""
-
-#: src/tools/dbverify.c:184
-#, fuzzy
-msgid "Duplicate sources"
-msgstr "Dubleret hurtignøgle for post: %s"
-
 #: src/tools/dbverify.c:185
-msgid "Duplicate events"
+msgid "Duplicate families"
 msgstr ""
 
 #: src/tools/dbverify.c:186
 #, fuzzy
-msgid "Duplicate others"
+msgid "Duplicate sources"
 msgstr "Dubleret hurtignøgle for post: %s"
 
 #: src/tools/dbverify.c:187
+msgid "Duplicate events"
+msgstr ""
+
+#: src/tools/dbverify.c:188
+#, fuzzy
+msgid "Duplicate others"
+msgstr "Dubleret hurtignøgle for post: %s"
+
+#: src/tools/dbverify.c:189
 #, fuzzy
 msgid "Missing records (from deleteset)"
 msgstr "Titel mangler"
 
-#: src/tools/dbverify.c:188
+#: src/tools/dbverify.c:190
 #, fuzzy
 msgid "Deleted records"
 msgstr "e  Redigér post"
 
-#: src/tools/dbverify.c:189
+#: src/tools/dbverify.c:191
 msgid "Bad name"
 msgstr ""
 
-#: src/tools/dbverify.c:190
+#: src/tools/dbverify.c:192
 #, fuzzy
 msgid "Bad family reference"
 msgstr "$$  List referencer"
 
-#: src/tools/dbverify.c:191
+#: src/tools/dbverify.c:193
 #, fuzzy
 msgid "Missing child"
 msgstr "Titel mangler"
 
-#: src/tools/dbverify.c:192
+#: src/tools/dbverify.c:194
 #, fuzzy
 msgid "Missing spouse"
 msgstr "Titel mangler"
 
-#: src/tools/dbverify.c:193
+#: src/tools/dbverify.c:195
 msgid "Bad HUSB reference"
 msgstr ""
 
-#: src/tools/dbverify.c:194
+#: src/tools/dbverify.c:196
 msgid "Bad WIFE reference"
 msgstr ""
 
-#: src/tools/dbverify.c:195
+#: src/tools/dbverify.c:197
 #, fuzzy
 msgid "Bad CHIL reference"
 msgstr "$$  List referencer"
 
-#: src/tools/dbverify.c:196
+#: src/tools/dbverify.c:198
 msgid "Improper HUSB"
 msgstr ""
 
-#: src/tools/dbverify.c:197
+#: src/tools/dbverify.c:199
 msgid "Improper WIFE"
 msgstr ""
 
-#: src/tools/dbverify.c:198
+#: src/tools/dbverify.c:200
 msgid "Improper child"
 msgstr ""
 
-#: src/tools/dbverify.c:199
+#: src/tools/dbverify.c:201
 #, fuzzy
 msgid "Empty family"
 msgstr "e  Redigér familien"
 
-#: src/tools/dbverify.c:200
+#: src/tools/dbverify.c:202
 #, fuzzy
 msgid "Single person family"
 msgstr "g  Bladr t. familie"
 
-#: src/tools/dbverify.c:201
+#: src/tools/dbverify.c:203
 msgid "Bad pointer"
 msgstr ""
 
-#: src/tools/dbverify.c:202
+#: src/tools/dbverify.c:204
 #, fuzzy
 msgid "Missing data records"
 msgstr "Titel mangler"
 
-#: src/tools/dbverify.c:232
+#: src/tools/dbverify.c:205
+msgid "Stale block directory entry"
+msgstr ""
+
+#: src/tools/dbverify.c:235
 msgid "\\My Documents\\LifeLines\\Databases\\MyFamily"
-msgstr ""
-
-#: src/tools/dbverify.c:238
-#, c-format
-msgid "usage: dbverify -(flags) <btree>\n"
-msgstr ""
-
-#: src/tools/dbverify.c:239
-#, c-format
-msgid "flags:\n"
-msgstr ""
-
-#: src/tools/dbverify.c:240
-#, c-format
-msgid "\t-a = Perform all checks (does not include fixes)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:241
 #, c-format
-msgid "\t-g = Check for ghosts (names/refns)\n"
+msgid "usage: dbverify [flags] <btree>\n"
 msgstr ""
 
 #: src/tools/dbverify.c:242
 #, c-format
-msgid "\t-G = Check for & fix ghosts (names/refns)\n"
+msgid "flags:\n"
 msgstr ""
 
 #: src/tools/dbverify.c:243
 #, c-format
-msgid "\t-i = Check individuals\n"
+msgid "\t-a = Perform all checks (does not include fixes)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:244
 #, c-format
-msgid "\t-f = Check families\n"
+msgid "\t-g = Check for ghosts (names/refns)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:245
 #, c-format
-msgid "\t-F = Alter any bad family lineage pointers (to _badptr)\n"
+msgid "\t-G = Fix ghosts (names/refns)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:246
 #, c-format
-msgid "\t-h = Display help text (this text)\n"
+msgid "\t-i = Check individuals\n"
 msgstr ""
 
 #: src/tools/dbverify.c:247
 #, c-format
-msgid "\t-s = Check sours\n"
+msgid "\t-f = Check families\n"
 msgstr ""
 
 #: src/tools/dbverify.c:248
 #, c-format
-msgid "\t-e = Check events\n"
+msgid "\t-F = Alter any bad family lineage pointers (to _badptr)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:249
 #, c-format
-msgid "\t-x = Check others\n"
+msgid "\t-h = Display help text (this text)\n"
 msgstr ""
 
 #: src/tools/dbverify.c:250
 #, c-format
-msgid "\t-l = Check database structure\n"
+msgid "\t-s = Check sours\n"
 msgstr ""
 
 #: src/tools/dbverify.c:251
 #, c-format
-msgid "\t-m = Check for records missing data entries\n"
+msgid "\t-e = Check events\n"
 msgstr ""
 
 #: src/tools/dbverify.c:252
 #, c-format
-msgid "\t-M = Fix records missing data entries\n"
+msgid "\t-x = Check others\n"
 msgstr ""
 
 #: src/tools/dbverify.c:253
 #, c-format
-msgid "\t-D = Fix bad delete entries\n"
+msgid "\t-l = Check database structure\n"
 msgstr ""
 
 #: src/tools/dbverify.c:254
 #, c-format
-msgid "\t-n = Noisy (echo every record processed)\n"
+msgid "\t-m = Check for records missing data entries\n"
 msgstr ""
 
 #: src/tools/dbverify.c:255
 #, c-format
+msgid "\t-M = Fix records missing data entries\n"
+msgstr ""
+
+#: src/tools/dbverify.c:256
+#, c-format
+msgid "\t-D = Fix bad delete entries\n"
+msgstr ""
+
+#: src/tools/dbverify.c:257
+#, c-format
+msgid "\t-B = Fix block splits with stale data\n"
+msgstr ""
+
+#: src/tools/dbverify.c:258
+#, c-format
+msgid "\t-n = Noisy (echo every record processed)\n"
+msgstr ""
+
+#: src/tools/dbverify.c:259
+#, c-format
 msgid "example: dbverify -ifsex \"%s\"\n"
 msgstr ""
 
-#: src/tools/dbverify.c:388
+#: src/tools/dbverify.c:392
 #, c-format
 msgid "Non-indi name, key=%s, name=%s"
 msgstr ""
 
-#: src/tools/dbverify.c:405
+#: src/tools/dbverify.c:410
 #, fuzzy, c-format
 msgid "Orphaned name: %s"
 msgstr "indtast navn: "
 
-#: src/tools/dbverify.c:419
+#: src/tools/dbverify.c:424
 #, c-format
 msgid "Ghost name: %s -> %s"
 msgstr ""
 
-#: src/tools/dbverify.c:451
+#: src/tools/dbverify.c:456
 #, c-format
 msgid "Orphaned refn: %s"
 msgstr ""
 
-#: src/tools/dbverify.c:491
+#: src/tools/dbverify.c:496
 #, fuzzy, c-format
 msgid "Duplicate name for %s (%s)"
 msgstr "Dubleret hurtignøgle for post: %s"
 
-#: src/tools/dbverify.c:526
+#: src/tools/dbverify.c:531
 #, fuzzy, c-format
 msgid "Duplicate refn for %s (%s)"
 msgstr "Dubleret hurtignøgle for post: %s"
 
-#: src/tools/dbverify.c:639
+#: src/tools/dbverify.c:644
 #, fuzzy, c-format
 msgid "Duplicate individual for %s"
 msgstr "Dubleret hurtignøgle for post: %s"
 
-#: src/tools/dbverify.c:681
+#: src/tools/dbverify.c:686
 #, c-format
 msgid "Bad name for individual %s: %s"
 msgstr ""
 
-#: src/tools/dbverify.c:699 src/tools/dbverify.c:723
+#: src/tools/dbverify.c:704 src/tools/dbverify.c:728
 #, c-format
 msgid "Bad family reference (%s) individual %s"
 msgstr ""
 
-#: src/tools/dbverify.c:705
+#: src/tools/dbverify.c:710
 #, c-format
 msgid "Missing child (%s) in family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:709
+#: src/tools/dbverify.c:714
 #, c-format
 msgid "Fixed missing child (%s) in family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:729
+#: src/tools/dbverify.c:734
 #, c-format
 msgid "Missing spouse (%s) in family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:733
+#: src/tools/dbverify.c:738
 #, c-format
 msgid "Fixed missing spouse (%s) in family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:767
+#: src/tools/dbverify.c:772
 #, fuzzy, c-format
 msgid "Duplicate family for %s"
 msgstr "Dubleret hurtignøgle for post: %s"
 
-#: src/tools/dbverify.c:818
+#: src/tools/dbverify.c:823
 #, c-format
 msgid "Bad HUSB reference (%s) in family %s"
 msgstr ""
 
-#: src/tools/dbverify.c:824
+#: src/tools/dbverify.c:829
 #, c-format
 msgid "Fixed Bad HUSB reference (%s) in family %s"
 msgstr ""
 
-#: src/tools/dbverify.c:833
+#: src/tools/dbverify.c:838
 #, c-format
 msgid "Improper HUSB (%s) in family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:846
+#: src/tools/dbverify.c:851
 #, c-format
 msgid "Bad wife reference (%s) in family %s"
 msgstr ""
 
-#: src/tools/dbverify.c:852
+#: src/tools/dbverify.c:857
 #, c-format
 msgid "Fixed Bad wife reference (%s) in family %s"
 msgstr ""
 
-#: src/tools/dbverify.c:861
+#: src/tools/dbverify.c:866
 #, c-format
 msgid "Improper wife (%s) in family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:874
+#: src/tools/dbverify.c:879
 #, c-format
 msgid "Bad child reference (%s) in family %s"
 msgstr ""
 
-#: src/tools/dbverify.c:880
+#: src/tools/dbverify.c:885
 #, c-format
 msgid "Fixed bad child reference (%s) in family %s"
 msgstr ""
 
-#: src/tools/dbverify.c:889
+#: src/tools/dbverify.c:894
 #, c-format
 msgid "Improper child: Child (%s) without FAMC reference to family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:897
+#: src/tools/dbverify.c:902
 #, c-format
 msgid "Empty family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:899
+#: src/tools/dbverify.c:904
 #, c-format
 msgid "Single person family (%s)"
 msgstr ""
 
-#: src/tools/dbverify.c:925
+#: src/tools/dbverify.c:930
 #, fuzzy, c-format
 msgid "Duplicate source for %s"
 msgstr "Dubleret hurtignøgle for post: %s"
 
-#: src/tools/dbverify.c:941
+#: src/tools/dbverify.c:946
 #, fuzzy, c-format
 msgid "Duplicate event for %s"
 msgstr "Dubleret hurtignøgle for post: %s"
 
-#: src/tools/dbverify.c:957
+#: src/tools/dbverify.c:962
 #, fuzzy, c-format
 msgid "Duplicate record for %s"
 msgstr "Dubleret hurtignøgle for post: %s"
 
-#: src/tools/dbverify.c:1028
+#: src/tools/dbverify.c:1033
 #, c-format
 msgid "Bad pointer (in %s): %s"
 msgstr ""
 
-#: src/tools/dbverify.c:1066
+#: src/tools/dbverify.c:1071
 #, c-format
 msgid "Missing undeleted record %c%d"
 msgstr ""
 
-#: src/tools/dbverify.c:1073
+#: src/tools/dbverify.c:1078
 #, c-format
 msgid "Fixed missing undeleted record %c%d"
 msgstr ""
 
-#: src/tools/dbverify.c:1077
+#: src/tools/dbverify.c:1082
 #, c-format
 msgid "Failed to fix missing undeleted record %c%d"
 msgstr ""
 
-#: src/tools/dbverify.c:1089
+#: src/tools/dbverify.c:1094
 #, c-format
 msgid "Delete set contains valid record %s"
 msgstr ""
 
-#: src/tools/dbverify.c:1094
+#: src/tools/dbverify.c:1099
 #, c-format
 msgid "Fixed delete set contains valid record %s"
 msgstr ""
 
-#: src/tools/dbverify.c:1098
+#: src/tools/dbverify.c:1103
 #, c-format
 msgid "Failed to fix missing undeleted record %s"
 msgstr ""
 
-#: src/tools/dbverify.c:1119
+#: src/tools/dbverify.c:1127
 #, c-format
 msgid "Master fkey misaligned"
 msgstr ""
 
-#: src/tools/dbverify.c:1146
+#: src/tools/dbverify.c:1135
+#, c-format
+msgid "Index or block keys invalid\n"
+msgstr ""
+
+#: src/tools/dbverify.c:1164
 #, c-format
 msgid "Cycle in indexes, file %s found again!\n"
 msgstr ""
 
-#: src/tools/dbverify.c:1153
+#: src/tools/dbverify.c:1171
 #, fuzzy, c-format
 msgid "Error loading index at key"
 msgstr "Fejl ved dataadgang"
 
-#: src/tools/dbverify.c:1201
+#: src/tools/dbverify.c:1218
+#, c-format
+msgid "Found stale block directory entry (%s, %d)"
+msgstr ""
+
+#: src/tools/dbverify.c:1224
+#, c-format
+msgid "Fixed stale block directory entry (%s, %d)"
+msgstr ""
+
+#: src/tools/dbverify.c:1295
 #, c-format
 msgid "First key in block below parent's limit\n"
 msgstr ""
 
-#: src/tools/dbverify.c:1209
+#: src/tools/dbverify.c:1303
 #, c-format
 msgid "Last key in block above parent's limit\n"
 msgstr ""
 
-#: src/tools/dbverify.c:1217
+#: src/tools/dbverify.c:1311
 #, c-format
 msgid "Key not below next key"
 msgstr ""
 
-#: src/tools/dbverify.c:1234 src/tools/dbverify.c:1236
+#: src/tools/dbverify.c:1328 src/tools/dbverify.c:1330
 msgid "data block"
 msgstr ""
 
-#: src/tools/dbverify.c:1237
+#: src/tools/dbverify.c:1331
 #, c-format
 msgid "%s fkey=%d, file=%s"
 msgstr ""
 
-#: src/tools/dbverify.c:1250
+#: src/tools/dbverify.c:1344
 #, c-format
 msgid "Invalid errs array[%d] in dbverify - fix program\n"
 msgstr ""
 
-#: src/tools/dbverify.c:1287
+#: src/tools/dbverify.c:1381
 #, fuzzy, c-format
 msgid "Missing data record (%s)"
 msgstr "Titel mangler"
 
-#: src/tools/dbverify.c:1291
+#: src/tools/dbverify.c:1385
 #, fuzzy, c-format
 msgid "Fixed missing data record (%s)"
 msgstr "Titel mangler"
 
-#: src/tools/dbverify.c:1422
+#: src/tools/dbverify.c:1520
 #, c-format
 msgid "Checking %s"
 msgstr ""
 
-#: src/tools/dbverify.c:1478
+#: src/tools/dbverify.c:1582
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/tools/dbverify.c:1482
+#: src/tools/dbverify.c:1586
 #, c-format
 msgid "%d fixed"
 msgid_plural "%d fixed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/tools/dbverify.c:1489
+#: src/tools/dbverify.c:1593
 #, fuzzy
 msgid "No errors found"
 msgstr "Ingen poster fandtes i søgning"
 
-#: src/tools/dbverify.c:1508
+#: src/tools/dbverify.c:1613
 #, fuzzy, c-format
 msgid "FATAL ERROR: "
 msgstr "SYSTEMKALDSFEJL"
 
-#: src/tools/dbverify.c:1513
+#: src/tools/dbverify.c:1618
 #, c-format
 msgid "In file <%s> at line %d"
 msgstr ""
 
 #, fuzzy
-#~ msgid "Copyright (C) 1991-2007 Thomas T. Wetmore IV et al."
-#~ msgstr "Copyright© 1991 til 1996, af T. T. Wetmore IV"
+#~ msgid "%dI, %dF, %dS, %dE, %dX"
+#~ msgstr "Databaseposter (%dP, %dF, %dS, %dE, %dX)"
+
+#, fuzzy
+#~ msgid "%d spouse"
+#~ msgid_plural "%d spouses"
+#~ msgstr[0] "ægtefælle"
+#~ msgstr[1] "ægtefælle"
+
+#, fuzzy
+#~ msgid "%d child"
+#~ msgid_plural "%d children"
+#~ msgstr[0] "barn"
+#~ msgstr[1] "barn"
+
+#, fuzzy
+#~ msgid "Using original keys, %d deleted record will be in the database."
+#~ msgid_plural ""
+#~ "Using original keys, %d deleted records will be in the database."
+#~ msgstr[0] ""
+#~ "Med oprindelige nøgler vil der findes %d fjernede poster i databasen."
+#~ msgstr[1] ""
+#~ "Med oprindelige nøgler vil der findes %d fjernede poster i databasen."
+
+#, fuzzy
+#~ msgid ""
+#~ "The requested window size (%ld,%ld) is too large for your terminal (%d,"
+#~ "%d).\n"
+#~ msgstr ""
+#~ "Den forespurgte vinduestørrelse (%d,%d) er for stor til din terminal (%d,"
+#~ "%d).\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "The requested window size (%ld,%ld) is too small for LifeLines (%d,%d).\n"
+#~ msgstr ""
+#~ "Den forespurgte vinduestørrelse (%d,%d) er for lille for LifeLines (%d,"
+#~ "%d). \n"
 
 #, fuzzy
 #~ msgid "Second argument to (r)sort must be list or array"
