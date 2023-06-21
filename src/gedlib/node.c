@@ -24,11 +24,8 @@
 #include "lloptions.h"
 #include "date.h"
 #include "vtable.h"
-<<<<<<< HEAD
 #include "messages.h"
-=======
 #include "leaksi.h"
->>>>>>> remotes/origin/master
 
 /*********************************************
  * global/exported variables
