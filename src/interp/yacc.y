@@ -46,7 +46,6 @@
 #include "indiseq.h"
 #include "interpi.h"
 #include "liflines.h"
-#include "screen.h"
 #include <stdlib.h>
 
 static PNODE this, prev;
