@@ -73,7 +73,7 @@ edit_indi (RECORD irec1, RFMT rfmt)  /* may be NULL */
 		BOOLEAN emp;
 		indi2 = file_to_node(editfile, ttmi, &msg, &emp);
 		if (!equal_tree(indi1, indi2))
-			message("%s", _(qSronlye));
+			msg_error("%s", _(qSronlye));
 		free_nodes(indi2);
 		return FALSE;
 	}

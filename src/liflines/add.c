@@ -77,7 +77,7 @@ add_indi_by_edit (RFMT rfmt)
 	XLAT ttmi = transl_get_predefined_xlat(MEDIN);
 
 	if (readonly) {
-		message("%s", _(qSronlya));
+		msg_error("%s", _(qSronlya));
 		return NULL;
 	}
 
@@ -249,7 +249,7 @@ prompt_add_child (NODE child, NODE fam, RFMT rfmt)
 	INT i;
 
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return NULL;
 	}
 
@@ -363,7 +363,7 @@ prompt_add_spouse (RECORD sprec, RECORD frec, BOOLEAN conf)
 	NODE spouse, fam = nztop(frec);
 
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return FALSE;
 	}
 
@@ -373,7 +373,7 @@ prompt_add_spouse (RECORD sprec, RECORD frec, BOOLEAN conf)
 	if (!sprec) return FALSE;
 	spouse = nztop(sprec);
 	if ((sex = SEX(spouse)) == SEX_UNKNOWN) {
-		message("%s", _(qSnosex));
+		msg_error("%s", _(qSnosex));
 		return FALSE;
 	}
 
@@ -389,11 +389,11 @@ prompt_add_spouse (RECORD sprec, RECORD frec, BOOLEAN conf)
 		split_fam(fam, &fref, &husb, &wife, &chil, &rest);
 		join_fam(fam, fref, husb, wife, chil, rest);
 		if (sex == SEX_MALE && husb) {
-			message("%s", _(qShashsb));
+			msg_error("%s", _(qShashsb));
 			return FALSE;
 		}
 		if (sex == SEX_FEMALE && wife) {
-			message("%s", _(qShaswif));
+			msg_error("%s", _(qShaswif));
 			return FALSE;
 		}
 	}
@@ -532,7 +532,7 @@ add_family_by_edit (RECORD sprec1, RECORD sprec2, RECORD chrec, RFMT rfmt)
 	FILE *fp=NULL;
 
 	if (readonly) {
-		message("%s", _(qSronlya));
+		msg_error("%s", _(qSronlya));
 		return NULL;
 	}
 
@@ -550,7 +550,7 @@ add_family_by_edit (RECORD sprec1, RECORD sprec2, RECORD chrec, RFMT rfmt)
 	if (!sprec1) 
 		return NULL;
 	if ((sex1 = SEX(nztop(sprec1))) == SEX_UNKNOWN) {
-		message("%s", _(qSunksex));
+		msg_error("%s", _(qSunksex));
 		return NULL;
 	}
 
@@ -561,7 +561,7 @@ add_family_by_edit (RECORD sprec1, RECORD sprec2, RECORD chrec, RFMT rfmt)
 	if (sprec2) {
 		if ((sex2 = SEX(nztop(sprec2))) == SEX_UNKNOWN || 
 			(traditional && sex1 == sex2)) {
-			message("%s", _(qSnotopp));
+			msg_error("%s", _(qSnotopp));
 			return NULL;
 		}
 	}

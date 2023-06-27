@@ -89,14 +89,14 @@ ask_for_fam (STRING pttl, STRING sttl)
 		if (!sib) return NULL;
 		fam = FAMC(nztop(sib));
 		if (!fam) {
-			message("%s", _(qSntchld));
+			msg_error("%s", _(qSntchld));
 			return NULL;
 		}
 		frec = key_to_frecord(rmvat(nval(fam)));
 		return frec;
 	}
 	if (!FAMS(nztop(prn))) {
-		message("%s", _(qSntprnt));
+		msg_error("%s", _(qSntprnt));
 		return NULL;
 	}
 	return choose_family(prn, _(qSparadox), _(qSidfbrs), TRUE);

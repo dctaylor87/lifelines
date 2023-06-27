@@ -101,11 +101,11 @@ merge_two_indis (NODE indi1, NODE indi2, BOOLEAN conf)
 	ASSERT(eqstr("INDI", ntag(indi1)));
 	ASSERT(eqstr("INDI", ntag(indi2)));
 	if (readonly) {
-		message("%s", _(qSronlym));
+		msg_error("%s", _(qSronlym));
 		return NULL;
 	}
 	if (indi1 == indi2) {
-		message("%s", _(qSnopmrg));
+		msg_error("%s", _(qSnopmrg));
 		return NULL;
 	}
 
@@ -118,7 +118,7 @@ merge_two_indis (NODE indi1, NODE indi2, BOOLEAN conf)
 	if (traditional) {
 		if (famc1 && famc2 && nestr(nval(famc1), nval(famc2))) {
 			if (!ask_yes_or_no_msg(_(qSmgsfam), _(qSmgconf))) {
-				message("%s", _(qSnoqmrg));
+				msg_error("%s", _(qSnoqmrg));
 				return NULL;
 			}
 		}
@@ -126,7 +126,7 @@ merge_two_indis (NODE indi1, NODE indi2, BOOLEAN conf)
 	fams1 = FAMS(indi1);
 	fams2 = FAMS(indi2);
 	if (fams1 && fams2 && SEX(indi1) != SEX(indi2)) {
-		message("%s", _(qSnoxmrg));
+		msg_error("%s", _(qSnoxmrg));
 		return NULL;
 	}
 
@@ -444,7 +444,7 @@ merge_two_fams (NODE fam1, NODE fam2)
 	BOOLEAN emp;
 
 	if (readonly) {
-		message("%s", _(qSronlym));
+		msg_error("%s", _(qSronlym));
 		return NULL;
 	}
 	ASSERT(fam1);
@@ -452,7 +452,7 @@ merge_two_fams (NODE fam1, NODE fam2)
 	ASSERT(eqstr("FAM", ntag(fam1)));
 	ASSERT(eqstr("FAM", ntag(fam2)));
 	if (fam1 == fam2) {
-		message("%s", _(qSnofmrg));
+		msg_error("%s", _(qSnofmrg));
 		return NULL;
 	}
 
@@ -466,11 +466,11 @@ merge_two_fams (NODE fam1, NODE fam2)
 	if (traditional) {
 		BOOLEAN ok = TRUE;
 		if (husb1 && husb2 && nestr(nval(husb1), nval(husb2))) {
-			message("%s", _(qSdhusb));
+			msg_error("%s", _(qSdhusb));
 			ok = FALSE;
 		}
 		if (ok && wife1 && wife2 && nestr(nval(wife1), nval(wife2))) {
-			message("%s", _(qSdwife));
+			msg_error("%s", _(qSdwife));
 			ok = FALSE;
 		}
 		if (!ok) {

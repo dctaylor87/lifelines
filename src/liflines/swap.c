@@ -61,7 +61,7 @@ swap_children (RECORD prnt, RECORD frec)
 	INT nfam, nchil;
 
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return FALSE;
 	}
 
@@ -71,7 +71,7 @@ swap_children (RECORD prnt, RECORD frec)
 	if (!prnt) return FALSE;
 	nfam = num_families(nztop(prnt));
 	if (nfam <= 0) {
-		message("%s", _(qSntchld));
+		msg_error("%s", _(qSntchld));
 		return FALSE;
 	}
 
@@ -86,7 +86,7 @@ gotfam:
 	fam = nztop(frec);
 	nchil = num_children(fam);
 	if (nchil < 2) {
-		message("%s", _(qSless2c));
+		msg_error("%s", _(qSless2c));
 		return FALSE;
 	}
 
@@ -174,7 +174,7 @@ reorder_child (RECORD prnt, RECORD frec, RFMT rfmt)
 	NODE fam, child;
 
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return FALSE;
 	}
 
@@ -184,7 +184,7 @@ reorder_child (RECORD prnt, RECORD frec, RFMT rfmt)
 	if (!prnt) return FALSE;
 	nfam = num_families(nztop(prnt));
 	if (nfam <= 0) {
-		message("%s", _(qSntchld));
+		msg_error("%s", _(qSntchld));
 		return FALSE;
 	}
 
@@ -199,7 +199,7 @@ gotfam:
 	fam = nztop(frec);
 	nchil = num_children(fam);
 	if (nchil < 2) {
-		message("%s", _(qSless2c));
+		msg_error("%s", _(qSless2c));
 		return FALSE;
 	}
 
@@ -272,7 +272,7 @@ swap_families (RECORD irec)
 	STRING str;
 
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return FALSE;
 	}
 
@@ -281,7 +281,7 @@ swap_families (RECORD irec)
 	if (!irec) return FALSE;
 	indi = nztop(irec);
 	if (!(fams = FAMS(indi))) {
-		message("%s", _(qSntprnt));
+		msg_error("%s", _(qSntprnt));
 		return FALSE;
 	}
 	nfam = num_families(indi);

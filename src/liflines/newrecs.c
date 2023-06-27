@@ -73,7 +73,7 @@ edit_add_source (void)
 {
 	STRING str;
 	if (readonly) {
-		message("%s", _(qSronlya));
+		msg_error("%s", _(qSronlya));
 		return NULL;
 	}
 	str = getlloptstr("SOURREC", _(qSdefsour));
@@ -87,7 +87,7 @@ edit_add_event (void)
 {
 	STRING str;
 	if (readonly) {
-		message("%s", _(qSronlya));
+		msg_error("%s", _(qSronlya));
 		return NULL;
 	}
 	str = getlloptstr("EVENREC", _(qSdefeven));
@@ -101,7 +101,7 @@ edit_add_other (void)
 {
 	STRING str;
 	if (readonly) {
-		message("%s", _(qSronlya));
+		msg_error("%s", _(qSronlya));
 		return NULL;
 	}
 	str = getlloptstr("OTHR", _(qSdefothr));
@@ -295,7 +295,7 @@ edit_record (RECORD rec1, STRING idedt, INT letr, STRING redt, STRING redtopt
 	}
 	root1 = nztop(rec1);
 	if (!root1) {
-		message("%s", _(qSnosuchrec));
+		msg_error("%s", _(qSnosuchrec));
 		return FALSE;
 	}
 
@@ -308,7 +308,7 @@ edit_record (RECORD rec1, STRING idedt, INT letr, STRING redt, STRING redtopt
 	if (readonly) {
 		root2 = file_to_node(editfile, ttmi, &msg, &emp);
 		if (!equal_tree(root1, root2))
-			message("%s", _(qSronlye));
+			msg_error("%s", _(qSronlye));
 		free_nodes(root2);
 		return FALSE;
 	}

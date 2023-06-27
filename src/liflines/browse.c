@@ -306,7 +306,7 @@ pick_create_new_family (RECORD current, RECORD save, STRING * addstrings)
 	RECORD rec=0;
 
 	if (readonly) {
-		message("%s", _(qSronlya));
+		msg_error("%s", _(qSronlya));
 		return NULL;
 	}
 	i = choose_from_array(_(qSidfcop), 2, addstrings);
@@ -906,12 +906,12 @@ pick_remove_spouse_from_family (RECORD frec)
 	STRING spstrings[MAX_SPOUSES];
 	INT i;
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return;
 	}
 	split_fam(fam, &fref, &husb, &wife, &chil, &rest);
 	if (!husb && !wife) {
-		message("%s", _(qShasnei));
+		msg_error("%s", _(qShasnei));
 		return;
 	}
 	i = 0;
@@ -950,14 +950,14 @@ prompt_add_spouse_with_candidate (RECORD fam, RECORD candidate)
 	BOOLEAN confirm;
 	char scratch[100];
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return;
 	}
 	split_fam(nztop(fam), &fref, &husb, &wife, &chil, &rest);
 	join_fam(nztop(fam), fref, husb, wife, chil, rest);
 	if (traditional) {
 		if (husb && wife) {
-			message("%s", _(qShasbth));
+			msg_error("%s", _(qShasbth));
 			return;
 		}
 	}
@@ -990,7 +990,7 @@ prompt_add_child_check_save (NODE fam, NODE save)
 {
 	char scratch[100];
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return;
 	}
 	if (save) {
@@ -1163,7 +1163,7 @@ reprocess_fam_cmd: /* so one command can forward to another */
 			break;
 		case CMD_REMOVECHILD:	/* Remove a child */
 			if (readonly) {
-				message("%s", _(qSronlye));
+				msg_error("%s", _(qSronlye));
 				break;
 			}
 			if ((tmp = choose_child(NULL, current, _(qSnocinf),
@@ -1453,7 +1453,7 @@ choose_any_source (void)
 	seq = get_all_sour();
 	if (!seq)
 	{
-		message("%s", _(qSnosour));
+		msg_error("%s", _(qSnosour));
 		return 0;
 	}
 	rec = choose_from_indiseq(seq, DOASK1, _(qSidsour), _(qSidsour));
@@ -1471,7 +1471,7 @@ choose_any_event (void)
 	seq = get_all_even();
 	if (!seq)
 	{
-		message("%s", _(qSnoeven));
+		msg_error("%s", _(qSnoeven));
 		return NULL;
 	}
 	rec = choose_from_indiseq(seq, DOASK1, _(qSideven), _(qSideven));
@@ -1489,7 +1489,7 @@ choose_any_other (void)
 	seq = get_all_othe();
 	if (!seq)
 	{
-		message("%s", _(qSnoothe));
+		msg_error("%s", _(qSnoothe));
 		return NULL;
 	}
 	rec = choose_from_indiseq(seq, DOASK1, _(qSidothe), _(qSidothe));
@@ -1844,7 +1844,7 @@ do_disp_history_list (struct hist * histp)
 	RECORD rec=0;
 
 	if (!seq) {
-		message("%s", _(qSnohist));
+		msg_error("%s", _(qSnohist));
 		return NULL;
 	}
 	rec = choose_from_indiseq(seq, DOASK1, _(qSidhist), _(qSidhist));

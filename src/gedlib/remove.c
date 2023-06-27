@@ -133,7 +133,7 @@ remove_empty_fam (NODE fam)
 		/* TO DO - This probably should never happen, and maybe could be
 		changed to an assertion, 2001/11/08, Perry, but I've not checked
 		merge code's call */
-		message("%s", _(qShaslnk));
+		msg_error("%s", _(qShaslnk));
 		join_fam(fam, refn, husb, wife, chil, rest);
 		return FALSE;
 	}
@@ -241,7 +241,7 @@ remove_spouse (NODE indi, NODE fam)
 BOOLEAN
 remove_fam_record (HINT_PARAM_UNUSED RECORD frec)
 {
-	message("%s", _("Families may not yet be removed in this fashion."));
+	msg_error("%s", _("Families may not yet be removed in this fashion."));
 	return FALSE;
 }
 

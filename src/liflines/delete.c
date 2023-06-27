@@ -158,7 +158,7 @@ choose_and_remove_spouse (RECORD irec, RECORD frec, BOOLEAN nolast)
 	NODE fam;
 
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return FALSE;
 	}
 
@@ -166,7 +166,7 @@ choose_and_remove_spouse (RECORD irec, RECORD frec, BOOLEAN nolast)
 	if (!irec) irec = ask_for_indi(_(qSidsrmv), NOASK1);
 	if (!irec) return FALSE;
 	if (!FAMS(nztop(irec))) {
-		message("%s", _(qSntprnt));
+		msg_error("%s", _(qSntprnt));
 		return FALSE;
 	}
 
@@ -175,14 +175,14 @@ choose_and_remove_spouse (RECORD irec, RECORD frec, BOOLEAN nolast)
 	if (!frec) return FALSE;
 	fam = nztop(frec);
 	if (nolast && num_fam_xrefs(fam) < 2) {
-		message("%s", _(qSnormls));
+		msg_error("%s", _(qSnormls));
 		return FALSE;
 	}
 	if (!ask_yes_or_no(_(qScfsrmv))) return FALSE;
 
 	/* call internal workhorse remove_spouse() to do the actual removal */
 	if (!remove_spouse(nztop(irec), fam)) {
-		message("%s", _(qSntsinf));
+		msg_error("%s", _(qSntsinf));
 		return FALSE;
 	}
 	message("%s", _(qSoksrmv));
@@ -200,7 +200,7 @@ choose_and_remove_child (RECORD irec, RECORD frec, BOOLEAN nolast)
 	NODE fam;
 
 	if (readonly) {
-		message("%s", _(qSronlye));
+		msg_error("%s", _(qSronlye));
 		return FALSE;
 	}
 		
@@ -208,7 +208,7 @@ choose_and_remove_child (RECORD irec, RECORD frec, BOOLEAN nolast)
 	if (!irec) irec = ask_for_indi(_(qSidcrmv), NOASK1);
 	if (!irec) return FALSE;
 	if (!FAMC(nztop(irec))) {
-		message("%s", _(qSntchld));
+		msg_error("%s", _(qSntchld));
 		return FALSE;
 	}
 
@@ -217,13 +217,13 @@ choose_and_remove_child (RECORD irec, RECORD frec, BOOLEAN nolast)
 	if (!frec) return FALSE;
 	fam = nztop(frec);
 	if (nolast && num_fam_xrefs(fam) < 2) {
-		message("%s", _(qSnormls));
+		msg_error("%s", _(qSnormls));
 		return FALSE;
 	}
 	if (!ask_yes_or_no(_(qScfcrmv))) return TRUE;
 
 	if (!remove_child(nztop(irec), fam)) {
-		message("%s", _(qSntcinf));
+		msg_error("%s", _(qSntcinf));
 		return FALSE;
 	}
 

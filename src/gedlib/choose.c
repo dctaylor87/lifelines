@@ -74,7 +74,7 @@ choose_spouse (RECORD irec, STRING msg0, STRING msgn)
 
 	if (!irec) return NULL;
 	if (!(seq = indi_to_spouses(nztop(irec)))) {
-		message("%s", msg0);
+		msg_error("%s", msg0);
 		return NULL;
 	}
 	rec = choose_from_indiseq(seq, NOASK1, NULL, msgn);
@@ -93,7 +93,7 @@ choose_source (RECORD current, STRING msg0, STRING msgn)
 	RECORD rec;
 	if (!current) return NULL;
 	if (!(seq = node_to_sources(nztop(current)))) {
-		message("%s", msg0);
+		msg_error("%s", msg0);
 		return NULL;
 	}
 	rec = choose_from_indiseq(seq, DOASK1, msgn, msgn);
@@ -113,7 +113,7 @@ choose_note (RECORD current, STRING msg0, STRING msgn)
 	RECORD rec;
 	if (!current) return NULL;
 	if (!(seq = node_to_notes(nztop(current)))) {
-		message("%s", msg0);
+		msg_error("%s", msg0);
 		return NULL;
 	}
 	rec = choose_from_indiseq(seq, DOASK1, msgn, msgn);
@@ -134,7 +134,7 @@ choose_pointer (RECORD current, STRING msg0, STRING msgn)
 	RECORD rec;
 	if (!current) return NULL;
 	if (!(seq = node_to_pointers(nztop(current)))) {
-		message("%s", msg0);
+		msg_error("%s", msg0);
 		return NULL;
 	}
 	rec = choose_from_indiseq(seq, DOASK1, msgn, msgn);
