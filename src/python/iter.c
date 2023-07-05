@@ -150,7 +150,9 @@ static PyObject *llpy_others (PyObject *self ATTRIBUTE_UNUSED,
 
 static void llpy_iter_dealloc (PyObject *self)
 {
+#if 0
   PyTypeObject *tp = Py_TYPE (self);
+#endif
 
   if (llpy_debug)
     {
@@ -292,7 +294,9 @@ static PyObject *llpy_iter_iternext (PyObject *self)
 
 static void llpy_nodeiter_dealloc (PyObject *self)
 {
+#if 0
   PyTypeObject *tp = Py_TYPE (self);
+#endif
   LLINES_PY_NODEITER *nodeiter = (LLINES_PY_NODEITER *) self;
 
   if (llpy_debug)
@@ -334,8 +338,10 @@ static PyObject *llpy_nodeiter_iternext (PyObject *self)
   LLINES_PY_NODE *py_node;
   int retval;
 
+#if 0
   /* if this is ever stored or returned, something is screwed up */
   int new_level = -2;
+#endif
 
   if (llpy_debug)
     {
