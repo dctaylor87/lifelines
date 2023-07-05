@@ -199,7 +199,6 @@ void wpos (INT, INT);
 
 
 /* show.c (curses specific) */
-extern struct tag_rfmt disp_long_rfmt, disp_shrt_rfmt;
 extern INT Scroll1;
 void display_cache_stats(void);
 void init_show_module(void);

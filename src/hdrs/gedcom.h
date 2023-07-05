@@ -208,6 +208,7 @@ extern TABLE tagtable;		/* table for GEDCOM tags */
 extern TABLE placabbvs;		/* table for place abbrvs */
 extern LLDATABASE def_lldb;        /* default database */
 
+extern struct tag_rfmt disp_long_rfmt, disp_shrt_rfmt;
 
 /*=====================
  * enums for functions
@@ -215,9 +216,9 @@ extern LLDATABASE def_lldb;        /* default database */
 typedef enum { DOSURCAP, NOSURCAP } SURCAPTYPE;
 typedef enum { SURFIRST, REGORDER } SURORDER;
 
-/*=====================
- * Function definitions
- *===================*/
+/*======================
+ * Function declarations
+ *====================*/
 
 STRING addat(STRING);
 void addixref(INT key);
