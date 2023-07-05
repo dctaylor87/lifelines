@@ -20,7 +20,8 @@
 #include "lloptions.h"
 
 #include "llinesi.h"
-#include "screen.h"
+#include "gedcom.h"
+#include "indiseq.h"
 
 /*********************************************
  * global/exported variables

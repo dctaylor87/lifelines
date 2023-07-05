@@ -41,7 +41,8 @@
 #include "messages.h"
 
 #include "llinesi.h"
-#include "screen.h" /* calling initscr, noecho, ... */
+#include "indiseq.h"
+#include "feedback.h"
 
 
 /*********************************************

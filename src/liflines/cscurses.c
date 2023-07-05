@@ -13,6 +13,8 @@
 #include "llstdlib.h"
 #include "liflines.h"
 #include "llinesi.h"
+#include "gedcom.h"
+#include "indiseq.h"
 #include "screen.h"
 #include "cscurses.h"
 #include "zstr.h"

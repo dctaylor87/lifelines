@@ -37,6 +37,8 @@
 #include "interp.h"
 #include "llinesi.h"
 #include "menuitem.h"
+#include "gedcom.h"
+#include "indiseq.h"
 #include "screen.h"
 #include "screeni.h"
 #include "cscurses.h"

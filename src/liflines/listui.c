@@ -38,6 +38,8 @@
 #include "interp.h"
 #include "llinesi.h"
 #include "menuitem.h"
+#include "gedcom.h"
+#include "indiseq.h"
 #include "screen.h"
 #include "cscurses.h"
 #include "zstr.h"
