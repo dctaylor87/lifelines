@@ -156,7 +156,7 @@ static PyModuleDef lifelines_module =
    .m_methods = LifelinesMethods,
   };
 
-PyMODINIT_FUNC
+static PyMODINIT_FUNC
 PyInit_llines(void)
 {
   PyObject *module;
