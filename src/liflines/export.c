@@ -41,6 +41,7 @@
 #include "lloptions.h"
 #include "codesets.h"
 #include "impfeed.h"
+#include "version.h"
 #include "xlat.h"
 
 /*********************************************

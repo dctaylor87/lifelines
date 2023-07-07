@@ -51,6 +51,7 @@
 #include "charprops.h"
 #include "listui.h"
 #include "messages.h"
+#include "version.h"
 
 #define LINESREQ 24
 #define COLSREQ  80

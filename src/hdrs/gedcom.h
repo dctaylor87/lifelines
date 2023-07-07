@@ -289,7 +289,6 @@ STRING get_current_locale_collate(void);
 STRING get_current_locale_msgs(void);
 INT get_decimal(STRING);
 INT get_hexidecimal(STRING);
-STRING get_lifelines_version(INT maxlen);
 STRING get_original_locale_collate(void);
 STRING get_original_locale_msgs(void);
 STRING get_property(STRING opt);
@@ -522,9 +521,6 @@ RECORD get_record_for_cel(CACHEEL cel);
 STRING generic_to_list_string(NODE node, STRING key, INT len, STRING delim, RFMT rfmt, BOOLEAN appkey);
 STRING *get_child_strings(NODE, RFMT, INT*, STRING**);
 STRING indi_to_list_string(NODE indi, NODE fam, INT len, RFMT rfmt, BOOLEAN appkey);
-
-/* init.c */
-void print_version(CNSTRING program);
 
 /* lldatabase.c */
 LLDATABASE lldb_alloc(void);
