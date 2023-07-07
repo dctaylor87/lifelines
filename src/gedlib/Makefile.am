@@ -3,8 +3,6 @@
 
 # Makefile for the LifeLines gedlib area
 
-# AUTOMAKE_OPTIONS = no-dependencies
-
 noinst_LIBRARIES = libgedcom.a
 
 libgedcom_a_SOURCES = brwslist.c charmaps.c charprops.c \

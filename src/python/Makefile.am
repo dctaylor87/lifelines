@@ -5,8 +5,6 @@
 
 # need to figure out how to specify the python dependency, for now...
 
-# AUTOMAKE_OPTIONS = no-dependencies
-
 noinst_LIBRARIES = libpyllines.a
 
 libpyllines_a_SOURCES = \
