@@ -668,9 +668,10 @@ AC_CONFIG_FILES([Makefile \
         src/gedlib/Makefile \
         src/stdlib/Makefile \
         src/liflines/Makefile \
-	src/python/Makefile \
+        src/python/Makefile \
         src/tools/Makefile \
         src/ui/Makefile \
+        src/cli/Makefile \
         src/hdrs/Makefile \
         src/hdrs/mswin/Makefile \
         docs/man/Makefile \
