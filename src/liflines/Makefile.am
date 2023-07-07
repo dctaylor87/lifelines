@@ -1,8 +1,6 @@
 # Process this file with automake to produce Makefile.in
 # (configure will process the resulting Makefile.in to produce Makefile)
 
-# AUTOMAKE_OPTIONS = no-dependencies
-
 # what are we going to build?
 bin_PROGRAMS = llines llexec
 
@@ -10,7 +8,7 @@ bin_PROGRAMS = llines llexec
 llines_SOURCES = add.c advedit.c ask.c askgedc.c askprogram.c \
 	browse.c brwsmenu.c \
 	cscurses.c delete.c dynmenu.c \
-	edit.c error.c export.c import.c interact.c \
+	edit.c export.c import.c interact.c \
 	lbrowse.c lines_usage.c listui.c loadsave.c \
 	main.c menuset.c merge.c miscutls.c \
 	newrecs.c pedigree.c \
