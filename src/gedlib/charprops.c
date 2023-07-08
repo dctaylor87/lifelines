@@ -22,11 +22,6 @@
 #define MAXCASES 1024
 
 /*********************************************
- * external/imported variables
- *********************************************/
-extern BOOLEAN opt_mychar;
-
-/*********************************************
  * local function prototypes
  *********************************************/
 
@@ -174,7 +169,7 @@ charprops_load (const char * codepage)
 
 	/* assume that we don't have a table, in case we bail */
 	loaded_codepage = -1;
-	opt_mychar = 0;
+	opt_mychar = FALSE;
 
 	/* check that we have UTF-8 */
 	if (!loaded_utf8)
@@ -236,7 +231,7 @@ charprops_load (const char * codepage)
 
 	/* activate new table of character properties */
 	mych_set_table(charset_info);
-	opt_mychar = 1;
+	opt_mychar = TRUE;
 
 	strupdate(&charset_name, codepage);
 	return TRUE;

@@ -48,7 +48,6 @@ BOOLEAN writeable = FALSE;     /* normally defined in liflines/main.c */
 BOOLEAN immutable = FALSE;     /* normally defined in liflines/main.c */
 STRING dbname = NULL;
 int opt_finnish = 0;
-int opt_mychar = 0;
 extern BTREE BTR;
 
 /*==================================

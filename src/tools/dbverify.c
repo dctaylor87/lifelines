@@ -66,7 +66,6 @@ BOOLEAN readonly = FALSE;	/* normally defined in liflines/main.c */
 BOOLEAN writeable = FALSE;	/* normally defined in liflines/main.c */
 BOOLEAN immutable = FALSE;  /* normally defined in liflines/main.c */
 int opt_finnish = 0;
-int opt_mychar = 0;
 
 /*********************************************
  * local types

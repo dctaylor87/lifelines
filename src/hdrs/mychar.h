@@ -11,6 +11,7 @@ typedef struct my_charset_info_tag {
 } my_charset_info;
 
 extern my_charset_info ISO_Latin1[];
+extern BOOLEAN opt_mychar;
 
 int mych_isalpha(const int c);
 int mych_iscntrl(const int c);

@@ -56,7 +56,6 @@ extern int yydebug;
 
 static STRING usage_summary = "";      /* usage string */
 int opt_finnish  = FALSE;      /* Finnish Language sorting order if TRUE */
-int opt_mychar = FALSE;        /* Custom character set handling (bypass libc) */
 BOOLEAN debugmode = FALSE;     /* no signal handling, so we can get coredump */
 BOOLEAN opt_nocb  = FALSE;     /* no cb. data is displayed if TRUE */
 BOOLEAN keyflag   = TRUE;      /* show key values */
