@@ -64,9 +64,9 @@ BOOLEAN readonly  = FALSE;     /* database is read only */
 BOOLEAN writeable = FALSE;     /* database must be writeable */
 BOOLEAN immutable = FALSE;     /* make no changes at all to database, for access to truly read-only medium */
 INT alldone       = 0;         /* completion flag */
-BOOLEAN progrunning = FALSE;   /* program is running */
-BOOLEAN progparsing = FALSE;   /* program is being parsed */
-INT     progerror = 0;         /* error count during report program */
+extern BOOLEAN progrunning;
+extern BOOLEAN progparsing;
+extern INT     progerror;
 BOOLEAN traditional = TRUE;    /* use traditional family rules */
 BOOLEAN showusage = FALSE;     /* show usage */
 BOOLEAN showversion = FALSE;   /* show version */

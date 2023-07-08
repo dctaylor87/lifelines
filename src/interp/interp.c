@@ -75,12 +75,11 @@ PNODE Pnode = NULL;		/* node being interpreted */
 BOOLEAN explicitvars = FALSE;	/* all vars must be declared */
 BOOLEAN rpt_cancelled = FALSE;
 
-/*********************************************
- * external/imported variables
- *********************************************/
+/*********************************************/
 
-extern INT progerror;
-extern BOOLEAN progrunning, progparsing;
+INT progerror = 0;             /* error count during report program */
+BOOLEAN progrunning = FALSE;   /* program is running */
+BOOLEAN progparsing = FALSE;   /* program is being parsed */
 
 /*********************************************
  * local function prototypes
