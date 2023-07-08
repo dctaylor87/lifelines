@@ -35,6 +35,9 @@
 #include "mystring.h"
 #include "mychar.h"
 
+/* global variables defined here */
+BOOLEAN opt_mychar = FALSE; /* Custom character set handling (bypass libc) */
+
 /*********************************************
  * local variables
  *********************************************/

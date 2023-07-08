@@ -58,7 +58,6 @@ STRING editstr=NULL; /* edit command to run to edit (has editfile inside of it) 
 STRING editfile=NULL; /* file used for editing, name obtained via mktemp */
 STRING readpath = NULL;		/* path to database */
 STRING readpath_file = NULL;	/* final component of path to database */
-int opt_mychar = FALSE;        /* Custom character set handling (bypass libc) */
 
 /*********************************************
  * external/imported variables
@@ -66,7 +65,7 @@ int opt_mychar = FALSE;        /* Custom character set handling (bypass libc) */
 
 extern BOOLEAN writeable;
 extern STRING illegal_char;
-extern INT opt_finnish, opt_mychar;
+extern INT opt_finnish;
 
 /*********************************************
  * local function prototypes
