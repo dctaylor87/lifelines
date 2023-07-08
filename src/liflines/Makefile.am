@@ -17,7 +17,7 @@ llines_SOURCES = add.c advedit.c ask.c askgedc.c askprogram.c \
 	listui.h llinesi.h 
 
 # what goes into llexec ?
-llexec_SOURCES = ask.c error.c lines_usage.c llexec.c selectdb.c miscutls.c llexec.h
+llexec_SOURCES = ask.c lines_usage.c llexec.c selectdb.c miscutls.c llexec.h
 
 PYTHON_LIBS = @PYTHON_LIBS@
 
