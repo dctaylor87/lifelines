@@ -27,12 +27,6 @@ LLDATABASE def_lldb = 0;
 BTREE BTR=NULL;	/* database */
 
 /*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING readpath,readpath_file;
-
-/*********************************************
  * local types
  *********************************************/
 

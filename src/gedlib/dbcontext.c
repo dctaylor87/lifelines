@@ -50,7 +50,6 @@
  *********************************************/
 
 extern BOOLEAN writeable;
-extern STRING readpath,readpath_file;
 
 /*********************************************
  * local function prototypes

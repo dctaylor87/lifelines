@@ -56,13 +56,14 @@ TABLE tagtable=NULL;		/* table for tag strings */
 TABLE placabbvs=NULL;	/* table for place abbrevs */
 STRING editstr=NULL; /* edit command to run to edit (has editfile inside of it) */
 STRING editfile=NULL; /* file used for editing, name obtained via mktemp */
+STRING readpath = NULL;		/* path to database */
+STRING readpath_file = NULL;	/* final component of path to database */
 
 /*********************************************
  * external/imported variables
  *********************************************/
 
 extern BOOLEAN writeable;
-extern STRING readpath,readpath_file;
 extern STRING illegal_char;
 extern INT opt_finnish, opt_mychar;
 

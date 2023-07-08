@@ -252,7 +252,6 @@ llrpt_extracttokens (PNODE node, SYMTAB stab, BOOLEAN *eflg)
 PVALUE
 llrpt_database (PNODE node, SYMTAB stab, BOOLEAN *eflg)
 {
-	extern STRING readpath;
 	BOOLEAN full = FALSE;
 	PVALUE val=0;
 	PNODE argvar = builtin_args(node);

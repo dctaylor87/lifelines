@@ -93,7 +93,6 @@ static UIWINDOW extra_menu_win=NULL;
 
 extern INT alldone;
 extern BOOLEAN progrunning;
-extern STRING empstr,empstr71,readpath,readpath_file;
 extern STRING idsortttl,idloc;
 
 

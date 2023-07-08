@@ -208,6 +208,9 @@ extern TABLE tagtable;		/* table for GEDCOM tags */
 extern TABLE placabbvs;		/* table for place abbrvs */
 extern LLDATABASE def_lldb;        /* default database */
 
+extern STRING readpath;		/* path used to open database */
+extern STRING readpath_file;	/* last component of readpath */
+
 extern struct tag_rfmt disp_long_rfmt, disp_shrt_rfmt;
 
 /*=====================

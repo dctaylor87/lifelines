@@ -38,8 +38,6 @@
  * required global variables
  *********************************************/
 /* defined in liflines/main.c */
-STRING readpath_file = NULL;
-STRING readpath = NULL;
 int opt_finnish = 0;
 int opt_mychar = 0;
 /* defined in gedlib/codesets.c */

@@ -64,12 +64,6 @@ static void import_validation_warning(STRING msg);
 static void update_rec_count(INT pass, char ctype, STRING tag, INT count);
 
 /*********************************************
- * external/imported variables
- *********************************************/
-
-extern STRING readpath_file;
-
-/*********************************************
  * local variables
  *********************************************/
 

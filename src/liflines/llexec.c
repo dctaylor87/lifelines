@@ -70,8 +70,6 @@ extern INT     progerror;
 BOOLEAN traditional = TRUE;    /* use traditional family rules */
 BOOLEAN showusage = FALSE;     /* show usage */
 BOOLEAN showversion = FALSE;   /* show version */
-STRING  readpath_file = NULL;  /* last component of readpath */
-STRING  readpath = NULL;       /* database path used to open */
 STRING  ext_codeset = 0;       /* default codeset from locale */
 INT screen_width = 20; /* TODO */
 
