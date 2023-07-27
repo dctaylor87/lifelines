@@ -197,7 +197,7 @@ browse_list (RECORD *prec1, RECORD *prec2, INDISEQ *pseq)
 		{
 			RECORD cand1=0, cand2=0;
 			if (mark == -1 || cur == mark) {
-				message("%s", _(qSmrkrec));
+				msg_error("%s", _(qSmrkrec));
 				break;
 			}
 			cand2 = rec;
@@ -214,7 +214,7 @@ browse_list (RECORD *prec1, RECORD *prec2, INDISEQ *pseq)
 				*prec2 = cand2;
 				return BROWSE_2FAM;
 			} else {
-				message("%s", _("Tandem browse only compatible with persons or families."));
+				msg_error("%s", _("Tandem browse only compatible with persons or families."));
 				break;
 			}
 		}
@@ -286,7 +286,7 @@ name_the_list (INDISEQ seq)
 	char name[MAXPATHLEN];
 	if (!ask_for_string(_(qSlstwht), _(qSasknam), name, sizeof(name))
 		|| !name[0]) {
-		message("%s", _(qSlstnon));
+		msg_error("%s", _(qSlstnon));
 		return;
 	}
 	/* TODO: Should just let the browse list addref the indiseq */

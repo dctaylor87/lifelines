@@ -559,13 +559,13 @@ reprocess_indi_cmd: /* so one command can forward to another */
 			if ((tmp = indi_to_prev_sib(current)) != 0)
 				setrecord(&current, &tmp);
 			else
-				message("%s", _(qSnoosib));
+				msg_error("%s", _(qSnoosib));
 			break;
 		case CMD_DOWNSIB:	/* Browse to younger sib */
 			if ((tmp = indi_to_next_sib(current)) != 0)
 				setrecord(&current, &tmp);
 			else
-				message("%s", _(qSnoysib));
+				msg_error("%s", _(qSnoysib));
 			break;
 		case CMD_PARENTS:	/* Browse to parents' family */
 			if ((tmp = choose_family(current, _(qSnoprnt),
@@ -682,7 +682,7 @@ reprocess_indi_cmd: /* so one command can forward to another */
 					tmp = keynum_to_irecord(i);
 					setrecord(&current, &tmp);
 				} else {
-					message("%s", _(qSnopers));
+					msg_error("%s", _(qSnopers));
 				}
 			}
 			break;
@@ -693,7 +693,7 @@ reprocess_indi_cmd: /* so one command can forward to another */
 					tmp = keynum_to_irecord(i);
 					setrecord(&current, &tmp);
 				} else {
-					message("%s", _(qSnopers));
+					msg_error("%s", _(qSnopers));
 				}
 			}
 			break;
@@ -860,7 +860,7 @@ reprocess_aux_cmd:
 					tmp = keynum_to_record(ntype, i);
 					setrecord(&current, &tmp);
 				} else {
-					message("%s", _(qSnorec));
+					msg_error("%s", _(qSnorec));
 				}
 				break;
 			}
@@ -871,7 +871,7 @@ reprocess_aux_cmd:
 					tmp = keynum_to_record(ntype, i);
 					setrecord(&current, &tmp);
 				} else {
-					message("%s", _(qSnorec));
+					msg_error("%s", _(qSnorec));
 				}
 				break;
 			}
@@ -1092,7 +1092,7 @@ reprocess_fam_cmd: /* so one command can forward to another */
 				if ((tmp = qkeynum_to_frecord(i)))
 					setrecord(&current, &tmp);
 				else
-					message("%s", _(qSnofam));
+					msg_error("%s", _(qSnofam));
 			}
 			break;
 		case CMD_EDIT:	/* Edit family's record */
@@ -1267,7 +1267,7 @@ reprocess_fam_cmd: /* so one command can forward to another */
 				rtn = BROWSE_INDI;
 				goto exitbrowse;
 			}
-			message("%s", _(qSnochil));
+			msg_error("%s", _(qSnochil));
 			break;
 		case CMD_NEXT:	/* Go to next fam in db */
 			{
@@ -1275,7 +1275,7 @@ reprocess_fam_cmd: /* so one command can forward to another */
 				if (i && (tmp = qkeynum_to_frecord(i))) {
 					setrecord(&current, &tmp);
 				} else {
-					message("%s", _(qSnofam));
+					msg_error("%s", _(qSnofam));
 				}
 				break;
 			}
@@ -1286,7 +1286,7 @@ reprocess_fam_cmd: /* so one command can forward to another */
 					tmp = keynum_to_frecord(i);
 					setrecord(&current, &tmp);
 				} else {
-					message("%s", _(qSnofam));
+					msg_error("%s", _(qSnofam));
 				}
 				break;
 			}
@@ -1890,7 +1890,7 @@ ask_clear_history (struct hist * histp)
 	INT count;
 
 	if (!histp->size || histp->start==-1) {
-		message("%s", _(qSnohist));
+		msg_error("%s", _(qSnohist));
 		return;
 	}
 	count = get_hist_count(histp);
@@ -1915,7 +1915,7 @@ handle_history_cmds (INT c, RECORD * prec1)
 			*prec1 = rec;
 			return -1; /* handled, change pages */
 		}
-		message("%s", _(qSnohist));
+		msg_error("%s", _(qSnohist));
 		return 1; /* handled, stay here */
 	}
 	if (c == CMD_CHISTORY_BACK) {
@@ -1924,7 +1924,7 @@ handle_history_cmds (INT c, RECORD * prec1)
 			*prec1 = rec;
 			return -1; /* handled, change pages */
 		}
-		message("%s", _(qSnohist));
+		msg_error("%s", _(qSnohist));
 		return 1; /* handled, stay here */
 	}
 	if (c == CMD_VHISTORY_FWD) {
@@ -1933,7 +1933,7 @@ handle_history_cmds (INT c, RECORD * prec1)
 			*prec1 = rec;
 			return -1; /* handled, change pages */
 		}
-		message("%s", _(qSnohist));
+		msg_error("%s", _(qSnohist));
 		return 1; /* handled, stay here */
 	}
 	if (c == CMD_CHISTORY_FWD) {
@@ -1942,7 +1942,7 @@ handle_history_cmds (INT c, RECORD * prec1)
 			*prec1 = rec;
 			return -1; /* handled, change pages */
 		}
-		message("%s", _(qSnohist));
+		msg_error("%s", _(qSnohist));
 		return 1; /* handled, stay here */
 	}
 	if (c == CMD_VHISTORY_LIST) {

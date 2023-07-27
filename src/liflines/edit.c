@@ -151,7 +151,7 @@ edit_family (RECORD frec1, RFMT rfmt) /* may be NULL */
 		irec = ask_for_indi(_(qSidspse), NOASK1);
 		if (!irec) return FALSE;
 		if (!FAMS(nztop(irec))) {
-			message("%s", _(qSntprnt));
+			msg_error("%s", _(qSntprnt));
 			goto end_edit_fam;
 		} 
 		frec1 = choose_family(irec, _(qSparadox), _(qSidfbys), TRUE);
@@ -168,7 +168,7 @@ edit_family (RECORD frec1, RFMT rfmt) /* may be NULL */
 		BOOLEAN emp;
 		fam2 = file_to_node(editfile, ttmi, &msg, &emp);
 		if (!equal_tree(fam1, fam2))
-			message("%s", _(qSronlye));
+			msg_error("%s", _(qSronlye));
 		goto end_edit_fam;
 	}
 	while (TRUE) {

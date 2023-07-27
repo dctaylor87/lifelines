@@ -464,7 +464,7 @@ choose_from_indiseq (INDISEQ seq, ASK1Q ask1, STRING titl1, STRING titln)
 			llstrncpyf(buf, sizeof(buf), uu8, "%s: %.40s", _(qSmisskeys), badkeylist);
 		else
 			llstrncpyf(buf, sizeof(buf), uu8, "%s", _(qSbadkeyptr));
-		message("%s", buf);
+		msg_error("%s", buf);
 	}
 	return rec;
 }

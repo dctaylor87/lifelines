@@ -383,7 +383,7 @@ show_indi_vitals (UIWINDOW uiwin, RECORD irec, LLRECT rect
 	if(badkeylist[0]) {
 		char buf[132];
 		llstrncpyf(buf, sizeof(buf), uu8, "%s: %.40s", _(qSmisskeys), badkeylist);
-		message("%s", buf);
+		msg_error("%s", buf);
 	}
 }
 /*=============================================
@@ -580,7 +580,7 @@ show_fam_vitals (UIWINDOW uiwin, RECORD frec, INT row, INT hgt
 	listbadkeys = 0;
 	if(badkeylist[0]) {
 		snprintf(buf, sizeof(buf), "WARNING: missing keys: %.40s", badkeylist);
-		message("%s", buf);
+		msg_error("%s", buf);
 	}
 }
 /*================================================
