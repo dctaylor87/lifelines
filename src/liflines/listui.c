@@ -521,7 +521,7 @@ shw_recordlist_list (INDISEQ seq, listdisp * ld)
 				mvwaddch(win, row, ld->rectList.left, '$');
 			if (i == ld->cur) mvwaddch(win, row, ld->rectList.left+3, '>');
 			if (ld->listlen < 10) {
-				char numstr[12];
+				char numstr[24];
 				snprintf(numstr, sizeof(numstr), FMT_INT ":", i+1);
 				mvccwaddstr(win, row, ld->rectList.left+4, numstr);
 			}

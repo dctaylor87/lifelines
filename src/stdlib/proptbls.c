@@ -39,7 +39,7 @@ set_prop_dnum (TABLE props, INT n, CNSTRING name, CNSTRING value)
 {
 	STRING str = valueof_str(props, "dn");
 	INT max = ll_atoi(str, 0);
-	char temp[20];
+	char temp[24];
 	snprintf(temp, sizeof(temp), "d" FMT_INT, n);
 	replace_table_str(props, temp, name);
 	replace_table_str(props, name, value);
