@@ -13,7 +13,7 @@ llines_SOURCES = add.c advedit.c ask.c askgedc.c askprogram.c \
 	main.c menuset.c merge.c miscutls.c \
 	newrecs.c pedigree.c \
 	scan.c screen.c searchui.c selectdb.c show.c swap.c \
-	tandem.c valgdcom.c \
+	tandem.c valgdcom.c wprintf.c \
 	listui.h llinesi.h 
 
 # what goes into llexec ?

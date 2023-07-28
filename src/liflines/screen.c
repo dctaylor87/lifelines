@@ -2097,17 +2097,6 @@ llvwprintf (STRING fmt, va_list args)
 	*/
 /*	msg_outputv(MSG_ERROR, fmt, args);*/ /* also send to msg list */
 }
-/*=================================================
- * llwprintf -- Called as wprintf(fmt, arg, arg, ...)
- *===============================================*/
-void
-llwprintf (STRING fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	llvwprintf(fmt, args);
-	va_end(args);
-}
 /*==============================
  * clearw -- Clear stdout window
  *============================*/
@@ -2477,55 +2466,7 @@ display_status (STRING text)
 	place_cursor_main();
 	wrefresh(win);
 }
-/*=========================================
- * message -- handle generic message
- * delegates to msg_outputv
- * TODO: replace with msg_error/info/status
- *=======================================*/
-void
-message (STRING fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	msg_outputv(MSG_ERROR, fmt, args);
-	va_end(args);
-}
-/*=========================================
- * msg_error -- handle error message
- * delegates to msg_outputv
- *=======================================*/
-void
-msg_error (STRING fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	msg_outputv(MSG_ERROR, fmt, args);
-	va_end(args);
-}
-/*=========================================
- * msg_info -- handle regular messages
- * delegates to msg_outputv
- *=======================================*/
-void
-msg_info (STRING fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	msg_outputv(MSG_INFO, fmt, args);
-	va_end(args);
-}
-/*=========================================
- * msg_status -- handle transitory/status messages
- * delegates to msg_outputv
- *=======================================*/
-void
-msg_status (STRING fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	msg_outputv(MSG_STATUS, fmt, args);
-	va_end(args);
-}
+
 /*=========================================
  * msg_output -- handle any message
  * delegates to msg_outputv
