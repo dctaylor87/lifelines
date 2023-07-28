@@ -37,6 +37,7 @@
 #include "gedcom.h"
 #include "liflines.h"
 #include "llinesi.h"
+#include "loadsave.h"
 #include "feedback.h"
 #include "lloptions.h"
 #include "codesets.h"

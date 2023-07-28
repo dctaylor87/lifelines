@@ -76,12 +76,6 @@ BOOLEAN choose_and_remove_any_record(RECORD rec, CONFIRMQ confirmq);
 BOOLEAN edit_family(RECORD frec1, RFMT rfmt);
 BOOLEAN edit_indi(RECORD irec1, RFMT rfmt);
 
-/* export.c */
-BOOLEAN archive_in_file (struct tag_export_feedback * efeed, FILE *fp);
-
-/* import.c */
-BOOLEAN import_from_gedcom_file(IMPORT_FEEDBACK ifeed, FILE *fp);
-
 /* lbrowse.c */
 INT browse_list(RECORD *prec1, RECORD *prec2, INDISEQ *pseq);
 

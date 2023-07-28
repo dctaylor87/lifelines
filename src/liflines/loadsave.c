@@ -37,6 +37,7 @@
 #include "lloptions.h"
 #include "date.h"
 #include "llinesi.h"
+#include "loadsave.h"
 #include "gedcom.h"
 #include "indiseq.h"
 #include "feedback.h"

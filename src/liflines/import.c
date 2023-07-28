@@ -39,6 +39,7 @@
 #include "liflines.h"
 
 #include "llinesi.h"
+#include "loadsave.h"
 #include "feedback.h"
 #include "impfeed.h"
 #include "codesets.h"
