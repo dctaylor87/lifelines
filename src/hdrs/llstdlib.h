@@ -180,7 +180,6 @@ char *llstrncat(char *dest, const char *src, size_t n, int utf8);
 char *llstrncpy(char *dest, const char *src, size_t n, int utf8);
 char *llstrncpyf(char *dest, size_t n, int utf8, const char * fmt, ...) HINT_PRINTF(4,5);
 char *llstrncpyvf(char *dest, size_t n, int utf8, const char * fmt, va_list args);
-char *llstrncpyvf(char *dest, size_t n, int utf8, const char * fmt, va_list args);
 int make8char(int c);
 void stdstring_hardfail(void);
 
