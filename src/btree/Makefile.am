@@ -20,13 +20,3 @@ AM_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir)/src/hdrs
 
 EXTRA_DIST = btreei.h
 
-# since we're not doing dependencies automagically...
-addkey.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-block.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-file.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-index.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-opnbtree.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-btrec.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-traverse.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-utils.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-

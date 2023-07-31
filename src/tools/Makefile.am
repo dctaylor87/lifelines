@@ -59,10 +59,3 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 ../gedlib/libgedcom.a :
 	$(MAKE) -C ../gedlib libgedcom.a
-
-# since we're not doing dependencies automagically...
-btedit.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-dbverify.o: ../hdrs/standard.h ../hdrs/btree.h ../hdrs/gedcom.h
-lldump.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-lltest.o: ../hdrs/standard.h ../hdrs/mystring.h ../hdrs/btree.h
-
