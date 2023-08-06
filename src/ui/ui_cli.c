@@ -48,14 +48,6 @@ static INT interact(CNSTRING ptrn);
  * Xprintf() implementations
  *===========================================================*/
 void
-llwprintf (char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
-void
 llvwprintf (STRING fmt, va_list args)
 {
 	vprintf(fmt, args);
@@ -76,46 +68,6 @@ refresh_stdout (void)
 /*=============================================================
  * Message output functions
  *===========================================================*/
-void
-message (char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
-void
-msg_error (char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
-void
-msg_info (char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
-void
-msg_status (char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
-void
-msg_output (HINT_PARAM_UNUSED MSG_LEVEL level, STRING fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
 INT
 msg_width (void)
 {

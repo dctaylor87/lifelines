@@ -35,6 +35,7 @@
 #endif /* HAVE_GETOPT */
 
 #include "llpy-externs.h"
+#include "uiio.h"
 
 /*********************************************
  * external variables (no header)
@@ -111,6 +112,8 @@ main (int argc, char **argv)
 	STRING crashlog=NULL;
 	int i=0;
 	BOOLEAN have_python_scripts = FALSE;
+
+	current_uiio = uiio_stdio;
 
 	/* initialize all the low-level library code */
 	init_stdlib();

@@ -22,6 +22,7 @@ EXTRA_DIST = \
 	screen.h sequence.h standard.h sys_inc.h \
 	table.h translat.h \
 	ui.h uiprompts.h \
+	uiio.h \
 	version.h vtable.h xlat.h zstr.h
 
 

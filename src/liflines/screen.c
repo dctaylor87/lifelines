@@ -26,6 +26,8 @@
  * Copyright(c) 1992-96 by T.T. Wetmore IV; all rights reserved
  *===========================================================*/
 
+#include <ansidecl.h>
+
 #include "llstdlib.h"
 #ifdef HAVE_LOCALE_H
 #include <locale.h>
@@ -2441,44 +2443,32 @@ color_hseg (WINDOW *win, INT row, INT x1, INT x2, char ch)
 	for (i=x1; i<=x2; ++i)
 		mvwaddch(win, row, i, ch);
 }
-/*===============================================
- * display_status -- put string in status line
- * We don't touch the status_transitory flag
- * That is caller's responsibility.
- *=============================================*/
+
+/* display_status -- put string in status line
+   We don't touch the status_transitory flag
+   That is caller's responsibility. */
+
 static void
 display_status (STRING text)
 {
-	UIWINDOW uiwin = main_win;
-	WINDOW *win = uiw_win(uiwin);
-	INT row;
-	/* first store it */
-	llstrncpy(status_showing, text, sizeof(status_showing), uu8);
-	if ((INT)strlen(text)>ll_cols-6) {
-		status_showing[ll_cols-8] = 0;
-		strcat(status_showing, "...");
-	}
-	/* then display it */
-	row = ll_lines-2;
-	clear_hseg(win, row, 2, ll_cols-2);
-	wmove(win, row, 2);
-	mvccwaddstr(win, row, 2, status_showing);
-	place_cursor_main();
-	wrefresh(win);
+  UIWINDOW uiwin = main_win;
+  WINDOW *win = uiw_win(uiwin);
+  INT row;
+  /* first store it */
+  llstrncpy(status_showing, text, sizeof(status_showing), uu8);
+  if ((INT)strlen(text)>ll_cols-6) {
+    status_showing[ll_cols-8] = 0;
+    strcat(status_showing, "...");
+  }
+  /* then display it */
+  row = ll_lines-2;
+  clear_hseg(win, row, 2, ll_cols-2);
+  wmove(win, row, 2);
+  mvccwaddstr(win, row, 2, status_showing);
+  place_cursor_main();
+  wrefresh(win);
 }
 
-/*=========================================
- * msg_output -- handle any message
- * delegates to msg_outputv
- *=======================================*/
-void
-msg_output (MSG_LEVEL level, STRING fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	msg_outputv(level, fmt, args);
-	va_end(args);
-}
 /*=====================================
  * msg_width -- get max width of msgs
  *===================================*/
@@ -2487,8 +2477,9 @@ msg_width (void)
 {
 	return ll_cols-6;
 }
+#if 1			   /* for now... */
 /*=========================================
- * msg_outputv -- output message varargs style arguments
+ * curses_outputv -- output message varargs style arguments
  * Actually all other msg functions delegate to here.
  *  @level:     -1=error,0=info,1=status
  *  @fmt:   [IN]  printf style format string
@@ -2496,7 +2487,8 @@ msg_width (void)
  * Puts into message list and/or into status area
  *=======================================*/
 void
-msg_outputv (MSG_LEVEL level, STRING fmt, va_list args)
+curses_outputv (ARG_UNUSED(void *data),
+		MSG_LEVEL level, STRING fmt, va_list args)
 {
 	char buffer[250];
 	STRING ptr;
@@ -2567,6 +2559,7 @@ append_to_msg_list (STRING msg)
 			msg_list = create_list2(LISTDOFREE);
 		enqueue_list(msg_list, strsave(msg));
 }
+#endif
 /*=========================================
  * begin_action -- prepare to process users choice
  *=======================================*/

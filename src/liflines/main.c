@@ -52,6 +52,8 @@
 #include "feedback.h"
 #include "screen.h"
 
+#include "uiio.h"
+
 /* for parser debugging */
 extern int yydebug;
 
@@ -137,6 +139,8 @@ main (int argc, char **argv)
 	STRING configfile=0;
 	STRING crashlog=NULL;
 	int i=0;
+
+	current_uiio = uiio_curses;
 
 	/* initialize all the low-level platform code */
 	init_arch();

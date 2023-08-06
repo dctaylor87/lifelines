@@ -13,7 +13,7 @@ llines_SOURCES = add.c advedit.c ask.c askgedc.c askprogram.c \
 	main.c menuset.c merge.c miscutls.c \
 	newrecs.c pedigree.c \
 	scan.c screen.c searchui.c selectdb.c show.c swap.c \
-	tandem.c valgdcom.c wprintf.c \
+	tandem.c valgdcom.c \
 	listui.h llinesi.h 
 
 # what goes into llexec ?
@@ -24,6 +24,7 @@ PYTHON_LIBS = @PYTHON_LIBS@
 # extra stuff for lines
 llines_LDADD = ../interp/libinterp.a @LIBPYLLINES@ ../gedlib/libgedcom.a \
 	../btree/libbtree.a ../stdlib/libstdlib.a ../arch/libarch.a \
+	../ui/libui.a \
 	$(PYTHON_LIBS) @LIBINTL@ @LIBICONV@
 
 # extra stuff for llexec
@@ -65,3 +66,6 @@ EXTRA_DIST = llinesi.h screeni.h
 
 ../ui/libuicli.a :
 	$(MAKE) -C ../ui libuicli.a
+
+../ui/libui.a :
+	$(MAKE) -C ../ui libui.a
