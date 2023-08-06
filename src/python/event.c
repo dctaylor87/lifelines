@@ -473,10 +473,12 @@ static struct PyMethodDef Lifelines_Date_Functions[] =
 \t\t12 (yr, year only omitting all else)\n\
 \t\t13 (da/mo yr)\n\
 \t\t14 (As in GEDCOM" },
-   { "stddate",		llpy_stddate_str, METH_VARARGS | METH_KEYWORDS,
+   { "stddate",		(PyCFunction)llpy_stddate_str,
+     METH_VARARGS | METH_KEYWORDS,
      "stddate(EVENT) --> STRING: formatted date string." },
 
-   { "complexformat",	llpy_complexformat, METH_VARARGS | METH_KEYWORDS,
+   { "complexformat",	(PyCFunction)llpy_complexformat,
+     METH_VARARGS | METH_KEYWORDS,
      "complexformat([INT format]) --> INT:\n\
 Format must be either -1 or be in the range [3,8].\n\
 The value -1 just returns the current value without changing it.  Values in\n\
@@ -489,11 +491,13 @@ accompany the date.  Format values:\n\
 \t5 full words,  upper case\n\
 \t6 full words,  title case\n\
 \t8 full words,  lower case" },
-   { "complexdate",	llpy_complexdate_str, METH_VARARGS | METH_KEYWORDS,
+   { "complexdate",	(PyCFunction)llpy_complexdate_str,
+     METH_VARARGS | METH_KEYWORDS,
      "complexdate(date) --> STRING: formats and returns date\n\
 using complex date formats previously specified." },
 
-   { "complexpic",	llpy_complexpic, METH_VARARGS | METH_KEYWORDS,
+   { "complexpic",	(PyCFunction)llpy_complexpic,
+     METH_VARARGS | METH_KEYWORDS,
      "complexpic(which,[format] --> BOOLEAN\n\
 'which' is one of the constants: DATE_COMPLEX_ABT, DATE_COMPLEX_EST,\n\
 DATE_COMPLEX_CAL, DATE_COMPLEX_BEF, DATE_COMPLEX_AFT, DATE_COMPLEX_BET_AND,\n\

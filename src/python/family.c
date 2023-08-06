@@ -541,6 +541,10 @@ through user interface.  Returns None if family has no spouses or user cancels."
    { "top_node", (PyCFunction)_llpy_top_node, METH_NOARGS,
      "top_node(void) --> NODE.  Returns the top of the NODE tree associated with the RECORD." },
 
+   { "sync", (PyCFunction)llpy_sync_fam, METH_NOARGS,
+     "sync(void) --> BOOLEAN.  Writes modified FAM to database.\n\
+Returns success or failure."},
+
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 
