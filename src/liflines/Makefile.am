@@ -7,7 +7,7 @@ bin_PROGRAMS = llines llexec
 # what goes into lines?
 llines_SOURCES = add.c advedit.c ask.c askgedc.c askprogram.c \
 	browse.c brwsmenu.c \
-	cscurses.c delete.c dynmenu.c \
+	choose.c cscurses.c delete.c dynmenu.c \
 	edit.c export.c import.c interact.c \
 	lbrowse.c lines_usage.c listui.c loadsave.c \
 	main.c menuset.c merge.c miscutls.c \
@@ -17,7 +17,8 @@ llines_SOURCES = add.c advedit.c ask.c askgedc.c askprogram.c \
 	listui.h llinesi.h 
 
 # what goes into llexec ?
-llexec_SOURCES = ask.c lines_usage.c llexec.c selectdb.c miscutls.c llexec.h
+llexec_SOURCES = ask.c choose.c lines_usage.c llexec.c \
+	selectdb.c miscutls.c llexec.h
 
 PYTHON_LIBS = @PYTHON_LIBS@
 
