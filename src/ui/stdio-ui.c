@@ -37,6 +37,9 @@ static struct uiio _uiio_stdio =
 
 UIIO *uiio_stdio = &_uiio_stdio;
 
+/* XXX this should be moved elsewhere, renamed, and passed as an argument.  XXX */
+const char *ui_prompt = "cli> "; /* XXX */
+
 /* stdio_input -- on success (return 0), the input line is placed into
    a newly malloc'ed buffer -- it is the caller's responsibility to
    free the buffer when done with it. On failure, -1 is returned and a
@@ -50,9 +53,10 @@ UIIO *uiio_stdio = &_uiio_stdio;
 static int
 stdio_input (void *data, char **buffer, int *length, char **err_msg)
 {
-  size_t getline_length = 0;
-  ssize_t status;
+  size_t getline_length = 0;	/* size of malloc'ed buffer */
+  ssize_t status;		/* negative for error, otherwise length */
 
+  *buffer = NULL;
   status = getline (buffer, &getline_length, (FILE *)data);
   if (status < 0)
     {
@@ -61,9 +65,19 @@ stdio_input (void *data, char **buffer, int *length, char **err_msg)
       return (-1);
     }
   *err_msg = NULL;
-  ASSERT (getline_length > (ssize_t)__INT_MAX__);
-  *length = (int)getline_length;
-  return (0);			/* XXX double check -- does caller expect 0 or count? XXX */
+
+  /* if there is a terminating newline, strip it */
+  if ((*buffer)[status - 1] == '\n')
+    {
+      (*buffer)[status - 1] = '\0';
+      status--;
+    }
+  ASSERT (status <= (ssize_t)__INT_MAX__);
+  *length = (int)status;
+
+  /* XXX double check -- does caller expect 0 or count?  Also, how to
+     flag error vs EOF?  XXX */
+  return (0);
 }
 
 static int
