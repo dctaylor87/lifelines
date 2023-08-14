@@ -9,8 +9,6 @@ extern int uiio_error (UIIO *uiio, char *buffer, char **err_msg);
 extern void uiio_init (void);
 
 extern void uiio_printf (UIIO *uiio, char *format, ...);
-extern void uiio_msg_error (UIIO *uiio, char *format, ...);
-extern void uiio_msg_info (UIIO *uiio, char *format, ...);
 
 extern void uiio_stdio_init (void);
 extern void uiio_curses_init (void);
