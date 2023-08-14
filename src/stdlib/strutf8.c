@@ -16,6 +16,7 @@
  *  ch: [in] starting byte
  * Created: 2001/08/02 (Perry Rapp)
  *============================*/
+#if 0
 INT
 utf8len (char ch)
 {
@@ -31,6 +32,49 @@ utf8len (char ch)
 	if (!(ch & 0x04))
 		return 5;
 	return 6;
+}
+#endif
+
+INT
+utf8len (char ch)
+{
+  /* verify byte is first byte of a character */
+  if ((ch & 0xc0) == 0x80)
+    {
+      /* byte starts with 10 -- it's not the starting byte! */
+
+      /* XXX insert code to generate an error or print an error
+	 message -- byte is not the first byte of a character XXX */
+      return 0;
+    }
+
+  if ((ch & 0x80) == 0)
+    return 1;			/* top bit clear -- single byte */
+  else if ((ch & 0xe0) == 0xc0)
+    return 2;			/* top 3 bits are 110 */
+  else if ((ch & 0xf0) == 0xe0)
+    return 3;			/* top 4 bits are 1110 */
+  else if ((ch & 0xf8) == 0xf0)
+    return 4;			/* top 5 bits are 1111 0 */
+
+#if 1
+  /* to support the no longer supported 5 and 6 byte characters */
+  else if ((ch & 0xfc) == 0xf8)
+    return 5;			/* top 6 bits are 1111 10 */
+  else if ((ch & 0xfe) == 0xfc)
+    return 6;			/* top 7 bits are 1111 110 */
+
+  /* to continue the pattern and support the never supported 7 and 8
+     byte characters... */
+  else if ((ch & 0xff) == 0xfe)
+    return 7;
+  else
+    return 8;
+#else
+  /* XXX insert code to generate an error or print an error
+     message -- it is not a valid character encoding XXX */
+  return 0;
+#endif
 }
 /*==============================
  * str8chlen -- Length of a UTF-8 string in characters
