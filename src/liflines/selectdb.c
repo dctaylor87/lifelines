@@ -43,7 +43,7 @@
 #include "llinesi.h"
 #include "indiseq.h"
 #include "feedback.h"
-
+#include "ui.h"
 
 /*********************************************
  * local function prototypes
