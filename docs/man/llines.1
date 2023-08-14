@@ -82,6 +82,30 @@ option.)
 .PP
 \fIdbverify\fR is a utility program to verify Lifelines databases.
 For information about options, run \fIdbverify\fR with the \-h option.
+.SH CONFIGURATION FILES
+The LifeLines programs look for configuration files in a variety of
+locations.  If a configuratiion file is specified on the command line,
+it is read.  Otherwise, if the environment variables
+.B LLCONFIGFILE
+exists, the file pointed to is read.  Otherwise, the following three
+configuration files are searched for and read, in turn, if found:
+.br
+.I /etc/lifelines.conf
+.br
+.I ~/.linesrc
+(on Windows,
+.I ~/lines.cfg
+is read instead).
+.br
+.I ./.linesrc
+(on Windows,
+.I ./lines.cfg
+is read instead)
+
+Finally, if the database defines the option
+.B LLCONFIGFILE
+then that file is read.
+
 .SH FILES
 .I /etc/lifelines.conf
 .br
@@ -89,7 +113,7 @@ For information about options, run \fIdbverify\fR with the \-h option.
 .br
 .I ~/lines.cfg
 .br
-.I ./linesrc
+.I ./.linesrc
 .br
 .I ./lines.cfg
 .RS
