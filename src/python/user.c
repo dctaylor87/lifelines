@@ -133,8 +133,10 @@ static struct PyMethodDef Lifelines_User_Functions[] =
      "getint([prompt]) --> INT; Get integer through user interface." },
    { "getstr",		(PyCFunction)llpy_getstr, METH_VARARGS | METH_KEYWORDS,
      "getstr([prompt]) --> STRING; Get string through user interface." },
+#if 0
    { "menuchoose",	(PyCFunction)llpy_menuchoose, METH_VARARGS | METH_KEYWORDS,
      "menuchoose(choices,[prompt]) --> INTEGER; Select from a collection of choices." },
+#endif
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 
