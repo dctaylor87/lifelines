@@ -410,8 +410,10 @@ prompt_for_db:
 		release_table(exargs);
 		exargs = 0;
 	}
+#if 0				/* this will be initialized if we use it -p/-P */
 #if defined(HAVE_PYTHON)
 	llpy_init ();
+#endif
 #endif
 
 	if (exprogs) {
