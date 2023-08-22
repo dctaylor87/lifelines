@@ -17,7 +17,7 @@ static int
 stdio_input (void *data, char **buffer, int *length, char **err_msg);
 
 static int
-stdio_output (void *data, char *buffer, char **err_msg);
+stdio_output (void *data, const char *buffer, char **err_msg);
 
 static void
 stdio_outputv (void *data, MSG_LEVEL level, STRING fmt, va_list args);
@@ -81,7 +81,7 @@ stdio_input (void *data, char **buffer, int *length, char **err_msg)
 }
 
 static int
-stdio_output (void *data, char *buffer, char **err_msg)
+stdio_output (void *data, const char *buffer, char **err_msg)
 {
   FILE *fp = (FILE *)data;
   int status;

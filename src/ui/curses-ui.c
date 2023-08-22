@@ -22,10 +22,10 @@ static int
 curses_input (void *data, char **buffer, int *length, char **err_msg);
 
 static int
-curses_output (void *data, char *buffer, char **err_msg);
+curses_output (void *data, const char *buffer, char **err_msg);
 
 static int
-curses_error (void *data, char *buffer, char **err_msg);
+curses_error (void *data, const char *buffer, char **err_msg);
 #if 0				/* for now... */
 static void
 curses_outputv (void *data, char **err_msg,
@@ -43,7 +43,7 @@ static struct uiio _uiio_curses =
     0,
     curses_input,
     curses_output,
-    curses_output,
+    curses_error,
     curses_outputv
   };
 
@@ -56,13 +56,13 @@ curses_input (void *data, char **buffer, int *length, char **err_msg)
 }
 
 static int
-curses_output (void *data, char *buffer, char **err_msg)
+curses_output (void *data, const char *buffer, char **err_msg)
 {
   ASSERT (0);			/* not yet implemented */
 }
 
 static int
-curses_error (void *data, char *buffer, char **err_msg)
+curses_error (void *data, const char *buffer, char **err_msg)
 {
   ASSERT (0);			/* not yet implemented */
 }
