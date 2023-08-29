@@ -1,7 +1,5 @@
 # This makefile creates the docs/man directory
 
-# AUTOMAKE_OPTIONS = no-dependencies
-
 #############
 # Man Pages #
 #############

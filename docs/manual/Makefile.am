@@ -1,7 +1,5 @@
 # This makefile creates the docs/manual directory
 
-# AUTOMAKE_OPTIONS = no-dependencies
-
 ###################
 # Manuals
 ###################
