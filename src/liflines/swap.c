@@ -119,7 +119,7 @@ gotfam:
 
 	if (!confirm_and_swap_children_impl(fam, one, two))
 		return FALSE;
-	message("%s", _(qSokcswp));
+	msg_info("%s", _(qSokcswp));
 	return TRUE;
 }
 /*=============================================
@@ -332,6 +332,6 @@ swap_families (RECORD irec)
 	nchild(one) = nchild(two);
 	nchild(two) = tmp;
 	indi_to_dbase(indi);
-	message("%s", _(qSokfswp));
+	msg_info("%s", _(qSokfswp));
 	return TRUE;
 }

@@ -663,7 +663,7 @@ editfam:
 	/* Add the new record to the database */
 	add_new_fam_to_db(fam2, spouse1, spouse2, child);
 
-	message("%s", _(qSgdfadd));
+	msg_info("%s", _(qSgdfadd));
 
 	key = rmvat(nxref(fam2));
 	return key_to_record(key);

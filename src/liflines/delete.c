@@ -185,7 +185,7 @@ choose_and_remove_spouse (RECORD irec, RECORD frec, BOOLEAN nolast)
 		msg_error("%s", _(qSntsinf));
 		return FALSE;
 	}
-	message("%s", _(qSoksrmv));
+	msg_info("%s", _(qSoksrmv));
 	return TRUE;
 }
 /*===========================================
@@ -227,6 +227,6 @@ choose_and_remove_child (RECORD irec, RECORD frec, BOOLEAN nolast)
 		return FALSE;
 	}
 
-	message("%s", _(qSokcrmv));
+	msg_info("%s", _(qSokcrmv));
 	return TRUE;
 }
