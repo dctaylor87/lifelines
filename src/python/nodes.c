@@ -374,7 +374,6 @@ static void llpy_node_dealloc (PyObject *self)
 	       (void *)self, Py_REFCNT (self));
     }
   nrefcnt(node->lnn_node)--;
-  free_nodes (node->lnn_node);
   node->lnn_node = 0;
   node->lnn_type = 0;
   Py_TYPE(self)->tp_free (self);
