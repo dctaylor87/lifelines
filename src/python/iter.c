@@ -345,7 +345,7 @@ static PyObject *llpy_nodeiter_iternext (PyObject *self)
 
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_nodeiter_iternext entry: type %c current %p refcnt %ld\n",
+      fprintf (stderr, "llpy_nodeiter_iternext entry: type %d current %p refcnt %ld\n",
 	       iter->ni_type, (void *)iter->ni_cur_node, Py_REFCNT (self));
     }
 
