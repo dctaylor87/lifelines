@@ -37,6 +37,12 @@ static PyObject *llpy_key_to_record (PyObject *self ATTRIBUTE_UNUSED, PyObject *
   if (! PyArg_ParseTupleAndKeywords (args, kw, "s|z", keywords, &key, &type))
     return NULL;
 
+  /* convenience -- if a node has a xref, NODE.value() returns it with
+     @'s around it -- this saves the user from having to strip them
+     off */
+  if (key[0] == '@')
+    key = rmvat (key);
+
   if (type)
     {
       switch (type[0])
