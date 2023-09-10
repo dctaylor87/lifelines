@@ -226,22 +226,24 @@ are used.
 
 @subsection Event NODE related
 The following functions are instance methods.
-@deftypefun INDI birth (void) @arrow{} EVENT or @code{None}
+@deftypefun INDI birth (void) @arrow{} NODE or @code{None}
 @findex birth
 
-Returns the first @code{BIRT} event of INDI; @code{None} if no event is found.
+Returns the first @code{BIRT} event of INDI; @code{None} if no birth
+event is found.
 
 @end deftypefun
-@deftypefun INDI death (void) @arrow{} EVENT or @code{None}
+@deftypefun INDI death (void) @arrow{} NODE or @code{None}
 @findex death
 
-Returns the first @code{DEAT} event of INDI; @code{None} if no event is found.
+Returns the first @code{DEAT} event of INDI; @code{None} if no death
+event is found.
 
 @end deftypefun
-@deftypefun INDI burial (void) @arrow{} EVENT or @code{None}
+@deftypefun INDI burial (void) @arrow{} NODE or @code{None}
 @findex burial
 
-Returns the first burial event of INDI; @code{None} if no event is found.
+Returns the first burial event of INDI; @code{None} if no burial event is found.
 
 @end deftypefun
 @subsection Family related
@@ -410,13 +412,15 @@ the database in key order.
 @subsection Event related
 The following functions are instance methods.
 
-@deftypefun FAM marriage (void) @arrow{} EVENT or @code{None}
+@deftypefun FAM marriage (void) @arrow{} NODE or @code{None}
 @findex marriage
 
-Returns first marriage event of FAM.  @code{None} if no event is found.
+Returns first marriage event of FAM.  @code{None} if no marriage event
+is found.
 @end deftypefun
 
 @subsection Person related
+The following functions are instance methods.
 
 @deftypefun FAM husband (void) @arrow{} INDI or @code{None}
 @findex husband
@@ -656,6 +660,8 @@ Returns the NODE that is the top of the NODE tree associated with the RECORD.
 Works for each kind of RECORD.
 @end deftypefun
 
+The following functions are not instance methods:
+
 @defun key_to_record (key, [type]) @arrow{} RECORD or None
 @findex key_to_record
 Looks up and returns the database entry having the specified key.  If
@@ -665,6 +671,11 @@ is required.  Argument @code{type}, if supplied, must be
 @acronym{GEDCOM} tag that is part of the RECORD's top node.  That is,
 when supplied, the type must be one of the strings ``FAM'', ``INDI'',
 ``SOUR'', ``EVEN'', ``REPO'', ``SUBM'', ``SNOTE'', or ``OBJE''.
+
+NOTE: Some functions, e.g., the node instance function @code{value},
+will return the xref with @@'s present (as they are present in the
+GEDCOM, and so are part of the value).  As a convenience to the user
+@code{key_to_record} will strip them.
 @end defun
 
 @defun keynum_to_record (keynum, type) @arrow{} RECORD or None
@@ -1076,12 +1087,15 @@ to return the previous custom complex pic.
 @end defun
 
 @section Value Extraction Functions
+The following function is an instance function:
 
 @deftypefun NODE extractdate
 @findex extractdate
 
 XXX not yet implemented XXX
 @end deftypefun
+
+The following function is NOT an instance function:
 
 @defun extractdatestr
 @findex extractdatestr
@@ -1184,7 +1198,7 @@ N.B.: There are two types of events --
 @item
 RECORD EVENTs -- which are a Lifelines extension.
 @item
-NODE EVENTs -- such as births and marriages.
+NODE events -- such as births and marriages.
 @end itemize
 We are concerned here with RECORDs.
 
@@ -1228,7 +1242,7 @@ distinguish a ``family'' NODE from an ``individual'' NODE, other than
 which tree it is in.  Additionally, there are ``temp'' NODEs which are
 NODEs that are not associated with any RECORD.
 
-To get an iterator for a NODE, call instance function @code{nodeiter}.
+To get an iterator for a NODE, call the instance function @code{nodeiter}.
 Its signature is:
 
 @deftypefun NODE noteiter (type, [tag]) @arrow{} Iterator
