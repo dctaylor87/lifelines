@@ -170,9 +170,6 @@ PyInit_llines(void)
   if (PyType_Ready(&llines_individual_type) < 0)
     return NULL;
 
-  if (PyType_Ready(&llines_event_type) < 0)
-    return NULL;
-
   if (PyType_Ready(&llines_source_type) < 0)
     return NULL;
 

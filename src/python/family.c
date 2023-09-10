@@ -43,7 +43,7 @@ static PyObject *llpy_marriage (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
   NODE fam_node;
   NODE event = NULL;
-  LLINES_PY_EVEN_NODE *marr;
+  LLINES_PY_NODE *marr;
 
   fam_node = nztop (fam->llr_record);
   event = MARR (fam_node);
@@ -51,13 +51,13 @@ static PyObject *llpy_marriage (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   if (! event)
     Py_RETURN_NONE;
 
-  marr = PyObject_New (LLINES_PY_EVEN_NODE, &llines_event_type);
+  marr = PyObject_New (LLINES_PY_NODE, &llines_node_type);
   if (! marr)
     return NULL;		/* PyObject_New failed? -- out of memory?  */
 
   nrefcnt(event)++;
-  marr->lne_node = event;
-  marr->lne_type = LLINES_TYPE_EVEN;
+  marr->lnn_node = event;
+  marr->lnn_type = LLINES_TYPE_FAM;
 
   return ((PyObject *)marr);
 }
@@ -507,7 +507,7 @@ static PyObject *llpy_family_iter(PyObject *self ATTRIBUTE_UNUSED)
 static struct PyMethodDef Lifelines_Family_Methods[] =
   {
    { "marriage",	llpy_marriage, METH_NOARGS,
-     "(FAM).marriage --> EVENT: First marriage event of FAM; None if no event is found." },
+     "(FAM).marriage --> NODE: First marriage event of FAM; None if no event is found." },
    { "husband",		llpy_husband, METH_NOARGS,
      "(FAM).husband --> INDI: First husband of FAM; None if no person in the role." },
    { "wife",		llpy_wife, METH_NOARGS,

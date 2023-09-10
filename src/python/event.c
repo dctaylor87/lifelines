@@ -1,7 +1,7 @@
-/* event.c -- event functions
+/* event.c -- NODE event functions
 
    These are the bulk of the functions that are documented in the
-   'Event' section of the manual.  */
+   'NODE Event' section of the manual.  */
 
 
 #define PY_SSIZE_T_CLEAN
@@ -19,13 +19,9 @@
 #include "python-to-c.h"
 #include "types.h"
 
-/* forward references */
+#include "event.h"
 
-static PyObject *llpy_date (PyObject *self, PyObject *args);
-static PyObject *llpy_place (PyObject *self, PyObject *args);
-static PyObject *llpy_year (PyObject *self, PyObject *args);
-static PyObject *llpy_long (PyObject *self, PyObject *args);
-static PyObject *llpy_short (PyObject *self, PyObject *args);
+/* forward references */
 
 static PyObject *llpy_dayformat (PyObject *self, PyObject *args, PyObject *kw);
 static PyObject *llpy_monthformat (PyObject *self, PyObject *args, PyObject *kw);
@@ -33,8 +29,6 @@ static PyObject *llpy_yearformat (PyObject *self, PyObject *args, PyObject *kw);
 static PyObject *llpy_eraformat (PyObject *self, PyObject *args, PyObject *kw);
 static PyObject *llpy_dateformat (PyObject *self, PyObject *args, PyObject *kw);
 static PyObject *llpy_complexformat (PyObject *self, PyObject *args, PyObject *kw);
-
-static void llpy_event_dealloc (PyObject *self);
 
 /* might make this visible, for now it is private */
 static struct py_dateformat
@@ -47,10 +41,10 @@ static struct py_dateformat
   int pyd_complexformat;
 } py_dateformat = { 0, 3, 0, 0, 0, 1};
 
-static PyObject *llpy_date (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+PyObject *llpy_date (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_EVEN_NODE *event = (LLINES_PY_EVEN_NODE *) self;
-  NODE node = event->lne_node;
+  LLINES_PY_NODE *event = (LLINES_PY_NODE *) self;
+  NODE node = event->lnn_node;
   STRING str = event_to_date (node, FALSE);
 
   if (! str)			/* no date recorded for event */
@@ -59,10 +53,10 @@ static PyObject *llpy_date (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("s", str);
 }
 
-static PyObject *llpy_place (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+PyObject *llpy_place (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_EVEN_NODE *event = (LLINES_PY_EVEN_NODE *) self;
-  NODE node = event->lne_node;
+  LLINES_PY_NODE *event = (LLINES_PY_NODE *) self;
+  NODE node = event->lnn_node;
   STRING str = event_to_plac (node, FALSE);
 
   if (! str)			/* no place recorded for event */
@@ -71,10 +65,10 @@ static PyObject *llpy_place (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("s", str);
 }
 
-static PyObject *llpy_year (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+PyObject *llpy_year (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_EVEN_NODE *event = (LLINES_PY_EVEN_NODE *) self;
-  STRING str = event_to_date (event->lne_node, FALSE);
+  LLINES_PY_NODE *event = (LLINES_PY_NODE *) self;
+  STRING str = event_to_date (event->lnn_node, FALSE);
   GDATEVAL gdv;
   char buffer[20];
 
@@ -102,10 +96,10 @@ static PyObject *llpy_year (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("s", str);
 }
 
-static PyObject *llpy_long (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+PyObject *llpy_long (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_EVEN_NODE *event = (LLINES_PY_EVEN_NODE *) self;
-  NODE node = event->lne_node;
+  LLINES_PY_NODE *event = (LLINES_PY_NODE *) self;
+  NODE node = event->lnn_node;
   struct tag_rfmt rpt_format = { NULL, NULL, "%1 %2" };
   STRING str = event_to_string (node, &rpt_format);
 
@@ -115,10 +109,10 @@ static PyObject *llpy_long (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   return Py_BuildValue ("s", str);
 }
 
-static PyObject *llpy_short (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+PyObject *llpy_short (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_EVEN_NODE *event = (LLINES_PY_EVEN_NODE *) self;
-  NODE node = event->lne_node;
+  LLINES_PY_NODE *event = (LLINES_PY_NODE *) self;
+  NODE node = event->lnn_node;
   struct tag_rfmt rpt_format = { shorten_date, shorten_plac, "%1 %2" };
   STRING str = event_to_string (node, &rpt_format);
 
@@ -293,7 +287,7 @@ static PyObject *llpy_complexdate_str (PyObject *self ATTRIBUTE_UNUSED, PyObject
   return Py_BuildValue ("s", output_str);
 }
 
-static PyObject *llpy_complexdate_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+PyObject *llpy_complexdate_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_NODE *py_node = (LLINES_PY_NODE *) self;
   STRING input_str;
@@ -338,7 +332,7 @@ static PyObject *llpy_stddate_str  (PyObject *self ATTRIBUTE_UNUSED, PyObject *a
    finds the date, breaks it apart, formats it according to the
    previously specified formats, and returns the resulting string.  */
 
-static PyObject *llpy_stddate_node  (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
+PyObject *llpy_stddate_node  (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 {
   LLINES_PY_NODE *py_node = (LLINES_PY_NODE *) self;
   char *input_date;
@@ -375,44 +369,6 @@ static PyObject *llpy_dateformat (PyObject *self ATTRIBUTE_UNUSED, PyObject *arg
 
   return Py_BuildValue ("i", old_format);
 }
-
-static void llpy_event_dealloc (PyObject *self)
-{
-  LLINES_PY_EVEN_NODE *even = (LLINES_PY_EVEN_NODE *) self;
-  if (llpy_debug)
-    {
-      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
-	       (void *)self, Py_REFCNT (self));
-    }
-  nrefcnt(even->lne_node)--;
-  even->lne_node = 0;
-  even->lne_type = 0;
-  Py_TYPE(self)->tp_free (self);
-#if 0
-  Py_DECREF (Py_TYPE(self));
-#endif
-}
-
-static struct PyMethodDef Lifelines_Event_Methods[] =
-  {
-   { "date",		llpy_date, METH_NOARGS,
-     "date(EVENT) -> STRING: value of first DATE line for EVENT." },
-   { "place",		llpy_place, METH_NOARGS,
-     "place(EVENT) -> STRING: value of first PLAC line for EVENT." },
-   { "year",		llpy_year, METH_NOARGS,
-     "year(EVENT) --> STRING: year or first string of 3-4 digits in DATE line of EVENT." },
-   { "long",		llpy_long, METH_NOARGS,
-     "long(EVENT) --> STRING: values of first DATE and PLAC lines of EVENT" },
-   { "short",		llpy_short, METH_NOARGS,
-     "short(EVENT) --> STRING: abbreviated values of DATE and PLAC lines of EVENT." },
-   { "stddate",		llpy_stddate_node, METH_NOARGS,
-     "stddate(EVENT) --> STRING: formatted date string." },
-   { "complexdate",	llpy_complexdate_node, METH_NOARGS,
-     "complexdate(void) --> STRING; Formats and returns NODEs date\n\
-using complex date formats previously specified." },
-
-   { NULL, 0, 0, NULL }		/* sentinel */
-  };
 
 static struct PyMethodDef Lifelines_Date_Functions[] =
   {
@@ -475,7 +431,7 @@ static struct PyMethodDef Lifelines_Date_Functions[] =
 \t\t14 (As in GEDCOM" },
    { "stddate",		(PyCFunction)llpy_stddate_str,
      METH_VARARGS | METH_KEYWORDS,
-     "stddate(EVENT) --> STRING: formatted date string." },
+     "stddate(NODE) --> STRING: formatted date string." },
 
    { "complexformat",	(PyCFunction)llpy_complexformat,
      METH_VARARGS | METH_KEYWORDS,
@@ -504,19 +460,6 @@ DATE_COMPLEX_CAL, DATE_COMPLEX_BEF, DATE_COMPLEX_AFT, DATE_COMPLEX_BET_AND,\n\
 DATE_COMPLEX_FROM, DATE_COMPLEX_TO, and DATE_COMPLEX_FROM_TO.\n\
 And 'format' is a STRING or None." },
    { NULL, 0, 0, NULL }		/* sentinel */
-  };
-
-PyTypeObject llines_event_type =
-  {
-   PyVarObject_HEAD_INIT(NULL,0)
-   .tp_name = "llines.Event",
-   .tp_doc = "Lifelines GEDCOM Event Node",
-   .tp_basicsize = sizeof (LLINES_PY_EVEN_NODE),
-   .tp_itemsize = 0,
-   .tp_flags= Py_TPFLAGS_DEFAULT,
-   .tp_new = PyType_GenericNew,
-   .tp_dealloc = llpy_event_dealloc,
-   .tp_methods = Lifelines_Event_Methods,
   };
 
 void llpy_event_init (void)

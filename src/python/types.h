@@ -7,12 +7,6 @@ typedef struct {
   NODE lnn_node;		/* Lifelines GEDCOM generic NODE */
 } LLINES_PY_NODE;
 
-typedef struct {
-  PyObject_HEAD
-  int lne_type;
-  NODE lne_node;		/* Lifelines GEDCOM EVEN NODE */
-} LLINES_PY_EVEN_NODE;
-
 /* type values for records and nodes -- will likely be augmented in
    the future.  And might become numerical rather than mnemonic.  The
    'OTHR' type should disappear -- it is a catchall -- and be broken

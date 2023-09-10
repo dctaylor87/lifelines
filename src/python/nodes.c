@@ -10,6 +10,8 @@
 #include "types.h"
 #include "python-to-c.h"
 
+#include "event.h"
+
 /* forward references */
 
 static PyObject *llpy_xref (PyObject *self, PyObject *args);
@@ -413,6 +415,23 @@ It is (currently) an error for it to be the top-node of the tree." },
      "nodeiter(type, [tag]) --> Iterator over node tree.\n\
 TYPE is an int -- one of ITER_CHILDREN or ITER_TRAVERSE.\n\
 TAG, if specified, restricts the iterator to just those nodes having that tag." },
+
+   { "date",		llpy_date, METH_NOARGS,
+     "(NODE).date(void) -> STRING: value of first DATE line for NODE." },
+   { "place",		llpy_place, METH_NOARGS,
+     "(NODE).place(void) -> STRING: value of first PLAC line for NODE." },
+   { "year",		llpy_year, METH_NOARGS,
+     "(NODE).year(void) --> STRING: year or first string of 3-4 digits in DATE line of NODE." },
+   { "long",		llpy_long, METH_NOARGS,
+     "(NODE).long(void) --> STRING: values of first DATE and PLAC lines of NODE" },
+   { "short",		llpy_short, METH_NOARGS,
+     "(NODE).short(void) --> STRING: abbreviated values of DATE and PLAC lines of NODE." },
+   { "stddate",		llpy_stddate_node, METH_NOARGS,
+     "(NODE).stddate(void) --> STRING: formatted date string." },
+   { "complexdate",	llpy_complexdate_node, METH_NOARGS,
+     "(NODE).complexdate(void) --> STRING; Formats and returns NODEs date\n\
+using complex date formats previously specified." },
+
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 

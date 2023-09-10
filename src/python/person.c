@@ -236,7 +236,7 @@ static PyObject *llpy_trimname (PyObject *self, PyObject *args, PyObject *kw)
   return Py_BuildValue ("s", str);
 }
 
-/* llpy_birth (INDI) --> EVENT
+/* llpy_birth (INDI) --> NODE
 
    Returns the first birth event of INDI; None if no event is
    found.  */
@@ -246,23 +246,23 @@ static PyObject *llpy_birth (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   LLINES_PY_RECORD *indi = (LLINES_PY_RECORD *) self;
   NODE indi_node = nztop(indi->llr_record);
   NODE birth = BIRT(indi_node);
-  LLINES_PY_EVEN_NODE *event;
+  LLINES_PY_NODE *event;
   
   if (! birth)
     Py_RETURN_NONE;
 
-  event = PyObject_New(LLINES_PY_EVEN_NODE, &llines_event_type);
+  event = PyObject_New(LLINES_PY_NODE, &llines_node_type);
   if (! event)
     return NULL;		/* PyObject_New failed */
 
   nrefcnt(birth)++;
-  event->lne_node = birth;
-  event->lne_type = LLINES_TYPE_EVEN;
+  event->lnn_node = birth;
+  event->lnn_type = LLINES_TYPE_INDI;
 
   return (PyObject *)event;
 }
 
-/* llpy_death (INDI) --> EVENT
+/* llpy_death (INDI) --> NODE
 
    Returns the first death event of INDI; None if no event is
    found.  */
@@ -272,23 +272,23 @@ static PyObject *llpy_death (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   LLINES_PY_RECORD *indi = (LLINES_PY_RECORD *) self;
   NODE indi_node = nztop(indi->llr_record);
   NODE death = DEAT(indi_node);
-  LLINES_PY_EVEN_NODE *event;
+  LLINES_PY_NODE *event;
   
   if (! death)
     Py_RETURN_NONE;
 
-  event = PyObject_New(LLINES_PY_EVEN_NODE, &llines_event_type);
+  event = PyObject_New(LLINES_PY_NODE, &llines_node_type);
   if (! event)
     return NULL;		/* PyObject_New failed */
 
   nrefcnt(death)++;
-  event->lne_node = death;
-  event->lne_type = LLINES_TYPE_EVEN;
+  event->lnn_node = death;
+  event->lnn_type = LLINES_TYPE_INDI;
 
   return (PyObject *)event;
 }
 
-/* llpy_burial (INDI) --> EVENT
+/* llpy_burial (INDI) --> NODE
 
    Returns the first burial event of INDI; None if no event is
    found.  */
@@ -298,18 +298,18 @@ static PyObject *llpy_burial (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
   LLINES_PY_RECORD *indi = (LLINES_PY_RECORD *) self;
   NODE indi_node = nztop(indi->llr_record);
   NODE burial = BURI(indi_node);
-  LLINES_PY_EVEN_NODE *event;
+  LLINES_PY_NODE *event;
   
   if (! burial)
     Py_RETURN_NONE;
 
-  event = PyObject_New(LLINES_PY_EVEN_NODE, &llines_event_type);
+  event = PyObject_New(LLINES_PY_NODE, &llines_node_type);
   if (! event)
     return NULL;		/* PyObject_New failed */
 
   nrefcnt(burial)++;
-  event->lne_node = burial;
-  event->lne_type = LLINES_TYPE_EVEN;
+  event->lnn_node = burial;
+  event->lnn_type = LLINES_TYPE_INDI;
 
   return (PyObject *)event;
 }
@@ -1191,11 +1191,11 @@ same order and format as found in the first '1 NAME' line of the record." },
    { "trimname",	(PyCFunction)llpy_trimname, METH_VARARGS | METH_KEYWORDS,
      "trimname(MAX_LENGTH) --> STRING; returns name trimmed to MAX_LENGTH." },
    { "birth",		(PyCFunction)llpy_birth, METH_NOARGS,
-     "birth(void) -> EVENT: First birth event of INDI; None if no event is found." },
+     "birth(void) -> NODE: First birth event of INDI; None if no event is found." },
    { "death",		(PyCFunction)llpy_death, METH_NOARGS,
-     "death(void) -> EVENT: First death event of INDI; None if no event is found." },
+     "death(void) -> NODE: First death event of INDI; None if no event is found." },
    { "burial",		(PyCFunction)llpy_burial, METH_NOARGS,
-     "burial(void) -> EVENT: First burial event of INDI; None if no event is found." },
+     "burial(void) -> NODE: First burial event of INDI; None if no event is found." },
    { "father",		(PyCFunction)llpy_father, METH_NOARGS,
      "father(void) -> INDI: First father of INDI; None if no person in the role." },
    { "mother",		(PyCFunction)llpy_mother, METH_NOARGS,
