@@ -50,6 +50,7 @@ static PyObject *llpy_events (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
+  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_EVEN;
   iter->li_current = 0;
 
@@ -73,6 +74,7 @@ static PyObject *llpy_individuals (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
+  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_INDI;
   iter->li_current = 0;
 
@@ -96,6 +98,7 @@ static PyObject *llpy_families (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
+  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_FAM;
   iter->li_current = 0;
 
@@ -119,6 +122,7 @@ static PyObject *llpy_sources (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
+  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_SOUR;
   iter->li_current = 0;
 
@@ -142,6 +146,7 @@ static PyObject *llpy_others (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
+  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_OTHR;
   iter->li_current = 0;
 
@@ -159,8 +164,8 @@ static void llpy_iter_dealloc (PyObject *self)
       fprintf (stderr, "llpy_iter_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
-#if 0
   PyObject_Del (self);
+#if 0
   Py_DECREF (tp);
 #endif
 }
@@ -304,17 +309,19 @@ static void llpy_nodeiter_dealloc (PyObject *self)
       fprintf (stderr, "llpy_nodeiter_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
-  nrefcnt(nodeiter->ni_top_node)--;
+  if (nodeiter->ni_top_node)
+    nrefcnt(nodeiter->ni_top_node)--;
   nodeiter->ni_top_node = 0;
 
-  nrefcnt(nodeiter->ni_cur_node)--;
+  if (nodeiter->ni_cur_node)
+    nrefcnt(nodeiter->ni_cur_node)--;
   nodeiter->ni_cur_node = 0;
 
   if (nodeiter->ni_tag)
     free (nodeiter->ni_tag);
   nodeiter->ni_tag = 0;
-#if 0
   PyObject_Del (self);
+#if 0
   Py_DECREF (tp);
 #endif
 }
