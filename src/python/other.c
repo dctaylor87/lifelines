@@ -24,7 +24,7 @@ static void llpy_other_dealloc (PyObject *self)
   LLINES_PY_RECORD *othr = (LLINES_PY_RECORD *) self;
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+      fprintf (stderr, "llpy_other_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
   release_record (othr->llr_record);
@@ -41,7 +41,7 @@ static void llpy_event_dealloc (PyObject *self)
   LLINES_PY_RECORD *even = (LLINES_PY_RECORD *) self;
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+      fprintf (stderr, "llpy_event_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
   release_record (even->llr_record);

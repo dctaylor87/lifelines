@@ -24,7 +24,7 @@ static void llpy_source_dealloc (PyObject *self)
   LLINES_PY_RECORD *sour = (LLINES_PY_RECORD *) self;
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+      fprintf (stderr, "llpy_source_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
   release_record (sour->llr_record);
