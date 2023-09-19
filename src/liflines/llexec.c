@@ -334,6 +334,11 @@ prompt_for_db:
 		goto usage;
 	}
 
+	if (exargs) {
+		set_cmd_options(exargs);
+		release_table(exargs);
+		exargs = 0;
+	}
 	/* Open database, prompting user if necessary */
 	if (1) {
 		STRING errmsg=0;
@@ -358,11 +363,6 @@ prompt_for_db:
 	}
 	/* does not use show module */
 	/* does not use browse module */
-	if (exargs) {
-		set_cmd_options(exargs);
-		release_table(exargs);
-		exargs = 0;
-	}
 	if (exprogs) {
 		BOOLEAN picklist = FALSE;
 		BOOLEAN timing = FALSE;
