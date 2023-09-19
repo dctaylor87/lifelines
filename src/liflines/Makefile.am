@@ -28,11 +28,15 @@ llines_LDADD = ../interp/libinterp.a @LIBPYLLINES@ ../gedlib/libgedcom.a \
 	../ui/libui.a \
 	$(PYTHON_LIBS) @LIBINTL@ @LIBICONV@
 
+EXTRA_llines_DEPENDENCIES = $(LIBPYLLINES)
+
 # extra stuff for llexec
 llexec_LDADD = ../interp/libinterp.a @LIBPYLLINES@ ../gedlib/libgedcom.a \
 	../btree/libbtree.a ../stdlib/libstdlib.a ../arch/libarch.a \
 	../ui/libuicli.a \
 	$(PYTHON_LIBS) @LIBINTL@ @LIBICONV@
+
+EXTRA_llexec_DEPENDENCIES = $(LIBPYLLINES)
 
 # $(top_builddir)        for config.h
 # $(top_srcdir)/src/hdrs for headers
