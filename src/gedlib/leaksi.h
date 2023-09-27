@@ -50,7 +50,7 @@ void track_node_refcnt (NODE node, int op, INT refcnt, const char *tag,
   } while (0)
 #else
 #define TRACK_NODE(n,op,msg,file,line)
-#define TRACK_NODE_REFCNT(node,op,file,line)
+#define TRACK_NODE_REFCNT(node,op,function,file,line)
 #endif
 
 #endif /* leaksi_h_included */
