@@ -100,13 +100,74 @@ track_record_refcnt(RECORD rec, int op, INT refcnt, char *file, int line)
 void
 track_node(NODE rec, int op, char *msg, char *file, int line)
 {
-	char *t = (op == 1 ? "ALLOC" : (op == 2 ? "FREE" : "UNKNOWN" ) );
+  char *t;
 
-	if (fpleaks) {
-		fprintf(fpleaks, "NODE(%s,%d): %s: %p %s\n", file, line, t, (void*)rec, msg);
-	}
+  /* only alloc and free should be encountered, others for completeness */
+  switch (op)
+    {
+    case TRACK_OP_ALLOC:
+      t = "ALLOC";
+      break;
+    case TRACK_OP_FREE:
+      t = "FREE";
+      break;
+    case TRACK_OP_REFCNT_INC:
+      t = "INC";
+      break;
+    case TRACK_OP_REFCNT_DEC:
+      t = "DEC";
+      break;
+    default:
+      t = "UNKNOWN";
+      break;
+    }
+  if (fpleaks) {
+    fprintf(fpleaks, "NODE(%s,%d): %s: %p %s\n",
+	    file, line, t, (void*)rec, msg);
+  }
 
-	if (TRACK_BACKTRACE) {
-		dump_backtrace(fpleaks);
-	}
+  if (TRACK_BACKTRACE) {
+    dump_backtrace(fpleaks);
+  }
+}
+
+void
+track_node_refcnt (NODE node, int op, INT refcnt, const char *tag,
+		   const char *function, const char *file, int line)
+{
+  char *t = (op == TRACK_OP_REFCNT_INC ? "INC" : (op == TRACK_OP_REFCNT_DEC ? "DEC" : "UNKNOWN" ) );
+  INT adj = (op == TRACK_OP_REFCNT_INC ? -1    : (op == TRACK_OP_REFCNT_DEC ? 1     : 0 ) );
+
+  /* only refcnt inc and dec should be encountered, others for completeness */
+  switch (op)
+    {
+    case TRACK_OP_ALLOC:
+      t = "ALLOC";
+      adj = 0;
+      break;
+    case TRACK_OP_FREE:
+      t = "FREE";
+      adj = 0;
+      break;
+    case TRACK_OP_REFCNT_INC:
+      t = "INC";
+      adj = -1;			/* we are called AFTER the adjustment */
+      break;
+    case TRACK_OP_REFCNT_DEC:
+      t = "DEC";
+      adj = 1;			/* we are called AFTER the adjustment */
+      break;
+    default:
+      t = "UNKNOWN";
+      adj = 0;
+      break;
+    }
+  if (fpleaks) {
+    fprintf(fpleaks,"NODE(%s,%d): %s %s: %p[%s] " FMT_INT "->" FMT_INT "\n",
+	    file, line, function, t, (void*)node, tag, refcnt+adj, refcnt);
+  }
+
+  if (TRACK_BACKTRACE) {
+    dump_backtrace(fpleaks);
+  }
 }

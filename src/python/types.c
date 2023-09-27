@@ -1,12 +1,17 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "llpy-externs.h"
+#include "python-to-c.h"
 
 #include "llstdlib.h"
 #include "gedcom.h"
 #include "pvalue.h"
 
 #include "types.h"
+
+/* forward references */
+
+static void llpy_record_dealloc (PyObject *self);
 
 /* llines_record_richcompare -- Sorting rules:
 
@@ -163,6 +168,21 @@ Py_hash_t llines_record_hash (PyObject *obj)
   return (hash);
 }
 
+static void llpy_record_dealloc (PyObject *self)
+{
+  LLINES_PY_RECORD *fam = (LLINES_PY_RECORD *) self;
+
+  if (llpy_debug)
+    {
+      fprintf (stderr, "llpy_record_dealloc entry: self %p\n refcnt %ld",
+	       (void *)self, Py_REFCNT (self));
+    }
+  release_record (fam->llr_record);
+  fam->llr_record = 0;
+  fam->llr_type = 0;
+  Py_TYPE(self)->tp_free (self);
+}
+
 /* one time initialization related code */
 
 PyTypeObject llines_record_type =
@@ -174,4 +194,5 @@ PyTypeObject llines_record_type =
    .tp_itemsize = 0,
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
+   .tp_dealloc = llpy_record_dealloc,
   };

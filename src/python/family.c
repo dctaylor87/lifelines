@@ -15,6 +15,7 @@
 #include "indiseq.h"		/* INDISEQ */
 #include "liflines.h"		/* choose_from_indiseq */
 #include "messages.h"
+#include "../gedlib/leaksi.h"
 
 #include "python-to-c.h"
 #include "types.h"
@@ -56,6 +57,7 @@ static PyObject *llpy_marriage (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     return NULL;		/* PyObject_New failed? -- out of memory?  */
 
   nrefcnt(event)++;
+  TRACK_NODE_REFCNT_INC(event);
   marr->lnn_node = event;
   marr->lnn_type = LLINES_TYPE_FAM;
 
@@ -86,7 +88,7 @@ static PyObject *llpy_husband (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
   husb = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! husb)
-    return NULL;		/* PyOBject_New failed -- out of memory? */
+    return NULL;		/* PyObject_New failed -- out of memory? */
 
   husb->llr_record = key_to_irecord (key);
   husb->llr_type = LLINES_TYPE_INDI;
@@ -118,7 +120,7 @@ static PyObject *llpy_wife (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
   wife = PyObject_New (LLINES_PY_RECORD, &llines_individual_type);
   if (! wife)
-    return NULL;		/* PyOBject_New failed -- out of memory? */
+    return NULL;		/* PyObject_New failed -- out of memory? */
 
   wife->llr_record = key_to_irecord (key);
   wife->llr_type = LLINES_TYPE_INDI;
@@ -484,15 +486,13 @@ static void llpy_family_dealloc (PyObject *self)
   fam->llr_record = 0;
   fam->llr_type = 0;
   Py_TYPE(self)->tp_free (self);
-#if 0
-  Py_DECREF (Py_TYPE(self));
-#endif
 }
 
 #if 0
 static PyObject *llpy_family_iter(PyObject *self ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (! iter)
     return NULL;

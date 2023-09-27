@@ -110,8 +110,12 @@ execute_script (CNSTRING report_name)
   INT utf8 = uu8;
   STRING report_pathname;
   char *path;
-  int status;
+  int status = 0;
   PyGILState_STATE py_gil;	/* python's GIL */
+#if 1
+  PyObject *main_module;
+  PyObject *dict;
+#endif
 
   path = getlloptstr ("LLPROGRAMS", ".");
   report_fp = fopenpath (report_name, mode, path, ext, utf8, &report_pathname);
@@ -123,7 +127,62 @@ execute_script (CNSTRING report_name)
       return (-1);
     }
   py_gil = PyGILState_Ensure();
+#if 0
   status = PyRun_SimpleFile (report_fp, report_pathname);
+#else
+  main_module = PyImport_AddModule ("__main__");
+  if (! main_module)
+    {
+      PyErr_Print ();
+      fclose (report_fp);
+      return (-1);
+    }
+  else
+    {
+      Py_INCREF (main_module);
+      dict = PyModule_GetDict (main_module);
+      if (PyRun_File (report_fp, report_name, Py_file_input, dict, dict) == NULL)
+	{
+	  /* failure, if it was exit with zero status, return success anyway */
+	  Py_CLEAR (main_module);
+	  PyObject *exception_type = PyErr_Occurred ();
+	  if (! PyErr_GivenExceptionMatches (exception_type, PyExc_SystemExit))
+	    {
+	      /* not an exit */
+	      PyErr_Print ();
+	      status = -1;
+	    }
+	  else
+	    {
+	      /* it was an 'exit' -- was it a call to exit?  Or a signal? */
+	      PyObject *type;
+	      PyObject *value;
+	      PyObject *traceback;
+	      long exit_code;
+
+	      PyErr_Fetch (&type, &value, &traceback);
+	      exit_code = PyLong_AsLong (value);
+	      if (exit_code == 0)
+		status = 0;
+	      else
+		{
+		  /* was it a call to exit? */
+		  if (WIFEXITED((int)exit_code))
+		    status = WEXITSTATUS ((int)exit_code);
+		  else
+		    {
+		      /* XXX insert code to print a traceback XXX */
+		      status = -1;
+		    }
+		}
+	      Py_XDECREF (type);
+	      Py_XDECREF (value);
+	      Py_XDECREF (traceback);
+	    }
+	}
+      Py_XDECREF (main_module);
+    }
+#endif
   PyGILState_Release(py_gil);
 
   fclose (report_fp);
@@ -141,6 +200,24 @@ llpy_python_interactive (void)
       Py_Initialize ();
       initialized = 1;
     }
+#if 1
   status = PyRun_InteractiveLoop (stdin, "<stdin>");
+#else
+
+#endif
   return (status);
+}
+
+/* llpy_python_terminate -- called during LifeLines shutdown.  If
+   Python has been used, free any Python objects and hence decrement
+   the corresponding NODE and RECORD reference counts */
+
+void
+llpy_python_terminate (void)
+{
+  if (initialized)
+    {
+      (void) Py_FinalizeEx ();
+      initialized = 0;
+    }
 }

@@ -31,9 +31,6 @@ static void llpy_other_dealloc (PyObject *self)
   othr->llr_record = 0;
   othr->llr_type = 0;
   Py_TYPE(self)->tp_free (self);
-#if 0
-  Py_DECREF (Py_TYPE(self));
-#endif
 }
  
 static void llpy_event_dealloc (PyObject *self)
@@ -48,15 +45,13 @@ static void llpy_event_dealloc (PyObject *self)
   even->llr_record = 0;
   even->llr_type = 0;
   Py_TYPE(self)->tp_free (self);
-#if 0
-  Py_DECREF (Py_TYPE(self));
-#endif
 }
 
 #if 0
 static PyObject *llpy_other_iter(PyObject *self)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (! iter)
     return NULL;

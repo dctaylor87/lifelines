@@ -31,15 +31,13 @@ static void llpy_source_dealloc (PyObject *self)
   sour->llr_record = 0;
   sour->llr_type = 0;
   Py_TYPE(self)->tp_free (self);
-#if 0
-  Py_DECREF (Py_TYPE(self));
-#endif
 }
 
 #if 0
 static PyObject *llpy_source_iter(PyObject *self)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (! iter)
     return NULL;

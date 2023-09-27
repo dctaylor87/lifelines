@@ -10,6 +10,7 @@
 
 #include "llstdlib.h"
 #include "gedcom.h"
+#include "../gedlib/leaksi.h"
 
 #include "database.h"
 #include "family.h"
@@ -69,6 +70,7 @@ PyObject *_llpy_top_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
 
   py_node->lnn_type = py_record->llr_type;
   nrefcnt(top)++;
+  TRACK_NODE_REFCNT_INC(top);
   py_node->lnn_node = top;
   return ((PyObject *) py_node);
 }
@@ -182,10 +184,13 @@ PyInit_llines(void)
   if (PyType_Ready(&llines_database_type) < 0)
     return NULL;
 
-  if (PyType_Ready(&llines_iter_type) < 0)
+  if (PyType_Ready(&llines_record_iter_type) < 0)
     return NULL;
 
-  if (PyType_Ready(&llines_nodeiter_type) < 0)
+  if (PyType_Ready(&llines_node_iter_type) < 0)
+    return NULL;
+
+  if (PyType_Ready(&llines_event_type) < 0)
     return NULL;
 
   module = PyModule_Create (&lifelines_module);
@@ -272,10 +277,10 @@ PyInit_llines(void)
       return NULL;
     }
 
-  Py_INCREF (&llines_iter_type);
-  if (PyModule_AddObject (module, "Iter", (PyObject *) &llines_iter_type) < 0)
+  Py_INCREF (&llines_record_iter_type);
+  if (PyModule_AddObject (module, "Iter", (PyObject *) &llines_record_iter_type) < 0)
     {
-      Py_DECREF (&llines_iter_type);
+      Py_DECREF (&llines_record_iter_type);
       Py_DECREF (&llines_record_type);
       Py_DECREF (&llines_other_type);
       Py_DECREF (&llines_source_type);
@@ -287,11 +292,11 @@ PyInit_llines(void)
       return NULL;
     }
 
-  Py_INCREF (&llines_nodeiter_type);
-  if (PyModule_AddObject (module, "Iter", (PyObject *) &llines_nodeiter_type) < 0)
+  Py_INCREF (&llines_node_iter_type);
+  if (PyModule_AddObject (module, "Iter", (PyObject *) &llines_node_iter_type) < 0)
     {
-      Py_DECREF (&llines_nodeiter_type);
-      Py_DECREF (&llines_iter_type);
+      Py_DECREF (&llines_node_iter_type);
+      Py_DECREF (&llines_record_iter_type);
       Py_DECREF (&llines_record_type);
       Py_DECREF (&llines_other_type);
       Py_DECREF (&llines_source_type);
@@ -307,8 +312,8 @@ PyInit_llines(void)
   if (PyModule_AddObject (module, "Database", (PyObject *) &llines_database_type) < 0)
     {
       Py_DECREF (&llines_database_type);
-      Py_DECREF (&llines_nodeiter_type);
-      Py_DECREF (&llines_iter_type);
+      Py_DECREF (&llines_node_iter_type);
+      Py_DECREF (&llines_record_iter_type);
       Py_DECREF (&llines_record_type);
       Py_DECREF (&llines_other_type);
       Py_DECREF (&llines_source_type);

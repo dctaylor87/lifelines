@@ -43,7 +43,7 @@ typedef struct {
   PyObject_HEAD
   int li_type;			/* the type being iterated over, NOT *our* type */
   int li_current;		/* argument to supply to xref_next* function */
-} LLINES_PY_ITER;
+} LLINES_PY_RECORD_ITER;
 
 /* iter functions for NODEs use a different underlying type */
 
@@ -70,8 +70,8 @@ extern PyTypeObject llines_individual_type;
 extern PyTypeObject llines_other_type; /* catchall -- should be broken out */
 extern PyTypeObject llines_source_type;
 
-extern PyTypeObject llines_iter_type;
-extern PyTypeObject llines_nodeiter_type;
+extern PyTypeObject llines_record_iter_type;
+extern PyTypeObject llines_node_iter_type;
 
 /* generic GEDCOM record type -- not sure if we need this */
 

@@ -9,6 +9,7 @@
 #include "llstdlib.h"		/* CALLBACK_FNC */
 #include "uiprompts.h"		/* DOASK1 */
 #include "gedcom.h"		/* RECORD */
+#include "../gedlib/leaksi.h"
 
 #include "python-to-c.h"
 #include "types.h"
@@ -27,19 +28,24 @@ static PyObject *llpy_others (PyObject *self, PyObject *args);
 static int nodeiter_next_child (LLINES_PY_NODEITER *iter);
 static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter);
 
-static void llpy_iter_dealloc (PyObject *self);
-static PyObject *llpy_iter_iter (PyObject *self);
-static PyObject *llpy_iter_iternext (PyObject *self);
+static void llpy_record_iter_dealloc (PyObject *self);
+static PyObject *llpy_record_iter (PyObject *self);
+static PyObject *llpy_record_iternext (PyObject *self);
 
+static void llpy_debug_print_node_iter (const char *prefix,
+					LLINES_PY_NODEITER *self);
+static void llpy_debug_print_node_iter_cur (const char *prefix,
+					    LLINES_PY_NODEITER *iter);
 /* start of code */
 
 /* llpy_events (void) --> Returns an iterator for the set of
    events in the database.  */
 
-static PyObject *llpy_events (PyObject *self ATTRIBUTE_UNUSED,
+static PyObject *llpy_events (PyObject *self,
 			      PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (llpy_debug)
     {
@@ -50,7 +56,6 @@ static PyObject *llpy_events (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
-  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_EVEN;
   iter->li_current = 0;
 
@@ -60,10 +65,11 @@ static PyObject *llpy_events (PyObject *self ATTRIBUTE_UNUSED,
 /* llpy_individuals (void) --> Returns an iterator for the set of
    individuals in the database.  */
 
-static PyObject *llpy_individuals (PyObject *self ATTRIBUTE_UNUSED,
+static PyObject *llpy_individuals (PyObject *self,
 				   PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (llpy_debug)
     {
@@ -74,7 +80,6 @@ static PyObject *llpy_individuals (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
-  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_INDI;
   iter->li_current = 0;
 
@@ -84,10 +89,11 @@ static PyObject *llpy_individuals (PyObject *self ATTRIBUTE_UNUSED,
 /* llpy_families (void) --> Returns an iterator for the set of
    families in the database.  */
 
-static PyObject *llpy_families (PyObject *self ATTRIBUTE_UNUSED,
+static PyObject *llpy_families (PyObject *self,
 				PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (llpy_debug)
     {
@@ -98,7 +104,6 @@ static PyObject *llpy_families (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
-  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_FAM;
   iter->li_current = 0;
 
@@ -108,10 +113,11 @@ static PyObject *llpy_families (PyObject *self ATTRIBUTE_UNUSED,
 /* llpy_sources (void) --> Returns an iterator for the set of sources
    in the database.  */
 
-static PyObject *llpy_sources (PyObject *self ATTRIBUTE_UNUSED,
+static PyObject *llpy_sources (PyObject *self,
 			       PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (llpy_debug)
     {
@@ -122,7 +128,6 @@ static PyObject *llpy_sources (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
-  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_SOUR;
   iter->li_current = 0;
 
@@ -132,10 +137,11 @@ static PyObject *llpy_sources (PyObject *self ATTRIBUTE_UNUSED,
 /* llpy_others (void) --> Returns an iterator for the set of other records
    in the database.  */
 
-static PyObject *llpy_others (PyObject *self ATTRIBUTE_UNUSED,
+static PyObject *llpy_others (PyObject *self,
 			       PyObject *args ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (llpy_debug)
     {
@@ -146,52 +152,44 @@ static PyObject *llpy_others (PyObject *self ATTRIBUTE_UNUSED,
   if (! iter)
     return NULL;		/* PyObject_New failed and set exception */
 
-  Py_INCREF (iter);
   iter->li_type = LLINES_TYPE_OTHR;
   iter->li_current = 0;
 
   return (PyObject *)iter;
 }
 
-static void llpy_iter_dealloc (PyObject *self)
+static void llpy_record_iter_dealloc (PyObject *self)
 {
-#if 0
-  PyTypeObject *tp = Py_TYPE (self);
-#endif
-
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_iter_dealloc entry: self %p refcnt %ld\n",
+      fprintf (stderr, "llpy_record_iter_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
   PyObject_Del (self);
-#if 0
-  Py_DECREF (tp);
-#endif
 }
 
-static PyObject *llpy_iter_iter (PyObject *self)
+static PyObject *llpy_record_iter (PyObject *self)
 {
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_iter_iter entry: self %p refcnt %ld\n",
-	       (void *)self, Py_REFCNT (self));
+      fprintf (stderr, "llpy_record_iter entry: self %p refcnt %ld, type %s\n",
+	       (void *)self, Py_REFCNT (self), Py_TYPE(self)->tp_name);
     }
-  /* XXX do we need to do a Py_INCREF here? XXX */
   Py_INCREF (self);
-
   return (self);
 }
 
-static PyObject *llpy_iter_iternext (PyObject *self)
+static PyObject *llpy_record_iternext (PyObject *self)
 {
-  LLINES_PY_ITER *iter = (LLINES_PY_ITER *)self;
+  LLINES_PY_RECORD_ITER *iter = (LLINES_PY_RECORD_ITER *)self;
   RECORD record;
 
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_iter_iternext entry: type %c current %d refcnt %ld\n",
-	       iter->li_type, iter->li_current, Py_REFCNT (self));
+      fprintf (stderr,
+	       "llpy_record_iternext entry: type %c current %d refcnt %ld type %s\n",
+	       iter->li_type, iter->li_current, Py_REFCNT (self),
+	       Py_TYPE(self)->tp_name);
     }
 
   if (iter->li_current == -1)
@@ -297,53 +295,55 @@ static PyObject *llpy_iter_iternext (PyObject *self)
     }
 }
 
-static void llpy_nodeiter_dealloc (PyObject *self)
+static void llpy_node_iter_dealloc (PyObject *self)
 {
-#if 0
-  PyTypeObject *tp = Py_TYPE (self);
-#endif
   LLINES_PY_NODEITER *nodeiter = (LLINES_PY_NODEITER *) self;
 
   if (llpy_debug)
-    {
-      fprintf (stderr, "llpy_nodeiter_dealloc entry: self %p refcnt %ld\n",
-	       (void *)self, Py_REFCNT (self));
-    }
-  if (nodeiter->ni_top_node)
+    llpy_debug_print_node_iter ("llpy_node_iter_dealloc entry", nodeiter);
+
+  if (nodeiter->ni_top_node) {
     nrefcnt(nodeiter->ni_top_node)--;
+    TRACK_NODE_REFCNT_DEC(nodeiter->ni_top_node);
+  }
   nodeiter->ni_top_node = 0;
 
-  if (nodeiter->ni_cur_node)
+  if (nodeiter->ni_cur_node) {
     nrefcnt(nodeiter->ni_cur_node)--;
+    TRACK_NODE_REFCNT_DEC(nodeiter->ni_cur_node);
+  }
   nodeiter->ni_cur_node = 0;
 
   if (nodeiter->ni_tag)
     free (nodeiter->ni_tag);
   nodeiter->ni_tag = 0;
+
+  if (llpy_debug)
+    llpy_debug_print_node_iter ("llpy_node_iter_dealloc exit", nodeiter);
+
   PyObject_Del (self);
-#if 0
-  Py_DECREF (tp);
-#endif
 }
 
-static PyObject *llpy_nodeiter_iter (PyObject *self)
+static PyObject *llpy_node_iter (PyObject *self)
 {
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_iter_iter entry: self %p refcnt %ld\n",
-	       (void *)self, Py_REFCNT (self));
+      fprintf (stderr, "llpy_node_iter entry: self %p refcnt %ld, type %s\n",
+	       (void *)self, Py_REFCNT (self), Py_TYPE(self)->tp_name);
     }
-  /* XXX do we need to do a Py_INCREF here? XXX */
   Py_INCREF (self);
-
   return (self);
 }
 
-static PyObject *llpy_nodeiter_iternext (PyObject *self)
+static PyObject *llpy_node_iternext (PyObject *self)
 {
   LLINES_PY_NODEITER *iter = (LLINES_PY_NODEITER *) self;
   LLINES_PY_NODE *py_node;
   int retval;
+
+  /* these are only used if llpy_debug is true */
+  NODE old_cur_node = iter->ni_cur_node;
+  NODE old_top_node = iter->ni_top_node;
 
 #if 0
   /* if this is ever stored or returned, something is screwed up */
@@ -352,8 +352,21 @@ static PyObject *llpy_nodeiter_iternext (PyObject *self)
 
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_nodeiter_iternext entry: type %d current %p refcnt %ld\n",
-	       iter->ni_type, (void *)iter->ni_cur_node, Py_REFCNT (self));
+      fprintf (stderr,
+	       "llpy_node_iternext entry: type %d current %p refcnt %ld, type %s\n",
+	       iter->ni_type, (void *)iter->ni_cur_node, Py_REFCNT (self),
+	       Py_TYPE(self)->tp_name);
+
+      if (iter->ni_top_node)
+	fprintf (stderr, "llpy_node_iternext: top %p, refcnt %d\n",
+		 (void *)(iter->ni_top_node), nrefcnt(iter->ni_top_node));
+      else
+	fprintf (stderr, "llpy_node_iternext: top NULL\n");
+      if (iter->ni_cur_node)
+	fprintf (stderr, "llpy_node_iternext: cur %p, refcnt %d\n",
+		 (void *)(iter->ni_cur_node), nrefcnt(iter->ni_cur_node));
+      else
+	fprintf (stderr, "llpy_node_iternext: cur NULL\n");
     }
 
   while (1)
@@ -394,14 +407,28 @@ static PyObject *llpy_nodeiter_iternext (PyObject *self)
 		return NULL;
 	      py_node->lnn_type = 0;
 	      py_node->lnn_node = iter->ni_cur_node;
+
 	      nrefcnt(py_node->lnn_node)++;
+	      TRACK_NODE_REFCNT_INC(py_node->lnn_node);
+
+	      if (llpy_debug)
+		{
+		  if (old_top_node)
+		    fprintf (stderr, "llpy_node_iternext exit: old top refcnt %d\n",
+			     nrefcnt(iter->ni_top_node));
+		  if (old_cur_node)
+		    fprintf (stderr, "llpy_node_iternext exit: old cur refcnt %d\n",
+			     nrefcnt(iter->ni_cur_node));
+
+		  llpy_debug_print_node_iter ("llpy_node_iternext exit", iter);
+		}
 	      return (PyObject *) py_node;
 	    }
 	}
     }
 }
 
-/* nodeiter_next_child -- helper function for llpy_nodeiter_iternext
+/* nodeiter_next_child -- helper function for llpy_node_iternext
    for the case of CHILD iteration, determine the next NODE to return.
 
    This function is ONLY concerned with returning the next node, not
@@ -427,10 +454,16 @@ static int nodeiter_next_child (LLINES_PY_NODEITER *iter)
       if (iter->ni_cur_node)
 	{
 	  nrefcnt(iter->ni_cur_node)++;
+	  TRACK_NODE_REFCNT_INC(iter->ni_cur_node);
+
+	  if (llpy_debug)
+	    llpy_debug_print_node_iter_cur ("nodeiter_next_child FIRST NEW cur", iter);
+
 	  return (1);		/* we have a node */
 	}
       else
 	{
+	  /* node we were asked to iterate over has no children! */
 	  iter->ni_level = -1;	/* mark that it is exhausted */
 	  return (0);		/* exhausted -- no children */
 	}
@@ -445,18 +478,34 @@ static int nodeiter_next_child (LLINES_PY_NODEITER *iter)
       return (-1);
     }
   nrefcnt(iter->ni_cur_node)--;
+  TRACK_NODE_REFCNT_DEC(iter->ni_cur_node);
+
+  if (llpy_debug)
+    llpy_debug_print_node_iter_cur ("nodeiter_next_child OLD cur", iter);
+
+  /* check for siblings... */
   iter->ni_cur_node = nsibling (iter->ni_cur_node);
+
   if (iter->ni_cur_node)
     {
       nrefcnt(iter->ni_cur_node)++;
+      TRACK_NODE_REFCNT_INC(iter->ni_cur_node);
+
+      if (llpy_debug)
+	llpy_debug_print_node_iter_cur ("nodeiter_next_child exit NEW cur", iter);
+
       return (1);		/* we have a node */
     }
 
   iter->ni_level = -1;		/* mark that it is exhausted */
+
+  if (llpy_debug)
+    llpy_debug_print_node_iter_cur ("nodeiter_next_child exit NEW cur", iter);
+
   return (0);			/* exhausted -- no more children */
 }
 
-/* nodeiter_next_traverse -- helper function for llpy_nodeiter_iternext
+/* nodeiter_next_traverse -- helper function for llpy_node_iternext
    for the case of TRAVERSE iteration, determine the next NODE to
    return.
 
@@ -484,6 +533,7 @@ static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter)
       /* first iteration */
       iter->ni_cur_node = iter->ni_top_node;
       nrefcnt(iter->ni_cur_node)++;
+      TRACK_NODE_REFCNT_INC(iter->ni_cur_node);
       iter->ni_level = 0;
       return (1);		/* we have a node -- the top node */
     }
@@ -495,8 +545,10 @@ static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter)
   if (new_node)
     {
       nrefcnt(iter->ni_cur_node)--;
+      TRACK_NODE_REFCNT_DEC(iter->ni_cur_node);
       iter->ni_cur_node = new_node;
       nrefcnt(iter->ni_cur_node)++;
+      TRACK_NODE_REFCNT_INC(iter->ni_cur_node);
       iter->ni_level = new_level;
       return (1);
     }
@@ -508,12 +560,14 @@ static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter)
   if (new_node)
     {
       nrefcnt(iter->ni_cur_node)--;
+      TRACK_NODE_REFCNT_DEC(iter->ni_cur_node);
       iter->ni_cur_node = new_node;
       nrefcnt(iter->ni_cur_node)++;
+      TRACK_NODE_REFCNT_INC(iter->ni_cur_node);
       iter->ni_level = new_level;
       return (1);
     }
-  /* nothing below, nothing to the size, so go up */
+  /* nothing below, nothing to the side, so go up */
 
   /* start of loop */
 
@@ -538,15 +592,59 @@ static int nodeiter_next_traverse (LLINES_PY_NODEITER *iter)
 	{
 	  /* found one, return it */
 	  nrefcnt(iter->ni_cur_node)--;
+	  TRACK_NODE_REFCNT_DEC(iter->ni_cur_node);
 	  iter->ni_cur_node = new_node;
 	  nrefcnt(iter->ni_cur_node)++;
+	  TRACK_NODE_REFCNT_INC(iter->ni_cur_node);
 	  iter->ni_level = new_level;
 	  return (1);
 	}
     }
 }
 
-static struct PyMethodDef Lifelines_Iter_Methods[] =
+static void llpy_debug_print_node_iter (const char *prefix,
+					LLINES_PY_NODEITER *iter)
+{
+  fprintf (stderr, "%s: self %p\n", prefix, (void *) iter);
+  fprintf (stderr,
+	   "%s: search type %d top %p cur %p refcnt %ld, type name %s\n",
+	   prefix, iter->ni_type, (void *)iter->ni_top_node,
+	   (void *)iter->ni_cur_node, Py_REFCNT (iter),
+	   Py_TYPE(iter)->tp_name);
+
+  if (iter->ni_top_node)
+    fprintf (stderr, "%s: top refcnt %d xref %s tag %s val %s\n",
+	     prefix, nrefcnt(iter->ni_top_node),
+	     nxref(iter->ni_top_node) ? nxref(iter->ni_top_node) : "NULL",
+	     ntag(iter->ni_top_node),
+	     nval(iter->ni_top_node) ? nval(iter->ni_top_node) : "NULL");
+
+  if (iter->ni_cur_node)
+    fprintf (stderr, "%s: cur refcnt %d xref %s tag %s val %s\n",
+	     prefix, nrefcnt(iter->ni_cur_node),
+	     nxref(iter->ni_cur_node) ? nxref(iter->ni_cur_node) : "NULL",
+	     ntag(iter->ni_cur_node),
+	     nval(iter->ni_cur_node) ? nval(iter->ni_cur_node) : "NULL");
+  else
+    fprintf (stderr, "%s: cur NULL\n", prefix);
+}
+
+/* llpy_debug_print_node_iter_cur -- just print ni_cur_node, after
+   delta before changing */
+static void llpy_debug_print_node_iter_cur (const char *prefix,
+					    LLINES_PY_NODEITER *iter)
+{
+  if (iter->ni_cur_node)
+    fprintf (stderr, "%s: cur refcnt %d xref %s tag %s val %s\n",
+	     prefix, nrefcnt(iter->ni_cur_node),
+	     nxref(iter->ni_cur_node) ? nxref(iter->ni_cur_node) : "NULL",
+	     ntag(iter->ni_cur_node),
+	     nval(iter->ni_cur_node) ? nval(iter->ni_cur_node) : "NULL");
+  else
+    fprintf (stderr, "%s: cur NULL\n", prefix);
+}
+
+static struct PyMethodDef Lifelines_Iter_Functions[] =
   {
    /* RECORD functions */
 
@@ -566,22 +664,22 @@ static struct PyMethodDef Lifelines_Iter_Methods[] =
    { NULL, 0, 0, NULL }		/* sentinel */
   };
 
-PyTypeObject llines_iter_type =
+PyTypeObject llines_record_iter_type =
   {
    PyVarObject_HEAD_INIT (NULL, 0)
    .tp_name = "llines.Iter",
    .tp_doc = "Lifelines GEDCOM Iteration Type",
-   .tp_basicsize = sizeof (LLINES_PY_ITER),
+   .tp_basicsize = sizeof (LLINES_PY_RECORD_ITER),
    .tp_itemsize = 0,
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
-   .tp_dealloc = llpy_iter_dealloc,
+   .tp_dealloc = llpy_record_iter_dealloc,
    .tp_methods = NULL,
-   .tp_iter = llpy_iter_iter,
-   .tp_iternext = llpy_iter_iternext,
+   .tp_iter = llpy_record_iter,
+   .tp_iternext = llpy_record_iternext,
   };
 
-PyTypeObject llines_nodeiter_type =
+PyTypeObject llines_node_iter_type =
   {
    PyVarObject_HEAD_INIT(NULL, 0)
    .tp_name = "llines.NodeIter",
@@ -590,17 +688,17 @@ PyTypeObject llines_nodeiter_type =
    .tp_itemsize = 0,
    .tp_flags = Py_TPFLAGS_DEFAULT,
    .tp_new = PyType_GenericNew,
-   .tp_dealloc = llpy_nodeiter_dealloc,
+   .tp_dealloc = llpy_node_iter_dealloc,
    .tp_methods = NULL,
-   .tp_iter = llpy_nodeiter_iter,
-   .tp_iternext = llpy_nodeiter_iternext,
+   .tp_iter = llpy_node_iter,
+   .tp_iternext = llpy_node_iternext,
   };
 
 void llpy_iter_init (void)
 {
   int status;
 
-  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Iter_Methods);
+  status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Iter_Functions);
 
   if (status != 0)
     fprintf (stderr, "llpy_iter_init: attempt to add functions returned %d\n", status);

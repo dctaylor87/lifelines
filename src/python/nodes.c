@@ -7,6 +7,8 @@
 #include "llstdlib.h"
 #include "gedcom.h"
 #include "../interp/interpi.h"	/* XXX */
+#include "../gedlib/leaksi.h"
+
 #include "types.h"
 #include "python-to-c.h"
 
@@ -23,6 +25,7 @@ static PyObject *llpy_sibling_node (PyObject *self, PyObject *args);
 static PyObject *llpy_copy_node_tree (PyObject *self, PyObject *args);
 static PyObject *llpy_level (PyObject *self, PyObject *args);
 static PyObject *llpy_nodeiter (PyObject *self, PyObject *args, PyObject *kw);
+static void llpy_debug_print_node (const char *prefix, PyObject *self);
 
 /* start of code */
 
@@ -63,9 +66,10 @@ static PyObject *llpy_parent_node (PyObject *self, PyObject *args ATTRIBUTE_UNUS
 
   parent = PyObject_New (LLINES_PY_NODE, &llines_node_type);
   if (! parent)
-    return NULL;		/* PyOBject_New failed and set an exception */
+    return NULL;		/* PyObject_New failed and set an exception */
 
   nrefcnt(pnode)++;
+  TRACK_NODE_REFCNT_INC(pnode);
   parent->lnn_type = node->lnn_type; /* 'inherit' type from previous node */
   parent->lnn_node = pnode;
 
@@ -88,6 +92,7 @@ static PyObject *llpy_child_node (PyObject *self, PyObject *args ATTRIBUTE_UNUSE
     return NULL;
 
   nrefcnt(node)++;
+  TRACK_NODE_REFCNT_INC(node);
   py_node->lnn_type = type;
   py_node->lnn_node = node;
 
@@ -110,6 +115,7 @@ static PyObject *llpy_sibling_node (PyObject *self, PyObject *args ATTRIBUTE_UNU
     return NULL;
 
   nrefcnt(node)++;
+  TRACK_NODE_REFCNT_INC(node);
   py_node->lnn_type = type;
   py_node->lnn_node = node;
 
@@ -127,6 +133,7 @@ static PyObject *llpy_copy_node_tree (PyObject *self, PyObject *args ATTRIBUTE_U
   copy->lnn_type = node->lnn_type;
   copy->lnn_node = copy_nodes (node->lnn_node, TRUE, TRUE);
   nrefcnt(copy->lnn_node)++;
+  TRACK_NODE_REFCNT_INC(copy->lnn_node);
 
   return (PyObject *)copy;
 }
@@ -312,6 +319,7 @@ static PyObject *llpy_create_node (PyObject *self ATTRIBUTE_UNUSED, PyObject *ar
     return NULL;
 
   nrefcnt(node)++;
+  TRACK_NODE_REFCNT_INC(node);
   py_node->lnn_node = node;
   py_node->lnn_type = 0;	/* unknown */
 
@@ -349,13 +357,14 @@ static PyObject *llpy_nodeiter (PyObject *self, PyObject *args, PyObject *kw)
       PyErr_SetString (PyExc_ValueError, "nodeiter: type must be either ITER_CHILDREN or ITER_TRAVERSE");
       return NULL;
     }
-  iter = PyObject_New (LLINES_PY_NODEITER, &llines_nodeiter_type);
+  iter = PyObject_New (LLINES_PY_NODEITER, &llines_node_iter_type);
   if (! iter)
     return NULL;
 
-  Py_INCREF (self);
+  /*Py_INCREF (self);*/
   iter->ni_top_node = ((LLINES_PY_NODE *)self)->lnn_node;
   nrefcnt(iter->ni_top_node)++;
+  TRACK_NODE_REFCNT_INC(iter->ni_top_node);
   iter->ni_cur_node = NULL;
   iter->ni_type = type;
   iter->ni_level = 0;
@@ -370,18 +379,35 @@ static PyObject *llpy_nodeiter (PyObject *self, PyObject *args, PyObject *kw)
 static void llpy_node_dealloc (PyObject *self)
 {
   LLINES_PY_NODE *node = (LLINES_PY_NODE *) self;
+
   if (llpy_debug)
-    {
-      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
-	       (void *)self, Py_REFCNT (self));
-    }
+    llpy_debug_print_node ("llpy_node_dealloc entry", self);
+
   nrefcnt(node->lnn_node)--;
+  TRACK_NODE_REFCNT_DEC(node->lnn_node);
   node->lnn_node = 0;
   node->lnn_type = 0;
+
+  if (llpy_debug)
+    llpy_debug_print_node ("llpy_node_dealloc exit", self);
+
   Py_TYPE(self)->tp_free (self);
-#if 0
-  Py_DECREF (Py_TYPE(self));
-#endif
+}
+
+static void llpy_debug_print_node (const char *prefix, PyObject *self)
+{
+  NODE node;
+
+  fprintf (stderr, "%s: self %p refcnt %ld type %s\n",
+	   prefix, (void *)self, Py_REFCNT (self), Py_TYPE (self)->tp_name);
+
+  node = ((LLINES_PY_NODE *) self)->lnn_node;
+
+  if (! node)
+    fprintf (stderr, "%s: lnn_node: node NULL\n", prefix);
+  else
+    fprintf (stderr, "%s: lnn node: node %p tag %s refcnt %d\n",
+	     prefix, (void *)node, ntag(node), nrefcnt(node));
 }
 
 static struct PyMethodDef Lifelines_Node_Methods[] =
@@ -462,5 +488,7 @@ void llpy_nodes_init (void)
 
   status = PyModule_AddFunctions (Lifelines_Module, Lifelines_Node_Functions);
   if (status != 0)
-    fprintf (stderr, "llpy_nodes_initj: attempt to add functions returned %d\n", status);
+    fprintf (stderr, "llpy_nodes_init: attempt to add functions returned %d\n", status);
 }
+
+

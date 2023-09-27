@@ -16,6 +16,7 @@
 #include "indiseq.h"		/* INDISEQ */
 #include "liflines.h"
 #include "messages.h"
+#include "../gedlib/leaksi.h"
 
 #include "python-to-c.h"
 #include "types.h"
@@ -256,6 +257,7 @@ static PyObject *llpy_birth (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     return NULL;		/* PyObject_New failed */
 
   nrefcnt(birth)++;
+  TRACK_NODE_REFCNT_INC(birth);
   event->lnn_node = birth;
   event->lnn_type = LLINES_TYPE_INDI;
 
@@ -282,6 +284,7 @@ static PyObject *llpy_death (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     return NULL;		/* PyObject_New failed */
 
   nrefcnt(death)++;
+  TRACK_NODE_REFCNT_INC(death);
   event->lnn_node = death;
   event->lnn_type = LLINES_TYPE_INDI;
 
@@ -308,6 +311,7 @@ static PyObject *llpy_burial (PyObject *self, PyObject *args ATTRIBUTE_UNUSED)
     return NULL;		/* PyObject_New failed */
 
   nrefcnt(burial)++;
+  TRACK_NODE_REFCNT_INC(burial);
   event->lnn_node = burial;
   event->lnn_type = LLINES_TYPE_INDI;
 
@@ -1146,7 +1150,7 @@ static void llpy_individual_dealloc (PyObject *self)
   LLINES_PY_RECORD *indi = (LLINES_PY_RECORD *) self;
   if (llpy_debug)
     {
-      fprintf (stderr, "llpy_family_dealloc entry: self %p refcnt %ld\n",
+      fprintf (stderr, "llpy_individual_dealloc entry: self %p refcnt %ld\n",
 	       (void *)self, Py_REFCNT (self));
     }
   release_record (indi->llr_record);
@@ -1161,7 +1165,8 @@ static void llpy_individual_dealloc (PyObject *self)
 #if 0
 static PyObject *llpy_individual_iter(PyObject *self ATTRIBUTE_UNUSED)
 {
-  LLINES_PY_ITER *iter = PyObject_New (LLINES_PY_ITER, &llines_iter_type);
+  LLINES_PY_RECORD_ITER *iter = PyObject_New (LLINES_PY_RECORD_ITER,
+					      &llines_record_iter_type);
 
   if (! iter)
     return NULL;
