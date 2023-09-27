@@ -1,8 +1,8 @@
 #ifndef leaksi_h_included
 #define leaksi_h_included
 
-#define TRACK_RECORD_OPS 1
-#define TRACK_NODE_OPS   1
+#define TRACK_RECORD_OPS 0
+#define TRACK_NODE_OPS   0
 
 #define TRACK_BACKTRACE  0
 

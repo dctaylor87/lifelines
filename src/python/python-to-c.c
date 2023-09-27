@@ -22,7 +22,7 @@
 
 PyObject *Lifelines_Module;
 
-int llpy_debug = 1;	      /* XXX TODO: make this ia bitmask XXX */
+int llpy_debug = 0;	      /* XXX TODO: make this ia bitmask XXX */
 
 /* forward references */
 
